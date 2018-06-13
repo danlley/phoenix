@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- <mappers>
+		<mapper resource="sqlmap/customers/CsUsers-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsUsersContactList-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsUserSecurity-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsUsersMobileBaseInfo-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsUsersQrWf-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsCheckCode-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsFatigeConfig-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/customers/CsFatigeIndicator-sqlmap-mapping.xml"/>
+	</mappers> -->
+</configuration>
