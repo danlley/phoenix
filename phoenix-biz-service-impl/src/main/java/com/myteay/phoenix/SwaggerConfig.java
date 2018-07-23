@@ -47,6 +47,6 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("MTC [myteay customer]--test api for customer of myteay.com").version("1.0").build();
+        return new ApiInfoBuilder().title("MTC [myteay phoenix]--test api for phoenix of myteay.com").version("1.0").build();
     }
 }
