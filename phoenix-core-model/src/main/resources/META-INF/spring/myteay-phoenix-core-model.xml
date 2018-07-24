@@ -11,5 +11,5 @@
                 http://www.springframework.org/schema/context/spring-context-4.1.xsd"
 	default-autowire="byName">
 	
-	
+	<bean id="pxShopRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxShopRepositoryImpl"></bean>
 </beans>

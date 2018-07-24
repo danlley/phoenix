@@ -1,24 +1,21 @@
 /**
  * Myteay.com Inc.
- * Copyright (c) 2015-2015 All Rights Reserved.
+ * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.core.model.enums;
+package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 操作结果返回码
+ * 店铺状态维护枚举
  * 
- * @author Administrator
- * @version $Id: MtOperateResultEnum.java, v 0.1 2015年12月1日 下午4:48:14 Administrator Exp $
+ * @author min.weixm
+ * @version $Id: PxShopStatus.java, v 0.1 Jul 24, 2018 11:06:38 AM min.weixm Exp $
  */
-public enum MtOperateResultEnum {
+public enum PxShopStatusEnum {
+                              PX_SHOP_EXPIRED("PX_SHOP_EXPIRED", "店铺已过期"),
 
-    CAMP_OPERATE_SUCCESS("CAMP_OPERATE_SUCCESS", "操作成功"),
-
-    CAMP_OPERATE_FAILED("CAMP_OPERATE_FAILED", "操作失败"),
-
-    CAMP_OPERATE_UNKONW("CAMP_OPERATE_UNKONW", "操作结果未知"),
+                              PX_SHOP_ONLINE("PX_SHOP_ONLINE", "店铺在线"),
 
     ;
 
@@ -34,7 +31,7 @@ public enum MtOperateResultEnum {
      * @param value         枚举值
      * @param message       枚举描述
      */
-    private MtOperateResultEnum(String value, String message) {
+    private PxShopStatusEnum(String value, String message) {
         this.value = value;
         this.message = message;
     }
@@ -62,12 +59,12 @@ public enum MtOperateResultEnum {
      * @param value     枚举值
      * @return          枚举对象
      */
-    public static MtOperateResultEnum getByCode(String value) {
+    public static PxShopStatusEnum getByCode(String value) {
         if (StringUtils.isBlank(value)) {
             return null;
         }
         value = value.trim();
-        for (MtOperateResultEnum type : values()) {
+        for (PxShopStatusEnum type : values()) {
             if (type.getValue().equals(value)) {
                 return type;
             }
@@ -82,7 +79,7 @@ public enum MtOperateResultEnum {
      * @param value     枚举值
      * @return          枚举对象
      */
-    public static MtOperateResultEnum getByValue(String value) {
+    public static PxShopStatusEnum getByValue(String value) {
         return getByCode(value);
     }
 
@@ -92,11 +89,11 @@ public enum MtOperateResultEnum {
      * @param message       枚举描述
      * @return              枚举对象
      */
-    public static MtOperateResultEnum getByMessage(String message) {
+    public static PxShopStatusEnum getByMessage(String message) {
         if (StringUtils.isBlank(message)) {
             return null;
         }
-        for (MtOperateResultEnum result : values()) {
+        for (PxShopStatusEnum result : values()) {
             if (result.getMessage().equals(message)) {
                 return result;
             }

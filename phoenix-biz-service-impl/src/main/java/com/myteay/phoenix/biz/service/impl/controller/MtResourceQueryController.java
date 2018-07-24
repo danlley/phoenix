@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.core.model.enums.MtOperateResultEnum;
 
 /**
  * 资源查询控制器

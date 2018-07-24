@@ -9,8 +9,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.myteay.phoenix.core.model.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.core.model.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 
 /**
  * 返回结果
@@ -42,6 +42,10 @@ public class MtOperateResult<T> implements Serializable {
      * default constructor
      */
     public MtOperateResult() {
+        this.errorDetail = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS.getMessage();
+        this.errorCode = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS.getCode();
+        this.operateResult = MtOperateResultEnum.CAMP_OPERATE_SUCCESS;
+        this.operateExResult = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS;
     }
 
     /**

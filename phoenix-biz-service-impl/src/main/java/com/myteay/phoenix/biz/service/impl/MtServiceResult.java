@@ -6,8 +6,8 @@ package com.myteay.phoenix.biz.service.impl;
 
 import java.io.Serializable;
 
-import com.myteay.phoenix.core.model.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.core.model.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 
 /**
  * 对外服务返回结果
@@ -42,6 +42,10 @@ public class MtServiceResult<T> implements Serializable {
      * default constructor
      */
     public MtServiceResult() {
+        this.errorDetail = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS.getMessage();
+        this.operateResult = MtOperateResultEnum.CAMP_OPERATE_SUCCESS.getValue();
+        this.operateExResult = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS.getValue();
+        this.isSuccess = true;
     }
 
     /**
