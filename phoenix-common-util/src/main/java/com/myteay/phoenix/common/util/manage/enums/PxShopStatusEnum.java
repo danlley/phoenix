@@ -6,16 +6,18 @@ package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 店铺状态维护枚举
  * 
  * @author min.weixm
  * @version $Id: PxShopStatus.java, v 0.1 Jul 24, 2018 11:06:38 AM min.weixm Exp $
  */
-public enum PxShopStatusEnum {
-                              PX_SHOP_EXPIRED("PX_SHOP_EXPIRED", "店铺已过期"),
+public enum PxShopStatusEnum implements EnumMessage {
+                                                     PX_SHOP_EXPIRED("PX_SHOP_EXPIRED", "店铺已过期"),
 
-                              PX_SHOP_ONLINE("PX_SHOP_ONLINE", "店铺在线"),
+                                                     PX_SHOP_ONLINE("PX_SHOP_ONLINE", "店铺在线"),
 
     ;
 

@@ -27,6 +27,8 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_OPERATE_FAILED("CAMP_OPERATE_FAILED", "00110006", "操作失败"),
 
+                                   CAMP_DATA_DIC_NOT_FOUND("CAMP_DATA_DIC_NOT_FOUND", "00014001", "数据字典信息未找到"),
+
                                    //----------------          基本扩展结果信息信息          ----------------
                                    PX_SHOP_MODEL_INVALID("PX_SHOP_MODEL_INVALID", "00110001", "当前店铺模型不可用，无法保存店铺信息"),
 

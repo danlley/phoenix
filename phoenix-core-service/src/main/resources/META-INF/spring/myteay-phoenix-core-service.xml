@@ -13,4 +13,6 @@
 	
 	<bean id="pxCommonManageComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxCommonManageComponentImpl"></bean>
 	
+	<bean id="pxDataDictionaryComponent" class="com.myteay.phoenix.core.service.component.impl.PxDataDictionaryComponentImpl"></bean>
+	
 </beans>
