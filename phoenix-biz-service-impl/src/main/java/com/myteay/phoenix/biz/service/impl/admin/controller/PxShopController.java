@@ -19,6 +19,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
+import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
 
 /**
  * 店铺管理
@@ -36,6 +37,10 @@ public class PxShopController {
     /** 后台一般性简单业务管理组件 */
     @Autowired
     private PxCommonManageComponent pxCommonManageComponent;
+
+    /** 后台一般性简单业务管理组件 */
+    @Autowired
+    private PxShopComponent         pxShopComponent;
 
     /**
      * 查询所有店铺信息
@@ -59,15 +64,15 @@ public class PxShopController {
         return result;
     }
 
-    @RequestMapping(value = "/save", method = { RequestMethod.POST })
-    public MtServiceResult<PxShopModel> sendRegisterCheckCode(@RequestBody PxShopModel pxShopModel) {
+    @RequestMapping(value = "/manage", method = { RequestMethod.POST })
+    public MtServiceResult<PxShopModel> manageShop(@RequestBody PxShopModel pxShopModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存店铺信息 pxShopModel=" + pxShopModel);
         }
         MtServiceResult<PxShopModel> result = null;
         try {
-            MtOperateResult<PxShopModel> innerResult = pxCommonManageComponent.saveShopModel(pxShopModel);
+            MtOperateResult<PxShopModel> innerResult = pxShopComponent.manageShop(pxShopModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -87,4 +92,12 @@ public class PxShopController {
         this.pxCommonManageComponent = pxCommonManageComponent;
     }
 
+    /**
+     * Setter method for property <tt>pxShopComponent</tt>.
+     * 
+     * @param pxShopComponent value to be assigned to property pxShopComponent
+     */
+    public void setPxShopComponent(PxShopComponent pxShopComponent) {
+        this.pxShopComponent = pxShopComponent;
+    }
 }

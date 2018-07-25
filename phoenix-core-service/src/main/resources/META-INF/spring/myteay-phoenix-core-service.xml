@@ -15,4 +15,16 @@
 	
 	<bean id="pxDataDictionaryComponent" class="com.myteay.phoenix.core.service.component.impl.PxDataDictionaryComponentImpl"></bean>
 	
+	<bean id="pxShopComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxShopComponentImpl"></bean>
+	
+	<!-- 店铺配置信息变更监听器 -->
+	<bean id="pxShopEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxShopEventListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_SHOP_CFG_CHANGED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>	
 </beans>

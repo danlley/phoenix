@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 
 /**
@@ -19,43 +20,64 @@ import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 public class PxShopModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -5828377760866622621L;
+    private static final long   serialVersionUID = -5828377760866622621L;
 
     /** 店铺ID */
-    private String            shopId;
+    private String              shopId;
 
     /** 店铺名称 */
-    private String            shopName;
+    private String              shopName;
 
     /** 店铺地址 */
-    private String            shopAddress;
+    private String              shopAddress;
 
     /** 店铺联系电话 */
-    private String            shopTel;
+    private String              shopTel;
 
     /** 店铺服务人员 */
-    private String            waiterName;
+    private String              waiterName;
 
     /** 店铺管理员 */
-    private String            ownerName;
+    private String              ownerName;
 
     /** 店铺管理员联系电话 */
-    private String            ownerPhone;
+    private String              ownerPhone;
 
     /** 店铺管理员身份证 */
-    private String            ownerIdcard;
+    private String              ownerIdcard;
 
     /** 店铺状态 */
-    private PxShopStatusEnum      shopStatus;
+    private PxShopStatusEnum    shopStatus;
+
+    /** 店铺状态 */
+    private PxOperationTypeEnum operationType;
 
     /** 过期时间 */
-    private Date              gmtExpired;
+    private Date                gmtExpired;
 
     /** 创建时间 */
-    private Date              gmtCreated;
+    private Date                gmtCreated;
 
     /** 修改时间 */
-    private Date              gmtModified;
+    private Date                gmtModified;
+
+    /**
+     * Getter method for property <tt>operationType</tt>.
+     * 
+     * @return property value of operationType
+     */
+    public PxOperationTypeEnum getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Setter method for property <tt>operationType</tt>.
+     * 
+     * @param operationType value to be assigned to property operationType
+     */
+    public void setOperationType(PxOperationTypeEnum operationType) {
+        this.operationType = operationType;
+    }
 
     /**
      * Getter method for property <tt>shopId</tt>.

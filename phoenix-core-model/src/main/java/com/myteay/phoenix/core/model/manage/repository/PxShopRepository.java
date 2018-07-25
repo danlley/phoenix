@@ -33,4 +33,13 @@ public interface PxShopRepository {
      * @throws PxManageException 
      */
     public List<PxShopModel> findAll() throws PxManageException;
+
+    /**
+     * 查询单个店铺信息
+     * 
+     * @param shopId
+     * @return
+     * @throws PxManageException
+     */
+    public PxShopModel findSingleShop(String shopId) throws PxManageException;
 }

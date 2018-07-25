@@ -31,24 +31,6 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     private PxShopRepository   pxShopRepository;
 
     /** 
-     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#saveShopModel(com.myteay.phoenix.core.model.manage.PxShopModel)
-     */
-    @Override
-    public MtOperateResult<PxShopModel> saveShopModel(PxShopModel pxShopModel) {
-        MtOperateResult<PxShopModel> result = new MtOperateResult<PxShopModel>();
-        PxShopModel freshPxShopModel = null;
-        try {
-            freshPxShopModel = pxShopRepository.saveShopInfo(pxShopModel);
-            result.setResult(freshPxShopModel);
-        } catch (PxManageException e) {
-            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
-            result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_SAVE_FAILD);
-        }
-
-        return result;
-    }
-
-    /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryShopAll()
      */
     @Override

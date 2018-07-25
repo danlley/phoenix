@@ -75,6 +75,15 @@ public class PxShopRepositoryImpl implements PxShopRepository {
         return modelList;
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#findSingleShop(java.lang.String)
+     */
+    @Override
+    public PxShopModel findSingleShop(String shopId) throws PxManageException {
+        PxShopDO freshPxShopDO = pxShopDAO.findPxShopById(shopId);
+        return PxShopConvertor.convertDO2Model(freshPxShopDO);
+    }
+
     /**
      * Setter method for property <tt>pxShopDAO</tt>.
      * 

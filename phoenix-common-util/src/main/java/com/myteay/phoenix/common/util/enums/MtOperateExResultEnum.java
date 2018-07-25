@@ -38,6 +38,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_QUERY_FAILD("PX_SHOP_QUERY_FAILD", "00110004", "店铺信息查询失败"),
 
+                                   PX_SHOP_OP_UNKNOW("PX_SHOP_OP_UNKNOW", "00110005", "店铺模型中的操作类型未知"),
+
     ;
 
     /** 枚举值 */
