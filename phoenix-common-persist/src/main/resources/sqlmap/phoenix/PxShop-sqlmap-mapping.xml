@@ -47,7 +47,7 @@
     <select id="PX-SHOP-SELECT-ALL" resultMap="RM-PX-SHOP">
 	    <![CDATA[
 	        select shop_id,shop_name,shop_address,shop_tel,waiter_name,owner_name,owner_phone,owner_idcard,shop_status,gmt_expired,gmt_created,gmt_modified 
-	        from phoenix.px_shop 
+	        from phoenix.px_shop order by gmt_modified desc
 	    ]]>
     </select>
 

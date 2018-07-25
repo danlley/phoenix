@@ -49,9 +49,6 @@ CREATE TABLE `px_goods_packages` (
   `goods_id` bigint(20) NOT NULL COMMENT '商品ID',
   `goods_online_time` varchar(32) NOT NULL COMMENT '营业时间',
   `order_type` varchar(32) NOT NULL COMMENT '订购类型，如：免预约',
-  `goods_packages_image_id` bigint(20) NOT NULL COMMENT '套餐图片ID',
-  `goods_packages_detail_id` bigint(20) NOT NULL COMMENT '套餐包详情ID',
-  `goods_packages_notice_id` bigint(20) NOT NULL COMMENT '套餐提示信息ID',
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   KEY `goods_packages_id` (`goods_packages_id`)
@@ -65,7 +62,7 @@ DROP TABLE IF EXISTS `px_goods_packages_detail`;
 
 CREATE TABLE `px_goods_packages_detail` (
   `packages_detail_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '套餐详情子包ID',
-  `goods_packages_detail_id` bigint(20) NOT NULL COMMENT '套餐包详情ID',
+  `goods_packages_id` bigint(20) DEFAULT NULL COMMENT '套餐包ID',
   `package_detail_name` varchar(32) NOT NULL COMMENT '子包名称',
   `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
@@ -80,7 +77,7 @@ DROP TABLE IF EXISTS `px_goods_packages_image`;
 
 CREATE TABLE `px_goods_packages_image` (
   `image_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '图片ID',
-  `goods_packages_image_id` bigint(20) DEFAULT NULL COMMENT '套餐包图片ID',
+  `goods_packages_id` bigint(20) DEFAULT NULL COMMENT '套餐包ID',
   `image` varchar(128) DEFAULT NULL COMMENT '图片地址',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
@@ -95,7 +92,7 @@ DROP TABLE IF EXISTS `px_goods_packages_notice`;
 
 CREATE TABLE `px_goods_packages_notice` (
   `packages_notice_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '套餐包提示子项ID',
-  `goods_packages_notice_id` bigint(20) DEFAULT NULL COMMENT '套餐包提示ID',
+  `goods_packages_id` bigint(20) DEFAULT NULL COMMENT '套餐包ID',
   `packages_notice_name` varchar(32) DEFAULT NULL COMMENT '套餐包子项名称',
   `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
@@ -134,12 +131,14 @@ CREATE TABLE `px_shop` (
   `owner_idcard` varchar(32) NOT NULL COMMENT '店铺主管身份证',
   `shop_status` varchar(32) NOT NULL COMMENT '店铺状态',
   `gmt_expired` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '店铺过期时间',
-  `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`shop_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=gbk;
 
 /*Data for the table `px_shop` */
+
+insert  into `px_shop`(`shop_id`,`shop_name`,`shop_address`,`shop_tel`,`waiter_name`,`owner_name`,`owner_phone`,`owner_idcard`,`shop_status`,`gmt_expired`,`gmt_created`,`gmt_modified`) values (14,'吃香了','大像山镇西关山货市丁家巷1号','09385631212','张君','张君111','15294395456','610121199003127667','PX_SHOP_ONLINE','1970-01-01 08:16:40','2018-07-25 22:57:02','2018-07-25 23:19:25');
 
 /*Table structure for table `px_sub_packages` */
 

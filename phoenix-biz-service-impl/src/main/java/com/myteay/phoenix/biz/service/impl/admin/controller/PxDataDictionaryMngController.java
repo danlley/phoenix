@@ -27,7 +27,7 @@ import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
  * @version $Id: PxDataDictionaryMngController.java, v 0.1 Feb 8, 2018 9:59:00 PM min.weixm Exp $
  */
 @RestController
-@RequestMapping(value = "myteay/api/customer/admin/manage/dic")
+@RequestMapping(value = "myteay/api/phoenix/admin/manage/dic")
 public class PxDataDictionaryMngController {
 
     /** 日志 */
