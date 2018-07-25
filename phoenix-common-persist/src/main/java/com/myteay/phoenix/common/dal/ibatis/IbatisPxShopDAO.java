@@ -54,4 +54,24 @@ public class IbatisPxShopDAO extends SqlSessionDaoSupport implements PxShopDAO {
         return this.getSqlSession().selectOne("PX-SHOP-SELECT-GET-BY-ID", map);
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxShopDAO#updatePxShop(com.myteay.phoenix.common.dal.dataobject.PxShopDO)
+     */
+    @Override
+    public void updatePxShop(PxShopDO pxShopDO) {
+        if (pxShopDO == null) {
+            throw new IllegalArgumentException("Can't update by a null data object.");
+        }
+
+        this.getSqlSession().update("PX-SHOP-UPDATE-GET-BY-ID", pxShopDO);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxShopDAO#deleteById(java.lang.String)
+     */
+    @Override
+    public void deleteById(String shopId) {
+        this.getSqlSession().delete("PX-SHOP-DELETE-GET-BY-ID", shopId);
+    }
+
 }

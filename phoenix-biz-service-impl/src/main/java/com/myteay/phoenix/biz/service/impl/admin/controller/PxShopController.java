@@ -64,6 +64,12 @@ public class PxShopController {
         return result;
     }
 
+    /**
+     * 店铺管理服务（增、删、改、单条查询）
+     * 
+     * @param pxShopModel
+     * @return
+     */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
     public MtServiceResult<PxShopModel> manageShop(@RequestBody PxShopModel pxShopModel) {
 

@@ -18,6 +18,23 @@ import com.myteay.phoenix.core.model.manage.PxShopModel;
 public interface PxShopRepository {
 
     /**
+     * 删除店铺
+     * 
+     * @param pxShopModel
+     * @throws PxManageException 
+     */
+    public void removeShopInfo(PxShopModel pxShopModel) throws PxManageException;
+
+    /**
+     * 修改店铺信息
+     * 
+     * @param pxShopModel
+     * @return
+     * @throws PxManageException 
+     */
+    public PxShopModel modifyShopInfo(PxShopModel pxShopModel) throws PxManageException;
+
+    /**
      * 保存店铺模型
      * 
      * @param pxShopModel

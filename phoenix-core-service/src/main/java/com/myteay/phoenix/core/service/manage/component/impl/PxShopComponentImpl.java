@@ -63,10 +63,11 @@ public class PxShopComponentImpl implements PxShopComponent {
                 result = saveShopModel(pxShopModel);
                 break;
             case PX_MODIFY:
-
+                result = modifyShopModel(pxShopModel);
                 break;
             case PX_DELETE:
                 // 如果店铺已经关联了商品，则不允许进行删除
+                result = deleteShopModel(pxShopModel);
                 break;
             case PX_QUERY_ONE:
                 result = querySingleShop(pxShopModel);
@@ -75,6 +76,44 @@ public class PxShopComponentImpl implements PxShopComponent {
             default:
                 result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_OP_UNKNOW);
                 break;
+        }
+
+        return result;
+    }
+
+    /**
+     * 修改店铺
+     * 
+     * @param pxShopModel
+     * @return
+     */
+    private MtOperateResult<PxShopModel> modifyShopModel(PxShopModel pxShopModel) {
+        MtOperateResult<PxShopModel> result = new MtOperateResult<PxShopModel>();
+        PxShopModel freshPxShopModel = null;
+        try {
+            freshPxShopModel = pxShopRepository.modifyShopInfo(pxShopModel);
+            result.setResult(freshPxShopModel);
+        } catch (PxManageException e) {
+            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
+            result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_UPDATE_FAILD);
+        }
+
+        return result;
+    }
+
+    /**
+     * 删除店铺
+     * 
+     * @param pxShopModel
+     * @return
+     */
+    private MtOperateResult<PxShopModel> deleteShopModel(PxShopModel pxShopModel) {
+        MtOperateResult<PxShopModel> result = new MtOperateResult<PxShopModel>();
+        try {
+            pxShopRepository.removeShopInfo(pxShopModel);
+        } catch (PxManageException e) {
+            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
+            result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_DELETE_FAILD);
         }
 
         return result;
@@ -114,7 +153,7 @@ public class PxShopComponentImpl implements PxShopComponent {
             result.setResult(freshPxShopModel);
         } catch (PxManageException e) {
             logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
-            result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_SAVE_FAILD);
+            result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
         }
 
         return result;

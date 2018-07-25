@@ -56,6 +56,39 @@ public class PxShopRepositoryImpl implements PxShopRepository {
 
     /** 
      * @throws PxManageException 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#removeShopInfo(com.myteay.phoenix.core.model.manage.PxShopModel)
+     */
+    @Override
+    public void removeShopInfo(PxShopModel pxShopModel) throws PxManageException {
+        if (pxShopModel == null) {
+            logger.warn("当前店铺模型不可用，无法删除店铺信息");
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_INVALID);
+        }
+
+        // TODO 删除前，需要检查是否存在商品关联，如果存在，则不允许进行删除
+
+        pxShopDAO.deleteById(pxShopModel.getShopId());
+    }
+
+    /** 
+     * @throws PxManageException 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#modifyShopInfo(com.myteay.phoenix.core.model.manage.PxShopModel)
+     */
+    @Override
+    public PxShopModel modifyShopInfo(PxShopModel pxShopModel) throws PxManageException {
+        PxShopDO pxShopDO = PxShopConvertor.convertModel2DO(pxShopModel);
+
+        // 店铺名称不允许进行修改
+        pxShopDO.setShopName(null);
+
+        pxShopDAO.updatePxShop(pxShopDO);
+
+        PxShopDO freshPxShopDO = pxShopDAO.findPxShopById(pxShopDO.getShopId());
+        return PxShopConvertor.convertDO2Model(freshPxShopDO);
+    }
+
+    /** 
+     * @throws PxManageException 
      * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#findAll()
      */
     @Override

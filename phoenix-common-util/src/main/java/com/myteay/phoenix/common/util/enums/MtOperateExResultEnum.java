@@ -40,6 +40,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_OP_UNKNOW("PX_SHOP_OP_UNKNOW", "00110005", "店铺模型中的操作类型未知"),
 
+                                   PX_SHOP_DELETE_FAILD("PX_SHOP_DELETE_FAILD", "00110006", "店铺信息删除失败"),
+
+                                   PX_SHOP_UPDATE_FAILD("PX_SHOP_UPDATE_FAILD", "00110007", "店铺信息修改失败"),
+
     ;
 
     /** 枚举值 */

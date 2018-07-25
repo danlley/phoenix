@@ -51,11 +51,52 @@
 	    ]]>
     </select>
 
-        <select id="PX-SHOP-SELECT-GET-BY-ID" resultMap="RM-PX-SHOP">
+    <select id="PX-SHOP-SELECT-GET-BY-ID" resultMap="RM-PX-SHOP">
 	    <![CDATA[
 	        select shop_id,shop_name,shop_address,shop_tel,waiter_name,owner_name,owner_phone,owner_idcard,shop_status,gmt_expired,gmt_created,gmt_modified 
 	        from phoenix.px_shop 
 	        where shop_id = #{shopId}
 	    ]]>
     </select>
+    
+    <delete id="PX-SHOP-DELETE-GET-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_shop where (shop_id = #value#)
+	    ]]>
+    </delete>
+    
+    <update id="PX-SHOP-UPDATE-GET-BY-ID">
+        update phoenix.px_shop
+			set
+				<if test="shopName!=null">
+					shop_name = #{shopName},
+				</if>
+				<if test="shopAddress!=null">
+					shop_address = #{shopAddress},
+				</if>
+				<if test="shopTel!=null">
+					shop_tel = #{shopTel},
+				</if>
+				<if test="waiterName!=null">
+					waiter_name = #{waiterName},
+				</if>
+				<if test="ownerName!=null">
+					owner_name = #{ownerName},
+				</if>
+				<if test="ownerPhone!=null">
+					owner_phone = #{ownerPhone},
+				</if>
+				<if test="ownerIdcard!=null">
+					owner_idcard = #{ownerIdcard},
+				</if>
+				<if test="shopStatus!=null">
+					shop_status = #{shopStatus},
+				</if>
+				<if test="gmtExpired!=null">
+					gmt_expired = #{gmtExpired},
+				</if>
+				gmt_modified = now()
+			where
+				shop_id = #{shopId}
+    </update>
 </mapper>

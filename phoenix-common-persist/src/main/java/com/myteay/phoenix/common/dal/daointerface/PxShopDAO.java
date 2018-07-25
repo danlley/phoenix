@@ -38,4 +38,18 @@ public interface PxShopDAO {
      * @return
      */
     PxShopDO findPxShopById(String shopId);
+
+    /**
+     * 更新店铺配置信息
+     * 
+     * @param pxShopDO
+     */
+    void updatePxShop(PxShopDO pxShopDO);
+
+    /**
+     * 通过ID删除店铺信息
+     * 
+     * @param shopId
+     */
+    void deleteById(String shopId);
 }
