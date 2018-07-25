@@ -4,9 +4,7 @@
  */
 package com.myteay.phoenix.common.dal.ibatis;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -48,10 +46,7 @@ public class IbatisPxShopDAO extends SqlSessionDaoSupport implements PxShopDAO {
      */
     @Override
     public PxShopDO findPxShopById(String shopId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("shopId", shopId);
-
-        return this.getSqlSession().selectOne("PX-SHOP-SELECT-GET-BY-ID", map);
+        return this.getSqlSession().selectOne("PX-SHOP-SELECT-GET-BY-ID", shopId);
     }
 
     /** 

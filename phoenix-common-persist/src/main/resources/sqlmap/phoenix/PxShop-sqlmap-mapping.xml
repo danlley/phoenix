@@ -55,13 +55,13 @@
 	    <![CDATA[
 	        select shop_id,shop_name,shop_address,shop_tel,waiter_name,owner_name,owner_phone,owner_idcard,shop_status,gmt_expired,gmt_created,gmt_modified 
 	        from phoenix.px_shop 
-	        where shop_id = #{shopId}
+	        where (shop_id = #{value})
 	    ]]>
     </select>
     
     <delete id="PX-SHOP-DELETE-GET-BY-ID">
 	    <![CDATA[
-	        delete from phoenix.px_shop where (shop_id = #value#)
+	        delete from phoenix.px_shop where (shop_id = #{value})
 	    ]]>
     </delete>
     
