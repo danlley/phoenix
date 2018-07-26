@@ -67,7 +67,7 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
             logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
-            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
         }
 
         return result;
@@ -87,7 +87,7 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
             logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
-            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_UPDATE_FAILD);
+            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
         }
 
         return result;
@@ -105,7 +105,7 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             pxGoodsRepository.removeGoodsInfo(pxGoodsModel);
         } catch (PxManageException e) {
             logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
-            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_DELETE_FAILD);
+            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
         }
 
         return result;
@@ -125,7 +125,7 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
             logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
-            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_SAVE_FAILD);
+            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_SAVE_FAILD);
         }
 
         return result;

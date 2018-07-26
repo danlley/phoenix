@@ -18,9 +18,8 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
-import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
-import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 
 /**
  * 商品摘要管理
@@ -33,7 +32,7 @@ import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
 public class PxGoodsController {
 
     /** 日志 */
-    public static final Logger      logger = Logger.getLogger(PxShopController.class);
+    public static final Logger      logger = Logger.getLogger(PxGoodsController.class);
 
     /** 后台一般性简单业务管理组件 */
     @Autowired
@@ -41,10 +40,10 @@ public class PxGoodsController {
 
     /** 后台一般性简单业务管理组件 */
     @Autowired
-    private PxShopComponent         pxShopComponent;
+    private PxGoodsComponent        pxGoodsComponent;
 
     /**
-     * 查询所有店铺信息
+     * 查询所有商品概要信息
      * 
      * @return
      */
@@ -66,24 +65,24 @@ public class PxGoodsController {
     }
 
     /**
-     * 店铺管理服务（增、删、改、单条查询）
+     * 商品概要管理服务（增、删、改、单条查询）
      * 
      * @param pxShopModel
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxShopModel> manageShop(@RequestBody PxShopModel pxShopModel) {
+    public MtServiceResult<PxGoodsModel> manageGoods(@RequestBody PxGoodsModel pxGoodsModel) {
 
         if (logger.isInfoEnabled()) {
-            logger.info("开始保存店铺信息 pxShopModel=" + pxShopModel);
+            logger.info("开始保存商品概要信息 pxGoodsModel=" + pxGoodsModel);
         }
-        MtServiceResult<PxShopModel> result = null;
+        MtServiceResult<PxGoodsModel> result = null;
         try {
-            MtOperateResult<PxShopModel> innerResult = pxShopComponent.manageShop(pxShopModel);
+            MtOperateResult<PxGoodsModel> innerResult = pxGoodsComponent.manageGoods(pxGoodsModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
-            logger.warn("保存店铺信息发生异常" + e.getMessage(), e);
+            logger.warn("保存商品概要信息发生异常" + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
@@ -100,11 +99,12 @@ public class PxGoodsController {
     }
 
     /**
-     * Setter method for property <tt>pxShopComponent</tt>.
+     * Setter method for property <tt>pxGoodsComponent</tt>.
      * 
-     * @param pxShopComponent value to be assigned to property pxShopComponent
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
      */
-    public void setPxShopComponent(PxShopComponent pxShopComponent) {
-        this.pxShopComponent = pxShopComponent;
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
     }
+
 }

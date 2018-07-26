@@ -23,8 +23,8 @@
     <resultMap id="RM-PX-GOODS" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
         <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="shopName" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="goodsImage" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsImage" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -80,6 +80,9 @@
     <update id="PX-GOODS-UPDATE-GET-BY-ID">
         update phoenix.px_goods
 			set
+				<if test="goodsSellAmount!=null">
+					goods_sell_amount = #{goodsSellAmount},
+				</if>
 				<if test="goodsImage!=null">
 					goods_image = #{goodsImage},
 				</if>

@@ -50,6 +50,14 @@ public enum MtOperateExResultEnum {
 
                                    PX_TEMPLATE_OP_UNKNOW("PX_TEMPLATE_OP_UNKNOW", "00110010", "处理模板操作类型未知"),
 
+                                   PX_GOODS_QUERY_FAILD("PX_GOODS_QUERY_FAILD", "00110011", "商品概要信息查询失败"),
+
+                                   PX_GOODS_UPDATE_FAILD("PX_GOODS_UPDATE_FAILD", "00110012", "商品概要信息修改失败"),
+
+                                   PX_GOODS_DELETE_FAILD("PX_GOODS_DELETE_FAILD", "00110013", "商品概要信息删除失败"),
+
+                                   PX_GOODS_SAVE_FAILD("PX_GOODS_SAVE_FAILD", "00110014", "商品概要信息保存失败"),
+
     ;
 
     /** 枚举值 */
