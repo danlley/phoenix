@@ -12,7 +12,9 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 
@@ -30,6 +32,9 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     /** 店铺管理仓储 */
     private PxShopRepository   pxShopRepository;
 
+    /** 商品摘要管理仓储 */
+    private PxGoodsRepository  pxGoodsRepository;
+
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryShopAll()
      */
@@ -42,7 +47,24 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("店铺信息查询发生异常", e);
-            result = new MtOperateResult<List<PxShopModel>>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+        }
+        return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryGoodsAll()
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsModel>> queryGoodsAll() {
+        List<PxGoodsModel> list = null;
+        MtOperateResult<List<PxGoodsModel>> result = new MtOperateResult<>();
+        try {
+            list = pxGoodsRepository.findAll();
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("商品摘要信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
         }
         return result;
     }
@@ -54,6 +76,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
      */
     public void setPxShopRepository(PxShopRepository pxShopRepository) {
         this.pxShopRepository = pxShopRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
     }
 
 }

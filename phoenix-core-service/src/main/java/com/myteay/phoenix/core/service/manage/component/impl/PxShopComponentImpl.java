@@ -14,6 +14,8 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
+import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
+import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
 
 /**
  * 店铺管理组件
@@ -24,10 +26,13 @@ import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
 public class PxShopComponentImpl implements PxShopComponent {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxShopComponentImpl.class);
+    public static final Logger               logger = Logger.getLogger(PxShopComponentImpl.class);
 
     /** 店铺管理仓储 */
-    private PxShopRepository   pxShopRepository;
+    private PxShopRepository                 pxShopRepository;
+
+    /** 后台管理业务处理分流模板 */
+    private PxCommonMngTemplate<PxShopModel> pxCommonMngTemplate;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxShopComponent#manageShop(com.myteay.phoenix.core.model.manage.PxShopModel)
@@ -56,29 +61,40 @@ public class PxShopComponentImpl implements PxShopComponent {
      */
     private MtOperateResult<PxShopModel> switchOperation(PxShopModel pxShopModel, PxOperationTypeEnum operationType) {
 
-        MtOperateResult<PxShopModel> result = null;
+        return pxCommonMngTemplate.switchOperation(pxShopModel, operationType, new PxCommonCallback<PxShopModel>() {
 
-        switch (operationType) {
-            case PX_ADD:
-                result = saveShopModel(pxShopModel);
-                break;
-            case PX_MODIFY:
-                result = modifyShopModel(pxShopModel);
-                break;
-            case PX_DELETE:
-                // 如果店铺已经关联了商品，则不允许进行删除
-                result = deleteShopModel(pxShopModel);
-                break;
-            case PX_QUERY_ONE:
-                result = querySingleShop(pxShopModel);
-                break;
+            /** 
+             * @see com.myteay.phoenix.core.service.manage.template.PxCommonCallback#querySingleModel(java.lang.Object)
+             */
+            @Override
+            public MtOperateResult<PxShopModel> querySingleModel(PxShopModel t) {
+                return querySingleShop(pxShopModel);
+            }
 
-            default:
-                result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_OP_UNKNOW);
-                break;
-        }
+            /** 
+             * @see com.myteay.phoenix.core.service.manage.template.PxCommonCallback#modifyModel(java.lang.Object)
+             */
+            @Override
+            public MtOperateResult<PxShopModel> modifyModel(PxShopModel t) {
+                return modifyShopModel(pxShopModel);
+            }
 
-        return result;
+            /** 
+             * @see com.myteay.phoenix.core.service.manage.template.PxCommonCallback#deleteModel(java.lang.Object)
+             */
+            @Override
+            public MtOperateResult<PxShopModel> deleteModel(PxShopModel t) {
+                return deleteShopModel(pxShopModel);
+            }
+
+            /** 
+             * @see com.myteay.phoenix.core.service.manage.template.PxCommonCallback#addModel(java.lang.Object)
+             */
+            @Override
+            public MtOperateResult<PxShopModel> addModel(PxShopModel t) {
+                return saveShopModel(pxShopModel);
+            }
+        });
     }
 
     /**
@@ -157,6 +173,15 @@ public class PxShopComponentImpl implements PxShopComponent {
         }
 
         return result;
+    }
+
+    /**
+     * Setter method for property <tt>pxCommonMngTemplate</tt>.
+     * 
+     * @param pxCommonMngTemplate value to be assigned to property pxCommonMngTemplate
+     */
+    public void setPxCommonMngTemplate(PxCommonMngTemplate<PxShopModel> pxCommonMngTemplate) {
+        this.pxCommonMngTemplate = pxCommonMngTemplate;
     }
 
     /**

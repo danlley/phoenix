@@ -15,9 +15,9 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
-import com.myteay.phoenix.core.model.manage.PxShopModel;
-import com.myteay.phoenix.core.model.manage.convertor.PxShopConvertor;
+import com.myteay.phoenix.core.model.manage.convertor.PxGoodsConvertor;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
+import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 
 /**
  * 商品概要管理仓储
@@ -52,7 +52,12 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
      */
     @Override
     public PxGoodsModel modifyGoodsInfo(PxGoodsModel pxGoodsModel) throws PxManageException {
-        return null;
+        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel);
+
+        pxGoodsDAO.updatePxGoods(pxGoodsDO);
+
+        PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(pxGoodsDO.getShopId());
+        return PxGoodsConvertor.convertDO2Model(freshPxGoodsDO);
     }
 
     /** 
@@ -60,7 +65,19 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
      */
     @Override
     public PxGoodsModel saveGoodsInfo(PxGoodsModel pxGoodsModel) throws PxManageException {
-        return null;
+        if (pxGoodsModel == null) {
+            logger.warn("当前店铺模型不可用，无法保存店铺信息");
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
+        }
+
+        PxManageValidateTool.validatePxGoodsModel(pxGoodsModel);
+
+        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel);
+        String goodsId = pxGoodsDAO.insert(pxGoodsDO);
+
+        PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(goodsId);
+
+        return PxGoodsConvertor.convertDO2Model(freshPxGoodsDO);
     }
 
     /** 
@@ -71,11 +88,11 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
         List<PxGoodsDO> list = pxGoodsDAO.findPxGoodsAll();
 
         List<PxGoodsModel> modelList = new ArrayList<>();
-        PxShopModel pxShopModel = null;
+        PxGoodsModel pxGoodsModel = null;
         for (PxGoodsDO pxGoodsDO : list) {
-            pxShopModel = PxShopConvertor.convertDO2Model(pxShopDO);
-            if (pxShopModel != null) {
-                modelList.add(pxShopModel);
+            pxGoodsModel = PxGoodsConvertor.convertDO2Model(pxGoodsDO);
+            if (pxGoodsModel != null) {
+                modelList.add(pxGoodsModel);
             }
         }
 
@@ -87,7 +104,8 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
      */
     @Override
     public PxGoodsModel findSingleGoods(String goodsId) throws PxManageException {
-        return null;
+        PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(goodsId);
+        return PxGoodsConvertor.convertDO2Model(freshPxGoodsDO);
     }
 
     /**

@@ -17,6 +17,10 @@
 	
 	<bean id="pxShopComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxShopComponentImpl"></bean>
 	
+	<bean id="pxGoodsComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxGoodsComponentImpl"></bean>
+	
+	<bean id="pxCommonMngTemplate" class="com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplateImpl"></bean>
+	
 	<!-- 店铺配置信息变更监听器 -->
 	<bean id="pxShopEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxShopEventListener">
 		<property name="descriptor">

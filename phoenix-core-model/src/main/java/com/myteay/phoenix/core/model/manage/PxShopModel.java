@@ -49,7 +49,7 @@ public class PxShopModel implements Serializable {
     /** 店铺状态 */
     private PxShopStatusEnum    shopStatus;
 
-    /** 店铺状态 */
+    /** 操作类型 */
     private PxOperationTypeEnum operationType;
 
     /** 过期时间 */

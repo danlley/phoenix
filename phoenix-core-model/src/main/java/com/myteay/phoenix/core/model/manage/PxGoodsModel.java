@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
@@ -60,6 +61,9 @@ public class PxGoodsModel implements Serializable {
     /** 是否团购 */
     private PxGoodsTuanEnum      isTuan;
 
+    /** 操作类型 */
+    private PxOperationTypeEnum  operationType;
+
     /** 当前销售量 */
     private String               goodsSellAmount;
 
@@ -71,6 +75,24 @@ public class PxGoodsModel implements Serializable {
 
     /** 最后修改时间 */
     private Date                 gmtModified;
+
+    /**
+     * Getter method for property <tt>operationType</tt>.
+     * 
+     * @return property value of operationType
+     */
+    public PxOperationTypeEnum getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Setter method for property <tt>operationType</tt>.
+     * 
+     * @param operationType value to be assigned to property operationType
+     */
+    public void setOperationType(PxOperationTypeEnum operationType) {
+        this.operationType = operationType;
+    }
 
     /**
      * Getter method for property <tt>goodsId</tt>.

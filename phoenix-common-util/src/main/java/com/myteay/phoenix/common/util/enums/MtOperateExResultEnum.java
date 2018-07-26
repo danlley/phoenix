@@ -48,6 +48,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_MODEL_ERR("PX_GOODS_MODEL_ERR", "00110009", "商品概要关键信息不可用"),
 
+                                   PX_TEMPLATE_OP_UNKNOW("PX_TEMPLATE_OP_UNKNOW", "00110010", "处理模板操作类型未知"),
+
     ;
 
     /** 枚举值 */

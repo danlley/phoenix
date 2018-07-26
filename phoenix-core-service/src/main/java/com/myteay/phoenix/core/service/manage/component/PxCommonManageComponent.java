@@ -7,6 +7,7 @@ package com.myteay.phoenix.core.service.manage.component;
 import java.util.List;
 
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 
 /**
@@ -23,4 +24,11 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxShopModel>> queryShopAll();
+
+    /**
+     * 查询所有商品摘要模型
+     * 
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsModel>> queryGoodsAll();
 }
