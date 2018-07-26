@@ -7,10 +7,12 @@ package com.myteay.phoenix.core.model.manage.tools;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 
 /**
@@ -23,6 +25,30 @@ public class PxManageValidateTool {
 
     /** 日志 */
     public static final Logger logger = Logger.getLogger(PxManageValidateTool.class);
+
+    /**
+     * 检查商品概要模型合法性
+     * 
+     * @param pxGoodsModel
+     */
+    public static void validatePxGoodsModel(PxGoodsModel pxGoodsModel) throws PxManageException {
+        if (StringUtils.isBlank() || ) {
+            logger.warn("商品概要模型关键信息不可用 pxGoodsModel=" + pxGoodsModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查商品概要数据模型合法性
+     * 
+     * @param pxGoodsDO
+     */
+    public static void validatePxGoodsDO(PxGoodsDO pxGoodsDO) throws PxManageException {
+        if (StringUtils.isBlank() || ) {
+            logger.warn("商品概要数据模型关键信息不可用 pxGoodsDO=" + pxGoodsDO);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_ERR);
+        }
+    }
 
     /**
      * 检查店铺模型合法性

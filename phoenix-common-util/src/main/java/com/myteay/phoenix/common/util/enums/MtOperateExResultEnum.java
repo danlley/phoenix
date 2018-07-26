@@ -30,7 +30,7 @@ public enum MtOperateExResultEnum {
                                    CAMP_DATA_DIC_NOT_FOUND("CAMP_DATA_DIC_NOT_FOUND", "00014001", "数据字典信息未找到"),
 
                                    //----------------          基本扩展结果信息信息          ----------------
-                                   PX_SHOP_MODEL_INVALID("PX_SHOP_MODEL_INVALID", "00110001", "当前店铺模型不可用，无法保存店铺信息"),
+                                   PX_SHOP_MODEL_INVALID("PX_SHOP_MODEL_INVALID", "00110001", "当前店铺模型非法"),
 
                                    PX_SHOP_MODEL_ERR("PX_SHOP_MODEL_ERR", "00110002", "店铺关键信息不可用"),
 
@@ -43,6 +43,10 @@ public enum MtOperateExResultEnum {
                                    PX_SHOP_DELETE_FAILD("PX_SHOP_DELETE_FAILD", "00110006", "店铺信息删除失败"),
 
                                    PX_SHOP_UPDATE_FAILD("PX_SHOP_UPDATE_FAILD", "00110007", "店铺信息修改失败"),
+
+                                   PX_GOODS_MODEL_INVALID("PX_GOODS_MODEL_INVALID", "00110008", "当前商品概要模型非法"),
+
+                                   PX_GOODS_MODEL_ERR("PX_GOODS_MODEL_ERR", "00110009", "商品概要关键信息不可用"),
 
     ;
 

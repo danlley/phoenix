@@ -45,7 +45,7 @@
 		    order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 		)values(
 		    #{shopId},#{goodsImage},#{goodsTitle},#{goodsDesc},#{goodsPrice},#{goodsCommPrice},#{goodsOnlineTime},
-		    #{orderType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},#{gmtCreated},#{gmtModified}
+		    #{orderType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="goodsId">  
 	    SELECT LAST_INSERT_ID()  

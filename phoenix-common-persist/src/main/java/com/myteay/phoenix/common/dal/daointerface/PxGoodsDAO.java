@@ -28,7 +28,7 @@ public interface PxGoodsDAO {
      * 
      * @return
      */
-    List<PxGoodsDO> findPxShopAll();
+    List<PxGoodsDO> findPxGoodsAll();
 
     /**
      * 通过商品概要ID查询指定的商品概要信息
@@ -36,14 +36,14 @@ public interface PxGoodsDAO {
      * @param goodsId
      * @return
      */
-    PxGoodsDO findPxShopById(String goodsId);
+    PxGoodsDO findPxGoodsById(String goodsId);
 
     /**
      * 更新商品概要配置信息
      * 
      * @param pxGoodsDO
      */
-    void updatePxShop(PxGoodsDO pxGoodsDO);
+    void updatePxGoods(PxGoodsDO pxGoodsDO);
 
     /**
      * 通过ID删除商品概要信息

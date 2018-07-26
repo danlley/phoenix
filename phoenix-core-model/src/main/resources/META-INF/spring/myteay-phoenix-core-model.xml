@@ -12,4 +12,6 @@
 	default-autowire="byName">
 	
 	<bean id="pxShopRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxShopRepositoryImpl"></bean>
+	
+	<bean id="pxGoodsRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsRepositoryImpl"></bean>
 </beans>

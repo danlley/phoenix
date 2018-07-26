@@ -30,30 +30,30 @@ public class IbatisPxGoodsDAO extends SqlSessionDaoSupport implements PxGoodsDAO
 
         this.getSqlSession().insert("PX-GOODS-INSERT", pxGoodsDO);
 
-        return pxGoodsDO.getShopId();
+        return pxGoodsDO.getGoodsId();
     }
 
     /** 
-     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopAll()
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxGoodsAll()
      */
     @Override
-    public List<PxGoodsDO> findPxShopAll() {
+    public List<PxGoodsDO> findPxGoodsAll() {
         return this.getSqlSession().selectList("PX-GOODS-SELECT-ALL");
     }
 
     /** 
-     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopById(java.lang.String)
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxGoodsById(java.lang.String)
      */
     @Override
-    public PxGoodsDO findPxShopById(String goodsId) {
+    public PxGoodsDO findPxGoodsById(String goodsId) {
         return this.getSqlSession().selectOne("PX-GOODS-SELECT-GET-BY-ID", goodsId);
     }
 
     /** 
-     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#updatePxShop(com.myteay.phoenix.common.dal.dataobject.PxGoodsDO)
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#updatePxGoods(com.myteay.phoenix.common.dal.dataobject.PxGoodsDO)
      */
     @Override
-    public void updatePxShop(PxGoodsDO pxGoodsDO) {
+    public void updatePxGoods(PxGoodsDO pxGoodsDO) {
         if (pxGoodsDO == null) {
             throw new IllegalArgumentException("Can't update by a null data object.");
         }
