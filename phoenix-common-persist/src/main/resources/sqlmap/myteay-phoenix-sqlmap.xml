@@ -3,5 +3,6 @@
 <configuration>
 	<mappers>
 		<mapper resource="sqlmap/phoenix/PxShop-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/phoenix/PxGoods-sqlmap-mapping.xml"/>
 	</mappers>
 </configuration>

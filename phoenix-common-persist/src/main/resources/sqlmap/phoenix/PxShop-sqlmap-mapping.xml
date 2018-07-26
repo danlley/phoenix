@@ -16,7 +16,7 @@
 <!-- @author Wei Xiaomin                                                           -->
 <!-- ============================================================================= -->
 
-<mapper namespace="com.myteay.customer.common.dal.dataobject.FatigeConfigDAO">
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxShopDAO">
     <!-- ============================================= -->
     <!-- mapped statements for IbatisUsersInfoDAO -->
     <!-- ============================================= -->

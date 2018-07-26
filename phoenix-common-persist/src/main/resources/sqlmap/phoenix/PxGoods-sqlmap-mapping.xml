@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopName" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsImage" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsOnlineTime" column="goods_online_time" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="orderType" column="order_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isHuiyuan" column="is_huiyuan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isQuan" column="is_quan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isTuan" column="is_tuan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsSellAmount" column="goods_sell_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="gmtExpired" column="gmt_expired" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="PX-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxShopDO">
+		insert into phoenix.px_goods (
+		    shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+		    order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+		)values(
+		    #{shopId},#{goodsImage},#{goodsTitle},#{goodsDesc},#{goodsPrice},#{goodsCommPrice},#{goodsOnlineTime},
+		    #{orderType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},#{gmtCreated},#{gmtModified}
+		) ;
+	  <selectKey resultType="java.lang.String" keyProperty="goodsId">  
+	    SELECT LAST_INSERT_ID()  
+	  </selectKey>
+    </insert>
+
+    <select id="PX-GOODS-SELECT-ALL" resultMap="RM-PX-GOODS">
+	    <![CDATA[
+	        select
+	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        from phoenix.px_goods order by gmt_modified desc
+	    ]]>
+    </select>
+
+    <select id="PX-GOODS-SELECT-GET-BY-ID" resultMap="RM-PX-GOODS">
+	    <![CDATA[
+	        select
+	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        from phoenix.px_goods 
+	        where (goods_id = #{value})
+	    ]]>
+    </select>
+    
+    <delete id="PX-GOODS-DELETE-GET-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_goods where (goods_id = #{value})
+	    ]]>
+    </delete>
+    
+    <update id="PX-GOODS-UPDATE-GET-BY-ID">
+        update phoenix.px_goods
+			set
+				<if test="goodsImage!=null">
+					goods_image = #{goodsImage},
+				</if>
+				<if test="goodsTitle!=null">
+					goods_title = #{goodsTitle},
+				</if>
+				<if test="goodsDesc!=null">
+					goods_desc = #{goodsDesc},
+				</if>
+				<if test="goodsPrice!=null">
+					goods_price = #{goodsPrice},
+				</if>
+				<if test="goodsCommPrice!=null">
+					goods_comm_price = #{goodsCommPrice},
+				</if>
+				<if test="goodsOnlineTime!=null">
+					goods_online_time = #{goodsOnlineTime},
+				</if>
+				<if test="orderType!=null">
+					order_type = #{orderType},
+				</if>
+				<if test="isHuiyuan!=null">
+					is_huiyuan = #{isHuiyuan},
+				</if>
+				<if test="isQuan!=null">
+					is_quan = #{isQuan},
+				</if>
+				<if test="isTuan!=null">
+					is_tuan = #{isTuan},
+				</if>
+				<if test="gmtExpired!=null">
+					gmt_expired = #{gmtExpired},
+				</if>
+				gmt_modified = now()
+			where
+				goods_id = #{goodsId}
+    </update>
+</mapper>

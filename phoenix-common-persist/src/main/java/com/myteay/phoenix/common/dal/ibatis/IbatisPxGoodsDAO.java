@@ -1,0 +1,72 @@
+/**
+ * Myteay.com Inc.
+ * Copyright (c) 2015-2018 All Rights Reserved.
+ */
+package com.myteay.phoenix.common.dal.ibatis;
+
+import java.util.List;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
+import com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO;
+import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
+
+/**
+ * 商品概要操作DAO
+ * 
+ * @author min.weixm
+ * @version $Id: IbatisPxGoodsDAO.java, v 0.1 Jul 26, 2018 10:36:48 AM min.weixm Exp $
+ */
+public class IbatisPxGoodsDAO extends SqlSessionDaoSupport implements PxGoodsDAO {
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#insert(com.myteay.phoenix.common.dal.dataobject.PxGoodsDO)
+     */
+    @Override
+    public String insert(PxGoodsDO pxGoodsDO) {
+        if (pxGoodsDO == null) {
+            throw new IllegalArgumentException("Can't insert a null data object into db.");
+        }
+
+        this.getSqlSession().insert("PX-GOODS-INSERT", pxGoodsDO);
+
+        return pxGoodsDO.getShopId();
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopAll()
+     */
+    @Override
+    public List<PxGoodsDO> findPxShopAll() {
+        return this.getSqlSession().selectList("PX-GOODS-SELECT-ALL");
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopById(java.lang.String)
+     */
+    @Override
+    public PxGoodsDO findPxShopById(String goodsId) {
+        return this.getSqlSession().selectOne("PX-GOODS-SELECT-GET-BY-ID", goodsId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#updatePxShop(com.myteay.phoenix.common.dal.dataobject.PxGoodsDO)
+     */
+    @Override
+    public void updatePxShop(PxGoodsDO pxGoodsDO) {
+        if (pxGoodsDO == null) {
+            throw new IllegalArgumentException("Can't update by a null data object.");
+        }
+
+        this.getSqlSession().update("PX-GOODS-UPDATE-GET-BY-ID", pxGoodsDO);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#deleteById(java.lang.String)
+     */
+    @Override
+    public void deleteById(String goodsId) {
+        this.getSqlSession().delete("PX-GOODS-DELETE-GET-BY-ID", goodsId);
+    }
+
+}
