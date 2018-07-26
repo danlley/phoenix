@@ -6,18 +6,20 @@ package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 优惠券类型枚举
  * 
  * @author min.weixm
  * @version $Id: PxGoodsOrderTypeEnum.java, v 0.1 Jul 26, 2018 11:21:20 AM min.weixm Exp $
  */
-public enum PxGoodsOrderTypeEnum {
-                                  PX_NON_APPOINTMENT("PX_NON_APPOINTMENT", "免预约"),
+public enum PxGoodsOrderTypeEnum implements EnumMessage {
+                                                         PX_NON_APPOINTMENT("PX_NON_APPOINTMENT", "免预约"),
 
-                                  PX_NEED_APPOINTMENT("PX_NEED_APPOINTMENT", "需要预约"),
+                                                         PX_NEED_APPOINTMENT("PX_NEED_APPOINTMENT", "需要预约"),
 
-                                  PX_NOTHING("PX_NOTHING", "无"),
+                                                         PX_NOTHING("PX_NOTHING", "无"),
 
     ;
 

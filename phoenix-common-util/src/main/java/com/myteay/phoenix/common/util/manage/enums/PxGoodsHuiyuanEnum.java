@@ -6,16 +6,18 @@ package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 是否支持会员类型枚举
  * 
  * @author min.weixm
  * @version $Id: PxGoodsHuiyuanEnum.java, v 0.1 Jul 26, 2018 11:21:20 AM min.weixm Exp $
  */
-public enum PxGoodsHuiyuanEnum {
-                                PX_SUPPORT_HUIYUAN("PX_SUPPORT_HUIYUAN", "仅支持会员"),
+public enum PxGoodsHuiyuanEnum implements EnumMessage {
+                                                       PX_SUPPORT_HUIYUAN("PX_SUPPORT_HUIYUAN", "仅支持会员"),
 
-                                PX_UNSUPPORT_HUIYUAN("PX_UNSUPPORT_HUIYUAN", "全员通用"),
+                                                       PX_UNSUPPORT_HUIYUAN("PX_UNSUPPORT_HUIYUAN", "全员通用"),
 
     ;
 

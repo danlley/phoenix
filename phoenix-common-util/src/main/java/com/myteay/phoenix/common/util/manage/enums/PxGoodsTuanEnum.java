@@ -6,16 +6,18 @@ package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 团购类型枚举
  * 
  * @author min.weixm
  * @version $Id: PxGoodsTuanEnum.java, v 0.1 Jul 26, 2018 11:21:20 AM min.weixm Exp $
  */
-public enum PxGoodsTuanEnum {
-                             PX_HAS_TUAN("PX_HAS_TUAN", "支持团购"),
+public enum PxGoodsTuanEnum implements EnumMessage {
+                                                    PX_HAS_TUAN("PX_HAS_TUAN", "支持团购"),
 
-                             PX_UNHAS_TUAN("PX_UNHAS_TUAN", "不支持团购"),
+                                                    PX_UNHAS_TUAN("PX_UNHAS_TUAN", "不支持团购"),
 
     ;
 

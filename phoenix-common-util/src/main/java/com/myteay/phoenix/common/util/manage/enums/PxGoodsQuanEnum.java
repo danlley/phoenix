@@ -6,16 +6,18 @@ package com.myteay.phoenix.common.util.manage.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 优惠券类型枚举
  * 
  * @author min.weixm
  * @version $Id: PxGoodsQuanEnum.java, v 0.1 Jul 26, 2018 11:21:20 AM min.weixm Exp $
  */
-public enum PxGoodsQuanEnum {
-                             PX_HAS_QUAN("PX_HAS_QUAN", "支持优惠券"),
+public enum PxGoodsQuanEnum implements EnumMessage {
+                                                    PX_HAS_QUAN("PX_HAS_QUAN", "支持优惠券"),
 
-                             PX_UNHAS_QUAN("PX_UNHAS_QUAN", "不支持优惠券"),
+                                                    PX_UNHAS_QUAN("PX_UNHAS_QUAN", "不支持优惠券"),
 
     ;
 

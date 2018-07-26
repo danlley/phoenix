@@ -19,6 +19,10 @@ import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.common.util.tools.EnumUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
@@ -72,6 +76,18 @@ public class PxDataDictionaryComponentImpl implements PxDataDictionaryComponent,
 
         list = EnumUtil.getDataDictionaryModelFromEnum(PxShopStatusEnum.class);
         DATA_DIC_CACHE.put("PxShopStatusEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsHuiyuanEnum.class);
+        DATA_DIC_CACHE.put("PxGoodsHuiyuanEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsOrderTypeEnum.class);
+        DATA_DIC_CACHE.put("PxGoodsOrderTypeEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsQuanEnum.class);
+        DATA_DIC_CACHE.put("PxGoodsQuanEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsTuanEnum.class);
+        DATA_DIC_CACHE.put("PxGoodsTuanEnum", list);
 
         logger.warn("缓存初始化结果： " + DATA_DIC_CACHE);
     }
