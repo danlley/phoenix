@@ -74,7 +74,7 @@
     <update id="PX-PACKAGE-DETAIL-UPDATE-BY-ID">
         update phoenix.px_goods_packages_detail
 			set
-				packageDetailName = #{packageDetailName},
+				package_detail_name = #{packageDetailName},
 				gmt_modified = now()
 			where
 				packages_detail_id = #{packagesDetailId}

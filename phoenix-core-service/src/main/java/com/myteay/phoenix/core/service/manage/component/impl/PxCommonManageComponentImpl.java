@@ -13,7 +13,9 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
@@ -27,13 +29,48 @@ import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxCommonManageComponentImpl.class);
+    public static final Logger              logger = Logger.getLogger(PxCommonManageComponentImpl.class);
 
     /** 店铺管理仓储 */
-    private PxShopRepository   pxShopRepository;
+    private PxShopRepository                pxShopRepository;
 
     /** 商品摘要管理仓储 */
-    private PxGoodsRepository  pxGoodsRepository;
+    private PxGoodsRepository               pxGoodsRepository;
+
+    /** 套餐包仓储 */
+    private PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesDetailListByGoodsId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListByGoodsId(String goodsId) {
+        MtOperateResult<List<PxGoodsPackagesDetailModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsPackagesDetailModel> list = pxGoodsPackagesDetailRepository.findGoodsPackagesDetailByGoodsId(goodsId);
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("套餐包信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+        }
+        return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesDetailListAll()
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListAll() {
+        MtOperateResult<List<PxGoodsPackagesDetailModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsPackagesDetailModel> list = pxGoodsPackagesDetailRepository.findAll();
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("套餐包信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+        }
+        return result;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryGoodsListByShopId(java.lang.String)
@@ -83,6 +120,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
         }
         return result;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesDetailRepository</tt>.
+     * 
+     * @param pxGoodsPackagesDetailRepository value to be assigned to property pxGoodsPackagesDetailRepository
+     */
+    public void setPxGoodsPackagesDetailRepository(PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository) {
+        this.pxGoodsPackagesDetailRepository = pxGoodsPackagesDetailRepository;
     }
 
     /**

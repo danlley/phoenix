@@ -66,7 +66,7 @@ public class IbatisPxGoodsPackageDetailDAO extends SqlSessionDaoSupport implemen
             throw new IllegalArgumentException("Can't update by a null data object.");
         }
 
-        this.getSqlSession().update("PX-GOODS-PACKAGE-DETAIL-DELETE-BY-ID", pxGoodsPackageDetailDO);
+        this.getSqlSession().update("PX-PACKAGE-DETAIL-UPDATE-BY-ID", pxGoodsPackageDetailDO);
     }
 
     /** 
@@ -74,7 +74,7 @@ public class IbatisPxGoodsPackageDetailDAO extends SqlSessionDaoSupport implemen
      */
     @Override
     public void deleteById(String packagesDetailId) {
-        this.getSqlSession().delete("PX-GOODS-DELETE-GET-BY-ID", packagesDetailId);
+        this.getSqlSession().delete("PX-GOODS-PACKAGE-DETAIL-DELETE-BY-ID", packagesDetailId);
     }
 
 }
