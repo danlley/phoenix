@@ -11,5 +11,7 @@
 	
 	<bean id="pxShopDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxShopDAO"/>
 	
+	<bean id="pxGoodsPackageDetailDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackageDetailDAO"/>
+	
 	<bean id="pxGoodsDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsDAO"/>
 </beans>
