@@ -36,6 +36,22 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     private PxGoodsRepository  pxGoodsRepository;
 
     /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryGoodsListByShopId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsModel>> queryGoodsListByShopId(String shopId) {
+        MtOperateResult<List<PxGoodsModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsModel> list = pxGoodsRepository.findGoodsByShopId(shopId);
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("店铺信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+        }
+        return result;
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryShopAll()
      */
     @Override

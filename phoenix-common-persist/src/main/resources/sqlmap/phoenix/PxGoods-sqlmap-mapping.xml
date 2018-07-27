@@ -70,6 +70,16 @@
 	        where (goods_id = #{value})
 	    ]]>
     </select>
+
+    <select id="PX-GOODS-SELECT-GET-BY-SHOP-ID" resultMap="RM-PX-GOODS">
+	    <![CDATA[
+	        select
+	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        from phoenix.px_goods 
+	        where (shop_id = #{value})
+	    ]]>
+    </select>
     
     <delete id="PX-GOODS-DELETE-GET-BY-ID">
 	    <![CDATA[

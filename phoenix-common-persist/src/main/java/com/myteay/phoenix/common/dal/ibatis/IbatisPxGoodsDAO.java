@@ -69,4 +69,12 @@ public class IbatisPxGoodsDAO extends SqlSessionDaoSupport implements PxGoodsDAO
         this.getSqlSession().delete("PX-GOODS-DELETE-GET-BY-ID", goodsId);
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxGoodsByShopId(java.lang.String)
+     */
+    @Override
+    public List<PxGoodsDO> findPxGoodsByShopId(String shopId) {
+        return this.getSqlSession().selectList("PX-GOODS-SELECT-GET-BY-SHOP-ID", shopId);
+    }
+
 }

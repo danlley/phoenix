@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,6 +55,29 @@ public class PxGoodsController {
         MtOperateResult<List<PxGoodsModel>> componentResult = null;
         try {
             componentResult = pxCommonManageComponent.queryGoodsAll();
+            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result.setResult(componentResult.getResult());
+        } catch (Exception e) {
+            logger.warn("查询商品摘要信息发生未知异常 " + e.getMessage(), e);
+            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+        }
+
+        return result;
+    }
+
+    /**
+     * 通过店铺ID查询店铺下的所有商品列表
+     * 
+     * @param shopId
+     * @return
+     */
+    @RequestMapping(value = "/list/shop/{shopId}", method = { RequestMethod.GET })
+    public MtServiceResult<List<PxGoodsModel>> queryGoodsByShopId(@PathVariable String shopId) {
+        MtServiceResult<List<PxGoodsModel>> result = null;
+
+        MtOperateResult<List<PxGoodsModel>> componentResult = null;
+        try {
+            componentResult = pxCommonManageComponent.queryGoodsListByShopId(shopId);
             result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {

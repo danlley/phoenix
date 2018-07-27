@@ -59,4 +59,13 @@ public interface PxGoodsRepository {
      * @throws PxManageException
      */
     public PxGoodsModel findSingleGoods(String goodsId) throws PxManageException;
+
+    /**
+     * 通过店铺查询商品概要信息列表
+     * 
+     * @param shopId
+     * @return
+     * @throws PxManageException
+     */
+    public List<PxGoodsModel> findGoodsByShopId(String shopId) throws PxManageException;
 }

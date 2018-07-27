@@ -31,4 +31,12 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxGoodsModel>> queryGoodsAll();
+
+    /**
+     * 通过店铺ID查询商品列表
+     * 
+     * @param shopId
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsModel>> queryGoodsListByShopId(String shopId);
 }

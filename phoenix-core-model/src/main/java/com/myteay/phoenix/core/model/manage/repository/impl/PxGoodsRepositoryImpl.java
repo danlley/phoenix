@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
@@ -94,6 +95,25 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
             if (pxGoodsModel != null) {
                 modelList.add(pxGoodsModel);
             }
+        }
+
+        return modelList;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository#findGoodsByShopId(java.lang.String)
+     */
+    @Override
+    public List<PxGoodsModel> findGoodsByShopId(String shopId) throws PxManageException {
+
+        List<PxGoodsDO> pxGoodsDOs = pxGoodsDAO.findPxGoodsByShopId(shopId);
+        if (CollectionUtils.isEmpty(pxGoodsDOs)) {
+            return null;
+        }
+
+        List<PxGoodsModel> modelList = new ArrayList<>();
+        for (PxGoodsDO pxGoodsDO : pxGoodsDOs) {
+            modelList.add(PxGoodsConvertor.convertDO2Model(pxGoodsDO));
         }
 
         return modelList;
