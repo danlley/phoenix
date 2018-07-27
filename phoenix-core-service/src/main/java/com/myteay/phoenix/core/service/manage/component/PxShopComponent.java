@@ -8,6 +8,7 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 
 /**
+ * 店铺信息维护组件
  * 
  * @author min.weixm
  * @version $Id: PxShopComponent.java, v 0.1 Jul 24, 2018 7:42:19 PM min.weixm Exp $
@@ -15,6 +16,7 @@ import com.myteay.phoenix.core.model.manage.PxShopModel;
 public interface PxShopComponent {
 
     /**
+     * 管理店铺
      * 
      * @param pxShopModel
      * @return
