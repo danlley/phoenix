@@ -29,7 +29,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxGoodsRepositoryImpl implements PxGoodsRepository {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxShopRepositoryImpl.class);
+    public static final Logger logger = Logger.getLogger(PxGoodsRepositoryImpl.class);
 
     /** 商品概要操作DAO */
     private PxGoodsDAO         pxGoodsDAO;

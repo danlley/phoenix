@@ -8,11 +8,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
+import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackageDetailDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 
 /**
@@ -73,6 +75,32 @@ public class PxManageValidateTool {
         if (StringUtils.isBlank(pxShopDO.getOwnerIdcard()) || StringUtils.isBlank(pxShopDO.getOwnerName()) || StringUtils.isBlank(pxShopDO.getOwnerPhone()) || StringUtils.isBlank(pxShopDO.getShopAddress()) || StringUtils.isBlank(pxShopDO.getShopName()) || StringUtils.isBlank(pxShopDO.getShopStatus()) || StringUtils.isBlank(pxShopDO.getShopTel()) || StringUtils.isBlank(pxShopDO.getWaiterName())) {
             logger.warn("店铺数据模型关键信息不可用 pxShopDO=" + pxShopDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查套餐包模型合法性
+     * 
+     * @param pxGoodsPackagesDetailModel
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackagesDetailModel(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackagesDetailModel.getGoodsId()) || StringUtils.isBlank(pxGoodsPackagesDetailModel.getPackageDetailName())) {
+            logger.warn("套餐包模型关键信息不可用 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查套餐包数据模型合法性
+     * 
+     * @param pxGoodsPackageDetailDO
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackageDetailDO(PxGoodsPackageDetailDO pxGoodsPackageDetailDO) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackageDetailDO.getGoodsId()) || StringUtils.isBlank(pxGoodsPackageDetailDO.getPackageDetailName())) {
+            logger.warn("套餐包模型关键信息不可用 pxGoodsPackageDetailDO=" + pxGoodsPackageDetailDO);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_MODEL_ERR);
         }
     }
 }

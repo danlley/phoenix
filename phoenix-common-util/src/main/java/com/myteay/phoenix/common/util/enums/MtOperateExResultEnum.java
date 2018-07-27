@@ -58,6 +58,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_SAVE_FAILD("PX_GOODS_SAVE_FAILD", "00110014", "商品概要信息保存失败"),
 
+                                   PX_PKG_DETAIL_MODEL_INVALID("PX_PKG_DETAIL_MODEL_INVALID", "00110015", "当前套餐包模型非法"),
+
+                                   PX_PKG_DETAIL_MODEL_ERR("PX_PKG_DETAIL_MODEL_ERR", "00110016", "套餐包关键信息不可用"),
+
     ;
 
     /** 枚举值 */
