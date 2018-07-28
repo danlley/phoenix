@@ -16,4 +16,6 @@
 	<bean id="pxGoodsRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsRepositoryImpl"></bean>
 	
 	<bean id="pxGoodsPackagesDetailRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesDetailRepositoryImpl"></bean>
+	
+	<bean id="pxSubPackagesRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxSubPackagesRepositoryImpl"></bean>
 </beans>

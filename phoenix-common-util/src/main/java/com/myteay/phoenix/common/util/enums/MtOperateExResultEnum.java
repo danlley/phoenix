@@ -62,6 +62,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_DETAIL_MODEL_ERR("PX_PKG_DETAIL_MODEL_ERR", "00110016", "套餐包关键信息不可用"),
 
+                                   PX_SUB_PKG_MODEL_INVALID("PX_SUB_PKG_MODEL_INVALID", "00110017", "子套餐模型非法"),
+
+                                   PX_SUB_PKG_MODEL_ERR("PX_SUB_PKG_MODEL_ERR", "00110018", "子套餐关键信息不可用"),
+
     ;
 
     /** 枚举值 */

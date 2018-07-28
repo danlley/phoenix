@@ -10,12 +10,14 @@ import org.apache.log4j.Logger;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackageDetailDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
+import com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
 /**
  * 后台管理模型合法性检查工具
@@ -101,6 +103,32 @@ public class PxManageValidateTool {
         if (StringUtils.isBlank(pxGoodsPackageDetailDO.getGoodsId()) || StringUtils.isBlank(pxGoodsPackageDetailDO.getPackageDetailName())) {
             logger.warn("套餐包模型关键信息不可用 pxGoodsPackageDetailDO=" + pxGoodsPackageDetailDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_MODEL_ERR);
+        }
+    }
+
+    /**
+     *  检查子套餐模型合法性
+     * 
+     * @param pxSubPackagesModel
+     * @throws PxManageException 
+     */
+    public static void validatePxSubPackagesModel(PxSubPackagesModel pxSubPackagesModel) throws PxManageException {
+        if (StringUtils.isBlank(pxSubPackagesModel.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagePrice()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesName()) || pxSubPackagesModel.getSubPackagesType() == null) {
+            logger.warn("子套餐模型关键信息不可用 pxSubPackagesModel=" + pxSubPackagesModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查子套餐数据模型合法性
+     * 
+     * @param pxSubPackagesDO
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackageDetailDO(PxSubPackagesDO pxSubPackagesDO) throws PxManageException {
+        if (StringUtils.isBlank(pxSubPackagesDO.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagePrice()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesName()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesType())) {
+            logger.warn("子套餐数据模型关键信息不可用 pxSubPackagesDO=" + pxSubPackagesDO);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_MODEL_ERR);
         }
     }
 }
