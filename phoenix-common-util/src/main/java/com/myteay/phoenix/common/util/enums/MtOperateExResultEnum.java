@@ -62,9 +62,25 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_DETAIL_MODEL_ERR("PX_PKG_DETAIL_MODEL_ERR", "00110016", "套餐包关键信息不可用"),
 
+                                   PX_PKG_DETAIL_QUERY_FAILD("PX_PKG_DETAIL_QUERY_FAILD", "00110019", "套餐包信息查询失败"),
+
+                                   PX_PKG_DETAIL_UPDATE_FAILD("PX_PKG_DETAIL_UPDATE_FAILD", "00110020", "套餐包信息修改失败"),
+
+                                   PX_PKG_DETAIL_DELETE_FAILD("PX_PKG_DETAIL_DELETE_FAILD", "00110021", "套餐包信息删除失败"),
+
+                                   PX_PKG_DETAIL_SAVE_FAILD("PX_PKG_DETAIL_SAVE_FAILD", "00110022", "套餐包信息保存失败"),
+
                                    PX_SUB_PKG_MODEL_INVALID("PX_SUB_PKG_MODEL_INVALID", "00110017", "子套餐模型非法"),
 
                                    PX_SUB_PKG_MODEL_ERR("PX_SUB_PKG_MODEL_ERR", "00110018", "子套餐关键信息不可用"),
+
+                                   PX_SUB_PKG_QUERY_FAILD("PX_SUB_PKG_QUERY_FAILD", "00110023", "子套餐信息查询失败"),
+
+                                   PX_SUB_PKG_UPDATE_FAILD("PX_SUB_PKG_UPDATE_FAILD", "00110024", "子套餐信息修改失败"),
+
+                                   PX_SUB_PKG_DELETE_FAILD("PX_SUB_PKG_DELETE_FAILD", "00110025", "子套餐信息删除失败"),
+
+                                   PX_SUB_PKG_SAVE_FAILD("PX_SUB_PKG_SAVE_FAILD", "00110026", "子套餐信息保存失败"),
 
     ;
 

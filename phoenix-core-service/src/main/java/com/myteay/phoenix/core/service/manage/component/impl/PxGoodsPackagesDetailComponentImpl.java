@@ -26,7 +26,7 @@ import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
 public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetailComponent {
 
     /** 日志 */
-    public static final Logger                              logger = Logger.getLogger(PxGoodsComponentImpl.class);
+    public static final Logger                              logger = Logger.getLogger(PxGoodsPackagesDetailComponentImpl.class);
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxGoodsPackagesDetailModel> pxCommonMngTemplate;
@@ -67,7 +67,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
             result.setResult(freshPxGoodsPackagesDetailModel);
         } catch (PxManageException e) {
             logger.warn("保存套餐包信息发生异常 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
-            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
+            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_QUERY_FAILD);
         }
 
         return result;
@@ -87,7 +87,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
             result.setResult(freshPxGoodsPackagesDetailModel);
         } catch (PxManageException e) {
             logger.warn("保存套餐包信息发生异常 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
-            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
+            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_UPDATE_FAILD);
         }
 
         return result;
@@ -105,7 +105,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
             pxGoodsPackagesDetailRepository.removeGoodsPackagesDetailInfo(pxGoodsPackagesDetailModel);
         } catch (PxManageException e) {
             logger.warn("保存套餐包信息发生异常 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
-            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
+            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_DELETE_FAILD);
         }
 
         return result;
@@ -125,7 +125,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
             result.setResult(freshPxGoodsPackagesDetailModel);
         } catch (PxManageException e) {
             logger.warn("保存套餐包信息发生异常 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
-            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_SAVE_FAILD);
+            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_SAVE_FAILD);
         }
 
         return result;
