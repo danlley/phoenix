@@ -15,9 +15,11 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 
 /**
@@ -39,6 +41,9 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 套餐包仓储 */
     private PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository;
+
+    /** 子套餐仓储 */
+    private PxSubPackagesRepository         pxSubPackagesRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesDetailListByGoodsId(java.lang.String)
@@ -122,6 +127,22 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
         return result;
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#querySubPackagesByPackagesId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxSubPackagesModel>> querySubPackagesByPackagesId(String packagesDetailId) {
+        MtOperateResult<List<PxSubPackagesModel>> result = new MtOperateResult<>();
+        try {
+            List<PxSubPackagesModel> list = pxSubPackagesRepository.findSubPackagesByGoodsId(packagesDetailId);
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("子套餐信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+        }
+        return result;
+    }
+
     /**
      * Setter method for property <tt>pxGoodsPackagesDetailRepository</tt>.
      * 
@@ -147,6 +168,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
      */
     public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
         this.pxGoodsRepository = pxGoodsRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxSubPackagesRepository</tt>.
+     * 
+     * @param pxSubPackagesRepository value to be assigned to property pxSubPackagesRepository
+     */
+    public void setPxSubPackagesRepository(PxSubPackagesRepository pxSubPackagesRepository) {
+        this.pxSubPackagesRepository = pxSubPackagesRepository;
     }
 
 }

@@ -33,7 +33,7 @@ import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailCom
 public class PxGoodsPackagesDetailController {
 
     /** 日志 */
-    public static final Logger             logger = Logger.getLogger(PxGoodsController.class);
+    public static final Logger             logger = Logger.getLogger(PxGoodsPackagesDetailController.class);
 
     /** 后台一般性简单业务管理组件 */
     @Autowired
@@ -66,7 +66,7 @@ public class PxGoodsPackagesDetailController {
     }
 
     /**
-     * 通过店铺ID查询店铺下的所有商品列表
+     * 通过商品摘要ID查询店铺下的所有套餐包列表
      * 
      * @param shopId
      * @return

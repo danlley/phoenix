@@ -10,6 +10,7 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
 /**
  * 后台一般性简单业务管理组件
@@ -55,4 +56,12 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListAll();
+
+    /**
+     * 通过套餐包ID查询所有的子套餐
+     * 
+     * @param packagesDetailId
+     * @return
+     */
+    public MtOperateResult<List<PxSubPackagesModel>> querySubPackagesByPackagesId(String packagesDetailId);
 }
