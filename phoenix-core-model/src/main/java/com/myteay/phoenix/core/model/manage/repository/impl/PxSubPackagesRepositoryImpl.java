@@ -45,7 +45,7 @@ public class PxSubPackagesRepositoryImpl implements PxSubPackagesRepository {
         }
 
         // TODO 删除前，需要检查是否存在商品关联，如果存在，则不允许进行删除
-        pxSubPackagesDAO.deleteById(pxSubPackagesModel.getPackagesDetailId());
+        pxSubPackagesDAO.deleteById(pxSubPackagesModel.getSubPackagesId());
     }
 
     /** 

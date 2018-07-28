@@ -30,7 +30,7 @@ public class IbatisPxSubPackagesDAO extends SqlSessionDaoSupport implements PxSu
 
         this.getSqlSession().insert("PX-SUB-PACKAGE-INSERT", pxSubPackagesDO);
 
-        return pxSubPackagesDO.getPackagesDetailId();
+        return pxSubPackagesDO.getSubPackagesId();
     }
 
     /** 
