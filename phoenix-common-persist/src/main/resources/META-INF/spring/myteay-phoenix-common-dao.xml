@@ -14,4 +14,6 @@
 	<bean id="pxGoodsPackageDetailDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackageDetailDAO"/>
 	
 	<bean id="pxGoodsDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsDAO"/>
+	
+	<bean id="pxGoodsPackageDetailDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxSubPackagesDAO"/>
 </beans>

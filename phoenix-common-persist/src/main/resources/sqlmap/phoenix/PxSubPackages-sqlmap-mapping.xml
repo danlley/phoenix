@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxSubPackagesDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-SUB-PACKAGE" type="com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO">
+        <result property="subPackagesId" column="sub_packages_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="packagesDetailId" column="packages_detail_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="subPackagesName" column="sub_packages_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="subPackagesAmount" column="sub_packages_amount" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="subPackagesType" column="sub_packages_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="subPackagePrice" column="sub_package_price" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="PX-SUB-PACKAGE-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO">
+		insert into phoenix.px_sub_packages (
+		    packages_detail_id,sub_packages_name,sub_packages_amount,sub_packages_type,sub_package_price,gmt_created,gmt_modified
+		)values(
+		    #{packagesDetailId},#{subPackagesName},#{subPackagesAmount},#{subPackagesType},#{subPackagePrice},now(),now()
+		) ;
+	  <selectKey resultType="java.lang.String" keyProperty="subPackagesId">  
+	    SELECT LAST_INSERT_ID()  
+	  </selectKey>
+    </insert>
+
+    <select id="PX-SUB-PACKAGE-SELECT-ALL" resultMap="RM-PX-SUB-PACKAGE">
+	    <![CDATA[
+	        select
+	        	sub_packages_id,packages_detail_id,sub_packages_name,sub_packages_amount,sub_packages_type,sub_package_price,gmt_created,gmt_modified
+	        from phoenix.px_sub_packages order by gmt_modified desc
+	    ]]>
+    </select>
+
+    <select id="PX-SUB-PACKAGE-SELECT-LIST-BY-ID" resultMap="RM-PX-SUB-PACKAGE">
+	    <![CDATA[
+	        select
+	        	sub_packages_id,packages_detail_id,sub_packages_name,sub_packages_amount,sub_packages_type,sub_package_price,gmt_created,gmt_modified
+	        from phoenix.px_sub_packages 
+	        where (packages_detail_id = #{value}) order by gmt_modified desc
+	    ]]>
+    </select>
+
+    <select id="PX-SUB-PACKAGE-SELECT-SINGLE-BY-ID" resultMap="RM-PX-SUB-PACKAGE">
+	    <![CDATA[
+	        select
+	        	sub_packages_id,packages_detail_id,sub_packages_name,sub_packages_amount,sub_packages_type,sub_package_price,gmt_created,gmt_modified
+	        from phoenix.px_sub_packages 
+	        where (sub_packages_id = #{value})
+	    ]]>
+    </select>
+    
+    <delete id="PX-SUB-PACKAGE-DELETE-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_sub_packages where (sub_packages_id = #{value})
+	    ]]>
+    </delete>
+    
+    <update id="PX-SUB-PACKAGE-UPDATE-BY-ID">
+        update phoenix.px_sub_packages
+			set
+				<if test="subPackagesName!=null">
+					sub_packages_name = #{subPackagesName},
+				</if>
+				<if test="subPackagesAmount!=null">
+					sub_packages_amount = #{subPackagesAmount},
+				</if>
+				<if test="subPackagesType!=null">
+					sub_packages_type = #{subPackagesType},
+				</if>
+				<if test="subPackagePrice!=null">
+					sub_package_price = #{subPackagePrice},
+				</if>
+				gmt_modified = now()
+			where
+				sub_packages_id = #{subPackagesId}
+    </update>
+</mapper>
