@@ -46,7 +46,7 @@ public class IbatisPxGoodsPackagesImageDAO extends SqlSessionDaoSupport implemen
      */
     @Override
     public List<PxGoodsPackagesImageDO> findPxGoodsPackageImageByGoodsId(String goodsId) {
-        return this.getSqlSession().selectList("PX-GOODS-PACKAGE-IMAGE-SELECT-LIST-BY-ID");
+        return this.getSqlSession().selectList("PX-GOODS-PACKAGE-IMAGE-SELECT-LIST-BY-ID", goodsId);
     }
 
     /** 

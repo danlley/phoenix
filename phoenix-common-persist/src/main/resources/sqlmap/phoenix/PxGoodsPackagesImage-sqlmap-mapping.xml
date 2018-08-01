@@ -42,7 +42,7 @@
     <select id="PX-GOODS-PACKAGE-IMAGE-SELECT-LIST-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-IMAGE">
 	    <![CDATA[
 	        select
-	        	imageId,goods_id,image,gmt_created,gmt_modified
+	        	image_id,goods_id,image,gmt_created,gmt_modified
 	        from phoenix.px_goods_packages_image 
 	        where (goods_id = #{value})
 	    ]]>
@@ -51,7 +51,7 @@
     <select id="PX-GOODS-PACKAGE-IMAGE-SELECT-SINGLE-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-IMAGE">
 	    <![CDATA[
 	        select
-	        	imageId,goods_id,image,gmt_created,gmt_modified
+	        	image_id,goods_id,image,gmt_created,gmt_modified
 	        from phoenix.px_goods_packages_image 
 	        where (image_id = #{value})
 	    ]]>
