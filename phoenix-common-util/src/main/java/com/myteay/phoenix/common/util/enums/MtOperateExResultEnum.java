@@ -27,7 +27,9 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_OPERATE_FAILED("CAMP_OPERATE_FAILED", "00110006", "操作失败"),
 
-                                   CAMP_DATA_DIC_NOT_FOUND("CAMP_DATA_DIC_NOT_FOUND", "00014001", "数据字典信息未找到"),
+                                   CAMP_DATA_DIC_NOT_FOUND("CAMP_DATA_DIC_NOT_FOUND", "00011007", "数据字典信息未找到"),
+
+                                   CAMP_UN_SUPPORT("CAMP_UN_SUPPORT", "00011008", "当前不支持该操作"),
 
                                    //----------------          基本扩展结果信息信息          ----------------
                                    PX_SHOP_MODEL_INVALID("PX_SHOP_MODEL_INVALID", "00110001", "当前店铺模型非法"),
@@ -85,6 +87,12 @@ public enum MtOperateExResultEnum {
                                    PX_PKG_IMAGE_MODEL_INVALID("PX_PKG_IMAGE_MODEL_INVALID", "00110027", "当前套餐详情图片模型非法"),
 
                                    PX_PKG_IMAGE_MODEL_ERR("PX_PKG_IMAGE_MODEL_ERR", "00110028", "套餐详情图片关键信息不可用"),
+
+                                   PX_PKG_IMAGE_QUERY_FAILD("PX_PKG_IMAGE_QUERY_FAILD", "00110029", "套餐详情图片信息查询失败"),
+
+                                   PX_PKG_IMAGE_DELETE_FAILD("PX_PKG_IMAGE_DELETE_FAILD", "00110030", "套餐详情图片信息删除失败"),
+
+                                   PX_PKG_IMAGE_SAVE_FAILD("PX_PKG_IMAGE_SAVE_FAILD", "00110031", "套餐详情图片信息保存失败"),
 
     ;
 

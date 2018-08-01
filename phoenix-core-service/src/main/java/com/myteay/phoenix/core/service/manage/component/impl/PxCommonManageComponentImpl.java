@@ -14,9 +14,11 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
@@ -45,6 +47,25 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     /** 子套餐仓储 */
     private PxSubPackagesRepository         pxSubPackagesRepository;
 
+    /** 商品详情图片管理仓储 */
+    private PxGoodsPackagesImageRepository  pxGoodsPackagesImageRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesImageListByGoodsId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsPackagesImageModel>> queryPackagesImageListByGoodsId(String goodsId) {
+        MtOperateResult<List<PxGoodsPackagesImageModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsPackagesImageModel> list = pxGoodsPackagesImageRepository.findGoodsPackagesImageByGoodsId(goodsId);
+            result.setResult(list);
+        } catch (PxManageException e) {
+            logger.warn("套餐详情图片信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_QUERY_FAILD);
+        }
+        return result;
+    }
+
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesDetailListByGoodsId(java.lang.String)
      */
@@ -56,7 +77,7 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("套餐包信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_QUERY_FAILD);
         }
         return result;
     }
@@ -72,7 +93,7 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("套餐包信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_QUERY_FAILD);
         }
         return result;
     }
@@ -88,7 +109,7 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("店铺信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
         }
         return result;
     }
@@ -122,7 +143,7 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("商品摘要信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
         }
         return result;
     }
@@ -138,7 +159,7 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result.setResult(list);
         } catch (PxManageException e) {
             logger.warn("子套餐信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_QUERY_FAILD);
         }
         return result;
     }
@@ -177,6 +198,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
      */
     public void setPxSubPackagesRepository(PxSubPackagesRepository pxSubPackagesRepository) {
         this.pxSubPackagesRepository = pxSubPackagesRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesImageRepository</tt>.
+     * 
+     * @param pxGoodsPackagesImageRepository value to be assigned to property pxGoodsPackagesImageRepository
+     */
+    public void setPxGoodsPackagesImageRepository(PxGoodsPackagesImageRepository pxGoodsPackagesImageRepository) {
+        this.pxGoodsPackagesImageRepository = pxGoodsPackagesImageRepository;
     }
 
 }

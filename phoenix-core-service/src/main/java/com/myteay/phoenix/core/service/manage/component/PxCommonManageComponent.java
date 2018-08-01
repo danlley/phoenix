@@ -9,6 +9,7 @@ import java.util.List;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
@@ -49,6 +50,14 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListByGoodsId(String goodsId);
+
+    /**
+     * 通过商品摘要ID查询所有的商品详情图片列表
+     * 
+     * @param goodsId
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsPackagesImageModel>> queryPackagesImageListByGoodsId(String goodsId);
 
     /**
      * 查询所有套餐包
