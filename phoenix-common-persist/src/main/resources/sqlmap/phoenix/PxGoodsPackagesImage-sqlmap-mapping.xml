@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsPackagesImageDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS-PACKAGE-IMAGE" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO">
+        <result property="imageId" column="image_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="image" column="image" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="PX-GOODS-PACKAGE-IMAGE-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO">
+		insert into phoenix.px_goods_packages_image (
+		    goods_id,image,gmt_created,gmt_modified
+		)values(
+		    #{goodsId},#{image},now(),now()
+		) ;
+	  <selectKey resultType="java.lang.String" keyProperty="imageId">  
+	    SELECT LAST_INSERT_ID()  
+	  </selectKey>
+    </insert>
+
+    <select id="PX-GOODS-PACKAGE-IMAGE-SELECT-LIST-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-IMAGE">
+	    <![CDATA[
+	        select
+	        	imageId,goods_id,image,gmt_created,gmt_modified
+	        from phoenix.px_goods_packages_image 
+	        where (goods_id = #{value})
+	    ]]>
+    </select>
+
+    <select id="PX-GOODS-PACKAGE-IMAGE-SELECT-SINGLE-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-IMAGE">
+	    <![CDATA[
+	        select
+	        	imageId,goods_id,image,gmt_created,gmt_modified
+	        from phoenix.px_goods_packages_image 
+	        where (image_id = #{value})
+	    ]]>
+    </select>
+    
+    <delete id="PX-GOODS-PACKAGE-IMAGE-DELETE-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_goods_packages_image where (image_id = #{value})
+	    ]]>
+    </delete>
+
+</mapper>
