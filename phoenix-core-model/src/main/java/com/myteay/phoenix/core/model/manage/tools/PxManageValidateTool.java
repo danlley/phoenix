@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackageDetailDO;
+import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
 import com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
@@ -16,6 +17,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
@@ -24,6 +26,11 @@ import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
  * 
  * @author min.weixm
  * @version $Id: PxManageValidateTool.java, v 0.1 Jul 24, 2018 11:38:27 AM min.weixm Exp $
+ */
+/**
+ * 
+ * @author min.weixm
+ * @version $Id: PxManageValidateTool.java, v 0.1 Aug 1, 2018 12:38:21 PM min.weixm Exp $
  */
 public class PxManageValidateTool {
 
@@ -129,6 +136,32 @@ public class PxManageValidateTool {
         if (StringUtils.isBlank(pxSubPackagesDO.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagePrice()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesName()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesType())) {
             logger.warn("子套餐数据模型关键信息不可用 pxSubPackagesDO=" + pxSubPackagesDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查套餐详情图片模型合法性
+     * 
+     * @param pxGoodsPackagesImageModel
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackagesImageModel(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackagesImageModel.getImage())) {
+            logger.warn("套餐详情图片模型关键信息不可用 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查套餐详情图片数据模型合法性
+     * 
+     * @param pxGoodsPackagesImageDO
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackagesImageDO(PxGoodsPackagesImageDO pxGoodsPackagesImageDO) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackagesImageDO.getImage())) {
+            logger.warn("套餐详情图片数据模型关键信息不可用 pxGoodsPackagesImageDO=" + pxGoodsPackagesImageDO);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_MODEL_ERR);
         }
     }
 }

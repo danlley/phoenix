@@ -82,6 +82,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUB_PKG_SAVE_FAILD("PX_SUB_PKG_SAVE_FAILD", "00110026", "子套餐信息保存失败"),
 
+                                   PX_PKG_IMAGE_MODEL_INVALID("PX_PKG_IMAGE_MODEL_INVALID", "00110027", "当前套餐详情图片模型非法"),
+
+                                   PX_PKG_IMAGE_MODEL_ERR("PX_PKG_IMAGE_MODEL_ERR", "00110028", "套餐详情图片关键信息不可用"),
+
     ;
 
     /** 枚举值 */
