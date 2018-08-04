@@ -4,19 +4,21 @@
  */
 package com.myteay.phoenix.biz.service.impl.controller;
 
-import java.util.List;
+import java.io.File;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.common.util.model.DataDictionaryModel;
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent;
 
 /**
  * 资源查询控制器
@@ -29,30 +31,76 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 public class MtResourceQueryController {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(MtResourceQueryController.class);
+    public static final Logger            logger = Logger.getLogger(MtResourceQueryController.class);
+
+    /** 套餐详情图片管理 */
+    @Autowired
+    private PxGoodsPackagesImageComponent pxGoodsPackagesImageComponent;
+
+    //    private final ResourceLoader resourceLoader;
+
+    /** 套餐详情图片管理 */
+    @Autowired
+    private Environment                   env;
 
     @RequestMapping(value = "/{key}", method = { RequestMethod.GET })
-    public MtServiceResult<List<DataDictionaryModel>> queryImageByKey(@PathVariable("key") String key) {
+    public File queryImageByKey(@PathVariable("key") String key) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始查询图片信息  key=" + key);
         }
 
-        MtOperateResult<List<DataDictionaryModel>> innerResult = null;
+        String path = env.getProperty("myteay.phoenix.images.path");
+
+        PxGoodsPackagesImageModel pxGoodsPackagesImageModel = new PxGoodsPackagesImageModel();
+        pxGoodsPackagesImageModel.setOperationType(PxOperationTypeEnum.PX_QUERY_ONE);
+        pxGoodsPackagesImageModel.setImageId(key);
+        String image = null;
         try {
-
-            if (logger.isInfoEnabled()) {
-                logger.info("查询图片结果： key=" + key + " innerResult=" + innerResult);
-            }
-        } catch (Throwable e) {
-            logger.warn("查询图片发生异常" + e.getMessage(), e);
-        }
-        if (innerResult == null || innerResult.getOperateResult() != MtOperateResultEnum.CAMP_OPERATE_SUCCESS) {
-            logger.warn("查询图片过程发生异常： innerResult=" + innerResult);
-            return new MtServiceResult<List<DataDictionaryModel>>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
+            MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageComponent.manageGoodsPackagesImage(
+                pxGoodsPackagesImageModel);
+            image = (innerResult.getResult() == null ? null : innerResult.getResult().getImage());
+        } catch (Exception e) {
+            logger.warn("保存套餐详情图片信息发生异常" + e.getMessage(), e);
         }
 
-        return new MtServiceResult<List<DataDictionaryModel>>(innerResult.getResult());
+        if (StringUtils.isBlank(image)) {
+            logger.warn("当前key未找到相应的图片信息 key" + key);
+            return null;
+        }
+
+        return new File(path, image);
+
+    }
+
+    //    @RequestMapping(method = RequestMethod.GET, value = "/{filename:.+}")
+    //    @ResponseBody
+    //    public ResponseEntity<?> getFile(@PathVariable String filename) {
+    //
+    //        try {
+    //            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(env.getProperty("myteay.phoenix.images.path"), filename)
+    //                .toString()));
+    //        } catch (Exception e) {
+    //            return ResponseEntity.notFound().build();
+    //        }
+    //    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesImageComponent</tt>.
+     * 
+     * @param pxGoodsPackagesImageComponent value to be assigned to property pxGoodsPackagesImageComponent
+     */
+    public void setPxGoodsPackagesImageComponent(PxGoodsPackagesImageComponent pxGoodsPackagesImageComponent) {
+        this.pxGoodsPackagesImageComponent = pxGoodsPackagesImageComponent;
+    }
+
+    /**
+     * Setter method for property <tt>env</tt>.
+     * 
+     * @param env value to be assigned to property env
+     */
+    public void setEnv(Environment env) {
+        this.env = env;
     }
 
 }
