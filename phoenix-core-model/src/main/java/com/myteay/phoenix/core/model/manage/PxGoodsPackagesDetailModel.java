@@ -6,6 +6,7 @@ package com.myteay.phoenix.core.model.manage;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.myteay.common.util.tools.ToStringUtil;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
@@ -19,25 +20,46 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 public class PxGoodsPackagesDetailModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long   serialVersionUID = -9180667135808287150L;
+    private static final long        serialVersionUID = -9180667135808287150L;
 
     /** 套餐包ID */
-    private String              packagesDetailId;
+    private String                   packagesDetailId;
 
     /** 商品概要ID */
-    private String              goodsId;
+    private String                   goodsId;
 
     /** 套餐包名称 */
-    private String              packageDetailName;
+    private String                   packageDetailName;
 
     /** 创建时间 */
-    private Date                gmtCreated;
+    private Date                     gmtCreated;
 
     /** 最后修改时间 */
-    private Date                gmtModified;
+    private Date                     gmtModified;
 
     /** 操作类型 */
-    private PxOperationTypeEnum operationType;
+    private PxOperationTypeEnum      operationType;
+
+    /** 子套餐模型 */
+    private List<PxSubPackagesModel> pxSubPackagesModels;
+
+    /**
+     * Getter method for property <tt>pxSubPackagesModels</tt>.
+     * 
+     * @return property value of pxSubPackagesModels
+     */
+    public List<PxSubPackagesModel> getPxSubPackagesModels() {
+        return pxSubPackagesModels;
+    }
+
+    /**
+     * Setter method for property <tt>pxSubPackagesModels</tt>.
+     * 
+     * @param pxSubPackagesModels value to be assigned to property pxSubPackagesModels
+     */
+    public void setPxSubPackagesModels(List<PxSubPackagesModel> pxSubPackagesModels) {
+        this.pxSubPackagesModels = pxSubPackagesModels;
+    }
 
     /**
      * Getter method for property <tt>operationType</tt>.

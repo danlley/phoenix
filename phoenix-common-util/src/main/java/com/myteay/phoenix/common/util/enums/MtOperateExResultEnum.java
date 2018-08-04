@@ -94,6 +94,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_IMAGE_SAVE_FAILD("PX_PKG_IMAGE_SAVE_FAILD", "00110031", "套餐详情图片信息保存失败"),
 
+                                   PX_PKG_ADV_QUERY_FAILD("PX_PKG_ADV_QUERY_FAILD", "00110032", "套餐高级查询失败"),
+
     ;
 
     /** 枚举值 */

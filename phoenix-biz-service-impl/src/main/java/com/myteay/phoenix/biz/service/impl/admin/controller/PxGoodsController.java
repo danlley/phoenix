@@ -18,6 +18,7 @@ import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
@@ -82,6 +83,31 @@ public class PxGoodsController {
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询商品摘要信息发生未知异常 " + e.getMessage(), e);
+            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+        }
+
+        return result;
+    }
+
+    /**
+     * 商品概要管理服务（增、删、改、单条查询）
+     * 
+     * @param pxShopModel
+     * @return
+     */
+    @RequestMapping(value = "/query/goods/adv/{goodsId}", method = { RequestMethod.POST })
+    public MtServiceResult<PxGoodsAdvModel> querySingleAdv(@PathVariable String goodsId) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("开始执行商品高阶版查询 goodsId=" + goodsId);
+        }
+        MtServiceResult<PxGoodsAdvModel> result = null;
+        try {
+            MtOperateResult<PxGoodsAdvModel> innerResult = pxCommonManageComponent.queryGoodsAdvAll(goodsId);
+            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result.setResult(innerResult.getResult());
+        } catch (Exception e) {
+            logger.warn("保存商品概要信息发生异常" + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 

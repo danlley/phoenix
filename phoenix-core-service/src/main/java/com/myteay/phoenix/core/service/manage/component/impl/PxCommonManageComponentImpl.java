@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.service.manage.component.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
@@ -49,6 +51,48 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 商品详情图片管理仓储 */
     private PxGoodsPackagesImageRepository  pxGoodsPackagesImageRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryGoodsAdvAll(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<PxGoodsAdvModel> queryGoodsAdvAll(String goodsId) {
+        MtOperateResult<PxGoodsAdvModel> result = new MtOperateResult<>();
+
+        try {
+            PxGoodsAdvModel pxGoodsAdvModel = queryGoodsInfoAllbyGoodsId(goodsId);
+            result.setResult(pxGoodsAdvModel);
+        } catch (PxManageException e) {
+            logger.warn("套餐高级查询失败 goodsId=" + goodsId, e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_ADV_QUERY_FAILD);
+        }
+        return result;
+    }
+
+    private PxGoodsAdvModel queryGoodsInfoAllbyGoodsId(String goodsId) throws PxManageException {
+
+        PxGoodsAdvModel pxGoodsAdvModel = new PxGoodsAdvModel();
+
+        // step 1: 填充商品摘要信息
+        PxGoodsModel pxGoodsModel = pxGoodsRepository.findSingleGoods(goodsId);
+        pxGoodsAdvModel.setPxGoodsModel(pxGoodsModel);
+
+        // step 2: 填充套餐包信息（包含子套餐的填充）
+        List<PxGoodsPackagesDetailModel> list = pxGoodsPackagesDetailRepository.findGoodsPackagesDetailByGoodsId(goodsId);
+        if (!CollectionUtils.isEmpty(list)) {
+            List<PxSubPackagesModel> subList = null;
+            for (PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel : list) {
+                subList = pxSubPackagesRepository.findSubPackagesByGoodsId(pxGoodsPackagesDetailModel.getPackagesDetailId());
+                pxGoodsPackagesDetailModel.setPxSubPackagesModels(subList);
+            }
+        }
+
+        // step 3: 填充套餐图片信息
+        List<PxGoodsPackagesImageModel> imageList = pxGoodsPackagesImageRepository.findGoodsPackagesImageByGoodsId(goodsId);
+        pxGoodsAdvModel.setPxGoodsPackagesImageModels(imageList);
+
+        return pxGoodsAdvModel;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesImageListByGoodsId(java.lang.String)
