@@ -17,10 +17,12 @@ import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
@@ -51,6 +53,25 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 商品详情图片管理仓储 */
     private PxGoodsPackagesImageRepository  pxGoodsPackagesImageRepository;
+
+    /** 温馨提醒摘要管理仓储 */
+    private PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesNoticeListByGoodsId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsPackagesNoticeModel>> queryPackagesNoticeListByGoodsId(String goodsId) {
+        MtOperateResult<List<PxGoodsPackagesNoticeModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsPackagesNoticeModel> pxGoodsPackagesNoticeModels = pxGoodsPackagesNoticeRepository.findGoodsPackagesNoticeByGoodsId(goodsId);
+            result.setResult(pxGoodsPackagesNoticeModels);
+        } catch (PxManageException e) {
+            logger.warn("温馨提醒摘要信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_QUERY_FAILD);
+        }
+        return result;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryGoodsAdvAll(java.lang.String)
@@ -253,4 +274,12 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
         this.pxGoodsPackagesImageRepository = pxGoodsPackagesImageRepository;
     }
 
+    /**
+     * Setter method for property <tt>pxGoodsPackagesNoticeRepository</tt>.
+     * 
+     * @param pxGoodsPackagesNoticeRepository value to be assigned to property pxGoodsPackagesNoticeRepository
+     */
+    public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
+        this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
+    }
 }

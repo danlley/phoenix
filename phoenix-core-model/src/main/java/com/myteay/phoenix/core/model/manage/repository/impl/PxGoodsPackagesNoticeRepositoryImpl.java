@@ -41,7 +41,7 @@ public class PxGoodsPackagesNoticeRepositoryImpl implements PxGoodsPackagesNotic
     public void removeGoodsPackagesNoticeInfo(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
         if (pxGoodsPackagesNoticeModel == null) {
             logger.warn("当前套餐包模型不可用，无法删除套餐包信息");
-            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_MODEL_INVALID);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_INVALID);
         }
 
         // TODO 删除前，需要检查是否存在商品关联，如果存在，则不允许进行删除
@@ -69,7 +69,7 @@ public class PxGoodsPackagesNoticeRepositoryImpl implements PxGoodsPackagesNotic
     public PxGoodsPackagesNoticeModel saveGoodsPackagesNoticeInfo(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
         if (pxGoodsPackagesNoticeModel == null) {
             logger.warn("当前套餐包模型不可用，无法保存套餐包信息");
-            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_MODEL_INVALID);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_INVALID);
         }
 
         PxManageValidateTool.validatePxGoodsPackagesNoticeModel(pxGoodsPackagesNoticeModel);
