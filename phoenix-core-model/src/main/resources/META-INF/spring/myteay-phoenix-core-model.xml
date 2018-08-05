@@ -20,4 +20,6 @@
 	<bean id="pxSubPackagesRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxSubPackagesRepositoryImpl"></bean>
 	
 	<bean id="pxGoodsPackagesImageRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesImageRepositoryImpl"></bean>
+	
+	<bean id="pxGoodsPackagesNoticeRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesNoticeRepositoryImpl"></bean>
 </beans>

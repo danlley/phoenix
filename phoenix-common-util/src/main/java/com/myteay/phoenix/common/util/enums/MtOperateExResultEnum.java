@@ -96,6 +96,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_ADV_QUERY_FAILD("PX_PKG_ADV_QUERY_FAILD", "00110032", "套餐高级查询失败"),
 
+                                   PX_PKG_NOTICE_MODEL_ERR("PX_PKG_NOTICE_MODEL_ERR", "00110033", "温馨提醒摘要关键信息不可用"),
+
     ;
 
     /** 枚举值 */

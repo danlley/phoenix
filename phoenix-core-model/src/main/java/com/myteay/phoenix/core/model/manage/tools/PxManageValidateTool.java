@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackageDetailDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO;
+import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
 import com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
@@ -18,6 +19,7 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
@@ -43,7 +45,11 @@ public class PxManageValidateTool {
      * @param pxGoodsModel
      */
     public static void validatePxGoodsModel(PxGoodsModel pxGoodsModel) throws PxManageException {
-        if (StringUtils.isBlank(pxGoodsModel.getShopId()) || StringUtils.isBlank(pxGoodsModel.getGoodsImage()) || StringUtils.isBlank(pxGoodsModel.getGoodsTitle()) || StringUtils.isBlank(pxGoodsModel.getGoodsDesc()) || StringUtils.isBlank(pxGoodsModel.getGoodsPrice()) || StringUtils.isBlank(pxGoodsModel.getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsModel.getGoodsOnlineTime()) || pxGoodsModel.getOrderType() == null || pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel.getIsTuan() == null || pxGoodsModel.getGmtExpired() == null) {
+        if (StringUtils.isBlank(pxGoodsModel.getShopId()) || StringUtils.isBlank(pxGoodsModel.getGoodsImage()) || StringUtils.isBlank(pxGoodsModel
+            .getGoodsTitle()) || StringUtils.isBlank(pxGoodsModel.getGoodsDesc()) || StringUtils.isBlank(pxGoodsModel.getGoodsPrice()) || StringUtils
+                .isBlank(pxGoodsModel.getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsModel.getGoodsOnlineTime()) || pxGoodsModel
+                    .getOrderType() == null || pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel
+                        .getIsTuan() == null || pxGoodsModel.getGmtExpired() == null) {
             logger.warn("商品概要模型关键信息不可用 pxGoodsModel=" + pxGoodsModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_ERR);
         }
@@ -55,7 +61,11 @@ public class PxManageValidateTool {
      * @param pxGoodsDO
      */
     public static void validatePxGoodsDO(PxGoodsDO pxGoodsDO) throws PxManageException {
-        if (StringUtils.isBlank(pxGoodsDO.getShopId()) || StringUtils.isBlank(pxGoodsDO.getGoodsImage()) || StringUtils.isBlank(pxGoodsDO.getGoodsTitle()) || StringUtils.isBlank(pxGoodsDO.getGoodsDesc()) || StringUtils.isBlank(pxGoodsDO.getGoodsPrice()) || StringUtils.isBlank(pxGoodsDO.getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsDO.getGoodsOnlineTime()) || pxGoodsDO.getOrderType() == null || StringUtils.isBlank(pxGoodsDO.getIsHuiyuan()) || StringUtils.isBlank(pxGoodsDO.getIsQuan()) || StringUtils.isBlank(pxGoodsDO.getIsTuan()) || pxGoodsDO.getGmtExpired() == null) {
+        if (StringUtils.isBlank(pxGoodsDO.getShopId()) || StringUtils.isBlank(pxGoodsDO.getGoodsImage()) || StringUtils.isBlank(pxGoodsDO
+            .getGoodsTitle()) || StringUtils.isBlank(pxGoodsDO.getGoodsDesc()) || StringUtils.isBlank(pxGoodsDO.getGoodsPrice()) || StringUtils
+                .isBlank(pxGoodsDO.getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsDO.getGoodsOnlineTime()) || pxGoodsDO.getOrderType() == null
+            || StringUtils.isBlank(pxGoodsDO.getIsHuiyuan()) || StringUtils.isBlank(pxGoodsDO.getIsQuan()) || StringUtils.isBlank(pxGoodsDO
+                .getIsTuan()) || pxGoodsDO.getGmtExpired() == null) {
             logger.warn("商品概要数据模型关键信息不可用 pxGoodsDO=" + pxGoodsDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_ERR);
         }
@@ -68,7 +78,9 @@ public class PxManageValidateTool {
      * @throws PxManageException
      */
     public static void validatePxShopModel(PxShopModel pxShopModel) throws PxManageException {
-        if (StringUtils.isBlank(pxShopModel.getOwnerIdcard()) || StringUtils.isBlank(pxShopModel.getOwnerName()) || StringUtils.isBlank(pxShopModel.getOwnerPhone()) || StringUtils.isBlank(pxShopModel.getShopAddress()) || StringUtils.isBlank(pxShopModel.getShopName()) || pxShopModel.getShopStatus() == null || StringUtils.isBlank(pxShopModel.getShopTel()) || StringUtils.isBlank(pxShopModel.getWaiterName())) {
+        if (StringUtils.isBlank(pxShopModel.getOwnerIdcard()) || StringUtils.isBlank(pxShopModel.getOwnerName()) || StringUtils.isBlank(pxShopModel
+            .getOwnerPhone()) || StringUtils.isBlank(pxShopModel.getShopAddress()) || StringUtils.isBlank(pxShopModel.getShopName()) || pxShopModel
+                .getShopStatus() == null || StringUtils.isBlank(pxShopModel.getShopTel()) || StringUtils.isBlank(pxShopModel.getWaiterName())) {
             logger.warn("店铺关键信息不可用 pxShopModel=" + pxShopModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_ERR);
         }
@@ -81,7 +93,9 @@ public class PxManageValidateTool {
      * @throws PxManageException
      */
     public static void validatePxShopDO(PxShopDO pxShopDO) throws PxManageException {
-        if (StringUtils.isBlank(pxShopDO.getOwnerIdcard()) || StringUtils.isBlank(pxShopDO.getOwnerName()) || StringUtils.isBlank(pxShopDO.getOwnerPhone()) || StringUtils.isBlank(pxShopDO.getShopAddress()) || StringUtils.isBlank(pxShopDO.getShopName()) || StringUtils.isBlank(pxShopDO.getShopStatus()) || StringUtils.isBlank(pxShopDO.getShopTel()) || StringUtils.isBlank(pxShopDO.getWaiterName())) {
+        if (StringUtils.isBlank(pxShopDO.getOwnerIdcard()) || StringUtils.isBlank(pxShopDO.getOwnerName()) || StringUtils.isBlank(pxShopDO
+            .getOwnerPhone()) || StringUtils.isBlank(pxShopDO.getShopAddress()) || StringUtils.isBlank(pxShopDO.getShopName()) || StringUtils.isBlank(
+                pxShopDO.getShopStatus()) || StringUtils.isBlank(pxShopDO.getShopTel()) || StringUtils.isBlank(pxShopDO.getWaiterName())) {
             logger.warn("店铺数据模型关键信息不可用 pxShopDO=" + pxShopDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_ERR);
         }
@@ -120,7 +134,9 @@ public class PxManageValidateTool {
      * @throws PxManageException 
      */
     public static void validatePxSubPackagesModel(PxSubPackagesModel pxSubPackagesModel) throws PxManageException {
-        if (StringUtils.isBlank(pxSubPackagesModel.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagePrice()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesName()) || pxSubPackagesModel.getSubPackagesType() == null) {
+        if (StringUtils.isBlank(pxSubPackagesModel.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagePrice())
+            || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesModel.getSubPackagesName())
+            || pxSubPackagesModel.getSubPackagesType() == null) {
             logger.warn("子套餐模型关键信息不可用 pxSubPackagesModel=" + pxSubPackagesModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_MODEL_ERR);
         }
@@ -133,7 +149,9 @@ public class PxManageValidateTool {
      * @throws PxManageException 
      */
     public static void validatePxGoodsPackageDetailDO(PxSubPackagesDO pxSubPackagesDO) throws PxManageException {
-        if (StringUtils.isBlank(pxSubPackagesDO.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagePrice()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesName()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesType())) {
+        if (StringUtils.isBlank(pxSubPackagesDO.getPackagesDetailId()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagePrice()) || StringUtils
+            .isBlank(pxSubPackagesDO.getSubPackagesAmount()) || StringUtils.isBlank(pxSubPackagesDO.getSubPackagesName()) || StringUtils.isBlank(
+                pxSubPackagesDO.getSubPackagesType())) {
             logger.warn("子套餐数据模型关键信息不可用 pxSubPackagesDO=" + pxSubPackagesDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_MODEL_ERR);
         }
@@ -162,6 +180,32 @@ public class PxManageValidateTool {
         if (StringUtils.isBlank(pxGoodsPackagesImageDO.getImage())) {
             logger.warn("套餐详情图片数据模型关键信息不可用 pxGoodsPackagesImageDO=" + pxGoodsPackagesImageDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查温馨提醒摘要模型合法性
+     * 
+     * @param pxGoodsPackagesNoticeModel
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackagesNoticeModel(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackagesNoticeModel.getGoodsId()) || StringUtils.isBlank(pxGoodsPackagesNoticeModel.getPackagesNoticeName())) {
+            logger.warn("温馨提醒摘要模型关键信息不可用 pxGoodsPackagesDetailModel=" + pxGoodsPackagesNoticeModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_ERR);
+        }
+    }
+
+    /**
+     * 检查温馨提醒摘要数据模型合法性
+     * 
+     * @param pxGoodsPackagesNoticeDO
+     * @throws PxManageException 
+     */
+    public static void validatePxGoodsPackagesNoticeDO(PxGoodsPackagesNoticeDO pxGoodsPackagesNoticeDO) throws PxManageException {
+        if (StringUtils.isBlank(pxGoodsPackagesNoticeDO.getGoodsId()) || StringUtils.isBlank(pxGoodsPackagesNoticeDO.getPackagesNoticeName())) {
+            logger.warn("温馨提醒摘要数据模型关键信息不可用 pxGoodsPackagesDetailModel=" + pxGoodsPackagesNoticeDO);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_ERR);
         }
     }
 }
