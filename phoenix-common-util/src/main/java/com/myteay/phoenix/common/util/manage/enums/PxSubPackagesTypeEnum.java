@@ -17,7 +17,7 @@ import com.myteay.common.util.enums.EnumMessage;
 public enum PxSubPackagesTypeEnum implements EnumMessage {
                                                           PX_SUB_PKG_BIGGER("PX_SUB_PKG_BIGGER", "大份"),
 
-                                                          PX_SUB_PKG_COMMON("PX_SUB_PKG_COMMON", "中份"),
+                                                          PX_SUB_PKG_COMMON("PX_SUB_PKG_COMMON", "普通"),
 
                                                           PX_SUB_PKG_SMALL("PX_SUB_PKG_SMALL", "小份"),
 

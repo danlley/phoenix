@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsPackagesNoticeDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS-PACKAGE-NOTICE" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO">
+        <result property="packagesNoticeId" column="packages_notice_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="packagesNoticeName" column="packages_notice_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="PX-GOODS-PACKAGE-NOTICE-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO">
+		insert into phoenix.px_goods_packages_notice (
+		    goods_id,packages_notice_name,gmt_created,gmt_modified
+		)values(
+		    #{goodsId},#{packagesNoticeName},now(),now()
+		) ;
+	  <selectKey resultType="java.lang.String" keyProperty="packagesNoticeId">  
+	    SELECT LAST_INSERT_ID()  
+	  </selectKey>
+    </insert>
+
+    <select id="PX-GOODS-PACKAGE-NOTICE-SELECT-ALL" resultMap="RM-PX-GOODS-PACKAGE-NOTICE">
+	    <![CDATA[
+	        select
+	        	packages_notice_id,goods_id,packages_notice_name,gmt_created,gmt_modified
+	        from phoenix.px_goods_packages_notice order by gmt_modified asc
+	    ]]>
+    </select>
+
+    <select id="PX-GOODS-PACKAGE-NOTICE-SELECT-LIST-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-NOTICE">
+	    <![CDATA[
+	        select
+	        	packages_notice_id,goods_id,packages_notice_name,gmt_created,gmt_modified
+	        from phoenix.px_goods_packages_notice 
+	        where (goods_id = #{value})  order by gmt_modified asc
+	    ]]>
+    </select>
+
+    <select id="PX-GOODS-PACKAGE-NOTICE-SELECT-SINGLE-BY-ID" resultMap="RM-PX-GOODS-PACKAGE-NOTICE">
+	    <![CDATA[
+	        select
+	        	packages_notice_id,goods_id,packages_notice_name,gmt_created,gmt_modified
+	        from phoenix.px_goods_packages_notice 
+	        where (packages_notice_id = #{value})
+	    ]]>
+    </select>
+    
+    <delete id="PX-GOODS-PACKAGE-NOTICE-DELETE-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_goods_packages_notice where (packages_notice_id = #{value})
+	    ]]>
+    </delete>
+    
+    <update id="PX-GOODS-PACKAGE-NOTICE-UPDATE-BY-ID">
+        update phoenix.px_goods_packages_notice
+			set
+				packages_notice_name = #{packagesNoticeName},
+				gmt_modified = now()
+			where
+				packages_notice_id = #{packagesNoticeId}
+    </update>
+</mapper>

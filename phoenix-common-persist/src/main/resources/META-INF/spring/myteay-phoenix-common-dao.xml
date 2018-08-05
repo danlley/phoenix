@@ -18,4 +18,6 @@
 	<bean id="pxSubPackagesDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxSubPackagesDAO"/>
 	
 	<bean id="pxGoodsPackagesImageDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesImageDAO"/>
+	
+	<bean id="pxGoodsPackagesNoticeDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesNoticeDAO"/>
 </beans>
