@@ -8,5 +8,6 @@
 		<mapper resource="sqlmap/phoenix/PxSubPackages-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxGoodsPackagesImage-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxGoodsPackagesNotice-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/phoenix/PxPackagesSubNotice-sqlmap-mapping.xml"/>
 	</mappers>
 </configuration>

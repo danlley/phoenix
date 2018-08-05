@@ -20,4 +20,6 @@
 	<bean id="pxGoodsPackagesImageDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesImageDAO"/>
 	
 	<bean id="pxGoodsPackagesNoticeDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesNoticeDAO"/>
+	
+	<bean id="pxGoodsPackagesSubNoticeDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesSubNoticeDAO"/>
 </beans>
