@@ -22,4 +22,6 @@
 	<bean id="pxGoodsPackagesImageRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesImageRepositoryImpl"></bean>
 	
 	<bean id="pxGoodsPackagesNoticeRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesNoticeRepositoryImpl"></bean>
+	
+	<bean id="pxGoodsPackagesSubNoticeRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsPackagesSubNoticeRepositoryImpl"></bean>
 </beans>

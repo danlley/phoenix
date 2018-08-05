@@ -108,6 +108,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_NOTICE_SAVE_FAILD("PX_PKG_NOTICE_SAVE_FAILD", "00110038", "温馨提醒摘要信息保存失败"),
 
+                                   PX_PKG_SUB_NOTICE_MODEL_ERR("PX_PKG_SUB_NOTICE_MODEL_ERR", "00110039", "温馨提醒子项关键信息不可用"),
+
+                                   PX_PKG_SUB_NOTICE_MODEL_INVALID("PX_PKG_SUB_NOTICE_MODEL_INVALID", "00110040", "温馨提醒子项模型非法"),
+
     ;
 
     /** 枚举值 */
