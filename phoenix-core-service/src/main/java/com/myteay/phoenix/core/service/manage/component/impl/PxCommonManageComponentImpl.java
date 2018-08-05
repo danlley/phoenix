@@ -18,11 +18,13 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesNoticeRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesSubNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
@@ -37,25 +39,45 @@ import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 日志 */
-    public static final Logger              logger = Logger.getLogger(PxCommonManageComponentImpl.class);
+    public static final Logger                 logger = Logger.getLogger(PxCommonManageComponentImpl.class);
 
     /** 店铺管理仓储 */
-    private PxShopRepository                pxShopRepository;
+    private PxShopRepository                   pxShopRepository;
 
     /** 商品摘要管理仓储 */
-    private PxGoodsRepository               pxGoodsRepository;
+    private PxGoodsRepository                  pxGoodsRepository;
 
     /** 套餐包仓储 */
-    private PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository;
+    private PxGoodsPackagesDetailRepository    pxGoodsPackagesDetailRepository;
 
     /** 子套餐仓储 */
-    private PxSubPackagesRepository         pxSubPackagesRepository;
+    private PxSubPackagesRepository            pxSubPackagesRepository;
 
     /** 商品详情图片管理仓储 */
-    private PxGoodsPackagesImageRepository  pxGoodsPackagesImageRepository;
+    private PxGoodsPackagesImageRepository     pxGoodsPackagesImageRepository;
 
     /** 温馨提醒摘要管理仓储 */
-    private PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository;
+    private PxGoodsPackagesNoticeRepository    pxGoodsPackagesNoticeRepository;
+
+    /** 温馨提醒子项管理仓储 */
+    private PxGoodsPackagesSubNoticeRepository pxGoodsPackagesSubNoticeRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesNoticeListByNoticeId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryPackagesNoticeListByNoticeId(String packagesNoticeId) {
+        MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> result = new MtOperateResult<>();
+        try {
+            List<PxGoodsPackagesSubNoticeModel> pxGoodsPackagesSubNoticeModels = pxGoodsPackagesSubNoticeRepository.findPackagesSubNoticeByGoodsId(
+                packagesNoticeId);
+            result.setResult(pxGoodsPackagesSubNoticeModels);
+        } catch (PxManageException e) {
+            logger.warn("温馨提醒摘要信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_SUB_NOTICE_QUERY_FAILD);
+        }
+        return result;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesNoticeListByGoodsId(java.lang.String)
@@ -282,4 +304,14 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
         this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
     }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesSubNoticeRepository</tt>.
+     * 
+     * @param pxGoodsPackagesSubNoticeRepository value to be assigned to property pxGoodsPackagesSubNoticeRepository
+     */
+    public void setPxGoodsPackagesSubNoticeRepository(PxGoodsPackagesSubNoticeRepository pxGoodsPackagesSubNoticeRepository) {
+        this.pxGoodsPackagesSubNoticeRepository = pxGoodsPackagesSubNoticeRepository;
+    }
+
 }

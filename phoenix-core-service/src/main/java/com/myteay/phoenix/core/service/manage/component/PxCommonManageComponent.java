@@ -12,6 +12,7 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 
@@ -68,6 +69,14 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxGoodsPackagesNoticeModel>> queryPackagesNoticeListByGoodsId(String goodsId);
+
+    /**
+     * 通过商品摘要ID查询所有的温馨提醒子项
+     * 
+     * @param packagesNoticeId
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryPackagesNoticeListByNoticeId(String packagesNoticeId);
 
     /**
      * 通过商品摘要ID查询所有的商品详情图片列表

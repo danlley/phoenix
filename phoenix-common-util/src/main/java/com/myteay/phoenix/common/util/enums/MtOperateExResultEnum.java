@@ -112,6 +112,14 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_SUB_NOTICE_MODEL_INVALID("PX_PKG_SUB_NOTICE_MODEL_INVALID", "00110040", "温馨提醒子项模型非法"),
 
+                                   PX_PKG_SUB_NOTICE_QUERY_FAILD("PX_PKG_SUB_NOTICE_QUERY_FAILD", "00110041", "温馨提醒子项信息查询失败"),
+
+                                   PX_PKG_SUB_NOTICE_UPDATE_FAILD("PX_PKG_SUB_NOTICE_UPDATE_FAILD", "00110042", "温馨提醒子项信息修改失败"),
+
+                                   PX_PKG_SUB_NOTICE_DELETE_FAILD("PX_PKG_SUB_NOTICE_DELETE_FAILD", "00110043", "温馨提醒子项信息删除失败"),
+
+                                   PX_PKG_SUB_NOTICE_SAVE_FAILD("PX_PKG_SUB_NOTICE_SAVE_FAILD", "00110044", "温馨提醒子项信息保存失败"),
+
     ;
 
     /** 枚举值 */
