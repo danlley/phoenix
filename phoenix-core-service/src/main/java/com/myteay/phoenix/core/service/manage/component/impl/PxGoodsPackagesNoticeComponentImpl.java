@@ -35,10 +35,10 @@ public class PxGoodsPackagesNoticeComponentImpl implements PxGoodsPackagesNotice
     private PxGoodsPackagesNoticeRepository                 pxGoodsPackagesNoticeRepository;
 
     /** 
-     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesNoticeComponent#manageGoodsPackagesDetail(com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel)
+     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesNoticeComponent#manageGoodsPackagesNotice(com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel)
      */
     @Override
-    public MtOperateResult<PxGoodsPackagesNoticeModel> manageGoodsPackagesDetail(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) {
+    public MtOperateResult<PxGoodsPackagesNoticeModel> manageGoodsPackagesNotice(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) {
         if (pxGoodsPackagesNoticeModel == null) {
             logger.warn("温馨提醒摘要模型不可用，无法执行管理动作 pxGoodsPackagesNoticeModel= " + pxGoodsPackagesNoticeModel);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_INVALID);

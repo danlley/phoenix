@@ -21,5 +21,5 @@ public interface PxGoodsPackagesNoticeComponent {
      * @param pxGoodsPackagesNoticeModel
      * @return
      */
-    public MtOperateResult<PxGoodsPackagesNoticeModel> manageGoodsPackagesDetail(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel);
+    public MtOperateResult<PxGoodsPackagesNoticeModel> manageGoodsPackagesNotice(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel);
 }
