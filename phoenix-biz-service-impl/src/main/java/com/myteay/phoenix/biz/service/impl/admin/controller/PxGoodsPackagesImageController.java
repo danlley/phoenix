@@ -101,8 +101,7 @@ public class PxGoodsPackagesImageController {
         }
 
         try {
-            MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageComponent.manageGoodsPackagesImage(
-                pxGoodsPackagesImageModel);
+            MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageComponent.manageGoodsPackagesImage(pxGoodsPackagesImageModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -133,8 +132,7 @@ public class PxGoodsPackagesImageController {
         pxGoodsPackagesImageModel.setOperationType(PxOperationTypeEnum.PX_DELETE);
 
         try {
-            MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageComponent.manageGoodsPackagesImage(
-                pxGoodsPackagesImageModel);
+            MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageComponent.manageGoodsPackagesImage(pxGoodsPackagesImageModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -146,6 +144,7 @@ public class PxGoodsPackagesImageController {
     }
 
     /**
+     * 上传文件
      * 
      * @param goodsId
      * @param file

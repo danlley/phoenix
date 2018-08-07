@@ -7,6 +7,8 @@ package com.myteay.phoenix.core.model.manage;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.myteay.common.util.tools.ToStringUtil;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
@@ -68,6 +70,7 @@ public class PxGoodsModel implements Serializable {
     private String               goodsSellAmount;
 
     /** 商品过期时间 */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date                 gmtExpired;
 
     /** 创建时间 */
