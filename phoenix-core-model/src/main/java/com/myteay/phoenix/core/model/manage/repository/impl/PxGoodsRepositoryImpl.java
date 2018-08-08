@@ -57,7 +57,7 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
 
         pxGoodsDAO.updatePxGoods(pxGoodsDO);
 
-        PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(pxGoodsDO.getShopId());
+        PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(pxGoodsDO.getGoodsId());
         return PxGoodsConvertor.convertDO2Model(freshPxGoodsDO);
     }
 

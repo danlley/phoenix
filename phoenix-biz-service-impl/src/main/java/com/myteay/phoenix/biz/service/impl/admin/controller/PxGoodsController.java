@@ -130,7 +130,7 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsModel> manageGoods(@RequestParam(value = "file") MultipartFile file, PxGoodsModel pxGoodsModel) {
+    public MtServiceResult<PxGoodsModel> manageGoods(@RequestParam(value = "file", required = false) MultipartFile file, PxGoodsModel pxGoodsModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存商品概要信息 pxGoodsModel=" + pxGoodsModel);

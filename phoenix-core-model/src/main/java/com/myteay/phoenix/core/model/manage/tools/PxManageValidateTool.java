@@ -63,11 +63,10 @@ public class PxManageValidateTool {
      * @param pxGoodsDO
      */
     public static void validatePxGoodsDO(PxGoodsDO pxGoodsDO) throws PxManageException {
-        if (StringUtils.isBlank(pxGoodsDO.getShopId()) || StringUtils.isBlank(pxGoodsDO.getGoodsImage()) || StringUtils.isBlank(pxGoodsDO.getGoodsTitle())
-            || StringUtils.isBlank(pxGoodsDO.getGoodsDesc()) || StringUtils.isBlank(pxGoodsDO.getGoodsPrice()) || StringUtils.isBlank(pxGoodsDO
-                .getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsDO.getGoodsOnlineTime()) || pxGoodsDO.getOrderType() == null || StringUtils.isBlank(
-                    pxGoodsDO.getIsHuiyuan()) || StringUtils.isBlank(pxGoodsDO.getIsQuan()) || StringUtils.isBlank(pxGoodsDO.getIsTuan()) || pxGoodsDO
-                        .getGmtExpired() == null) {
+        if (StringUtils.isBlank(pxGoodsDO.getShopId()) || StringUtils.isBlank(pxGoodsDO.getGoodsTitle()) || StringUtils.isBlank(pxGoodsDO.getGoodsDesc())
+            || StringUtils.isBlank(pxGoodsDO.getGoodsPrice()) || StringUtils.isBlank(pxGoodsDO.getGoodsCommPrice()) || StringUtils.isBlank(pxGoodsDO
+                .getGoodsOnlineTime()) || pxGoodsDO.getOrderType() == null || StringUtils.isBlank(pxGoodsDO.getIsHuiyuan()) || StringUtils.isBlank(pxGoodsDO
+                    .getIsQuan()) || StringUtils.isBlank(pxGoodsDO.getIsTuan()) || pxGoodsDO.getGmtExpired() == null) {
             logger.warn("商品概要数据模型关键信息不可用 pxGoodsDO=" + pxGoodsDO);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_ERR);
         }
