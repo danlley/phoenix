@@ -14,6 +14,7 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
 
 /**
@@ -78,6 +79,27 @@ public class PxGoodsModel implements Serializable {
 
     /** 最后修改时间 */
     private Date                 gmtModified;
+
+    /** 商品状态 */
+    private PxGoodsStatusEnum    goodsStatus;
+
+    /**
+     * Getter method for property <tt>goodsStatus</tt>.
+     * 
+     * @return property value of goodsStatus
+     */
+    public PxGoodsStatusEnum getGoodsStatus() {
+        return goodsStatus;
+    }
+
+    /**
+     * Setter method for property <tt>goodsStatus</tt>.
+     * 
+     * @param goodsStatus value to be assigned to property goodsStatus
+     */
+    public void setGoodsStatus(PxGoodsStatusEnum goodsStatus) {
+        this.goodsStatus = goodsStatus;
+    }
 
     /**
      * Getter method for property <tt>operationType</tt>.

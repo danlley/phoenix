@@ -14,6 +14,7 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
@@ -58,6 +59,10 @@ public class PxGoodsConvertor {
         pxGoodsModel.setGoodsPrice(pxGoodsDO.getGoodsPrice());
         pxGoodsModel.setGoodsSellAmount(pxGoodsDO.getGoodsSellAmount());
         pxGoodsModel.setGoodsTitle(pxGoodsDO.getGoodsTitle());
+
+        if (StringUtils.isNotBlank(pxGoodsDO.getGoodsStatus())) {
+            pxGoodsModel.setGoodsStatus(PxGoodsStatusEnum.getByValue(pxGoodsDO.getGoodsStatus()));
+        }
 
         if (StringUtils.isNotBlank(pxGoodsDO.getIsHuiyuan())) {
             pxGoodsModel.setIsHuiyuan(PxGoodsHuiyuanEnum.getByValue(pxGoodsDO.getIsHuiyuan()));
@@ -115,6 +120,10 @@ public class PxGoodsConvertor {
         pxGoodsDO.setGoodsPrice(pxGoodsModel.getGoodsPrice());
         pxGoodsDO.setGoodsSellAmount(pxGoodsModel.getGoodsSellAmount());
         pxGoodsDO.setGoodsTitle(pxGoodsModel.getGoodsTitle());
+
+        if (pxGoodsModel.getGoodsStatus() != null) {
+            pxGoodsDO.setGoodsStatus(pxGoodsModel.getGoodsStatus().getValue());
+        }
 
         if (pxGoodsModel.getIsHuiyuan() != null) {
             pxGoodsDO.setIsHuiyuan(pxGoodsModel.getIsHuiyuan().getValue());

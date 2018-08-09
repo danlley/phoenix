@@ -5,6 +5,7 @@
 package com.myteay.phoenix.common.util;
 
 /**
+ * 系统常量
  * 
  * @author min.weixm
  * @version $Id: PxConstants.java, v 0.1 Aug 4, 2018 2:46:20 PM min.weixm Exp $
@@ -12,5 +13,8 @@ package com.myteay.phoenix.common.util;
 public class PxConstants {
 
     /** 套餐图片信息访问根路径 */
-    public static final String GOODS_PKG_UPLOAD_URI = "/upload/img/goods_pkg/";
+    public static final String GOODS_PKG_UPLOAD_URI          = "/upload/img/goods_pkg/";
+
+    /** 最大允许的商品详情图片数量 */
+    public static final int    MAX_GOODS_DETAIL_IMAGE_AMOUNT = 2;
 }

@@ -23,6 +23,7 @@
     <resultMap id="RM-PX-GOODS" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
         <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsStatus" column="goods_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsImage" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -41,10 +42,10 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="PX-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxShopDO">
 		insert into phoenix.px_goods (
-		    shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+		    shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
 		    order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 		)values(
-		    #{shopId},#{goodsImage},#{goodsTitle},#{goodsDesc},#{goodsPrice},#{goodsCommPrice},#{goodsOnlineTime},
+		    #{shopId},'PX_GOODS_DRAFT',#{goodsImage},#{goodsTitle},#{goodsDesc},#{goodsPrice},#{goodsCommPrice},#{goodsOnlineTime},
 		    #{orderType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="goodsId">  
@@ -55,7 +56,7 @@
     <select id="PX-GOODS-SELECT-ALL" resultMap="RM-PX-GOODS">
 	    <![CDATA[
 	        select
-	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	goods_id,goods_status,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
 	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods order by gmt_modified desc
 	    ]]>
@@ -64,7 +65,7 @@
     <select id="PX-GOODS-SELECT-GET-BY-ID" resultMap="RM-PX-GOODS">
 	    <![CDATA[
 	        select
-	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
 	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods 
 	        where (goods_id = #{value})
@@ -74,7 +75,7 @@
     <select id="PX-GOODS-SELECT-GET-BY-SHOP-ID" resultMap="RM-PX-GOODS">
 	    <![CDATA[
 	        select
-	        	goods_id,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
 	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods 
 	        where (shop_id = #{value})
@@ -92,6 +93,9 @@
 			set
 				<if test="goodsSellAmount!=null">
 					goods_sell_amount = #{goodsSellAmount},
+				</if>
+				<if test="goodsStatus!=null">
+					goods_status = #{goodsStatus},
 				</if>
 				<if test="goodsImage!=null">
 					goods_image = #{goodsImage},

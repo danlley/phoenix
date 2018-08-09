@@ -68,6 +68,27 @@ public class PxGoodsDO implements Serializable {
     /** 最后修改时间 */
     private Date              gmtModified;
 
+    /** 商品状态 */
+    private String            goodsStatus;
+
+    /**
+     * Getter method for property <tt>goodsStatus</tt>.
+     * 
+     * @return property value of goodsStatus
+     */
+    public String getGoodsStatus() {
+        return goodsStatus;
+    }
+
+    /**
+     * Setter method for property <tt>goodsStatus</tt>.
+     * 
+     * @param goodsStatus value to be assigned to property goodsStatus
+     */
+    public void setGoodsStatus(String goodsStatus) {
+        this.goodsStatus = goodsStatus;
+    }
+
     /**
      * Getter method for property <tt>goodsId</tt>.
      * 

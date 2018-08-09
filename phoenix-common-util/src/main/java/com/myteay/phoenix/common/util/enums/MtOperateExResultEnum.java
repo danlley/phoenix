@@ -120,6 +120,42 @@ public enum MtOperateExResultEnum {
 
                                    PX_PKG_SUB_NOTICE_SAVE_FAILD("PX_PKG_SUB_NOTICE_SAVE_FAILD", "00110044", "温馨提醒子项信息保存失败"),
 
+                                   PX_GOODS_NOTFOUND_ERR("PX_GOODS_NOTFOUND_EXCEPTION", "00110045", "当前商品未找到"),
+
+                                   PX_GOODS_STATUS_EQUAL("PX_GOODS_STATUS_EQUAL", "00110046", "当前商品状态无需变更"),
+
+                                   PX_GOODS_TYPE_UNCOVERED("PX_GOODS_TYPE_UNCOVERED", "00110047", "商品团、券、会员支持、预约类型等信息不完整"),
+
+                                   PX_GOODS_PRICE_UNCOVERED("PX_GOODS_PRICE_UNCOVERED", "00110048", "商品价格信息不完整"),
+
+                                   PX_GOODS_TITLE_UNCOVERED("PX_GOODS_TITLE_UNCOVERED", "00110049", "商品标题及套餐信息不完整"),
+
+                                   PX_GOODS_ID_UNCOVERED("PX_GOODS_ID_UNCOVERED", "00110050", "商品Id或所在店铺Id信息缺失"),
+
+                                   PX_GOODS_IMG_TIME_UNCOVERED("PX_GOODS_IMG_TIME_UNCOVERED", "00110050", "商品图片或在线时间不完整"),
+
+                                   PX_SHOP_EXPIRED_ERR("PX_SHOP_EXPIRED_ERR", "00110051", "店铺过期时间不可用"),
+
+                                   PX_SHOP_OFFLINE_ERR("PX_SHOP_OFFLINE_ERR", "00110052", "店铺已下架"),
+
+                                   PX_IMG_AMOUNT_ERR("PX_IMG_AMOUNT_ERR", "00110053", "商品数量不合法"),
+
+                                   PX_IMG_DETAIL_TYPE_ERR("PX_IMG_DETAIL_TYPE_ERR", "00110054", "商品详情图片格式不合法"),
+
+                                   PX_IMG_TYPE_ERR("PX_IMG_TYPE_ERR", "00110055", "商品摘要图片格式不合法"),
+
+                                   PX_GOODS_PACKAGE_AMOUNT_ERR("PX_GOODS_PACKAGE_AMOUNT_ERR", "00110056", "商品套餐包数量信息不合法"),
+
+                                   PX_GOODS_SUB_PACKAGE_AMOUNT_ERR("PX_GOODS_SUB_PACKAGE_AMOUNT_ERR", "00110057", "商品子套餐数量不合法"),
+
+                                   PX_GOODS_SUB_PACKAGE_TYPE_ERR("PX_GOODS_SUB_PACKAGE_TYPE_ERR", "00110058", "子套餐类型不合法"),
+
+                                   PX_GOODS_SUB_PACKAGE_PRICE_ERR("PX_GOODS_SUB_PACKAGE_PRICE_ERR", "00110059", "子套餐单价不合法"),
+
+                                   PX_GOODS_SUB_PACKAGE_TOTAL_ERR("PX_GOODS_SUB_PACKAGE_TOTAL_ERR", "00110060", "子套餐数量不合法"),
+
+                                   PX_GOODS_SUB_PACKAGE_NAME_ERR("PX_GOODS_SUB_PACKAGE_NAME_ERR", "00110061", "子套餐名称不合法"),
+
     ;
 
     /** 枚举值 */
