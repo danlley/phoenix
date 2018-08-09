@@ -156,6 +156,14 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_SUB_PACKAGE_NAME_ERR("PX_GOODS_SUB_PACKAGE_NAME_ERR", "00110061", "子套餐名称不合法"),
 
+                                   PX_GOODS_NOTICE_AMOUNT_ERR("PX_GOODS_NOTICE_AMOUNT_ERR", "00110062", "商品温馨提醒数量不合法"),
+
+                                   PX_GOODS_NOTICE_NAME_ERR("PX_GOODS_NOTICE_NAME_ERR", "00110063", "商品温馨提醒分类名称不合法"),
+
+                                   PX_GOODS_SUB_NOTICE_AMOUNT_ERR("PX_GOODS_SUB_NOTICE_AMOUNT_ERR", "00110064", "商品温馨提醒子项数量不合法"),
+
+                                   PX_GOODS_SUB_NOTICE_TITLE_ERR("PX_GOODS_SUB_NOTICE_TITLE_ERR", "00110065", "商品温馨提醒子项内容不合法"),
+
     ;
 
     /** 枚举值 */

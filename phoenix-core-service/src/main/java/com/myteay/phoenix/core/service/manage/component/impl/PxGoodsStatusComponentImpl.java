@@ -22,6 +22,8 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
@@ -89,7 +91,79 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
         // step 4: 检查套餐包信息
         validateGoodsPackagesDetail(pxGoodsModel);
 
+        // step 5: 检查温馨提醒信息
+        validateGoodsPackagesNotice(pxGoodsModel);
+
         return null;
+    }
+
+    /**
+     * 温馨提醒合法性检查
+     * 
+     * @param pxGoodsModel
+     * @throws PxManageException
+     */
+    private void validateGoodsPackagesNotice(PxGoodsModel pxGoodsModel) throws PxManageException {
+        List<PxGoodsPackagesNoticeModel> list = pxGoodsPackagesNoticeRepository.findGoodsPackagesNoticeByGoodsId(pxGoodsModel.getGoodsId());
+
+        if (CollectionUtils.isEmpty(list)) {
+            logger.warn("商品温馨提醒数量不合法 pxGoodsModel=" + pxGoodsModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_NOTICE_AMOUNT_ERR);
+        }
+
+        for (PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel : list) {
+            validateSinglePackageNotice(pxGoodsPackagesNoticeModel);
+        }
+    }
+
+    /**
+     * 检查单个温馨提醒分类及温馨提醒子项
+     * 
+     * @param pxGoodsPackagesNoticeModel
+     * @throws PxManageException 
+     */
+    private void validateSinglePackageNotice(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
+
+        if (pxGoodsPackagesNoticeModel == null) {
+            logger.warn("温馨提醒摘要模型不可用，无法执行管理动作 pxGoodsPackagesNoticeModel= " + pxGoodsPackagesNoticeModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_NOTICE_MODEL_INVALID);
+        }
+
+        if (StringUtils.isBlank(pxGoodsPackagesNoticeModel.getPackagesNoticeName())) {
+            logger.warn("商品温馨提醒分类名称不合法 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_NOTICE_NAME_ERR);
+        }
+
+        // 检查温馨提醒子项合法性
+        validateSubPackageNotice(pxGoodsPackagesNoticeModel);
+    }
+
+    /**
+     * 检查温馨提醒子项合法性
+     * 
+     * @param pxGoodsPackagesNoticeModel
+     * @throws PxManageException
+     */
+    private void validateSubPackageNotice(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
+        List<PxGoodsPackagesSubNoticeModel> list = pxGoodsPackagesSubNoticeRepository.findPackagesSubNoticeByGoodsId(pxGoodsPackagesNoticeModel
+            .getPackagesNoticeId());
+
+        if (CollectionUtils.isEmpty(list)) {
+            logger.warn("商品温馨提醒子项数量不合法 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_SUB_NOTICE_AMOUNT_ERR);
+        }
+
+        for (PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel : list) {
+            if (pxGoodsPackagesSubNoticeModel == null) {
+                logger.warn("温馨提醒子项模型不可用，无法执行管理动作 pxGoodsPackagesSubNoticeModel= " + pxGoodsPackagesSubNoticeModel);
+                throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_SUB_NOTICE_MODEL_INVALID);
+            }
+
+            if (StringUtils.isBlank(pxGoodsPackagesSubNoticeModel.getSubNoticeDetail())) {
+                logger.warn("商品温馨提醒子项内容不合法 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
+                throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_SUB_NOTICE_TITLE_ERR);
+            }
+        }
     }
 
     /**
