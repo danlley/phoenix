@@ -323,7 +323,7 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
                 continue;
             }
 
-            if (validateSingleImageType(image.getImage())) {
+            if (!validateSingleImageType(image.getImage())) {
                 logger.warn("商品详情图片格式不合法 pxGoodsModel=" + pxGoodsModel);
                 throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_IMG_DETAIL_TYPE_ERR);
             }
@@ -388,7 +388,7 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
         }
 
         PxGoodsModel model = pxGoodsRepository.findSingleGoods(goodsId);
-        validateGoodsProperty(pxGoodsModel);
+        validateGoodsProperty(model);
 
         PxGoodsStatusEnum targetGoodsStatusEnum = pxGoodsModel.getGoodsStatus();
         PxGoodsStatusEnum sourceGoodsStatusEnum = model.getGoodsStatus();
@@ -397,7 +397,7 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_STATUS_EQUAL);
         }
 
-        return pxGoodsModel;
+        return model;
     }
 
     /**
@@ -415,7 +415,7 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
         // TODO 需要对过期时间进行校验，如已经到过期时间，则不允许对商品进行发布操作
         if (pxGoodsModel.getGmtExpired() == null) {
             logger.warn("商品过期时间不可用, pxGoodsModel= " + pxGoodsModel);
-            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_STATUS_EQUAL);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_EXPIRE_UNKNOW);
         }
 
         if (pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel.getIsTuan() == null || pxGoodsModel
@@ -444,7 +444,7 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_IMG_TIME_UNCOVERED);
         }
 
-        if (validateSingleImageType(pxGoodsModel.getGoodsImage())) {
+        if (!validateSingleImageType(pxGoodsModel.getGoodsImage())) {
             logger.warn("商品摘要图片格式不合法 pxGoodsModel=" + pxGoodsModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_IMG_TYPE_ERR);
         }

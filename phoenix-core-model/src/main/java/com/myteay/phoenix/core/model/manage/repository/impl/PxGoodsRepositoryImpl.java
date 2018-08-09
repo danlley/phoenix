@@ -53,7 +53,7 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
      */
     @Override
     public PxGoodsModel modifyGoodsInfo(PxGoodsModel pxGoodsModel) throws PxManageException {
-        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel);
+        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel, false);
 
         pxGoodsDAO.updatePxGoods(pxGoodsDO);
 
@@ -73,7 +73,7 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
 
         PxManageValidateTool.validatePxGoodsModel(pxGoodsModel);
 
-        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel);
+        PxGoodsDO pxGoodsDO = PxGoodsConvertor.convertModel2DO(pxGoodsModel, true);
         String goodsId = pxGoodsDAO.insert(pxGoodsDO);
 
         PxGoodsDO freshPxGoodsDO = pxGoodsDAO.findPxGoodsById(goodsId);

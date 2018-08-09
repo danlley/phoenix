@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +23,13 @@ import com.myteay.phoenix.common.util.MtFileUtils;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
+import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent;
 
 /**
  * 商品摘要管理
@@ -45,9 +48,13 @@ public class PxGoodsController {
     @Autowired
     private PxCommonManageComponent pxCommonManageComponent;
 
-    /** 后台一般性简单业务管理组件 */
+    /** 商品管理组件 */
     @Autowired
     private PxGoodsComponent        pxGoodsComponent;
+
+    /** 商品状态管理组件 */
+    @Autowired
+    private PxGoodsStatusComponent  pxGoodsStatusComponent;
 
     /** 套餐详情图片管理 */
     @Autowired
@@ -143,6 +150,34 @@ public class PxGoodsController {
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存商品概要信息发生异常" + e.getMessage(), e);
+            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+        }
+
+        return result;
+    }
+
+    /**
+     * 商品下架及商品发布
+     * 
+     * @param pxShopModel
+     * @return
+     */
+    @RequestMapping(value = "/status/", method = { RequestMethod.POST })
+    public MtServiceResult<PxGoodsModel> onlineGoods(@RequestBody PxGoodsModel pxGoodsModel) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("开始执行商品下架及商品发布 pxGoodsModel=" + pxGoodsModel);
+        }
+        MtServiceResult<PxGoodsModel> result = null;
+        try {
+            MtOperateResult<PxGoodsModel> innerResult = pxGoodsStatusComponent.manageGoodsStatus(pxGoodsModel);
+            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result.setResult(innerResult.getResult());
+        } catch (PxManageException e) {
+            logger.warn("商品下架及商品发布过程发生业务异常" + e.getMessage(), e);
+            result = new MtServiceResult<>(e.getResultEnum(), e.getExResultEnum());
+        } catch (Exception e) {
+            logger.warn("商品下架及商品发布过程发生未知异常" + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 

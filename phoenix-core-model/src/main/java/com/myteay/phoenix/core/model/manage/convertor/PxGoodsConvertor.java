@@ -98,7 +98,7 @@ public class PxGoodsConvertor {
      * @return
      * @throws PxManageException
      */
-    public static PxGoodsDO convertModel2DO(PxGoodsModel pxGoodsModel) throws PxManageException {
+    public static PxGoodsDO convertModel2DO(PxGoodsModel pxGoodsModel, boolean isValidate) throws PxManageException {
         if (pxGoodsModel == null) {
             logger.warn("当前商品概要模型不可用，无法保存商品概要信息");
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
@@ -147,7 +147,9 @@ public class PxGoodsConvertor {
             logger.info("数据模型转换结束 pxGoodsDO=" + pxGoodsDO);
         }
 
-        PxManageValidateTool.validatePxGoodsDO(pxGoodsDO);
+        if (isValidate) {
+            PxManageValidateTool.validatePxGoodsDO(pxGoodsDO);
+        }
 
         return pxGoodsDO;
     }

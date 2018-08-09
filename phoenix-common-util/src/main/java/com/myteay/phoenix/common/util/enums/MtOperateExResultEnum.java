@@ -138,7 +138,7 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_OFFLINE_ERR("PX_SHOP_OFFLINE_ERR", "00110052", "店铺已下架"),
 
-                                   PX_IMG_AMOUNT_ERR("PX_IMG_AMOUNT_ERR", "00110053", "商品数量不合法"),
+                                   PX_IMG_AMOUNT_ERR("PX_IMG_AMOUNT_ERR", "00110053", "商品详情图片数量不合法"),
 
                                    PX_IMG_DETAIL_TYPE_ERR("PX_IMG_DETAIL_TYPE_ERR", "00110054", "商品详情图片格式不合法"),
 
@@ -165,6 +165,8 @@ public enum MtOperateExResultEnum {
                                    PX_GOODS_SUB_NOTICE_TITLE_ERR("PX_GOODS_SUB_NOTICE_TITLE_ERR", "00110065", "商品温馨提醒子项内容不合法"),
 
                                    PX_GOODS_STATUS_UNKNOW("PX_GOODS_STATUS_UNKNOW", "00110066", "商品的目标变更状态未知，请确认商品是否需要发布or下架"),
+
+                                   PX_GOODS_EXPIRE_UNKNOW("PX_GOODS_EXPIRE_UNKNOW", "00110067", "商品过期时间不可用"),
 
     ;
 
