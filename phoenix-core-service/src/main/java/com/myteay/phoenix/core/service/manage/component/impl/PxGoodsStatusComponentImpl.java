@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import com.myteay.phoenix.common.util.PxConstants;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
@@ -33,6 +34,7 @@ import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesSubNoticeR
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent;
 
 /**
@@ -67,6 +69,9 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
     /** 子套餐仓储 */
     private PxSubPackagesRepository            pxSubPackagesRepository;
 
+    /** 商品摘要管理组件 */
+    private PxGoodsComponent                   pxGoodsComponent;
+
     /** 
      * @throws PxManageException 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent#manageGoodsStatus(com.myteay.phoenix.core.model.manage.PxGoodsModel)
@@ -74,6 +79,44 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
     @Override
     public MtOperateResult<PxGoodsModel> manageGoodsStatus(PxGoodsModel pxGoodsModel) throws PxManageException {
 
+        if (pxGoodsModel == null || pxGoodsModel.getGoodsStatus() == null) {
+            logger.warn("商品概要模型不可用，无法执行状态变更动作 pxGoodsModel= " + pxGoodsModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
+        }
+
+        return changeGoodsStatus(pxGoodsModel, pxGoodsModel.getGoodsStatus());
+    }
+
+    /**
+     * 识别商品的发布或下架状态，并完成目标下架或发布任务
+     * 
+     * @param pxGoodsModel
+     * @param pxGoodsStatusEnum
+     * @return
+     * @throws PxManageException
+     */
+    private MtOperateResult<PxGoodsModel> changeGoodsStatus(PxGoodsModel pxGoodsModel, PxGoodsStatusEnum pxGoodsStatusEnum) throws PxManageException {
+
+        switch (pxGoodsStatusEnum) {
+            case PX_GOODS_ONLINE:
+                return change2Online(pxGoodsModel);
+            case PX_GOODS_OFFLINE:
+                pxGoodsModel.setOperationType(PxOperationTypeEnum.PX_MODIFY);
+                return pxGoodsComponent.modifyGoodsModel(pxGoodsModel);
+            default:
+                logger.warn("商品的目标变更状态未知，请确认商品是否需要发布or下架 pxGoodsModel= " + pxGoodsModel);
+                return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_STATUS_UNKNOW);
+        }
+    }
+
+    /**
+     * 商品发布
+     * 
+     * @param pxGoodsModel
+     * @return
+     * @throws PxManageException
+     */
+    private MtOperateResult<PxGoodsModel> change2Online(PxGoodsModel pxGoodsModel) throws PxManageException {
         if (pxGoodsModel == null || pxGoodsModel.getGoodsStatus() == null) {
             logger.warn("商品概要模型不可用，无法执行状态变更动作 pxGoodsModel= " + pxGoodsModel);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
@@ -94,7 +137,8 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
         // step 5: 检查温馨提醒信息
         validateGoodsPackagesNotice(pxGoodsModel);
 
-        return null;
+        pxGoodsModel.setOperationType(PxOperationTypeEnum.PX_MODIFY);
+        return pxGoodsComponent.modifyGoodsModel(pxGoodsModel);
     }
 
     /**
@@ -468,6 +512,15 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
      */
     public void setPxSubPackagesRepository(PxSubPackagesRepository pxSubPackagesRepository) {
         this.pxSubPackagesRepository = pxSubPackagesRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsComponent</tt>.
+     * 
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
+     */
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
     }
 
 }

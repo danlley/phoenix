@@ -22,4 +22,12 @@ public interface PxGoodsComponent {
      * @return
      */
     public MtOperateResult<PxGoodsModel> manageGoods(PxGoodsModel pxGoodsModel);
+
+    /**
+     * 修改商品概要信息
+     * 
+     * @param pxGoodsModel
+     * @return
+     */
+    public MtOperateResult<PxGoodsModel> modifyGoodsModel(PxGoodsModel pxGoodsModel);
 }

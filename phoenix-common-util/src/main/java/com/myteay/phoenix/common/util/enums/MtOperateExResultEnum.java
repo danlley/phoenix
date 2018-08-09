@@ -164,6 +164,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_SUB_NOTICE_TITLE_ERR("PX_GOODS_SUB_NOTICE_TITLE_ERR", "00110065", "商品温馨提醒子项内容不合法"),
 
+                                   PX_GOODS_STATUS_UNKNOW("PX_GOODS_STATUS_UNKNOW", "00110066", "商品的目标变更状态未知，请确认商品是否需要发布or下架"),
+
     ;
 
     /** 枚举值 */

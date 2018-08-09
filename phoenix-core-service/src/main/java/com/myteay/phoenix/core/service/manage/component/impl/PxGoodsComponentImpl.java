@@ -35,6 +35,23 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
     private PxGoodsRepository                 pxGoodsRepository;
 
     /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#modifyGoodsModel(com.myteay.phoenix.core.model.manage.PxGoodsModel)
+     */
+    public MtOperateResult<PxGoodsModel> modifyGoodsModel(PxGoodsModel pxGoodsModel) {
+        MtOperateResult<PxGoodsModel> result = new MtOperateResult<PxGoodsModel>();
+        PxGoodsModel freshPxGoodsModel = null;
+        try {
+            freshPxGoodsModel = pxGoodsRepository.modifyGoodsInfo(pxGoodsModel);
+            result.setResult(freshPxGoodsModel);
+        } catch (PxManageException e) {
+            logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
+            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
+        }
+
+        return result;
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#manageGoods(com.myteay.phoenix.core.model.manage.PxGoodsModel)
      */
     @Override
@@ -68,26 +85,6 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
         } catch (PxManageException e) {
             logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
-        }
-
-        return result;
-    }
-
-    /**
-     * 修改商品概要信息
-     * 
-     * @param pxGoodsModel
-     * @return
-     */
-    private MtOperateResult<PxGoodsModel> modifyGoodsModel(PxGoodsModel pxGoodsModel) {
-        MtOperateResult<PxGoodsModel> result = new MtOperateResult<PxGoodsModel>();
-        PxGoodsModel freshPxGoodsModel = null;
-        try {
-            freshPxGoodsModel = pxGoodsRepository.modifyGoodsInfo(pxGoodsModel);
-            result.setResult(freshPxGoodsModel);
-        } catch (PxManageException e) {
-            logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
-            result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
         }
 
         return result;
