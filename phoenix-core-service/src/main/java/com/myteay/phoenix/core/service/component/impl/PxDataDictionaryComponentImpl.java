@@ -22,6 +22,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxSubPackagesTypeEnum;
@@ -92,6 +93,9 @@ public class PxDataDictionaryComponentImpl implements PxDataDictionaryComponent,
 
         list = EnumUtil.getDataDictionaryModelFromEnum(PxSubPackagesTypeEnum.class);
         DATA_DIC_CACHE.put("PxSubPackagesTypeEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsStatusEnum.class);
+        DATA_DIC_CACHE.put("PxGoodsStatusEnum", list);
 
         logger.warn("缓存初始化结果： " + DATA_DIC_CACHE);
     }
