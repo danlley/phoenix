@@ -172,6 +172,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_EXPIRE_ERR("PX_SHOP_EXPIRE_ERR", "00110069", "店铺合同已到期"),
 
+                                   PX_SHOP_HAS_GOODS_ERR("PX_SHOP_HAS_GOODS_ERR", "00110070", "店铺包含商品，无法删除"),
+
     ;
 
     /** 枚举值 */

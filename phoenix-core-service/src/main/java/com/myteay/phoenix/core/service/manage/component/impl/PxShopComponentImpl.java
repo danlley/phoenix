@@ -4,14 +4,19 @@
  */
 package com.myteay.phoenix.core.service.manage.component.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
@@ -33,6 +38,9 @@ public class PxShopComponentImpl implements PxShopComponent {
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxShopModel> pxCommonMngTemplate;
+
+    /** 商品摘要管理仓储 */
+    private PxGoodsRepository                pxGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxShopComponent#manageShop(com.myteay.phoenix.core.model.manage.PxShopModel)
@@ -110,7 +118,7 @@ public class PxShopComponentImpl implements PxShopComponent {
             freshPxShopModel = pxShopRepository.modifyShopInfo(pxShopModel);
             result.setResult(freshPxShopModel);
         } catch (PxManageException e) {
-            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
+            logger.warn("修改店铺信息发生异常 pxShopModel=" + pxShopModel, e);
             result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_UPDATE_FAILD);
         }
 
@@ -124,15 +132,40 @@ public class PxShopComponentImpl implements PxShopComponent {
      * @return
      */
     private MtOperateResult<PxShopModel> deleteShopModel(PxShopModel pxShopModel) {
+
+        if (!isCanDeleteShop(pxShopModel.getShopId())) {
+            logger.warn("店铺包含商品，无法删除 pxShopModel=" + pxShopModel);
+            return new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_HAS_GOODS_ERR);
+        }
+
         MtOperateResult<PxShopModel> result = new MtOperateResult<PxShopModel>();
         try {
             pxShopRepository.removeShopInfo(pxShopModel);
         } catch (PxManageException e) {
-            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
+            logger.warn("删除店铺信息发生异常 pxShopModel=" + pxShopModel, e);
             result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_DELETE_FAILD);
         }
 
         return result;
+    }
+
+    /**
+     * 检查当前店铺是否允许删除
+     * 
+     * @param shopId
+     * @return
+     */
+    private boolean isCanDeleteShop(String shopId) {
+        try {
+            List<PxGoodsModel> list = pxGoodsRepository.findGoodsByShopId(shopId);
+            if (CollectionUtils.isEmpty(list)) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("保存店铺信息发生异常 shopId=" + shopId, e);
+        }
+
+        return false;
     }
 
     /**
@@ -168,7 +201,7 @@ public class PxShopComponentImpl implements PxShopComponent {
             freshPxShopModel = pxShopRepository.findSingleShop(pxShopModel.getShopId());
             result.setResult(freshPxShopModel);
         } catch (PxManageException e) {
-            logger.warn("保存店铺信息发生异常 pxShopModel=" + pxShopModel, e);
+            logger.warn("查找店铺信息发生异常 pxShopModel=" + pxShopModel, e);
             result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
         }
 
@@ -191,6 +224,15 @@ public class PxShopComponentImpl implements PxShopComponent {
      */
     public void setPxShopRepository(PxShopRepository pxShopRepository) {
         this.pxShopRepository = pxShopRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
     }
 
 }
