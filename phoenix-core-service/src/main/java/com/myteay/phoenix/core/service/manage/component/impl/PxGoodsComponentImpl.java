@@ -13,6 +13,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -116,11 +117,26 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
      */
     private MtOperateResult<PxGoodsModel> deleteGoodsModel(PxGoodsModel pxGoodsModel) {
 
+        // step 1: 商品状态为已发布、已下线，则不允许进行删除
+        try {
+            PxGoodsModel freshPxGoodsModel = pxGoodsRepository.findSingleGoods(pxGoodsModel.getGoodsId());
+            if (freshPxGoodsModel != null && (freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE || freshPxGoodsModel
+                .getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE)) {
+                logger.warn("商品状态为已发布、已下线，则不允许进行删除 pxGoodsModel=" + pxGoodsModel);
+                return new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DEL_STATUS_ERR);
+            }
+        } catch (PxManageException e) {
+            logger.warn("查询单个商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
+            return new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
+        }
+
+        // step 2: 商品包含子项内容，则不允许删除
         if (!isCanDeleteGoods(pxGoodsModel.getGoodsId())) {
             logger.warn("商品包含子项，无法删除 pxGoodsModel=" + pxGoodsModel);
             return new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_HAS_CHILD_ERR);
         }
 
+        // step 3: 执行删除动作
         MtOperateResult<PxGoodsModel> result = new MtOperateResult<PxGoodsModel>();
         try {
             pxGoodsRepository.removeGoodsInfo(pxGoodsModel);

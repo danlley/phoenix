@@ -176,6 +176,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_HAS_CHILD_ERR("PX_GOODS_HAS_CHILD_ERR", "00110071", "商品包含子项，无法删除"),
 
+                                   PX_GOODS_DEL_STATUS_ERR("PX_GOODS_DEL_STATUS_ERR", "00110072", "商品状态为已发布、已下线，则不允许进行删除"),
+
     ;
 
     /** 枚举值 */
