@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.common.util.PxConstants;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -357,10 +358,14 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_NOTFOUND_ERR);
         }
 
-        // TODO 需要对过期时间进行校验，如已经到过期时间，则不允许对商品进行发布操作
         if (pxShopModel.getGmtExpired() == null) {
             logger.warn("店铺过期时间不可用, pxShopModel= " + pxShopModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_EXPIRED_ERR);
+        }
+
+        if (DateUtil.isBeforeNow(pxShopModel.getGmtExpired())) {
+            logger.warn("店铺合同已到期, pxShopModel= " + pxShopModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_EXPIRE_ERR);
         }
 
         if (pxShopModel.getShopStatus() == null || PxShopStatusEnum.PX_SHOP_ONLINE != pxShopModel.getShopStatus()) {
@@ -412,10 +417,14 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
         }
 
-        // TODO 需要对过期时间进行校验，如已经到过期时间，则不允许对商品进行发布操作
         if (pxGoodsModel.getGmtExpired() == null) {
             logger.warn("商品过期时间不可用, pxGoodsModel= " + pxGoodsModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_EXPIRE_UNKNOW);
+        }
+
+        if (DateUtil.isBeforeNow(pxGoodsModel.getGmtExpired())) {
+            logger.warn("商品过期时间已到，无法保持发布状态, pxGoodsModel= " + pxGoodsModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_EXPIRE_ERR);
         }
 
         if (pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel.getIsTuan() == null || pxGoodsModel

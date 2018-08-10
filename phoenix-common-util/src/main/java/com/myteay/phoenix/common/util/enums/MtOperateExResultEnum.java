@@ -168,6 +168,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_EXPIRE_UNKNOW("PX_GOODS_EXPIRE_UNKNOW", "00110067", "商品过期时间不可用"),
 
+                                   PX_GOODS_EXPIRE_ERR("PX_GOODS_EXPIRE_ERR", "00110068", "商品过期时间已到，无法保持发布状态"),
+
+                                   PX_SHOP_EXPIRE_ERR("PX_SHOP_EXPIRE_ERR", "00110069", "店铺合同已到期"),
+
     ;
 
     /** 枚举值 */
