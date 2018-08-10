@@ -186,6 +186,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUB_NOTICE_VALIDATE_ERR("PX_SUB_NOTICE_VALIDATE_ERR", "00110076", "检查温馨提醒子项出错，无法删除"),
 
+                                   PX_SUB_PKGS_DEL_VALIDATE_ERR("PX_SUB_PKGS_DEL_VALIDATE_ERR", "00110077", "子套餐对应的商品状态为已发布或已下架，不允许删除"),
+
     ;
 
     /** 枚举值 */

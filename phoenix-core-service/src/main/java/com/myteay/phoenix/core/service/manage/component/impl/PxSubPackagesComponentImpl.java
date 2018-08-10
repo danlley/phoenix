@@ -4,14 +4,20 @@
  */
 package com.myteay.phoenix.core.service.manage.component.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
 import com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
@@ -33,6 +39,12 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
 
     /** 子套餐仓储 */
     private PxSubPackagesRepository                 pxSubPackagesRepository;
+
+    /** 套餐包仓储 */
+    private PxGoodsPackagesDetailRepository         pxGoodsPackagesDetailRepository;
+
+    /** 商品概要管理仓储 */
+    private PxGoodsRepository                       pxGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent#manageSubPackages(com.myteay.phoenix.core.model.manage.PxSubPackagesModel)
@@ -99,15 +111,71 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
      * @return
      */
     private MtOperateResult<PxSubPackagesModel> deleteGoodsModel(PxSubPackagesModel pxSubPackagesModel) {
+        if (!isCanDelete(pxSubPackagesModel)) {
+            logger.warn("子套餐对应的商品状态为已发布或已下架，不允许删除 pxSubPackagesModel=" + pxSubPackagesModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKGS_DEL_VALIDATE_ERR);
+        }
+
         MtOperateResult<PxSubPackagesModel> result = new MtOperateResult<PxSubPackagesModel>();
         try {
             pxSubPackagesRepository.removeSubPackagesInfo(pxSubPackagesModel);
         } catch (PxManageException e) {
-            logger.warn("保存子套餐信息发生异常 pxSubPackagesModel=" + pxSubPackagesModel, e);
-            result = new MtOperateResult<PxSubPackagesModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_DELETE_FAILD);
+            logger.warn("删除子套餐信息发生异常 pxSubPackagesModel=" + pxSubPackagesModel, e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_DELETE_FAILD);
         }
 
         return result;
+    }
+
+    /**
+     * 判断当前子套餐是否允许删除
+     * 
+     * @param pxSubPackagesModel
+     * @return
+     */
+    private boolean isCanDelete(PxSubPackagesModel pxSubPackagesModel) {
+        PxGoodsModel goodsModel = null;
+        try {
+            goodsModel = queryGoodsBySubPackages(pxSubPackagesModel);
+        } catch (PxManageException e) {
+            logger.warn("通过子套餐查询对应的商品信息失败 pxSubPackagesModel=" + pxSubPackagesModel, e);
+            return false;
+        }
+
+        if (goodsModel == null) {
+            return false;
+        }
+
+        if (goodsModel.getGoodsStatus() == null || goodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_DRAFT) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 通过子套餐查询对应的商品信息
+     * 
+     * @param pxSubPackagesModel
+     * @return
+     * @throws PxManageException
+     */
+    private PxGoodsModel queryGoodsBySubPackages(PxSubPackagesModel pxSubPackagesModel) throws PxManageException {
+
+        PxSubPackagesModel subPackagesModel = pxSubPackagesRepository.findSingleSubPackages(pxSubPackagesModel.getSubPackagesId());
+        if (subPackagesModel == null || StringUtils.isBlank(subPackagesModel.getPackagesDetailId())) {
+            logger.warn("当前子套餐无法找到 pxSubPackagesModel=" + pxSubPackagesModel);
+            return null;
+        }
+
+        PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.findSingleGoodsPackagesDetail(subPackagesModel
+            .getPackagesDetailId());
+        if (pxGoodsPackagesDetailModel == null || StringUtils.isBlank(pxGoodsPackagesDetailModel.getGoodsId())) {
+            logger.warn("当前子套餐无对应的套餐包，无法找到对应商品pxSubPackagesModel=" + pxSubPackagesModel);
+            return null;
+        }
+
+        return pxGoodsRepository.findSingleGoods(pxGoodsPackagesDetailModel.getGoodsId());
     }
 
     /**
@@ -194,4 +262,21 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
         this.pxSubPackagesRepository = pxSubPackagesRepository;
     }
 
+    /**
+     * Setter method for property <tt>pxGoodsPackagesDetailRepository</tt>.
+     * 
+     * @param pxGoodsPackagesDetailRepository value to be assigned to property pxGoodsPackagesDetailRepository
+     */
+    public void setPxGoodsPackagesDetailRepository(PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository) {
+        this.pxGoodsPackagesDetailRepository = pxGoodsPackagesDetailRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
+    }
 }
