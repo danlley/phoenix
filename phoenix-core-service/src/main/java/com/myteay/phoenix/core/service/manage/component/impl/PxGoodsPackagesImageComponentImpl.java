@@ -10,9 +10,12 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
@@ -33,6 +36,9 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
 
     /** 商品详情图片管理仓储 */
     private PxGoodsPackagesImageRepository                 pxGoodsPackagesImageRepository;
+
+    /** 商品概要管理仓储 */
+    private PxGoodsRepository                              pxGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent#manageGoodsPackagesImage(com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel)
@@ -79,6 +85,21 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
      * @return
      */
     private MtOperateResult<PxGoodsPackagesImageModel> deleteGoodsModel(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
+
+        // step 1: 商品状态为已发布、已下线，则不允许进行删除
+        try {
+            PxGoodsModel freshPxGoodsModel = pxGoodsRepository.findSingleGoods(pxGoodsPackagesImageRepository.findSingleGoodsPackagesImage(
+                pxGoodsPackagesImageModel.getImageId()).getGoodsId());
+            if (freshPxGoodsModel != null && (freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE || freshPxGoodsModel
+                .getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE)) {
+                logger.warn("商品状态为已发布、已下线，则不允许进行删除 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
+                return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DEL_STATUS_ERR);
+            }
+        } catch (PxManageException e) {
+            logger.warn("查询单个商品概要信息发生异常 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel, e);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
+        }
+
         MtOperateResult<PxGoodsPackagesImageModel> result = new MtOperateResult<PxGoodsPackagesImageModel>();
         try {
             pxGoodsPackagesImageRepository.removeGoodsPackagesImageInfo(pxGoodsPackagesImageModel);
@@ -174,4 +195,12 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
         this.pxGoodsPackagesImageRepository = pxGoodsPackagesImageRepository;
     }
 
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
+    }
 }
