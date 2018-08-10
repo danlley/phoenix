@@ -4,7 +4,10 @@
  */
 package com.myteay.phoenix.core.service.manage.component.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -12,7 +15,9 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
@@ -33,6 +38,9 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
 
     /** 套餐包仓储 */
     private PxGoodsPackagesDetailRepository                 pxGoodsPackagesDetailRepository;
+
+    /** 子套餐仓储 */
+    private PxSubPackagesRepository                         pxSubPackagesRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailComponent#manageGoodsPackagesDetail(com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel)
@@ -100,6 +108,17 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      * @return
      */
     private MtOperateResult<PxGoodsPackagesDetailModel> deleteGoodsModel(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
+
+        try {
+            List<PxSubPackagesModel> list = pxSubPackagesRepository.findSubPackagesByGoodsId(pxGoodsPackagesDetailModel.getPackagesDetailId());
+            if (!CollectionUtils.isEmpty(list)) {
+                logger.warn("商品套餐包含子项，无法删除 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
+                return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PACKAGES_DEL_ERR);
+            }
+        } catch (PxManageException e1) {
+            logger.warn("检查套餐子项出错，无法删除套餐  pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PACKAGES_DEL_VALIDATE_ERR);
+        }
         MtOperateResult<PxGoodsPackagesDetailModel> result = new MtOperateResult<PxGoodsPackagesDetailModel>();
         try {
             pxGoodsPackagesDetailRepository.removeGoodsPackagesDetailInfo(pxGoodsPackagesDetailModel);
@@ -138,7 +157,8 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      * @param operationType
      * @return
      */
-    private MtOperateResult<PxGoodsPackagesDetailModel> switchOperation(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel, PxOperationTypeEnum operationType) {
+    private MtOperateResult<PxGoodsPackagesDetailModel> switchOperation(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel,
+                                                                        PxOperationTypeEnum operationType) {
 
         return pxCommonMngTemplate.switchOperation(pxGoodsPackagesDetailModel, operationType, new PxCommonCallback<PxGoodsPackagesDetailModel>() {
 
@@ -195,4 +215,12 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
         this.pxGoodsPackagesDetailRepository = pxGoodsPackagesDetailRepository;
     }
 
+    /**
+     * Setter method for property <tt>pxSubPackagesRepository</tt>.
+     * 
+     * @param pxSubPackagesRepository value to be assigned to property pxSubPackagesRepository
+     */
+    public void setPxSubPackagesRepository(PxSubPackagesRepository pxSubPackagesRepository) {
+        this.pxSubPackagesRepository = pxSubPackagesRepository;
+    }
 }

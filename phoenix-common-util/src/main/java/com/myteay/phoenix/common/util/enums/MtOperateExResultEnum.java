@@ -178,6 +178,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_DEL_STATUS_ERR("PX_GOODS_DEL_STATUS_ERR", "00110072", "商品状态为已发布、已下线，则不允许进行删除"),
 
+                                   PX_PACKAGES_DEL_ERR("PX_PACKAGES_DEL_ERR", "00110073", "商品套餐包含子项，无法删除"),
+
+                                   PX_PACKAGES_DEL_VALIDATE_ERR("PX_PACKAGES_DEL_VALIDATE_ERR", "00110074", "检查套餐子项出错，无法删除套餐"),
+
     ;
 
     /** 枚举值 */
