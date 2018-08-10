@@ -4,7 +4,10 @@
  */
 package com.myteay.phoenix.core.service.manage.component.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -12,6 +15,12 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
@@ -33,6 +42,15 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                 pxGoodsRepository;
+
+    /** 套餐包仓储 */
+    private PxGoodsPackagesDetailRepository   pxGoodsPackagesDetailRepository;
+
+    /** 商品详情图片管理仓储 */
+    private PxGoodsPackagesImageRepository    pxGoodsPackagesImageRepository;
+
+    /** 温馨提醒摘要管理仓储 */
+    private PxGoodsPackagesNoticeRepository   pxGoodsPackagesNoticeRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#modifyGoodsModel(com.myteay.phoenix.core.model.manage.PxGoodsModel)
@@ -97,15 +115,90 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
      * @return
      */
     private MtOperateResult<PxGoodsModel> deleteGoodsModel(PxGoodsModel pxGoodsModel) {
+
+        if (!isCanDeleteGoods(pxGoodsModel.getGoodsId())) {
+            logger.warn("商品包含子项，无法删除 pxGoodsModel=" + pxGoodsModel);
+            return new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_HAS_CHILD_ERR);
+        }
+
         MtOperateResult<PxGoodsModel> result = new MtOperateResult<PxGoodsModel>();
         try {
             pxGoodsRepository.removeGoodsInfo(pxGoodsModel);
         } catch (PxManageException e) {
-            logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
+            logger.warn("删除商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
         }
 
         return result;
+    }
+
+    /**
+     * 检查是否允许删除商品
+     * 
+     * @param goodsId
+     * @return
+     */
+    private boolean isCanDeleteGoods(String goodsId) {
+
+        if (isNoPackageDetail(goodsId) && isNoPackageDetailImage(goodsId) && isNoPackageNotice(goodsId)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 检查当前商品是否包含温馨提醒
+     * 
+     * @param goodsId
+     * @return
+     */
+    private boolean isNoPackageNotice(String goodsId) {
+        try {
+            List<PxGoodsPackagesNoticeModel> list = pxGoodsPackagesNoticeRepository.findGoodsPackagesNoticeByGoodsId(goodsId);
+            if (CollectionUtils.isEmpty(list)) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("套餐温馨提醒信息查询发生异常", e);
+        }
+        return false;
+    }
+
+    /**
+     * 检查当前商品是否包含套餐详情图片
+     * 
+     * @param goodsId
+     * @return
+     */
+    private boolean isNoPackageDetailImage(String goodsId) {
+        try {
+            List<PxGoodsPackagesImageModel> list = pxGoodsPackagesImageRepository.findGoodsPackagesImageByGoodsId(goodsId);
+            if (CollectionUtils.isEmpty(list)) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("套餐详情图片信息查询发生异常", e);
+        }
+        return false;
+    }
+
+    /**
+     * 检查当前商品是否包含套餐包信息
+     * 
+     * @param goodsId
+     * @return
+     */
+    private boolean isNoPackageDetail(String goodsId) {
+        try {
+            List<PxGoodsPackagesDetailModel> list = pxGoodsPackagesDetailRepository.findGoodsPackagesDetailByGoodsId(goodsId);
+            if (CollectionUtils.isEmpty(list)) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("套餐包信息查询发生异常", e);
+        }
+        return false;
     }
 
     /**
@@ -192,4 +285,30 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
         this.pxGoodsRepository = pxGoodsRepository;
     }
 
+    /**
+     * Setter method for property <tt>pxGoodsPackagesDetailRepository</tt>.
+     * 
+     * @param pxGoodsPackagesDetailRepository value to be assigned to property pxGoodsPackagesDetailRepository
+     */
+    public void setPxGoodsPackagesDetailRepository(PxGoodsPackagesDetailRepository pxGoodsPackagesDetailRepository) {
+        this.pxGoodsPackagesDetailRepository = pxGoodsPackagesDetailRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesImageRepository</tt>.
+     * 
+     * @param pxGoodsPackagesImageRepository value to be assigned to property pxGoodsPackagesImageRepository
+     */
+    public void setPxGoodsPackagesImageRepository(PxGoodsPackagesImageRepository pxGoodsPackagesImageRepository) {
+        this.pxGoodsPackagesImageRepository = pxGoodsPackagesImageRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesNoticeRepository</tt>.
+     * 
+     * @param pxGoodsPackagesNoticeRepository value to be assigned to property pxGoodsPackagesNoticeRepository
+     */
+    public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
+        this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
+    }
 }

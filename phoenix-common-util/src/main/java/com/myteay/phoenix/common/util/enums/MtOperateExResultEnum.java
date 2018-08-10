@@ -174,6 +174,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_HAS_GOODS_ERR("PX_SHOP_HAS_GOODS_ERR", "00110070", "店铺包含商品，无法删除"),
 
+                                   PX_GOODS_HAS_CHILD_ERR("PX_GOODS_HAS_CHILD_ERR", "00110071", "商品包含子项，无法删除"),
+
     ;
 
     /** 枚举值 */
