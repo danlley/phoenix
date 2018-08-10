@@ -119,6 +119,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
             logger.warn("检查套餐子项出错，无法删除套餐  pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PACKAGES_DEL_VALIDATE_ERR);
         }
+
         MtOperateResult<PxGoodsPackagesDetailModel> result = new MtOperateResult<PxGoodsPackagesDetailModel>();
         try {
             pxGoodsPackagesDetailRepository.removeGoodsPackagesDetailInfo(pxGoodsPackagesDetailModel);

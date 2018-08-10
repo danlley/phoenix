@@ -182,6 +182,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_PACKAGES_DEL_VALIDATE_ERR("PX_PACKAGES_DEL_VALIDATE_ERR", "00110074", "检查套餐子项出错，无法删除套餐"),
 
+                                   PX_PACKAGES_NOTICE_DEL_ERR("PX_PACKAGES_NOTICE_DEL_ERR", "00110075", "商品温馨提醒包含子项，无法删除"),
+
+                                   PX_SUB_NOTICE_VALIDATE_ERR("PX_SUB_NOTICE_VALIDATE_ERR", "00110076", "检查温馨提醒子项出错，无法删除"),
+
     ;
 
     /** 枚举值 */
