@@ -17,7 +17,7 @@ import com.myteay.common.util.enums.EnumMessage;
 public enum PxGoodsStatusEnum implements EnumMessage {
                                                       PX_GOODS_DRAFT("PX_GOODS_DRAFT", "草稿"),
 
-                                                      PX_GOODS_ONLINE("PX_UNHAS_QUAN", "已发布"),
+                                                      PX_GOODS_ONLINE("PX_GOODS_ONLINE", "已发布"),
 
                                                       PX_GOODS_OFFLINE("PX_GOODS_OFFLINE", "已下架"),
 
