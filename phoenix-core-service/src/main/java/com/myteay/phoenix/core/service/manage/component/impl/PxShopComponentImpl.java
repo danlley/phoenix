@@ -13,6 +13,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
@@ -133,6 +134,11 @@ public class PxShopComponentImpl implements PxShopComponent {
      */
     private MtOperateResult<PxShopModel> deleteShopModel(PxShopModel pxShopModel) {
 
+        if (isShopOnline(pxShopModel.getShopId())) {
+            logger.warn("店铺状态在线，无法删除 pxShopModel=" + pxShopModel);
+            return new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_ONLINE_DEL_ERR);
+        }
+
         if (!isCanDeleteShop(pxShopModel.getShopId())) {
             logger.warn("店铺包含商品，无法删除 pxShopModel=" + pxShopModel);
             return new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_HAS_GOODS_ERR);
@@ -147,6 +153,25 @@ public class PxShopComponentImpl implements PxShopComponent {
         }
 
         return result;
+    }
+
+    /**
+     * 检查当前店铺是否在线
+     * 
+     * @param shopId
+     * @return
+     */
+    private boolean isShopOnline(String shopId) {
+        PxShopModel freshPxShopModel = null;
+        try {
+            freshPxShopModel = pxShopRepository.findSingleShop(shopId);
+            if (freshPxShopModel != null && freshPxShopModel.getShopStatus() == PxShopStatusEnum.PX_SHOP_ONLINE) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("查找店铺信息发生异常 shopId=" + shopId, e);
+        }
+        return false;
     }
 
     /**

@@ -4,15 +4,21 @@
  */
 package com.myteay.phoenix.core.service.manage.component.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.core.model.manage.PxGoodsPackagesNoticeModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesSubNoticeRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesSubNoticeComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
@@ -33,6 +39,12 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
 
     /** 温馨提醒子项管理仓储 */
     private PxGoodsPackagesSubNoticeRepository                 pxGoodsPackagesSubNoticeRepository;
+
+    /** 温馨提醒摘要管理仓储 */
+    private PxGoodsPackagesNoticeRepository                    pxGoodsPackagesNoticeRepository;
+
+    /** 商品概要管理仓储 */
+    private PxGoodsRepository                                  pxGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesSubNoticeComponent#manageSubPackages(com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel)
@@ -102,6 +114,11 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      * @return
      */
     private MtOperateResult<PxGoodsPackagesSubNoticeModel> deleteGoodsModel(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
+        if (!isCanDelete(pxGoodsPackagesSubNoticeModel)) {
+            logger.warn("子提醒对应的商品状态为已发布或已下架，不允许删除 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_NOTICE_DEL_VALIDATE_ERR);
+        }
+
         MtOperateResult<PxGoodsPackagesSubNoticeModel> result = new MtOperateResult<PxGoodsPackagesSubNoticeModel>();
         try {
             pxGoodsPackagesSubNoticeRepository.removePackagesSubNoticeInfo(pxGoodsPackagesSubNoticeModel);
@@ -112,6 +129,49 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
         }
 
         return result;
+    }
+
+    /**
+     * 判断当前子套餐是否允许删除
+     * 
+     * @param pxSubPackagesModel
+     * @return
+     */
+    private boolean isCanDelete(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
+        PxGoodsModel goodsModel = null;
+        try {
+            goodsModel = queryGoodsModelBySubNotice(pxGoodsPackagesSubNoticeModel);
+        } catch (PxManageException e) {
+            logger.warn("通过子提醒查询对应的商品信息失败 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel, e);
+            return false;
+        }
+
+        if (goodsModel == null) {
+            return false;
+        }
+
+        if (goodsModel.getGoodsStatus() == null || goodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_DRAFT) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 通过子提醒查找对应的商品模型
+     * 
+     * @param pxGoodsPackagesSubNoticeModel
+     * @return
+     * @throws PxManageException
+     */
+    private PxGoodsModel queryGoodsModelBySubNotice(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) throws PxManageException {
+        PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = pxGoodsPackagesNoticeRepository.findSingleGoodsPackagesNotice(pxGoodsPackagesSubNoticeRepository
+            .findSinglePackagesSubNotice(pxGoodsPackagesSubNoticeModel.getPackagesSuNoticeId()).getPackagesNoticeId());
+        if (pxGoodsPackagesNoticeModel == null || StringUtils.isBlank(pxGoodsPackagesNoticeModel.getGoodsId())) {
+            return null;
+        }
+
+        return pxGoodsRepository.findSingleGoods(pxGoodsPackagesNoticeModel.getGoodsId());
     }
 
     /**
@@ -198,6 +258,24 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      */
     public void setPxGoodsPackagesSubNoticeRepository(PxGoodsPackagesSubNoticeRepository pxGoodsPackagesSubNoticeRepository) {
         this.pxGoodsPackagesSubNoticeRepository = pxGoodsPackagesSubNoticeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsPackagesNoticeRepository</tt>.
+     * 
+     * @param pxGoodsPackagesNoticeRepository value to be assigned to property pxGoodsPackagesNoticeRepository
+     */
+    public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
+        this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
     }
 
 }

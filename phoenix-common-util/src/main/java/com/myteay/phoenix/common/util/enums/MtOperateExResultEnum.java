@@ -188,6 +188,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUB_PKGS_DEL_VALIDATE_ERR("PX_SUB_PKGS_DEL_VALIDATE_ERR", "00110077", "子套餐对应的商品状态为已发布或已下架，不允许删除"),
 
+                                   PX_SUB_NOTICE_DEL_VALIDATE_ERR("PX_SUB_NOTICE_DEL_VALIDATE_ERR", "00110078", "子提醒对应的商品状态为已发布或已下架，不允许删除"),
+
+                                   PX_SHOP_ONLINE_DEL_ERR("PX_SHOP_ONLINE_DEL_ERR", "00110079", "店铺状态在线，无法删除"),
+
     ;
 
     /** 枚举值 */
