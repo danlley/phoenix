@@ -19,9 +19,11 @@ import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesSubNoticeRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesSubNoticeComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
+import com.myteay.phoenix.core.service.utils.PxMngUtil;
 
 /**
  * 温馨提醒子项管理组件
@@ -45,6 +47,9 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                                  pxGoodsRepository;
+
+    /** 商品管理组件 */
+    private PxGoodsComponent                                   pxGoodsComponent;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesSubNoticeComponent#manageSubPackages(com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel)
@@ -182,6 +187,12 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      */
     private MtOperateResult<PxGoodsPackagesSubNoticeModel> saveGoodsModel(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
         MtOperateResult<PxGoodsPackagesSubNoticeModel> result = new MtOperateResult<PxGoodsPackagesSubNoticeModel>();
+
+        if (!PxMngUtil.isCanDoOperation(pxGoodsComponent.queryGoodsModelByGoodsId(queryGoodsIdBySubNoticeModel(pxGoodsPackagesSubNoticeModel)))) {
+            logger.warn("当前商品不满足追加子提醒条件，请检查商品是否已发布或已下线 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUBNOTICE_ONLINE_ADD_ERR);
+        }
+
         PxGoodsPackagesSubNoticeModel freshPxGoodsPackagesSubNoticeModel = null;
         try {
             freshPxGoodsPackagesSubNoticeModel = pxGoodsPackagesSubNoticeRepository.savePackagesSubNoticeInfo(pxGoodsPackagesSubNoticeModel);
@@ -193,6 +204,28 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
         }
 
         return result;
+    }
+
+    /**
+     * 查找对应的商品ID
+     * 
+     * @param pxGoodsPackagesSubNoticeModel
+     * @return
+     */
+    private String queryGoodsIdBySubNoticeModel(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
+
+        PxGoodsModel goodsModel = null;
+        try {
+            goodsModel = queryGoodsModelBySubNotice(pxGoodsPackagesSubNoticeModel);
+        } catch (PxManageException e) {
+            logger.warn("通过子提醒查询对应的商品信息失败 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel, e);
+        }
+
+        if (goodsModel == null) {
+            return null;
+        }
+
+        return goodsModel.getGoodsId();
     }
 
     /**
@@ -276,6 +309,15 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      */
     public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
         this.pxGoodsRepository = pxGoodsRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsComponent</tt>.
+     * 
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
+     */
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
     }
 
 }
