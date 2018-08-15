@@ -198,6 +198,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_IMG_ONLINE_ADD_ERR("PX_IMG_ONLINE_ADD_ERR", "00110082", "当前商品不满足追加详情图片条件，请检查商品是否已发布或已下线"),
 
+                                   PX_SUBPKG_ONLINE_ADD_ERR("PX_SUBPKG_ONLINE_ADD_ERR", "00110083", "当前商品不满足追加子套餐条件，请检查商品是否已发布或已下线"),
+
     ;
 
     /** 枚举值 */

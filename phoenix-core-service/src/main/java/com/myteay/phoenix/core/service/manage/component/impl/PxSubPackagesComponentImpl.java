@@ -19,9 +19,11 @@ import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
+import com.myteay.phoenix.core.service.utils.PxMngUtil;
 
 /**
  * 子套餐管理组件
@@ -45,6 +47,9 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                       pxGoodsRepository;
+
+    /** 商品管理组件 */
+    private PxGoodsComponent                        pxGoodsComponent;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent#manageSubPackages(com.myteay.phoenix.core.model.manage.PxSubPackagesModel)
@@ -186,6 +191,12 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
      */
     private MtOperateResult<PxSubPackagesModel> saveGoodsModel(PxSubPackagesModel pxSubPackagesModel) {
         MtOperateResult<PxSubPackagesModel> result = new MtOperateResult<PxSubPackagesModel>();
+
+        if (!PxMngUtil.isCanDoOperation(pxGoodsComponent.queryGoodsModelByGoodsId(queryGoodsIdBySubPackageModel(pxSubPackagesModel)))) {
+            logger.warn("当前商品不满足追加子套餐条件，请检查商品是否已发布或已下线 pxSubPackagesModel=" + pxSubPackagesModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUBPKG_ONLINE_ADD_ERR);
+        }
+
         PxSubPackagesModel freshPxSubPackagesModel = null;
         try {
             freshPxSubPackagesModel = pxSubPackagesRepository.saveSubPackagesInfo(pxSubPackagesModel);
@@ -196,6 +207,27 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
         }
 
         return result;
+    }
+
+    /**
+     * 查找商品ID
+     * 
+     * @param pxSubPackagesModel
+     * @return
+     */
+    private String queryGoodsIdBySubPackageModel(PxSubPackagesModel pxSubPackagesModel) {
+        PxGoodsModel goodsModel = null;
+        try {
+            goodsModel = queryGoodsBySubPackages(pxSubPackagesModel);
+        } catch (PxManageException e) {
+            logger.warn("通过子套餐查询对应的商品信息失败 pxSubPackagesModel=" + pxSubPackagesModel, e);
+        }
+
+        if (goodsModel == null) {
+            return null;
+        }
+
+        return goodsModel.getGoodsId();
     }
 
     /**
@@ -279,4 +311,14 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
     public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
         this.pxGoodsRepository = pxGoodsRepository;
     }
+
+    /**
+     * Setter method for property <tt>pxGoodsComponent</tt>.
+     * 
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
+     */
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
+    }
+
 }
