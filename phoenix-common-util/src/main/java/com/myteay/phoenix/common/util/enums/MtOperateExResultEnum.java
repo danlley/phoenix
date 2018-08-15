@@ -192,6 +192,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SHOP_ONLINE_DEL_ERR("PX_SHOP_ONLINE_DEL_ERR", "00110079", "店铺状态在线，无法删除"),
 
+                                   PX_GOODS_ONLINE_ADD_ERR("PX_GOODS_ONLINE_ADD_ERR", "00110080", "当前商品不满足追加套餐包条件，请检查商品是否已发布或已下线"),
+
+                                   PX_GOODS_ONLINE_MODIFY_ERR("PX_GOODS_ONLINE_MODIFY_ERR", "00110081", "当前商品不满足修改套餐包条件，请检查商品是否已发布或已下线 "),
+
     ;
 
     /** 枚举值 */

@@ -13,10 +13,13 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesDetailRepository;
+import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
@@ -41,6 +44,9 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
 
     /** 子套餐仓储 */
     private PxSubPackagesRepository                         pxSubPackagesRepository;
+
+    /** 商品概要管理仓储 */
+    private PxGoodsRepository                               pxGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailComponent#manageGoodsPackagesDetail(com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel)
@@ -69,6 +75,7 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      */
     private MtOperateResult<PxGoodsPackagesDetailModel> querySingleGoods(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
         MtOperateResult<PxGoodsPackagesDetailModel> result = new MtOperateResult<PxGoodsPackagesDetailModel>();
+
         PxGoodsPackagesDetailModel freshPxGoodsPackagesDetailModel = null;
         try {
             freshPxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.findSingleGoodsPackagesDetail(pxGoodsPackagesDetailModel.getPackagesDetailId());
@@ -89,6 +96,12 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      */
     private MtOperateResult<PxGoodsPackagesDetailModel> modifyGoodsModel(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
         MtOperateResult<PxGoodsPackagesDetailModel> result = new MtOperateResult<PxGoodsPackagesDetailModel>();
+
+        if (!isCanDoOperation(queryGoodsModelByGoodsPackagesDetail(pxGoodsPackagesDetailModel))) {
+            logger.warn("当前商品不满足追加套餐包条件，请检查商品是否已发布或已下线 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
+            return new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ONLINE_MODIFY_ERR);
+        }
+
         PxGoodsPackagesDetailModel freshPxGoodsPackagesDetailModel = null;
         try {
             freshPxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.modifyGoodsPackagesDetailInfo(pxGoodsPackagesDetailModel);
@@ -99,6 +112,45 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
         }
 
         return result;
+    }
+
+    /**
+     * 检查当前商品是否允许追加、修改套餐包
+     * 
+     * @param pxGoodsModel
+     * @return
+     */
+    private boolean isCanDoOperation(PxGoodsModel pxGoodsModel) {
+        if (pxGoodsModel == null || pxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE || pxGoodsModel
+            .getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 通过套餐包模型查找商品模型
+     * 
+     * @param pxGoodsPackagesDetailModel
+     * @return
+     */
+    private PxGoodsModel queryGoodsModelByGoodsPackagesDetail(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
+
+        if (pxGoodsPackagesDetailModel == null) {
+            logger.warn("无法通过套餐包中包含的商品信息找到商品 pxGoodsPackagesDetailModel is null");
+            return null;
+        }
+
+        PxGoodsModel pxGoodsModel = null;
+
+        try {
+            pxGoodsModel = pxGoodsRepository.findSingleGoods(pxGoodsPackagesDetailModel.getGoodsId());
+        } catch (PxManageException e) {
+            logger.warn("保存套餐包未找到商品信息 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
+        }
+
+        return pxGoodsModel;
     }
 
     /**
@@ -139,13 +191,19 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      */
     private MtOperateResult<PxGoodsPackagesDetailModel> saveGoodsModel(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
         MtOperateResult<PxGoodsPackagesDetailModel> result = new MtOperateResult<PxGoodsPackagesDetailModel>();
+
+        if (!isCanDoOperation(queryGoodsModelByGoodsPackagesDetail(pxGoodsPackagesDetailModel))) {
+            logger.warn("当前商品不满足修改套餐包条件，请检查商品是否已发布或已下线 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel);
+            return new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ONLINE_ADD_ERR);
+        }
+
         PxGoodsPackagesDetailModel freshPxGoodsPackagesDetailModel = null;
         try {
             freshPxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.saveGoodsPackagesDetailInfo(pxGoodsPackagesDetailModel);
             result.setResult(freshPxGoodsPackagesDetailModel);
         } catch (PxManageException e) {
             logger.warn("保存套餐包信息发生异常 pxGoodsPackagesDetailModel=" + pxGoodsPackagesDetailModel, e);
-            result = new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_SAVE_FAILD);
+            return new MtOperateResult<PxGoodsPackagesDetailModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_DETAIL_SAVE_FAILD);
         }
 
         return result;
@@ -223,5 +281,14 @@ public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetail
      */
     public void setPxSubPackagesRepository(PxSubPackagesRepository pxSubPackagesRepository) {
         this.pxSubPackagesRepository = pxSubPackagesRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsRepository</tt>.
+     * 
+     * @param pxGoodsRepository value to be assigned to property pxGoodsRepository
+     */
+    public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
+        this.pxGoodsRepository = pxGoodsRepository;
     }
 }
