@@ -200,6 +200,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUBPKG_ONLINE_ADD_ERR("PX_SUBPKG_ONLINE_ADD_ERR", "00110083", "当前商品不满足追加子套餐条件，请检查商品是否已发布或已下线"),
 
+                                   PX_NOTICE_ONLINE_ADD_ERR("PX_NOTICE_ONLINE_ADD_ERR", "00110084", "当前商品不满足追加温馨提醒分类条件，请检查商品是否已发布或已下线"),
+
+                                   PX_NOTICE_ONLINE_MODIFY_ERR("PX_NOTICE_ONLINE_MODIFY_ERR", "00110085", "当前商品不满足修改温馨提醒分类条件，请检查商品是否已发布或已下线"),
+
     ;
 
     /** 枚举值 */
