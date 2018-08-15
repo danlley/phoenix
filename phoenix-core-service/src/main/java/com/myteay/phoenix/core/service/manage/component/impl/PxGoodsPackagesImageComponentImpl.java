@@ -16,9 +16,11 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsPackagesImageRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
+import com.myteay.phoenix.core.service.utils.PxMngUtil;
 
 /**
  * 套餐详情图片管理
@@ -39,6 +41,9 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                              pxGoodsRepository;
+
+    /** 商品管理组件 */
+    private PxGoodsComponent                               pxGoodsComponent;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent#manageGoodsPackagesImage(com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel)
@@ -112,6 +117,27 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
     }
 
     /**
+     * 通过图片模型查找当前商品ID
+     * 
+     * @param pxGoodsPackagesImageModel
+     * @return
+     */
+    private String queryGoodsIdByImageModel(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
+        PxGoodsPackagesImageModel newModel = null;
+        try {
+            newModel = pxGoodsPackagesImageRepository.findSingleGoodsPackagesImage(pxGoodsPackagesImageModel.getImageId());
+        } catch (PxManageException e) {
+            logger.warn("查询当前图片模型失败 pxGoodsPackagesImageModel =" + pxGoodsPackagesImageModel, e);
+        }
+
+        if (newModel == null) {
+            return null;
+        }
+
+        return newModel.getGoodsId();
+    }
+
+    /**
      * 保存套餐详情图片信息
      * 
      * @param pxGoodsPackagesImageModel
@@ -119,6 +145,12 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
      */
     private MtOperateResult<PxGoodsPackagesImageModel> saveGoodsModel(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
         MtOperateResult<PxGoodsPackagesImageModel> result = new MtOperateResult<PxGoodsPackagesImageModel>();
+
+        if (!PxMngUtil.isCanDoOperation(pxGoodsComponent.queryGoodsModelByGoodsId(queryGoodsIdByImageModel(pxGoodsPackagesImageModel)))) {
+            logger.warn("当前商品不满足追加详情图片条件，请检查商品是否已发布或已下线 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_IMG_ONLINE_ADD_ERR);
+        }
+
         PxGoodsPackagesImageModel freshPxGoodsPackagesImageModel = null;
         try {
             freshPxGoodsPackagesImageModel = pxGoodsPackagesImageRepository.saveGoodsPackagesImageInfo(pxGoodsPackagesImageModel);
@@ -203,4 +235,14 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
     public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
         this.pxGoodsRepository = pxGoodsRepository;
     }
+
+    /**
+     * Setter method for property <tt>pxGoodsComponent</tt>.
+     * 
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
+     */
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
+    }
+
 }

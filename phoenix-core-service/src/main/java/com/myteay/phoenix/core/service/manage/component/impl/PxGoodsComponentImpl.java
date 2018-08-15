@@ -63,7 +63,7 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             freshPxGoodsModel = pxGoodsRepository.modifyGoodsInfo(pxGoodsModel);
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
-            logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
+            logger.warn("修改商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
         }
 
@@ -102,11 +102,26 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             freshPxGoodsModel = pxGoodsRepository.findSingleGoods(pxGoodsModel.getGoodsId());
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
-            logger.warn("保存商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
+            logger.warn("查询商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
         }
 
         return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#queryGoodsModelByGoodsId(java.lang.String)
+     */
+    @Override
+    public PxGoodsModel queryGoodsModelByGoodsId(String goodsId) {
+        PxGoodsModel freshPxGoodsModel = null;
+        try {
+            freshPxGoodsModel = pxGoodsRepository.findSingleGoods(goodsId);
+        } catch (PxManageException e) {
+            logger.warn("查询商品概要信息发生异常 goodsId=" + goodsId, e);
+        }
+
+        return freshPxGoodsModel;
     }
 
     /**
@@ -327,4 +342,5 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
     public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
         this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
     }
+
 }

@@ -30,4 +30,12 @@ public interface PxGoodsComponent {
      * @return
      */
     public MtOperateResult<PxGoodsModel> modifyGoodsModel(PxGoodsModel pxGoodsModel);
+
+    /**
+     * 通过商品ID查询商品模型（内部组件公用）
+     * 
+     * @param goodsId
+     * @return
+     */
+    public PxGoodsModel queryGoodsModelByGoodsId(String goodsId);
 }
