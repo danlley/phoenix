@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.mobile.daointerface.PxMobileGoodsDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-MOBILE-GOODS" type="com.myteay.phoenix.common.dal.mobile.dataobject.PxMobileGoodsDO">
+        <result property="shopName" column="shop_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopAddress" column="shop_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopTel" column="shop_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="waiterName" column="waiter_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopStatus" column="shop_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtShopCreated" column="gmt_shop_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtShopExpired" column="gmt_shop_expired" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsStatus" column="goods_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsImage" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsOnlineTime" column="goods_online_time" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="orderType" column="order_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isHuiyuan" column="is_huiyuan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isQuan" column="is_quan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="isTuan" column="is_tuan" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsSellAmount" column="goods_sell_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="gmtGoodsExpired" column="gmt_goods_expired" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtGoodsCreated" column="gmt_goods_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="PX-MOBILE-GOODS-SELECT-ALL" resultMap="RM-PX-MOBILE-GOODS">
+	    <![CDATA[
+	        select 
+				a.shop_name,a.shop_address,a.shop_tel,a.waiter_name,a.shop_status,a.gmt_expired gmt_shop_expired,a.gmt_created gmt_shop_created,
+				b.goods_id,b.shop_id,b.goods_status,b.goods_image,b.goods_title,b.goods_desc,b.goods_price,
+				b.goods_comm_price,b.goods_online_time,b.order_type,b.is_huiyuan,b.is_quan,b.is_tuan,
+				b.goods_sell_amount,b.gmt_expired gmt_goods_expired,b.gmt_created gmt_goods_created
+			from
+				phoenix.px_shop as a, phoenix.px_goods as b
+			where
+				a.shop_status = 'PX_SHOP_ONLINE' and b.goods_status = 'PX_GOODS_ONLINE' and a.shop_id = b.shop_id and
+				a.gmt_expired > now() and b.gmt_expired > now()
+			order by b.gmt_modified desc;
+	    ]]>
+    </select>
+    
+</mapper>
