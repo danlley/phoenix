@@ -6,6 +6,7 @@ package com.myteay.phoenix.core.service.component;
 
 import java.util.List;
 
+import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.mobile.PxMobileGoodsModel;
 
@@ -23,14 +24,16 @@ public interface PxMobileGoodsComponnet {
      * @param pageNo            需要获取的目标页号
      * @param excludeGoodsIds   需要剔除的商品ID
      * @return
+     * @throws PxManageException 
      */
-    public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds);
+    public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) throws PxManageException;
 
     /**
      * 获取单个商品详情
      * 
      * @param goodsId
      * @return
+     * @throws PxManageException 
      */
-    public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId);
+    public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId) throws PxManageException;
 }

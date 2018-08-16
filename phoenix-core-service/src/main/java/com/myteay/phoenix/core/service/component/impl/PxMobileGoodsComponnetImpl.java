@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.mobile.PxMobileGoodsModel;
 import com.myteay.phoenix.core.service.component.PxMobileGoodsCacheComponent;
@@ -35,7 +36,7 @@ public class PxMobileGoodsComponnetImpl implements PxMobileGoodsComponnet {
      * @see com.myteay.phoenix.core.service.component.PxMobileGoodsComponnet#queryNextGoodsList(java.util.List)
      */
     @Override
-    public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) {
+    public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) throws PxManageException {
         return new MtOperateResult<>(pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds));
     }
 
@@ -43,8 +44,8 @@ public class PxMobileGoodsComponnetImpl implements PxMobileGoodsComponnet {
      * @see com.myteay.phoenix.core.service.component.PxMobileGoodsComponnet#queryGoodsDetail(java.lang.String)
      */
     @Override
-    public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId) {
-        return new MtOperateResult<PxMobileGoodsModel>(pxMobileGoodsCacheComponent.queryMobileSingleGoodsByGoodsId(goodsId));
+    public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId) throws PxManageException {
+        return new MtOperateResult<>(pxMobileGoodsCacheComponent.queryMobileSingleGoodsByGoodsId(goodsId));
     }
 
     /**
