@@ -5,6 +5,7 @@
 package com.myteay.phoenix.common.dal.mobile.dataobject;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
 
@@ -35,10 +36,10 @@ public class PxMobileGoodsDO implements Serializable {
     private String            shopStatus;
 
     /** 店铺创建时间 */
-    private String            gmtShopCreated;
+    private Date              gmtShopCreated;
 
     /** 店铺过期时间 */
-    private String            gmtShopExpired;
+    private Date              gmtShopExpired;
 
     /** 商品ID */
     private String            goodsId;
@@ -83,10 +84,10 @@ public class PxMobileGoodsDO implements Serializable {
     private String            goodsSellAmount;
 
     /** 商品过期时间 */
-    private String            gmtGoodsExpired;
+    private Date              gmtGoodsExpired;
 
     /** 商品创建时间 */
-    private String            gmtGoodsCreated;
+    private Date              gmtGoodsCreated;
 
     /**
      * Getter method for property <tt>shopName</tt>.
@@ -183,7 +184,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @return property value of gmtShopCreated
      */
-    public String getGmtShopCreated() {
+    public Date getGmtShopCreated() {
         return gmtShopCreated;
     }
 
@@ -192,7 +193,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @param gmtShopCreated value to be assigned to property gmtShopCreated
      */
-    public void setGmtShopCreated(String gmtShopCreated) {
+    public void setGmtShopCreated(Date gmtShopCreated) {
         this.gmtShopCreated = gmtShopCreated;
     }
 
@@ -201,7 +202,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @return property value of gmtShopExpired
      */
-    public String getGmtShopExpired() {
+    public Date getGmtShopExpired() {
         return gmtShopExpired;
     }
 
@@ -210,7 +211,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @param gmtShopExpired value to be assigned to property gmtShopExpired
      */
-    public void setGmtShopExpired(String gmtShopExpired) {
+    public void setGmtShopExpired(Date gmtShopExpired) {
         this.gmtShopExpired = gmtShopExpired;
     }
 
@@ -471,7 +472,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @return property value of gmtGoodsExpired
      */
-    public String getGmtGoodsExpired() {
+    public Date getGmtGoodsExpired() {
         return gmtGoodsExpired;
     }
 
@@ -480,7 +481,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @param gmtGoodsExpired value to be assigned to property gmtGoodsExpired
      */
-    public void setGmtGoodsExpired(String gmtGoodsExpired) {
+    public void setGmtGoodsExpired(Date gmtGoodsExpired) {
         this.gmtGoodsExpired = gmtGoodsExpired;
     }
 
@@ -489,7 +490,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @return property value of gmtGoodsCreated
      */
-    public String getGmtGoodsCreated() {
+    public Date getGmtGoodsCreated() {
         return gmtGoodsCreated;
     }
 
@@ -498,7 +499,7 @@ public class PxMobileGoodsDO implements Serializable {
      * 
      * @param gmtGoodsCreated value to be assigned to property gmtGoodsCreated
      */
-    public void setGmtGoodsCreated(String gmtGoodsCreated) {
+    public void setGmtGoodsCreated(Date gmtGoodsCreated) {
         this.gmtGoodsCreated = gmtGoodsCreated;
     }
 

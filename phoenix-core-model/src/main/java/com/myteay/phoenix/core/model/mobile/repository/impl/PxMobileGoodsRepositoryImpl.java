@@ -9,8 +9,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.dal.mobile.daointerface.PxMobileGoodsDAO;
+import com.myteay.phoenix.common.dal.mobile.dataobject.PxMobileGoodsDO;
+import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.mobile.PxMobileGoodsModel;
+import com.myteay.phoenix.core.model.mobile.convertor.PxMobileGoodsModelConvertor;
 import com.myteay.phoenix.core.model.mobile.repository.PxMobileGoodsRepository;
 
 /**
@@ -32,7 +36,22 @@ public class PxMobileGoodsRepositoryImpl implements PxMobileGoodsRepository {
      */
     @Override
     public List<PxMobileGoodsModel> findAll() throws PxManageException {
-        return null;
+        return PxMobileGoodsModelConvertor.convertPxMobileGoodsDOList(queryAllMobileGoodsList());
+    }
+
+    /**
+     * 查询所有已在线、未过期店铺中的已发布、未过期商品
+     * 
+     * @return
+     * @throws PxManageException
+     */
+    public List<PxMobileGoodsDO> queryAllMobileGoodsList() throws PxManageException {
+        try {
+            return pxMobileGoodsDAO.findPxMobileGoodsAll();
+        } catch (Throwable e) {
+            logger.warn("查询所有已在线、未过期店铺中的已发布、未过期商品发生异常 " + e.getMessage(), e);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
+        }
     }
 
     /**
