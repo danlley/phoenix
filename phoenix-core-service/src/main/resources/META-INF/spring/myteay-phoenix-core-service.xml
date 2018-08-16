@@ -14,6 +14,10 @@
 	
 	<bean id="pxDataDictionaryComponent" class="com.myteay.phoenix.core.service.component.impl.PxDataDictionaryComponentImpl"></bean>
 	
+	<bean id="pxMobileGoodsCacheComponent" class="com.myteay.phoenix.core.service.component.impl.PxMobileGoodsCacheComponentImpl"></bean>
+	
+	<bean id="pxGoodsStrategy" class="com.myteay.phoenix.core.service.strategy.impl.PxGoodsStrategyImpl"></bean>
+	
 	<bean id="pxShopComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxShopComponentImpl"></bean>
 	
 	<bean id="pxGoodsComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxGoodsComponentImpl"></bean>

@@ -17,4 +17,7 @@ public class PxConstants {
 
     /** 最大允许的商品详情图片数量 */
     public static final int    MAX_GOODS_DETAIL_IMAGE_AMOUNT = 2;
+
+    /** 获取最大分页数 */
+    public static final int    MAX_MOBILE_QUERY_PAGE_SIZE    = 2;
 }
