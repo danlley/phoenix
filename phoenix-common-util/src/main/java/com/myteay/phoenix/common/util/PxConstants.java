@@ -19,5 +19,5 @@ public class PxConstants {
     public static final int    MAX_GOODS_DETAIL_IMAGE_AMOUNT = 2;
 
     /** 获取最大分页数 */
-    public static final int    MAX_MOBILE_QUERY_PAGE_SIZE    = 2;
+    public static final int    MAX_MOBILE_QUERY_PAGE_SIZE    = 20;
 }

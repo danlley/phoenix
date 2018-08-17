@@ -65,7 +65,7 @@ public class PxGoodsStrategyImpl implements PxGoodsStrategy {
             }
 
             size--;
-            if (size <= 0) {
+            if (size < 0) {
                 return list;
             }
 

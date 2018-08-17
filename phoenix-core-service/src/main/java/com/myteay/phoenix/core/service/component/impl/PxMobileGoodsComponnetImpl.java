@@ -4,9 +4,11 @@
  */
 package com.myteay.phoenix.core.service.component.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
@@ -37,7 +39,29 @@ public class PxMobileGoodsComponnetImpl implements PxMobileGoodsComponnet {
      */
     @Override
     public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) throws PxManageException {
-        return new MtOperateResult<>(pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds));
+
+        List<PxMobileGoodsModel> list = pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds);
+        if (CollectionUtils.isEmpty(list)) {
+            return new MtOperateResult<>(list);
+        }
+
+        // 禁止商品列表查询携带过多商品信息消耗过多的带宽，提升接口的吞吐能力
+        PxMobileGoodsModel tmPxMobileGoodsModel = null;
+        List<PxMobileGoodsModel> resultList = new ArrayList<>();
+        for (PxMobileGoodsModel model : list) {
+
+            if (model == null) {
+                continue;
+            }
+
+            tmPxMobileGoodsModel = new PxMobileGoodsModel();
+            tmPxMobileGoodsModel.setGoodsId(model.getGoodsId());
+            tmPxMobileGoodsModel.setPxMobileGoodsBaseModel(model.getPxMobileGoodsBaseModel());
+            tmPxMobileGoodsModel.setPxMobileShopModel(model.getPxMobileShopModel());
+            resultList.add(tmPxMobileGoodsModel);
+        }
+
+        return new MtOperateResult<>(resultList);
     }
 
     /** 
