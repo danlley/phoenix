@@ -145,6 +145,9 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
     private boolean isCanDelete(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
         PxGoodsModel goodsModel = null;
         try {
+            String packagesNoticeId = pxGoodsPackagesSubNoticeRepository.findSinglePackagesSubNotice(pxGoodsPackagesSubNoticeModel.getPackagesSuNoticeId())
+                .getPackagesNoticeId();
+            pxGoodsPackagesSubNoticeModel.setPackagesNoticeId(packagesNoticeId);
             goodsModel = queryGoodsModelBySubNotice(pxGoodsPackagesSubNoticeModel);
         } catch (PxManageException e) {
             logger.warn("通过子提醒查询对应的商品信息失败 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel, e);
@@ -170,8 +173,8 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      * @throws PxManageException
      */
     private PxGoodsModel queryGoodsModelBySubNotice(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) throws PxManageException {
-        PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = pxGoodsPackagesNoticeRepository.findSingleGoodsPackagesNotice(pxGoodsPackagesSubNoticeRepository
-            .findSinglePackagesSubNotice(pxGoodsPackagesSubNoticeModel.getPackagesSuNoticeId()).getPackagesNoticeId());
+        PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = pxGoodsPackagesNoticeRepository.findSingleGoodsPackagesNotice(pxGoodsPackagesSubNoticeModel
+            .getPackagesNoticeId());
         if (pxGoodsPackagesNoticeModel == null || StringUtils.isBlank(pxGoodsPackagesNoticeModel.getGoodsId())) {
             return null;
         }

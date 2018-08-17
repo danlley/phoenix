@@ -146,7 +146,7 @@ public class PxGoodsPackagesImageComponentImpl implements PxGoodsPackagesImageCo
     private MtOperateResult<PxGoodsPackagesImageModel> saveGoodsModel(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
         MtOperateResult<PxGoodsPackagesImageModel> result = new MtOperateResult<PxGoodsPackagesImageModel>();
 
-        if (!PxMngUtil.isCanDoOperation(pxGoodsComponent.queryGoodsModelByGoodsId(queryGoodsIdByImageModel(pxGoodsPackagesImageModel)))) {
+        if (!PxMngUtil.isCanDoOperation(pxGoodsComponent.queryGoodsModelByGoodsId(pxGoodsPackagesImageModel.getGoodsId()))) {
             logger.warn("当前商品不满足追加详情图片条件，请检查商品是否已发布或已下线 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_IMG_ONLINE_ADD_ERR);
         }

@@ -167,13 +167,7 @@ public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
      */
     private PxGoodsModel queryGoodsBySubPackages(PxSubPackagesModel pxSubPackagesModel) throws PxManageException {
 
-        PxSubPackagesModel subPackagesModel = pxSubPackagesRepository.findSingleSubPackages(pxSubPackagesModel.getSubPackagesId());
-        if (subPackagesModel == null || StringUtils.isBlank(subPackagesModel.getPackagesDetailId())) {
-            logger.warn("当前子套餐无法找到 pxSubPackagesModel=" + pxSubPackagesModel);
-            return null;
-        }
-
-        PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.findSingleGoodsPackagesDetail(subPackagesModel
+        PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel = pxGoodsPackagesDetailRepository.findSingleGoodsPackagesDetail(pxSubPackagesModel
             .getPackagesDetailId());
         if (pxGoodsPackagesDetailModel == null || StringUtils.isBlank(pxGoodsPackagesDetailModel.getGoodsId())) {
             logger.warn("当前子套餐无对应的套餐包，无法找到对应商品pxSubPackagesModel=" + pxSubPackagesModel);
