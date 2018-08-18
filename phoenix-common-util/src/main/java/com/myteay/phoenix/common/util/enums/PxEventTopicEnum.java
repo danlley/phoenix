@@ -17,6 +17,9 @@ public enum PxEventTopicEnum {
                               /** 店铺信息变更事件 */
                               PX_SHOP_CFG_CHANGED("PX_SHOP_CFG_CHANGED", "店铺信息变更事件"),
 
+                              /** 手机端商品列表定时加载事件 */
+                              PX_TASK_MOBILE_GOODS_CACHE_LOAD("PX_TASK_MOBILE_GOODS_CACHE_LOAD", "手机端商品列表定时加载事件"),
+
     ;
     /** value */
     private final String value;

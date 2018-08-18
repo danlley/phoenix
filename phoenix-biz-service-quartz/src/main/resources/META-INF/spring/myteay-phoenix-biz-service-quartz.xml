@@ -11,5 +11,14 @@
                 http://www.springframework.org/schema/context/spring-context-4.1.xsd"
 	default-autowire="byName">
 	
-	
+	<!-- 店铺配置信息变更监听器 -->
+	<bean id="pxMobileGoodsListCacheRefreshListener" class="com.myteay.phoenix.biz.service.quartz.listeners.PxMobileGoodsListCacheRefreshListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_TASK_MOBILE_GOODS_CACHE_LOAD"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
 </beans>

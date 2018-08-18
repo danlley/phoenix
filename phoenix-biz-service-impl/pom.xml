@@ -112,6 +112,11 @@
 		<artifactId>phoenix-core-service</artifactId>
 		<version>1.0.1.20172054</version>
     </dependency>
+    <dependency>
+		<groupId>com.myteay</groupId>
+		<artifactId>phoenix-biz-service-quartz</artifactId>
+		<version>1.0.1.20172054</version>
+    </dependency>
   </dependencies>
 
   <build>
