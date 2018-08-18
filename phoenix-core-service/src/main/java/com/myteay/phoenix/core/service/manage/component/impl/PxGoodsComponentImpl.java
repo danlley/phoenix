@@ -54,6 +54,36 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
     private PxGoodsPackagesNoticeRepository   pxGoodsPackagesNoticeRepository;
 
     /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#shutdownGoodsByShopId(java.lang.String)
+     */
+    @Override
+    public void shutdownGoodsByShopId(String shopId) {
+        List<PxGoodsModel> list = null;
+        try {
+            list = pxGoodsRepository.findShopOnlineGoodsByShopId(shopId);
+        } catch (PxManageException e) {
+            logger.warn("查询指定店铺下所有的在线商品失败 shopId=" + shopId, e);
+        }
+
+        if (CollectionUtils.isEmpty(list)) {
+            if (logger.isInfoEnabled()) {
+                logger.info("当前店铺不存在待关闭的商品 shopId=" + shopId);
+            }
+            return;
+        }
+
+        for (PxGoodsModel pxGoodsModel : list) {
+            if (pxGoodsModel == null) {
+                continue;
+            }
+
+            pxGoodsModel.setGoodsStatus(PxGoodsStatusEnum.PX_GOODS_OFFLINE);
+            modifyGoodsModel(pxGoodsModel);
+        }
+
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#modifyGoodsModel(com.myteay.phoenix.core.model.manage.PxGoodsModel)
      */
     public MtOperateResult<PxGoodsModel> modifyGoodsModel(PxGoodsModel pxGoodsModel) {
@@ -135,8 +165,8 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
         // step 1: 商品状态为已发布、已下线，则不允许进行删除
         try {
             PxGoodsModel freshPxGoodsModel = pxGoodsRepository.findSingleGoods(pxGoodsModel.getGoodsId());
-            if (freshPxGoodsModel != null && (freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE || freshPxGoodsModel
-                .getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE)) {
+            if (freshPxGoodsModel != null && (freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE
+                                              || freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE)) {
                 logger.warn("商品状态为已发布、已下线，则不允许进行删除 pxGoodsModel=" + pxGoodsModel);
                 return new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DEL_STATUS_ERR);
             }

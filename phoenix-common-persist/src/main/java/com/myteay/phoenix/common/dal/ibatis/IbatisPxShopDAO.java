@@ -69,4 +69,12 @@ public class IbatisPxShopDAO extends SqlSessionDaoSupport implements PxShopDAO {
         this.getSqlSession().delete("PX-SHOP-DELETE-GET-BY-ID", shopId);
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxShopDAO#findPxShopExpiredAll()
+     */
+    @Override
+    public List<PxShopDO> findPxShopExpiredAll() {
+        return this.getSqlSession().selectList("PX-SHOP-SELECT-EXPIRED-SHOP-LIST");
+    }
+
 }

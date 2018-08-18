@@ -120,6 +120,24 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
     }
 
     /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository#findShopOnlineGoodsByShopId(java.lang.String)
+     */
+    @Override
+    public List<PxGoodsModel> findShopOnlineGoodsByShopId(String shopId) throws PxManageException {
+        List<PxGoodsDO> pxGoodsDOs = pxGoodsDAO.findPxShopOnlineGoodsByShopId(shopId);
+        if (CollectionUtils.isEmpty(pxGoodsDOs)) {
+            return null;
+        }
+
+        List<PxGoodsModel> modelList = new ArrayList<>();
+        for (PxGoodsDO pxGoodsDO : pxGoodsDOs) {
+            modelList.add(PxGoodsConvertor.convertDO2Model(pxGoodsDO));
+        }
+
+        return modelList;
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository#findSingleGoods(java.lang.String)
      */
     @Override

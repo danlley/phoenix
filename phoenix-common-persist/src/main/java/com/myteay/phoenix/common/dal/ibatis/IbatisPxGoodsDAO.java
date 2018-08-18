@@ -77,4 +77,12 @@ public class IbatisPxGoodsDAO extends SqlSessionDaoSupport implements PxGoodsDAO
         return this.getSqlSession().selectList("PX-GOODS-SELECT-GET-BY-SHOP-ID", shopId);
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopOnlineGoodsByShopId(java.lang.String)
+     */
+    @Override
+    public List<PxGoodsDO> findPxShopOnlineGoodsByShopId(String shopId) {
+        return this.getSqlSession().selectList("PX-SHOP-ONLINE-GOODS-SELECT-ALL", shopId);
+    }
+
 }

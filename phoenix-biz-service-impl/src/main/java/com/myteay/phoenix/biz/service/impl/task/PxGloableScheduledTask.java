@@ -60,15 +60,11 @@ public class PxGloableScheduledTask {
      */
     private void publishEvent(PxEventTopicEnum topicEnum) {
 
-        if (logger.isInfoEnabled()) {
-            logger.info("开始执行用户注册过程中的扩展流程 topicEnum = " + topicEnum);
-        }
-
         //异步事件处理组件
         try {
             eventPublishService.publishEvent(new MtEvent<>(topicEnum.getValue(), topicEnum.getValue()));
         } catch (MtEventException e) {
-            logger.error("处理用户联系人信息过程中出现异常", e);
+            logger.error("[定时任务]发送异步事件过程中出现异常", e);
         }
 
     }

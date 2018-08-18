@@ -25,6 +25,13 @@ public interface PxShopDAO {
     String insert(PxShopDO pxShopDO);
 
     /**
+     * 查询所有店铺信息(已过期)
+     * 
+     * @return
+     */
+    List<PxShopDO> findPxShopExpiredAll();
+
+    /**
      * 查询所有店铺信息
      * 
      * @return

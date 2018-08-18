@@ -51,6 +51,13 @@
 	    ]]>
     </select>
 
+    <select id="PX-SHOP-SELECT-EXPIRED-SHOP-LIST" resultMap="RM-PX-SHOP">
+	    <![CDATA[
+	        select shop_id,shop_name,shop_address,shop_tel,waiter_name,owner_name,owner_phone,owner_idcard,shop_status,gmt_expired,gmt_created,gmt_modified 
+	        from phoenix.px_shop where gmt_expired < now() and shop_status = 'PX_SHOP_ONLINE' order by gmt_modified desc
+	    ]]>
+    </select>
+
     <select id="PX-SHOP-SELECT-GET-BY-ID" resultMap="RM-PX-SHOP">
 	    <![CDATA[
 	        select shop_id,shop_name,shop_address,shop_tel,waiter_name,owner_name,owner_phone,owner_idcard,shop_status,gmt_expired,gmt_created,gmt_modified 

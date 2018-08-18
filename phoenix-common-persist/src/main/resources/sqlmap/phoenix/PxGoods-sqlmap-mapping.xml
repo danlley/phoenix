@@ -62,6 +62,15 @@
 	    ]]>
     </select>
 
+    <select id="PX-SHOP-ONLINE-GOODS-SELECT-ALL" resultMap="RM-PX-GOODS">
+	    <![CDATA[
+	        select
+	        	goods_id,goods_status,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        from phoenix.px_goods where goods_status = 'PX_GOODS_ONLINE' and shop_id = #{value} order by gmt_modified desc
+	    ]]>
+    </select>
+
     <select id="PX-GOODS-SELECT-GET-BY-ID" resultMap="RM-PX-GOODS">
 	    <![CDATA[
 	        select

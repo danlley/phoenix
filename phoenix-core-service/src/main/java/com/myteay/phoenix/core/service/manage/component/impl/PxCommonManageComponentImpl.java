@@ -69,8 +69,8 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryPackagesNoticeListByNoticeId(String packagesNoticeId) {
         MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> result = new MtOperateResult<>();
         try {
-            List<PxGoodsPackagesSubNoticeModel> pxGoodsPackagesSubNoticeModels = pxGoodsPackagesSubNoticeRepository.findPackagesSubNoticeByGoodsId(
-                packagesNoticeId);
+            List<PxGoodsPackagesSubNoticeModel> pxGoodsPackagesSubNoticeModels = pxGoodsPackagesSubNoticeRepository
+                .findPackagesSubNoticeByGoodsId(packagesNoticeId);
             result.setResult(pxGoodsPackagesSubNoticeModels);
         } catch (PxManageException e) {
             logger.warn("温馨提醒摘要信息查询发生异常", e);
@@ -216,6 +216,21 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_QUERY_FAILD);
         }
         return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryShopExpiredAll()
+     */
+    @Override
+    public List<PxShopModel> queryShopExpiredAll() {
+        List<PxShopModel> list = null;
+        try {
+            list = pxShopRepository.findAllExpiredListShop();
+        } catch (PxManageException e) {
+            logger.warn("过期店铺信息查询发生异常", e);
+            return null;
+        }
+        return list;
     }
 
     /** 

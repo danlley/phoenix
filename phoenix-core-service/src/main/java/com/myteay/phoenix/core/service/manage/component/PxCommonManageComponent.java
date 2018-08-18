@@ -32,6 +32,13 @@ public interface PxCommonManageComponent {
     public MtOperateResult<List<PxShopModel>> queryShopAll();
 
     /**
+     * 查询所有已过期店铺模型
+     * 
+     * @return
+     */
+    public List<PxShopModel> queryShopExpiredAll();
+
+    /**
      * 查询所有商品摘要模型
      * 
      * @return

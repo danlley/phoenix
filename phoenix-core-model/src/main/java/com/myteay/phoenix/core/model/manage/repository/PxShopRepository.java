@@ -52,6 +52,14 @@ public interface PxShopRepository {
     public List<PxShopModel> findAll() throws PxManageException;
 
     /**
+     * 查询所有店铺信息
+     * 
+     * @return
+     * @throws PxManageException 
+     */
+    public List<PxShopModel> findAllExpiredListShop() throws PxManageException;
+
+    /**
      * 查询单个店铺信息
      * 
      * @param shopId

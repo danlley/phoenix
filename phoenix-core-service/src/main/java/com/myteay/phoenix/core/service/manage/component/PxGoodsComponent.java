@@ -38,4 +38,11 @@ public interface PxGoodsComponent {
      * @return
      */
     public PxGoodsModel queryGoodsModelByGoodsId(String goodsId);
+
+    /**
+     * 关闭指定店铺下所有在线商品
+     * 
+     * @param shopId
+     */
+    public void shutdownGoodsByShopId(String shopId);
 }

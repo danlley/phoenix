@@ -19,6 +19,7 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
+import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
 import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
@@ -42,6 +43,9 @@ public class PxShopComponentImpl implements PxShopComponent {
 
     /** 商品摘要管理仓储 */
     private PxGoodsRepository                pxGoodsRepository;
+
+    /** 商品摘要管理组件 */
+    private PxGoodsComponent                 pxGoodsComponent;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxShopComponent#manageShop(com.myteay.phoenix.core.model.manage.PxShopModel)
@@ -121,6 +125,11 @@ public class PxShopComponentImpl implements PxShopComponent {
         } catch (PxManageException e) {
             logger.warn("修改店铺信息发生异常 pxShopModel=" + pxShopModel, e);
             result = new MtOperateResult<PxShopModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_UPDATE_FAILD);
+        }
+
+        // 修改后如果店铺状态为已下线，则将店铺下所有已在线商品下架
+        if (freshPxShopModel != null && freshPxShopModel.getShopStatus() == PxShopStatusEnum.PX_SHOP_EXPIRED) {
+            pxGoodsComponent.shutdownGoodsByShopId(freshPxShopModel.getShopId());
         }
 
         return result;
@@ -258,6 +267,15 @@ public class PxShopComponentImpl implements PxShopComponent {
      */
     public void setPxGoodsRepository(PxGoodsRepository pxGoodsRepository) {
         this.pxGoodsRepository = pxGoodsRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsComponent</tt>.
+     * 
+     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
+     */
+    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
+        this.pxGoodsComponent = pxGoodsComponent;
     }
 
 }

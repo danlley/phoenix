@@ -109,6 +109,25 @@ public class PxShopRepositoryImpl implements PxShopRepository {
     }
 
     /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#findAllExpiredListShop()
+     */
+    @Override
+    public List<PxShopModel> findAllExpiredListShop() throws PxManageException {
+        List<PxShopDO> list = pxShopDAO.findPxShopExpiredAll();
+
+        List<PxShopModel> modelList = new ArrayList<>();
+        PxShopModel pxShopModel = null;
+        for (PxShopDO pxShopDO : list) {
+            pxShopModel = PxShopConvertor.convertDO2Model(pxShopDO);
+            if (pxShopModel != null) {
+                modelList.add(pxShopModel);
+            }
+        }
+
+        return modelList;
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxShopRepository#findSingleShop(java.lang.String)
      */
     @Override
