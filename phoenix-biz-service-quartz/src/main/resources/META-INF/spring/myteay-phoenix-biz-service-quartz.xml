@@ -21,4 +21,15 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<!-- 店铺过期时间扫描监听器 -->
+	<bean id="pxShopExpiredScanListener" class="com.myteay.phoenix.biz.service.quartz.listeners.PxShopExpiredScanListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_TASK_SHOP_EXPIRED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
 </beans>

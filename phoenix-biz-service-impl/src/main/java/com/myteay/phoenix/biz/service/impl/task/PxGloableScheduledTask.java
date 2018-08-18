@@ -35,12 +35,21 @@ public class PxGloableScheduledTask {
     private EventPublishService<String> eventPublishService;
 
     /**
-     * 每1分钟执行一次
+     * 定期刷新手机端商品列表每1分钟执行一次
      */
     @Scheduled(cron = "*/10 * * * * ?")
-    public void reportCurrentByCron() {
+    public void refreshMobileGoodsListCacheByCron() {
         logger.warn("[定时任务]商品列表定时加载任务启动");
         publishEvent(PxEventTopicEnum.PX_TASK_MOBILE_GOODS_CACHE_LOAD);
+    }
+
+    /**
+     * 定期刷新手机端商品列表每1分钟执行一次
+     */
+    @Scheduled(cron = "*/10 * * * * ?")
+    public void scanExpiredShopByCron() {
+        logger.warn("[定时任务]监控店铺过期时间");
+        publishEvent(PxEventTopicEnum.PX_TASK_SHOP_EXPIRED);
     }
 
     /**
