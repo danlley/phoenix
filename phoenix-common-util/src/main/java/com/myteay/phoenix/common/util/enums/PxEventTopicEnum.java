@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public enum PxEventTopicEnum {
 
-                              PX_SHOP_CFG_CHANGED("PX_SHOP_CFG_CHANGED", "店铺信息变更事件"),
+                              PX_GOODS_STATUS_CHANGED("PX_GOODS_STATUS_CHANGED", "店铺信息变更事件"),
 
                               PX_TASK_MOBILE_GOODS_CACHE_LOAD("PX_TASK_MOBILE_GOODS_CACHE_LOAD", "手机端商品列表定时加载事件"),
 

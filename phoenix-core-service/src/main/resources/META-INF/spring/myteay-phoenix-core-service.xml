@@ -38,11 +38,11 @@
 	
 	<bean id="pxCommonMngTemplate" class="com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplateImpl"></bean>
 	
-	<!-- 店铺配置信息变更监听器 -->
-	<bean id="pxShopEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxShopEventListener">
+	<!-- 商品状态变更为上线监听器 -->
+	<bean id="pxGoodsStatusChangedEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxGoodsStatusChangedEventListener">
 		<property name="descriptor">
 			<bean class="com.myteay.common.async.event.ListenerDescriptor">
-				<property name="topic" value="PX_SHOP_CFG_CHANGED"></property>
+				<property name="topic" value="PX_GOODS_STATUS_CHANGED"></property>
 				<property name="async" value="true"></property>
 				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
 			</bean>

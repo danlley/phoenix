@@ -9,8 +9,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.async.event.EventPublishService;
+import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.async.event.MtEventException;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
@@ -40,6 +44,9 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxGoodsModel> pxCommonMngTemplate;
+
+    /** 事件发送组件 */
+    private EventPublishService<String>       eventPublishService;
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                 pxGoodsRepository;
@@ -95,6 +102,15 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
         } catch (PxManageException e) {
             logger.warn("修改商品概要信息发生异常 pxGoodsModel=" + pxGoodsModel, e);
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
+        }
+
+        if (freshPxGoodsModel != null && freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE) {
+            MtEvent<PxGoodsModel> event = new MtEvent<PxGoodsModel>(PxEventTopicEnum.PX_GOODS_STATUS_CHANGED.getValue(), freshPxGoodsModel);
+            try {
+                eventPublishService.publishEvent(event);
+            } catch (MtEventException e) {
+                logger.warn("商品状态变更后，发送缓存刷新请求发生异常 " + e.getMessage(), e);
+            }
         }
 
         return result;
@@ -371,6 +387,15 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
      */
     public void setPxGoodsPackagesNoticeRepository(PxGoodsPackagesNoticeRepository pxGoodsPackagesNoticeRepository) {
         this.pxGoodsPackagesNoticeRepository = pxGoodsPackagesNoticeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>eventPublishService</tt>.
+     * 
+     * @param eventPublishService value to be assigned to property eventPublishService
+     */
+    public void setEventPublishService(EventPublishService<String> eventPublishService) {
+        this.eventPublishService = eventPublishService;
     }
 
 }
