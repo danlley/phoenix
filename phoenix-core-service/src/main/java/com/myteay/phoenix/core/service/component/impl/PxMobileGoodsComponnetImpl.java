@@ -4,7 +4,6 @@
  */
 package com.myteay.phoenix.core.service.component.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -45,23 +44,7 @@ public class PxMobileGoodsComponnetImpl implements PxMobileGoodsComponnet {
             return new MtOperateResult<>(list);
         }
 
-        // 禁止商品列表查询携带过多商品信息消耗过多的带宽，提升接口的吞吐能力
-        PxMobileGoodsModel tmPxMobileGoodsModel = null;
-        List<PxMobileGoodsModel> resultList = new ArrayList<>();
-        for (PxMobileGoodsModel model : list) {
-
-            if (model == null) {
-                continue;
-            }
-
-            tmPxMobileGoodsModel = new PxMobileGoodsModel();
-            tmPxMobileGoodsModel.setGoodsId(model.getGoodsId());
-            tmPxMobileGoodsModel.setPxMobileGoodsBaseModel(model.getPxMobileGoodsBaseModel());
-            tmPxMobileGoodsModel.setPxMobileShopModel(model.getPxMobileShopModel());
-            resultList.add(tmPxMobileGoodsModel);
-        }
-
-        return new MtOperateResult<>(resultList);
+        return new MtOperateResult<>(pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds));
     }
 
     /** 
