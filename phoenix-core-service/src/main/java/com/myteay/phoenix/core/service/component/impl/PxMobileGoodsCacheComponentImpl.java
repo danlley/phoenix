@@ -126,13 +126,16 @@ public class PxMobileGoodsCacheComponentImpl implements PxMobileGoodsCacheCompon
         }
 
         // step 3: 初始化缓存信息
-        for (PxMobileGoodsModel pxMobileGoodsModel : goodsList) {
-            if (pxMobileGoodsModel == null) {
-                continue;
-            }
+        synchronized (PX_GOODS_CACHE) {
+            PX_GOODS_CACHE = Collections.synchronizedMap(new HashMap<>());
+            for (PxMobileGoodsModel pxMobileGoodsModel : goodsList) {
+                if (pxMobileGoodsModel == null) {
+                    continue;
+                }
 
-            fillDetailInGoodsModel(pxMobileGoodsModel);
-            PX_GOODS_CACHE.put(pxMobileGoodsModel.getGoodsId(), pxMobileGoodsModel);
+                fillDetailInGoodsModel(pxMobileGoodsModel);
+                PX_GOODS_CACHE.put(pxMobileGoodsModel.getGoodsId(), pxMobileGoodsModel);
+            }
         }
 
         // step 4: 打印刷新结果

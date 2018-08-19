@@ -104,7 +104,8 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
             result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
         }
 
-        if (freshPxGoodsModel != null && freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE) {
+        if (freshPxGoodsModel != null && (freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_ONLINE
+                                          || freshPxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE)) {
             MtEvent<PxGoodsModel> event = new MtEvent<PxGoodsModel>(PxEventTopicEnum.PX_GOODS_STATUS_CHANGED.getValue(), freshPxGoodsModel);
             try {
                 eventPublishService.publishEvent(event);
