@@ -60,6 +60,27 @@ public class PxMobileGoodsBaseModel implements Serializable {
     /** 是否团购 */
     private PxGoodsTuanEnum      isTuan;
 
+    /** 订购类型说明，如：免预约 */
+    private String               orderTypeShow;
+
+    /** 是否会员说明 */
+    private String               isHuiyuanShow;
+
+    /** 是否有券说明 */
+    private String               isQuanShow;
+
+    /** 是否团购说明 */
+    private String               isTuanShow;
+
+    /** 是否会员说明 */
+    private boolean              isHuiyuanFlag;
+
+    /** 是否有券说明 */
+    private boolean              isQuanFlag;
+
+    /** 是否团购说明 */
+    private boolean              isTuanFlag;
+
     /** 当前销量 */
     private String               goodsSellAmount;
 
@@ -68,6 +89,132 @@ public class PxMobileGoodsBaseModel implements Serializable {
 
     /** 商品创建时间 */
     private Date                 gmtGoodsCreated;
+
+    /**
+     * Getter method for property <tt>isHuiyuanFlag</tt>.
+     * 
+     * @return property value of isHuiyuanFlag
+     */
+    public boolean isHuiyuanFlag() {
+        return isHuiyuanFlag;
+    }
+
+    /**
+     * Setter method for property <tt>isHuiyuanFlag</tt>.
+     * 
+     * @param isHuiyuanFlag value to be assigned to property isHuiyuanFlag
+     */
+    public void setHuiyuanFlag(boolean isHuiyuanFlag) {
+        this.isHuiyuanFlag = isHuiyuanFlag;
+    }
+
+    /**
+     * Getter method for property <tt>isQuanFlag</tt>.
+     * 
+     * @return property value of isQuanFlag
+     */
+    public boolean isQuanFlag() {
+        return isQuanFlag;
+    }
+
+    /**
+     * Setter method for property <tt>isQuanFlag</tt>.
+     * 
+     * @param isQuanFlag value to be assigned to property isQuanFlag
+     */
+    public void setQuanFlag(boolean isQuanFlag) {
+        this.isQuanFlag = isQuanFlag;
+    }
+
+    /**
+     * Getter method for property <tt>isTuanFlag</tt>.
+     * 
+     * @return property value of isTuanFlag
+     */
+    public boolean isTuanFlag() {
+        return isTuanFlag;
+    }
+
+    /**
+     * Setter method for property <tt>isTuanFlag</tt>.
+     * 
+     * @param isTuanFlag value to be assigned to property isTuanFlag
+     */
+    public void setTuanFlag(boolean isTuanFlag) {
+        this.isTuanFlag = isTuanFlag;
+    }
+
+    /**
+     * Getter method for property <tt>orderTypeShow</tt>.
+     * 
+     * @return property value of orderTypeShow
+     */
+    public String getOrderTypeShow() {
+        return orderTypeShow;
+    }
+
+    /**
+     * Setter method for property <tt>orderTypeShow</tt>.
+     * 
+     * @param orderTypeShow value to be assigned to property orderTypeShow
+     */
+    public void setOrderTypeShow(String orderTypeShow) {
+        this.orderTypeShow = orderTypeShow;
+    }
+
+    /**
+     * Getter method for property <tt>isHuiyuanShow</tt>.
+     * 
+     * @return property value of isHuiyuanShow
+     */
+    public String getIsHuiyuanShow() {
+        return isHuiyuanShow;
+    }
+
+    /**
+     * Setter method for property <tt>isHuiyuanShow</tt>.
+     * 
+     * @param isHuiyuanShow value to be assigned to property isHuiyuanShow
+     */
+    public void setIsHuiyuanShow(String isHuiyuanShow) {
+        this.isHuiyuanShow = isHuiyuanShow;
+    }
+
+    /**
+     * Getter method for property <tt>isQuanShow</tt>.
+     * 
+     * @return property value of isQuanShow
+     */
+    public String getIsQuanShow() {
+        return isQuanShow;
+    }
+
+    /**
+     * Setter method for property <tt>isQuanShow</tt>.
+     * 
+     * @param isQuanShow value to be assigned to property isQuanShow
+     */
+    public void setIsQuanShow(String isQuanShow) {
+        this.isQuanShow = isQuanShow;
+    }
+
+    /**
+     * Getter method for property <tt>isTuanShow</tt>.
+     * 
+     * @return property value of isTuanShow
+     */
+    public String getIsTuanShow() {
+        return isTuanShow;
+    }
+
+    /**
+     * Setter method for property <tt>isTuanShow</tt>.
+     * 
+     * @param isTuanShow value to be assigned to property isTuanShow
+     */
+    public void setIsTuanShow(String isTuanShow) {
+        this.isTuanShow = isTuanShow;
+    }
 
     /**
      * Getter method for property <tt>goodsId</tt>.
@@ -229,6 +376,10 @@ public class PxMobileGoodsBaseModel implements Serializable {
      */
     public void setOrderType(PxGoodsOrderTypeEnum orderType) {
         this.orderType = orderType;
+
+        if (orderType != null) {
+            this.setOrderTypeShow(orderType.getMessage());
+        }
     }
 
     /**
@@ -247,6 +398,14 @@ public class PxMobileGoodsBaseModel implements Serializable {
      */
     public void setIsHuiyuan(PxGoodsHuiyuanEnum isHuiyuan) {
         this.isHuiyuan = isHuiyuan;
+
+        if (isHuiyuan != null) {
+            this.setIsHuiyuanShow(isHuiyuan.getMessage());
+
+            if (isHuiyuan == PxGoodsHuiyuanEnum.PX_SUPPORT_HUIYUAN) {
+                this.setHuiyuanFlag(true);
+            }
+        }
     }
 
     /**
@@ -265,6 +424,14 @@ public class PxMobileGoodsBaseModel implements Serializable {
      */
     public void setIsQuan(PxGoodsQuanEnum isQuan) {
         this.isQuan = isQuan;
+
+        if (isQuan != null) {
+            this.setIsQuanShow(isQuan.getMessage());
+
+            if (isQuan == PxGoodsQuanEnum.PX_HAS_QUAN) {
+                this.setQuanFlag(true);
+            }
+        }
     }
 
     /**
@@ -283,6 +450,14 @@ public class PxMobileGoodsBaseModel implements Serializable {
      */
     public void setIsTuan(PxGoodsTuanEnum isTuan) {
         this.isTuan = isTuan;
+
+        if (isTuan != null) {
+            this.setIsTuanShow(isTuan.getMessage());
+
+            if (isTuan == PxGoodsTuanEnum.PX_HAS_TUAN) {
+                this.setTuanFlag(true);
+            }
+        }
     }
 
     /**
