@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.PxSalesAmountShowUtil;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
@@ -84,11 +85,32 @@ public class PxMobileGoodsBaseModel implements Serializable {
     /** 当前销量 */
     private String               goodsSellAmount;
 
+    /** 当前销量(用于展示) */
+    private String               goodsSellAmountShow;
+
     /** 商品过期时间 */
     private Date                 gmtGoodsExpired;
 
     /** 商品创建时间 */
     private Date                 gmtGoodsCreated;
+
+    /**
+     * Getter method for property <tt>goodsSellAmountShow</tt>.
+     * 
+     * @return property value of goodsSellAmountShow
+     */
+    public String getGoodsSellAmountShow() {
+        return goodsSellAmountShow;
+    }
+
+    /**
+     * Setter method for property <tt>goodsSellAmountShow</tt>.
+     * 
+     * @param goodsSellAmountShow value to be assigned to property goodsSellAmountShow
+     */
+    public void setGoodsSellAmountShow(String goodsSellAmountShow) {
+        this.goodsSellAmountShow = goodsSellAmountShow;
+    }
 
     /**
      * Getter method for property <tt>isHuiyuanFlag</tt>.
@@ -476,6 +498,7 @@ public class PxMobileGoodsBaseModel implements Serializable {
      */
     public void setGoodsSellAmount(String goodsSellAmount) {
         this.goodsSellAmount = goodsSellAmount;
+        this.setGoodsSellAmountShow(PxSalesAmountShowUtil.getSalesAmountShow(goodsSellAmount));
     }
 
     /**
