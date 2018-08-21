@@ -22,10 +22,10 @@ public class PxSalesAmountShowUtil {
     private static final String NO_SALES_AMOUNT_STRING = "0";
 
     /** 销量大于1000 */
-    private static final String S_SALES_AMOUNT_STRING  = "1000+";
+    private static final String S_SALES_AMOUNT_STRING  = "1千+";
 
     /** 销量大于100 */
-    private static final String H_SALES_AMOUNT_STRING  = "100+";
+    private static final String H_SALES_AMOUNT_STRING  = "1百+";
 
     /** 销量大于10 */
     private static final String T_SALES_AMOUNT_STRING  = "10+";
