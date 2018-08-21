@@ -88,11 +88,32 @@ public class PxMobileGoodsBaseModel implements Serializable {
     /** 当前销量(用于展示) */
     private String               goodsSellAmountShow;
 
+    /** 当前销量(星型展示) */
+    private boolean[]            goodsStarShow;
+
     /** 商品过期时间 */
     private Date                 gmtGoodsExpired;
 
     /** 商品创建时间 */
     private Date                 gmtGoodsCreated;
+
+    /**
+     * Getter method for property <tt>goodsStarShow</tt>.
+     * 
+     * @return property value of goodsStarShow
+     */
+    public boolean[] getGoodsStarShow() {
+        return goodsStarShow;
+    }
+
+    /**
+     * Setter method for property <tt>goodsStarShow</tt>.
+     * 
+     * @param goodsStarShow value to be assigned to property goodsStarShow
+     */
+    public void setGoodsStarShow(boolean[] goodsStarShow) {
+        this.goodsStarShow = goodsStarShow;
+    }
 
     /**
      * Getter method for property <tt>goodsSellAmountShow</tt>.
@@ -499,6 +520,7 @@ public class PxMobileGoodsBaseModel implements Serializable {
     public void setGoodsSellAmount(String goodsSellAmount) {
         this.goodsSellAmount = goodsSellAmount;
         this.setGoodsSellAmountShow(PxSalesAmountShowUtil.getSalesAmountShow(goodsSellAmount));
+        this.setGoodsStarShow(PxSalesAmountShowUtil.getStarConfig(goodsSellAmount));
     }
 
     /**
