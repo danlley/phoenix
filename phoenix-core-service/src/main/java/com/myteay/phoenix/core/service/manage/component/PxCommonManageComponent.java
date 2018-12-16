@@ -7,6 +7,7 @@ package com.myteay.phoenix.core.service.manage.component;
 import java.util.List;
 
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -107,4 +108,12 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<PxSubPackagesModel>> querySubPackagesByPackagesId(String packagesDetailId);
+
+    /**
+     * 通过店铺ID，查询当前店铺下的所有活动列表
+     * 
+     * @param shopId
+     * @return
+     */
+    public MtOperateResult<List<CampBaseModel>> queryCampBaseListByShopId(String shopId);
 }

@@ -40,6 +40,8 @@
 	
 	<bean id="campShopBaseComponent" class="com.myteay.phoenix.core.service.camp.component.CampShopBaseComponentImpl"></bean>
 	
+	<bean id="campShopBaseStatusComponent" class="com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponentImpl"></bean>
+	
 	<!-- 商品状态变更为上线监听器 -->
 	<bean id="pxGoodsStatusChangedEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxGoodsStatusChangedEventListener">
 		<property name="descriptor">

@@ -13,6 +13,8 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -61,6 +63,25 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
 
     /** 温馨提醒子项管理仓储 */
     private PxGoodsPackagesSubNoticeRepository pxGoodsPackagesSubNoticeRepository;
+
+    /** 针对单个店铺店内消费到场营销活动操作仓储 */
+    private CampShopBaseRepository             campShopBaseRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryCampBaseListByShopId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<CampBaseModel>> queryCampBaseListByShopId(String shopId) {
+        MtOperateResult<List<CampBaseModel>> result = new MtOperateResult<>();
+        try {
+            List<CampBaseModel> pxGoodsPackagesSubNoticeModels = campShopBaseRepository.findCampBaseByShopId(shopId);
+            result.setResult(pxGoodsPackagesSubNoticeModels);
+        } catch (PxManageException e) {
+            logger.warn("温馨提醒摘要信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_SUB_NOTICE_QUERY_FAILD);
+        }
+        return result;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryPackagesNoticeListByNoticeId(java.lang.String)
@@ -327,6 +348,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
      */
     public void setPxGoodsPackagesSubNoticeRepository(PxGoodsPackagesSubNoticeRepository pxGoodsPackagesSubNoticeRepository) {
         this.pxGoodsPackagesSubNoticeRepository = pxGoodsPackagesSubNoticeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campShopBaseRepository</tt>.
+     * 
+     * @param campShopBaseRepository value to be assigned to property campShopBaseRepository
+     */
+    public void setCampShopBaseRepository(CampShopBaseRepository campShopBaseRepository) {
+        this.campShopBaseRepository = campShopBaseRepository;
     }
 
 }
