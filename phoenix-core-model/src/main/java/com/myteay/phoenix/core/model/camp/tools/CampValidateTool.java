@@ -1,0 +1,39 @@
+/**
+ * Myteay.com Inc.
+ * Copyright (c) 2015-2018 All Rights Reserved.
+ */
+package com.myteay.phoenix.core.model.camp.tools;
+
+import org.apache.log4j.Logger;
+
+import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
+import com.myteay.phoenix.core.model.camp.CampBaseModel;
+
+/**
+ * 营销活动模型校验工具类
+ * 
+ * @author danlley
+ * @version $Id: CampValidateTool.java, v 0.1 Dec 16, 2018 11:08:24 PM danlley Exp $
+ */
+public class CampValidateTool {
+
+    /** 日志 */
+    public static final Logger logger = Logger.getLogger(CampValidateTool.class);
+
+    /**
+     * 校验店内消费营销活动基本模型
+     * 
+     * @param campBaseModel
+     */
+    public static void validateCampBaseModel(CampBaseModel campBaseModel) {
+    }
+
+    /**
+     * 校验店内消费营销活动数据模型
+     * 
+     * @param campBaseDO
+     */
+    public static void validateCampBaseDO(CampBaseDO campBaseDO) {
+    }
+
+}
