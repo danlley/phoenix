@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.camp.component;
 
+import org.apache.log4j.Logger;
+
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 
@@ -15,13 +17,28 @@ import com.myteay.phoenix.core.model.camp.CampBaseModel;
  */
 public class CampShopBaseStatusComponentImpl implements CampShopBaseStatusComponent {
 
+    /** 日志 */
+    public static final Logger    logger = Logger.getLogger(CampShopBaseStatusComponentImpl.class);
+
+    /** 针对单个店铺店内消费到场营销活动操作仓储 */
+    private CampShopBaseComponent campShopBaseComponent;
+
     /** 
      * @see com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponent#changeCampStatus(com.myteay.phoenix.core.model.camp.CampBaseModel)
      */
     @Override
     public MtOperateResult<CampBaseModel> changeCampStatus(CampBaseModel campBaseModel) {
         // TODO Auto-generated method stub
-        return null;
+        return campShopBaseComponent.modifyCampBaseModel(campBaseModel);
+    }
+
+    /**
+     * Setter method for property <tt>campShopBaseComponent</tt>.
+     * 
+     * @param campShopBaseComponent value to be assigned to property campShopBaseComponent
+     */
+    public void setCampShopBaseComponent(CampShopBaseComponent campShopBaseComponent) {
+        this.campShopBaseComponent = campShopBaseComponent;
     }
 
 }
