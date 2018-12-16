@@ -206,7 +206,7 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUBNOTICE_ONLINE_ADD_ERR("PX_SUBNOTICE_ONLINE_ADD_ERR", "00110086", "当前商品不满足追加子提醒条件，请检查商品是否已发布或已下线"),
 
-    ;
+                                   CAMP_BASE_MODEL_INVALID("CAMP_BASE_MODEL_INVALID", "00210001", "店内营销基本信息模型非法"),;
 
     /** 枚举值 */
     private final String value;
