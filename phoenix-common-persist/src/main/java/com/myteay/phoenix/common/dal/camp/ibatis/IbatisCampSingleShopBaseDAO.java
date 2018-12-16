@@ -34,10 +34,10 @@ public class IbatisCampSingleShopBaseDAO extends SqlSessionDaoSupport implements
     }
 
     /** 
-     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findPxGoodsAll()
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseAll()
      */
     @Override
-    public List<CampBaseDO> findPxGoodsAll() {
+    public List<CampBaseDO> findCampBaseAll() {
         return this.getSqlSession().selectList("CAMP-SHOP-BASE-SELECT-ALL");
     }
 

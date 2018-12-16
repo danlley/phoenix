@@ -28,7 +28,7 @@ public interface CampSingleShopBaseDAO {
      * 
      * @return
      */
-    List<CampBaseDO> findPxGoodsAll();
+    List<CampBaseDO> findCampBaseAll();
 
     /**
      * 通过营销活动基本ID查询指定的营销活动基本信息
