@@ -146,4 +146,13 @@ public class CampShopBaseRepositoryImpl implements CampShopBaseRepository {
         return modelList;
     }
 
+    /**
+     * Setter method for property <tt>campSingleShopBaseDAO</tt>.
+     * 
+     * @param campSingleShopBaseDAO value to be assigned to property campSingleShopBaseDAO
+     */
+    public void setCampSingleShopBaseDAO(CampSingleShopBaseDAO campSingleShopBaseDAO) {
+        this.campSingleShopBaseDAO = campSingleShopBaseDAO;
+    }
+
 }
