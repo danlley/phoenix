@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
+		<!-- 核心业务 -->
 		<mapper resource="sqlmap/phoenix/PxShop-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxGoods-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxGoodsPackagesDetail-sqlmap-mapping.xml"/>
@@ -10,5 +11,8 @@
 		<mapper resource="sqlmap/phoenix/PxGoodsPackagesNotice-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxPackagesSubNotice-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxMobileGoods-sqlmap-mapping.xml"/>
+		
+		<!-- 营销平台 -->
+		<mapper resource="sqlmap/camp/CampBase-sqlmap-mapping.xml"/>
 	</mappers>
 </configuration>

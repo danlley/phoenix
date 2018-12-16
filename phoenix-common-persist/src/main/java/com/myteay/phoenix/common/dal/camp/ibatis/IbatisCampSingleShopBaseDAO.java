@@ -6,6 +6,8 @@ package com.myteay.phoenix.common.dal.camp.ibatis;
 
 import java.util.List;
 
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
 import com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
 
@@ -15,15 +17,20 @@ import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
  * @author danlley
  * @version $Id: IbatisCampSingleShopBaseDAO.java, v 0.1 Dec 16, 2018 7:16:51 PM danlley Exp $
  */
-public class IbatisCampSingleShopBaseDAO implements CampSingleShopBaseDAO {
+public class IbatisCampSingleShopBaseDAO extends SqlSessionDaoSupport implements CampSingleShopBaseDAO {
 
     /** 
      * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#insert(com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO)
      */
     @Override
     public String insert(CampBaseDO campBaseDO) {
-        // TODO Auto-generated method stub
-        return null;
+        if (campBaseDO == null) {
+            throw new IllegalArgumentException("Can't insert a null data object into db.");
+        }
+
+        this.getSqlSession().insert("CAMP-SHOP-BASE-INSERT", campBaseDO);
+
+        return campBaseDO.getCampId();
     }
 
     /** 
@@ -31,26 +38,7 @@ public class IbatisCampSingleShopBaseDAO implements CampSingleShopBaseDAO {
      */
     @Override
     public List<CampBaseDO> findPxGoodsAll() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseById(java.lang.String)
-     */
-    @Override
-    public CampBaseDO findCampBaseById(String campId) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseByShopId(java.lang.String)
-     */
-    @Override
-    public List<CampBaseDO> findCampBaseByShopId(String shopId) {
-        // TODO Auto-generated method stub
-        return null;
+        return this.getSqlSession().selectList("CAMP-SHOP-BASE-SELECT-ALL");
     }
 
     /** 
@@ -58,8 +46,23 @@ public class IbatisCampSingleShopBaseDAO implements CampSingleShopBaseDAO {
      */
     @Override
     public List<CampBaseDO> findCampBaseOnlineByShopId(String shopId) {
-        // TODO Auto-generated method stub
-        return null;
+        return this.getSqlSession().selectList("CAMP-SHOP-ONLINE-CAMP-SELECT-ALL", shopId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseById(java.lang.String)
+     */
+    @Override
+    public CampBaseDO findCampBaseById(String campId) {
+        return this.getSqlSession().selectOne("CAMP-SHOP-BASE-SELECT-GET-BY-ID", campId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseByShopId(java.lang.String)
+     */
+    @Override
+    public List<CampBaseDO> findCampBaseByShopId(String shopId) {
+        return this.getSqlSession().selectList("CAMP-SHOP-BASE-SELECT-GET-BY-SHOP-ID", shopId);
     }
 
     /** 
@@ -67,8 +70,11 @@ public class IbatisCampSingleShopBaseDAO implements CampSingleShopBaseDAO {
      */
     @Override
     public void updateCampBase(CampBaseDO campBaseDO) {
-        // TODO Auto-generated method stub
+        if (campBaseDO == null) {
+            throw new IllegalArgumentException("Can't update by a null data object.");
+        }
 
+        this.getSqlSession().update("CAMP-SHOP-BASE-UPDATE-GET-BY-ID", campBaseDO);
     }
 
     /** 
@@ -76,8 +82,6 @@ public class IbatisCampSingleShopBaseDAO implements CampSingleShopBaseDAO {
      */
     @Override
     public void deleteById(String campId) {
-        // TODO Auto-generated method stub
-
+        this.getSqlSession().delete("CAMP-SHOP-BASE-DELETE-GET-BY-ID", campId);
     }
-
 }
