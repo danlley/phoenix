@@ -206,7 +206,21 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUBNOTICE_ONLINE_ADD_ERR("PX_SUBNOTICE_ONLINE_ADD_ERR", "00110086", "当前商品不满足追加子提醒条件，请检查商品是否已发布或已下线"),
 
-                                   CAMP_BASE_MODEL_INVALID("CAMP_BASE_MODEL_INVALID", "00210001", "店内营销基本信息模型非法"),;
+                                   CAMP_BASE_MODEL_INVALID("CAMP_BASE_MODEL_INVALID", "00210001", "店内营销基本信息模型非法"),
+
+                                   CAMP_BASE_DEL_STATUS_ERR("CAMP_BASE_DEL_STATUS_ERR", "00210002", "店内营销活动状态为已发布、已下线，则不允许进行删除"),
+
+                                   CAMP_BASE_DELETE_FAILD("CAMP_BASE_DELETE_FAILD", "00210003", "店内营销活动删除失败"),
+
+                                   CAMP_BASE_HAS_CHILD_ERR("CAMP_BASE_HAS_CHILD_ERR", "00210004", "店内营销活动包含子项，无法删除"),
+
+                                   CAMP_BASE_SAVE_FAILD("CAMP_BASE_SAVE_FAILD", "00210005", "店内营销活动保存失败"),
+
+                                   CAMP_BASE_QUERY_FAILD("CAMP_BASE_QUERY_FAILD", "00210006", "店内营销单个活动查询失败"),
+
+                                   CAMP_BASE_UPDATE_FAILD("CAMP_BASE_UPDATE_FAILD", "00210007", "店内营销单个活动信息修改失败"),
+
+    ;
 
     /** 枚举值 */
     private final String value;

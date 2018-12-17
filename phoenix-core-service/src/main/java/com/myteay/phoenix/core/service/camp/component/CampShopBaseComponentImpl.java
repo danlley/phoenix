@@ -71,7 +71,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             result.setResult(freshCampBaseModel);
         } catch (PxManageException e) {
             logger.warn("修改店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
-            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_UPDATE_FAILD);
+            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_UPDATE_FAILD);
         }
 
         if (freshCampBaseModel != null
@@ -117,7 +117,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             result.setResult(freshCampBaseModel);
         } catch (PxManageException e) {
             logger.warn("查询店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
-            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
+            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_QUERY_FAILD);
         }
 
         return result;
@@ -138,17 +138,17 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
                 && (freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE || freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_OFFLINE
                     || freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_EXPIRED)) {
                 logger.warn("商品状态为已发布、已下线，则不允许进行删除 campBaseModel=" + campBaseModel);
-                return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DEL_STATUS_ERR);
+                return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_DEL_STATUS_ERR);
             }
         } catch (PxManageException e) {
             logger.warn("查询单个店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
-            return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
+            return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_DELETE_FAILD);
         }
 
         // step 2: 店内活动包含子项内容，则不允许删除
         if (!isCanDeleteCampBase(campBaseModel.getCampId())) {
             logger.warn("店内活动包含子项，无法删除 campBaseModel=" + campBaseModel);
-            return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_HAS_CHILD_ERR);
+            return new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_HAS_CHILD_ERR);
         }
 
         // step 3: 执行删除动作
@@ -157,7 +157,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             campShopBaseRepository.removeGoodsInfo(campBaseModel);
         } catch (PxManageException e) {
             logger.warn("删除店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
-            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_DELETE_FAILD);
+            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_DELETE_FAILD);
         }
 
         return result;
@@ -210,7 +210,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             result.setResult(freshCampBaseModel);
         } catch (PxManageException e) {
             logger.warn("保存店内营销活动信息发生异常 campBaseModel=" + campBaseModel, e);
-            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_SAVE_FAILD);
+            result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_SAVE_FAILD);
         }
 
         return result;
