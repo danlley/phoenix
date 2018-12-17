@@ -16,7 +16,7 @@
 <!-- @author Wei Xiaomin                                                           -->
 <!-- ============================================================================= -->
 
-<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO">
+<mapper namespace="com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO">
     <!-- ============================================= -->
     <!-- mapped statements for IbatisUsersInfoDAO -->
     <!-- ============================================= -->

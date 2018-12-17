@@ -14,5 +14,6 @@
 		
 		<!-- 营销平台 -->
 		<mapper resource="sqlmap/camp/CampBase-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/camp/CampPrize-sqlmap-mapping.xml"/>
 	</mappers>
 </configuration>
