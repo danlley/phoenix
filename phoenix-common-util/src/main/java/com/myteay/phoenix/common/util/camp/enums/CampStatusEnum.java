@@ -6,20 +6,22 @@ package com.myteay.phoenix.common.util.camp.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 活动状态枚举
  * 
  * @author danlley
  * @version $Id: CampStatusEnum.java, v 0.1 Dec 16, 2018 11:14:38 PM danlley Exp $
  */
-public enum CampStatusEnum {
-                            CAMP_DRAFT("CAMP_DRAFT", "草稿"),
+public enum CampStatusEnum implements EnumMessage {
+                                                   CAMP_DRAFT("CAMP_DRAFT", "草稿"),
 
-                            CAMP_ONLINE("CAMP_ONLINE", "已启动"),
+                                                   CAMP_ONLINE("CAMP_ONLINE", "已启动"),
 
-                            CAMP_OFFLINE("CAMP_OFFLINE", "已停止"),
+                                                   CAMP_OFFLINE("CAMP_OFFLINE", "已停止"),
 
-                            CAMP_EXPIRED("CAMP_EXPIRED", "已过期"),
+                                                   CAMP_EXPIRED("CAMP_EXPIRED", "已过期"),
 
     ;
 

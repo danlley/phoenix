@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import com.myteay.common.util.exception.MtException;
 import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.common.util.tools.EnumUtil;
+import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsHuiyuanEnum;
@@ -96,6 +97,9 @@ public class PxDataDictionaryComponentImpl implements PxDataDictionaryComponent,
 
         list = EnumUtil.getDataDictionaryModelFromEnum(PxGoodsStatusEnum.class);
         DATA_DIC_CACHE.put("PxGoodsStatusEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(CampStatusEnum.class);
+        DATA_DIC_CACHE.put("CampStatusEnum", list);
 
         logger.warn("缓存初始化结果： " + DATA_DIC_CACHE);
     }
