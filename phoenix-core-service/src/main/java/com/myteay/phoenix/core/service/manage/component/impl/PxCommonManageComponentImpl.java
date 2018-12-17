@@ -14,7 +14,9 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
+import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -67,6 +69,9 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
     /** 针对单个店铺店内消费到场营销活动操作仓储 */
     private CampShopBaseRepository             campShopBaseRepository;
 
+    /** 针对单个店铺店内消费到场营销活动操作仓储 */
+    private CampShopPrizeRepository            campShopPrizeRepository;
+
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryCampBaseListByShopId(java.lang.String)
      */
@@ -77,8 +82,24 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             List<CampBaseModel> pxGoodsPackagesSubNoticeModels = campShopBaseRepository.findCampBaseByShopId(shopId);
             result.setResult(pxGoodsPackagesSubNoticeModels);
         } catch (PxManageException e) {
-            logger.warn("温馨提醒摘要信息查询发生异常", e);
-            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_SUB_NOTICE_QUERY_FAILD);
+            logger.warn("店内消费营销活动信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_QUERY_FAILD);
+        }
+        return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#queryCampPrizeListByCampId(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<CampPrizeModel>> queryCampPrizeListByCampId(String campId) {
+        MtOperateResult<List<CampPrizeModel>> result = new MtOperateResult<>();
+        try {
+            List<CampPrizeModel> pxGoodsPackagesSubNoticeModels = campShopPrizeRepository.findCampPrizeByCampId(campId);
+            result.setResult(pxGoodsPackagesSubNoticeModels);
+        } catch (PxManageException e) {
+            logger.warn("店内消费营销活动奖品信息查询发生异常", e);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_PRIZE_QUERY_FAILD);
         }
         return result;
     }
@@ -357,6 +378,15 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
      */
     public void setCampShopBaseRepository(CampShopBaseRepository campShopBaseRepository) {
         this.campShopBaseRepository = campShopBaseRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campShopPrizeRepository</tt>.
+     * 
+     * @param campShopPrizeRepository value to be assigned to property campShopPrizeRepository
+     */
+    public void setCampShopPrizeRepository(CampShopPrizeRepository campShopPrizeRepository) {
+        this.campShopPrizeRepository = campShopPrizeRepository;
     }
 
 }

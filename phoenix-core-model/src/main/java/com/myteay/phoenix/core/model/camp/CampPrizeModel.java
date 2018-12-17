@@ -50,10 +50,10 @@ public class CampPrizeModel implements Serializable {
     private String              prizeAmount;
 
     /** 奖品起效时间 */
-    private String              prizeEffictive;
+    private Date                prizeEffictive;
 
     /** 奖品过期时间 */
-    private String              prizeExpired;
+    private Date                prizeExpired;
 
     /** 创建时间 */
     private Date                gmtCreated;
@@ -270,7 +270,7 @@ public class CampPrizeModel implements Serializable {
      * 
      * @return property value of prizeEffictive
      */
-    public String getPrizeEffictive() {
+    public Date getPrizeEffictive() {
         return prizeEffictive;
     }
 
@@ -279,7 +279,7 @@ public class CampPrizeModel implements Serializable {
      * 
      * @param prizeEffictive value to be assigned to property prizeEffictive
      */
-    public void setPrizeEffictive(String prizeEffictive) {
+    public void setPrizeEffictive(Date prizeEffictive) {
         this.prizeEffictive = prizeEffictive;
     }
 
@@ -288,7 +288,7 @@ public class CampPrizeModel implements Serializable {
      * 
      * @return property value of prizeExpired
      */
-    public String getPrizeExpired() {
+    public Date getPrizeExpired() {
         return prizeExpired;
     }
 
@@ -297,7 +297,7 @@ public class CampPrizeModel implements Serializable {
      * 
      * @param prizeExpired value to be assigned to property prizeExpired
      */
-    public void setPrizeExpired(String prizeExpired) {
+    public void setPrizeExpired(Date prizeExpired) {
         this.prizeExpired = prizeExpired;
     }
 

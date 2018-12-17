@@ -30,7 +30,7 @@ public class IbatisCampSingleShopPrizeDAO extends SqlSessionDaoSupport implement
 
         this.getSqlSession().insert("CAMP-PRIZE-INSERT", campPrizeDO);
 
-        return campPrizeDO.getCampId();
+        return campPrizeDO.getPrizeId();
     }
 
     /** 

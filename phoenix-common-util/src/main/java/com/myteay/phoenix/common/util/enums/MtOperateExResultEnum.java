@@ -220,6 +220,8 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_BASE_UPDATE_FAILD("CAMP_BASE_UPDATE_FAILD", "00210007", "店内营销单个活动信息修改失败"),
 
+                                   CAMP_PRIZE_QUERY_FAILD("CAMP_PRIZE_QUERY_FAILD", "00210008", "店内营销奖品信息查询失败"),
+
     ;
 
     /** 枚举值 */

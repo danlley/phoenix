@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -116,4 +117,12 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<CampBaseModel>> queryCampBaseListByShopId(String shopId);
+
+    /**
+     * 通过活动ID，查询当前活动下所有奖品列表
+     * 
+     * @param campId
+     * @return
+     */
+    public MtOperateResult<List<CampPrizeModel>> queryCampPrizeListByCampId(String campId);
 }
