@@ -79,7 +79,7 @@ public class CampBaseController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<CampBaseModel> manageGoods(CampBaseModel campBaseModel) {
+    public MtServiceResult<CampBaseModel> manageGoods(@RequestBody CampBaseModel campBaseModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动信息 campBaseModel=" + campBaseModel);
