@@ -7,7 +7,9 @@ package com.myteay.phoenix.core.model.camp.tools;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
+import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 
 /**
  * 营销活动模型校验工具类
@@ -34,6 +36,23 @@ public class CampValidateTool {
      * @param campBaseDO
      */
     public static void validateCampBaseDO(CampBaseDO campBaseDO) {
+    }
+
+    /**
+     * 校验店内消费营销活动奖品模型
+     * 
+     * @param campPrizeModel
+     */
+    public static void validateCampPrizeModel(CampPrizeModel campPrizeModel) {
+
+    }
+
+    /**
+     * 校验店内消费营销活动奖品数据模型
+     * 
+     * @param campPrizeDO
+     */
+    public static void validateCampPrizeDO(CampPrizeDO campPrizeDO) {
     }
 
 }

@@ -28,4 +28,6 @@
 	<bean id="pxMobileGoodsRepository" class="com.myteay.phoenix.core.model.mobile.repository.impl.PxMobileGoodsRepositoryImpl"></bean>
 	
 	<bean id="campShopBaseRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopBaseRepositoryImpl"></bean>
+	
+	<bean id="campShopPrizeRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopPrizeRepositoryImpl"></bean>
 </beans>

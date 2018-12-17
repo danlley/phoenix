@@ -2,72 +2,77 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.common.dal.camp.dataobject;
+package com.myteay.phoenix.core.model.camp;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 
 /**
- * 店内营销活动奖品数据模型
+ * 奖品模型
  * 
  * @author danlley
- * @version $Id: CampPrizeDO.java, v 0.1 Dec 17, 2018 6:32:59 PM danlley Exp $
+ * @version $Id: CampPrizeModel.java, v 0.1 Dec 17, 2018 10:13:16 PM danlley Exp $
  */
-public class CampPrizeDO implements Serializable {
+public class CampPrizeModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -3631822148203466634L;
+    private static final long   serialVersionUID = 8056263012831762393L;
 
     /** 奖品ID */
-    private String            prizeId;
+    private String              prizeId;
 
     /** 奖品名称 */
-    private String            prizeName;
+    private String              prizeName;
 
     /** 活动ID */
-    private String            campId;
+    private String              campId;
 
     /** 店铺ID */
-    private String            shopId;
+    private String              shopId;
 
     /** 奖品等级 */
-    private String            prizeLevel;
+    private String              prizeLevel;
 
     /** 奖品比率 */
-    private String            prizePercent;
+    private String              prizePercent;
 
     /** 奖位分布 */
-    private String            distribution;
+    private String              distribution;
 
     /** 奖品单位价值 */
-    private String            price;
+    private String              price;
 
     /** 奖品数量 */
-    private String            prizeAmount;
-
-    /** 奖品状态 */
-    private String            prizeStatus;
+    private String              prizeAmount;
 
     /** 奖品起效时间 */
-    private String            prizeEffictive;
+    private String              prizeEffictive;
 
     /** 奖品过期时间 */
-    private String            prizeExpired;
+    private String              prizeExpired;
 
     /** 创建时间 */
-    private Date              gmtCreated;
+    private Date                gmtCreated;
 
     /** 最后修改时间 */
-    private Date              gmtModified;
+    private Date                gmtModified;
+
+    /** 奖品状态 */
+    private CampPrizeStatusEnum prizeStatus;
+
+    /** 操作类型 */
+    private PxOperationTypeEnum operationType;
 
     /**
      * Getter method for property <tt>prizeStatus</tt>.
      * 
      * @return property value of prizeStatus
      */
-    public String getPrizeStatus() {
+    public CampPrizeStatusEnum getPrizeStatus() {
         return prizeStatus;
     }
 
@@ -76,8 +81,26 @@ public class CampPrizeDO implements Serializable {
      * 
      * @param prizeStatus value to be assigned to property prizeStatus
      */
-    public void setPrizeStatus(String prizeStatus) {
+    public void setPrizeStatus(CampPrizeStatusEnum prizeStatus) {
         this.prizeStatus = prizeStatus;
+    }
+
+    /**
+     * Getter method for property <tt>operationType</tt>.
+     * 
+     * @return property value of operationType
+     */
+    public PxOperationTypeEnum getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Setter method for property <tt>operationType</tt>.
+     * 
+     * @param operationType value to be assigned to property operationType
+     */
+    public void setOperationType(PxOperationTypeEnum operationType) {
+        this.operationType = operationType;
     }
 
     /**

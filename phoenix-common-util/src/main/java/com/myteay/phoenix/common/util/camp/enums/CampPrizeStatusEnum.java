@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import com.myteay.common.util.enums.EnumMessage;
 
 /**
+ * 奖品状态枚举
  * 
  * @author danlley
  * @version $Id: CampPrizeStatusEnum.java, v 0.1 Dec 17, 2018 10:14:39 PM danlley Exp $
