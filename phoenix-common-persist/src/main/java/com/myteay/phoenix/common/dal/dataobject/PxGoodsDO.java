@@ -47,6 +47,9 @@ public class PxGoodsDO implements Serializable {
     /** 订购类型，如：免预约 */
     private String            orderType;
 
+    /** 商品类型，如：奶茶、汉堡、茶饮、套餐等 */
+    private String            goodsType;
+
     /** 是否会员 */
     private String            isHuiyuan;
 
@@ -70,6 +73,24 @@ public class PxGoodsDO implements Serializable {
 
     /** 商品状态 */
     private String            goodsStatus;
+
+    /**
+     * Getter method for property <tt>goodsType</tt>.
+     * 
+     * @return property value of goodsType
+     */
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    /**
+     * Setter method for property <tt>goodsType</tt>.
+     * 
+     * @param goodsType value to be assigned to property goodsType
+     */
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
 
     /**
      * Getter method for property <tt>goodsStatus</tt>.

@@ -31,6 +31,7 @@
         <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsOnlineTime" column="goods_online_time" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="orderType" column="order_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsType" column="goods_type" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="isHuiyuan" column="is_huiyuan" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="isQuan" column="is_quan" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="isTuan" column="is_tuan" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -43,10 +44,10 @@
     <insert id="PX-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxShopDO">
 		insert into phoenix.px_goods (
 		    shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
-		    order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+		    order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 		)values(
 		    #{shopId},'PX_GOODS_DRAFT',#{goodsImage},#{goodsTitle},#{goodsDesc},#{goodsPrice},#{goodsCommPrice},#{goodsOnlineTime},
-		    #{orderType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},now(),now()
+		    #{orderType},#{goodsType},#{isHuiyuan},#{isQuan},#{isTuan},#{goodsSellAmount},#{gmtExpired},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="goodsId">  
 	    SELECT LAST_INSERT_ID()  
@@ -57,7 +58,7 @@
 	    <![CDATA[
 	        select
 	        	goods_id,goods_status,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
-	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods order by gmt_modified desc
 	    ]]>
     </select>
@@ -66,7 +67,7 @@
 	    <![CDATA[
 	        select
 	        	goods_id,goods_status,shop_id,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
-	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods where goods_status = 'PX_GOODS_ONLINE' and shop_id = #{value} order by gmt_modified desc
 	    ]]>
     </select>
@@ -75,7 +76,7 @@
 	    <![CDATA[
 	        select
 	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
-	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods 
 	        where (goods_id = #{value})
 	    ]]>
@@ -85,7 +86,7 @@
 	    <![CDATA[
 	        select
 	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
-	        	order_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods 
 	        where (shop_id = #{value})
 	    ]]>
@@ -126,6 +127,9 @@
 				</if>
 				<if test="orderType!=null">
 					order_type = #{orderType},
+				</if>
+				<if test="goodsType!=null">
+					goods_type = #{goodsType},
 				</if>
 				<if test="isHuiyuan!=null">
 					is_huiyuan = #{isHuiyuan},

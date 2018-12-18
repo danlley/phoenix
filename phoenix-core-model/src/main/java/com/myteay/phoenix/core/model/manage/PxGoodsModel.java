@@ -16,6 +16,7 @@ import com.myteay.phoenix.common.util.manage.enums.PxGoodsOrderTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsTypeEnum;
 
 /**
  * 商品概要模型
@@ -55,6 +56,9 @@ public class PxGoodsModel implements Serializable {
     /** 订购类型，如：免预约 */
     private PxGoodsOrderTypeEnum orderType;
 
+    /** 商品类型，如：奶茶、汉堡、茶饮、套餐等 */
+    private PxGoodsTypeEnum      goodsType;
+
     /** 是否会员 */
     private PxGoodsHuiyuanEnum   isHuiyuan;
 
@@ -82,6 +86,24 @@ public class PxGoodsModel implements Serializable {
 
     /** 商品状态 */
     private PxGoodsStatusEnum    goodsStatus;
+
+    /**
+     * Getter method for property <tt>goodsType</tt>.
+     * 
+     * @return property value of goodsType
+     */
+    public PxGoodsTypeEnum getGoodsType() {
+        return goodsType;
+    }
+
+    /**
+     * Setter method for property <tt>goodsType</tt>.
+     * 
+     * @param goodsType value to be assigned to property goodsType
+     */
+    public void setGoodsType(PxGoodsTypeEnum goodsType) {
+        this.goodsType = goodsType;
+    }
 
     /**
      * Getter method for property <tt>goodsStatus</tt>.
