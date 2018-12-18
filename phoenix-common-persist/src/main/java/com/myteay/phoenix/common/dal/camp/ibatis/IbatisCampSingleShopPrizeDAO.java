@@ -74,7 +74,7 @@ public class IbatisCampSingleShopPrizeDAO extends SqlSessionDaoSupport implement
             throw new IllegalArgumentException("Can't update by a null data object.");
         }
 
-        this.getSqlSession().update("CAMP-PRIZE-DELETE-BY-ID", campPrizeDO);
+        this.getSqlSession().update("CAMP-PRIZE-UPDATE-BY-ID", campPrizeDO);
     }
 
     /** 
@@ -82,6 +82,6 @@ public class IbatisCampSingleShopPrizeDAO extends SqlSessionDaoSupport implement
      */
     @Override
     public void deleteById(String prizeId) {
-        this.getSqlSession().delete("CAMP-SHOP-BASE-DELETE-GET-BY-ID", prizeId);
+        this.getSqlSession().delete("CAMP-PRIZE-DELETE-BY-ID", prizeId);
     }
 }
