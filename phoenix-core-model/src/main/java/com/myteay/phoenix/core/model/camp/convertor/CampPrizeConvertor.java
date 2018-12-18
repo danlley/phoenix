@@ -35,6 +35,7 @@ public class CampPrizeConvertor {
         campPrizeModel.setCampId(campPrizeDO.getCampId());
         campPrizeModel.setDistribution(campPrizeDO.getDistribution());
         campPrizeModel.setGmtCreated(campPrizeDO.getGmtCreated());
+        campPrizeModel.setGmtModified(campPrizeDO.getGmtModified());
         campPrizeModel.setPrice(campPrizeDO.getPrice());
         campPrizeModel.setPrizeAmount(campPrizeDO.getPrizeAmount());
         campPrizeModel.setPrizeEffictive(campPrizeDO.getPrizeEffictive());
