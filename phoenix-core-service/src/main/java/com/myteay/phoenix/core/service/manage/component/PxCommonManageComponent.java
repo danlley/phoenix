@@ -125,4 +125,14 @@ public interface PxCommonManageComponent {
      * @return
      */
     public MtOperateResult<List<CampPrizeModel>> queryCampPrizeListByCampId(String campId);
+
+    /**
+     * 通过多条件查询指定的已发布商品概要信息列表
+     * 
+     * @param shopId
+     * @param goodsType
+     * @param goodsTitle
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsModel>> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle);
 }

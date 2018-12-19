@@ -146,6 +146,26 @@ public class PxGoodsRepositoryImpl implements PxGoodsRepository {
         return PxGoodsConvertor.convertDO2Model(freshPxGoodsDO);
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsRepository#findPxShopOnlineGoodsByCondition(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<PxGoodsModel> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle) throws PxManageException {
+        List<PxGoodsDO> goodsList = pxGoodsDAO.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
+
+        if (CollectionUtils.isEmpty(goodsList)) {
+            return null;
+        }
+
+        List<PxGoodsModel> modelList = new ArrayList<>();
+        PxGoodsModel pxGoodsModel = null;
+        for (PxGoodsDO pxGoodsDO : goodsList) {
+            pxGoodsModel = PxGoodsConvertor.convertDO2Model(pxGoodsDO);
+            modelList.add(pxGoodsModel);
+        }
+        return modelList;
+    }
+
     /**
      * Setter method for property <tt>pxGoodsDAO</tt>.
      * 

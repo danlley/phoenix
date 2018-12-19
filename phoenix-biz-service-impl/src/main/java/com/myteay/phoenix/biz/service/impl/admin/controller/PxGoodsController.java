@@ -131,6 +131,31 @@ public class PxGoodsController {
     }
 
     /**
+     * 多条件查询商品概要信息
+     * 
+     * @param pxShopModel
+     * @return
+     */
+    @RequestMapping(value = "/query/goods/condition/shopId/{shopId}/goodsType/{goodsType}/goodsTitle/{goodsTitle}", method = { RequestMethod.POST })
+    public MtServiceResult<List<PxGoodsModel>> querySingleAdv(@PathVariable String shopId, @PathVariable String goodsType, @PathVariable String goodsTitle) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("开始执行商品多条件查询 shopId=" + shopId + " goodsType=" + goodsType + " goodsTitle=" + goodsTitle);
+        }
+        MtServiceResult<List<PxGoodsModel>> result = null;
+        try {
+            MtOperateResult<List<PxGoodsModel>> innerResult = pxCommonManageComponent.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
+            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result.setResult(innerResult.getResult());
+        } catch (Exception e) {
+            logger.warn("执行商品多条件查询发生异常" + e.getMessage(), e);
+            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+        }
+
+        return result;
+    }
+
+    /**
      * 商品概要管理服务（增、删、改、单条查询）
      * 
      * @param pxShopModel

@@ -55,6 +55,16 @@ public interface PxGoodsDAO {
     List<PxGoodsDO> findPxShopOnlineGoodsByShopId(String shopId);
 
     /**
+     * 通过多条件查询指定的已发布商品概要信息列表
+     * 
+     * @param shopId
+     * @param goodsType
+     * @param goodsTitle
+     * @return
+     */
+    List<PxGoodsDO> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle);
+
+    /**
      * 更新商品概要配置信息
      * 
      * @param pxGoodsDO

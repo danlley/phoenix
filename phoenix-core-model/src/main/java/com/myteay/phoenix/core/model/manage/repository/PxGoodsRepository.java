@@ -77,4 +77,15 @@ public interface PxGoodsRepository {
      * @throws PxManageException
      */
     public List<PxGoodsModel> findShopOnlineGoodsByShopId(String shopId) throws PxManageException;
+
+    /**
+     * 通过多条件查询指定的已发布商品概要信息列表
+     * 
+     * @param shopId
+     * @param goodsType
+     * @param goodsTitle
+     * @return
+     * @throws PxManageException 
+     */
+    public List<PxGoodsModel> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle) throws PxManageException;
 }

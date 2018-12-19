@@ -6,6 +6,7 @@ package com.myteay.phoenix.core.service.manage.component.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
@@ -305,6 +306,30 @@ public class PxCommonManageComponentImpl implements PxCommonManageComponent {
             logger.warn("子套餐信息查询发生异常", e);
             result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SUB_PKG_QUERY_FAILD);
         }
+        return result;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent#findPxShopOnlineGoodsByCondition(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsModel>> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle) {
+
+        if (StringUtils.isBlank(shopId)) {
+            logger.warn("店铺ID不可用，无法通过过滤条件查询当前店铺的商品 shopId=" + shopId + " goodsType=" + goodsType + " goodsTitle=" + goodsTitle);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
+        }
+
+        MtOperateResult<List<PxGoodsModel>> result = new MtOperateResult<>();
+        List<PxGoodsModel> goodsModelList = null;
+        try {
+            goodsModelList = pxGoodsRepository.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
+            result.setResult(goodsModelList);
+        } catch (PxManageException e) {
+            logger.warn("通过过滤条件查询当前店铺的商品发生异常PxManageException " + e.getMessage(), e);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_QUERY_FAILD);
+        }
+
         return result;
     }
 

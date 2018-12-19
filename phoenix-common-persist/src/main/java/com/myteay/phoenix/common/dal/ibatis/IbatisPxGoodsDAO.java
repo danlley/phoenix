@@ -4,7 +4,9 @@
  */
 package com.myteay.phoenix.common.dal.ibatis;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -83,6 +85,18 @@ public class IbatisPxGoodsDAO extends SqlSessionDaoSupport implements PxGoodsDAO
     @Override
     public List<PxGoodsDO> findPxShopOnlineGoodsByShopId(String shopId) {
         return this.getSqlSession().selectList("PX-SHOP-ONLINE-GOODS-SELECT-ALL", shopId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsDAO#findPxShopOnlineGoodsByCondition(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<PxGoodsDO> findPxShopOnlineGoodsByCondition(String shopId, String goodsType, String goodsTitle) {
+        Map<String, String> param = new HashMap<>();
+        param.put("shopId", shopId);
+        param.put("goodsType", goodsType);
+        param.put("goodsTitle", goodsTitle);
+        return this.getSqlSession().selectList("PX-GOODS-SELECT-GET-BY-CONDITION", param);
     }
 
 }

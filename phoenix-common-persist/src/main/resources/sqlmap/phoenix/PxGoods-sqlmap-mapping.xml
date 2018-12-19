@@ -91,6 +91,26 @@
 	        where (shop_id = #{value})
 	    ]]>
     </select>
+
+    <select id="PX-GOODS-SELECT-GET-BY-CONDITION" resultMap="RM-PX-GOODS">
+	    <![CDATA[
+	        select
+	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
+	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
+	        from phoenix.px_goods 
+	        where goods_status = 'PX_GOODS_ONLINE'
+	        
+	    ]]>
+	    <if test="shopId!=null and shopId!=''">
+			and shop_id = #{shopId}
+		</if>
+	    <if test="goodsType!=null and goodsType!=''">
+			and goods_type = #{goodsType}
+		</if>
+		<if test="goodsTitle!=null and goodsTitle!=''">
+			and goods_title like CONCAT('%','${goodsTitle}','%')
+		</if>
+    </select>
     
     <delete id="PX-GOODS-DELETE-GET-BY-ID">
 	    <![CDATA[
