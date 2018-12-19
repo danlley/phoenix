@@ -2,7 +2,7 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.camp.component;
+package com.myteay.phoenix.core.service.camp.component.impl;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +17,7 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
+import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
 

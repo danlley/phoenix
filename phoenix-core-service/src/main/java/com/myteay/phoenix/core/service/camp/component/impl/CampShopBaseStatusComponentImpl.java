@@ -2,12 +2,14 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.camp.component;
+package com.myteay.phoenix.core.service.camp.component.impl;
 
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
+import com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponent;
 
 /**
  * 店内营销活动状态管理

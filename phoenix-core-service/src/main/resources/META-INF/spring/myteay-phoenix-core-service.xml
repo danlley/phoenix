@@ -38,11 +38,11 @@
 	
 	<bean id="pxCommonMngTemplate" class="com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplateImpl"></bean>
 	
-	<bean id="campShopBaseComponent" class="com.myteay.phoenix.core.service.camp.component.CampShopBaseComponentImpl"></bean>
+	<bean id="campShopBaseComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseComponentImpl"></bean>
 	
-	<bean id="campShopBaseStatusComponent" class="com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponentImpl"></bean>
+	<bean id="campShopBaseStatusComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseStatusComponentImpl"></bean>
 	
-	<bean id="campShopPrizeComponent" class="com.myteay.phoenix.core.service.camp.component.CampShopPrizeComponentImpl"></bean>
+	<bean id="campShopPrizeComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopPrizeComponentImpl"></bean>
 	
 	<bean id="campShopPrizeRefGoodsComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopPrizeRefGoodsComponentImpl"></bean>
 	
