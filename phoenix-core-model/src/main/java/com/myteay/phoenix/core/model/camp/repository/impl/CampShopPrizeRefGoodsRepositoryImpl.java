@@ -59,11 +59,14 @@ public class CampShopPrizeRefGoodsRepositoryImpl implements CampShopPrizeRefGood
         return savePrizeRefGoodsInfo(campPrizeRefGoodsModelList);
     }
 
-    /** 
-     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository#savePrizeRefGoodsInfo(java.util.List)
+    /**
+     * 保存店内到场营销活动奖品关联商品列表模型
+     * 
+     * @param campPrizeRefGoodsModelList
+     * @return
+     * @throws PxManageException 
      */
-    @Override
-    public List<CampPrizeRefGoodsModel> savePrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException {
+    private List<CampPrizeRefGoodsModel> savePrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException {
 
         if (CollectionUtils.isEmpty(campPrizeRefGoodsModelList)) {
             logger.warn("当前奖品关联商品列表不可用，无法完成奖品关联商品保存动作 campPrizeRefGoodsModelList is null");

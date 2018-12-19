@@ -224,6 +224,12 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_PRIZE_REF_GOODS_MODEL_ERR("CAMP_PRIZE_REF_GOODS_MODEL_ERR", "00210009", "奖品关联商品模型校验失败"),
 
+                                   CAMP_PRIZE_REF_GOODS_ERR("CAMP_PRIZE_REF_GOODS_ERR", "00210010", "在线活动的奖品关联商品"),
+
+                                   CAMP_PRIZE_REF_GOODS_MNG_ERR("CAMP_PRIZE_REF_GOODS_MNG_ERR", "00210011", "管理店内营销活动奖品关联商品发生异常"),
+
+                                   CAMP_PRIZE_REF_GOODS_QRY_ERR("CAMP_PRIZE_REF_GOODS_QRY_ERR", "00210012", "查询店内营销活动奖品关联商品发生异常"),
+
     ;
 
     /** 枚举值 */

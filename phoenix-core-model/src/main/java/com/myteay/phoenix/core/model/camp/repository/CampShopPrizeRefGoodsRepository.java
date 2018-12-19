@@ -27,15 +27,6 @@ public interface CampShopPrizeRefGoodsRepository {
     public List<CampPrizeRefGoodsModel> modifyPrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException;
 
     /**
-     * 保存店内到场营销活动奖品关联商品列表模型
-     * 
-     * @param campPrizeRefGoodsModelList
-     * @return
-     * @throws PxManageException 
-     */
-    public List<CampPrizeRefGoodsModel> savePrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException;
-
-    /**
      * 通过奖品ID查询已发布店内到场营销活动奖品关联商品列表信息
      * 
      * @param prizeId

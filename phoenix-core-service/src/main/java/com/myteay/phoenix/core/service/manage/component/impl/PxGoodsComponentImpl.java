@@ -19,6 +19,7 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
@@ -36,6 +37,11 @@ import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
  * 
  * @author min.weixm
  * @version $Id: PxGoodsComponentImpl.java, v 0.1 Jul 26, 2018 1:58:49 PM min.weixm Exp $
+ */
+/**
+ * 
+ * @author danlley
+ * @version $Id: PxGoodsComponentImpl.java, v 0.1 Dec 20, 2018 2:03:29 AM danlley Exp $
  */
 public class PxGoodsComponentImpl implements PxGoodsComponent {
 
@@ -59,6 +65,9 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
 
     /** 温馨提醒摘要管理仓储 */
     private PxGoodsPackagesNoticeRepository   pxGoodsPackagesNoticeRepository;
+
+    /** 店内消费营销活动奖品关联商品仓储 */
+    private CampShopPrizeRefGoodsRepository   campShopPrizeRefGoodsRepository;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsComponent#shutdownGoodsByShopId(java.lang.String)
@@ -97,6 +106,13 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
         MtOperateResult<PxGoodsModel> result = new MtOperateResult<PxGoodsModel>();
         PxGoodsModel freshPxGoodsModel = null;
         try {
+
+            if (pxGoodsModel.getGoodsStatus() == PxGoodsStatusEnum.PX_GOODS_OFFLINE
+                && campShopPrizeRefGoodsRepository.isRefedGoodsByCampPrize(pxGoodsModel.getGoodsId())) {
+                logger.warn("修改商品概要信息发生异常，在线活动的奖品关联商品 pxGoodsModel=" + pxGoodsModel);
+                result = new MtOperateResult<PxGoodsModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_PRIZE_REF_GOODS_ERR);
+            }
+
             freshPxGoodsModel = pxGoodsRepository.modifyGoodsInfo(pxGoodsModel);
             result.setResult(freshPxGoodsModel);
         } catch (PxManageException e) {
@@ -397,6 +413,15 @@ public class PxGoodsComponentImpl implements PxGoodsComponent {
      */
     public void setEventPublishService(EventPublishService<String> eventPublishService) {
         this.eventPublishService = eventPublishService;
+    }
+
+    /**
+     * Setter method for property <tt>campShopPrizeRefGoodsRepository</tt>.
+     * 
+     * @param campShopPrizeRefGoodsRepository value to be assigned to property campShopPrizeRefGoodsRepository
+     */
+    public void setCampShopPrizeRefGoodsRepository(CampShopPrizeRefGoodsRepository campShopPrizeRefGoodsRepository) {
+        this.campShopPrizeRefGoodsRepository = campShopPrizeRefGoodsRepository;
     }
 
 }
