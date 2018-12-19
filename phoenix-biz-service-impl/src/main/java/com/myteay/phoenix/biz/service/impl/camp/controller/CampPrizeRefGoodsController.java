@@ -64,6 +64,8 @@ public class CampPrizeRefGoodsController {
     /**
      * 店内营销活动关联奖品信息管理
      * 
+     * 调试专用JSON： [{"goodsId":"32","prizeId":"14"},{"goodsId":"33","prizeId":"14"}]
+     * 
      * @param campPrizeModel
      * @return
      */
