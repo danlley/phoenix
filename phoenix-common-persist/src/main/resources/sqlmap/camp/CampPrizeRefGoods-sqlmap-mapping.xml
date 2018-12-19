@@ -29,7 +29,7 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="CAMP-SHOP-PRIZE-REF-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeGoodsRefDO">
 		insert into phoenix.camp_prize_goods_ref (
-		    prizeId,goodsId,gmt_created,gmt_modified
+		    prizeId,goods_id,gmt_created,gmt_modified
 		)values(
 		    #{prizeId},#{goodsId},now(),now()
 		) ;
@@ -38,9 +38,18 @@
     <select id="CAMP-SHOP-PRIZE-REF-GOODS-SELECT-GET-BY-ID" resultMap="RM-CAMP-SHOP-PRIZE-REF-GOODS">
 	    <![CDATA[
 	        select
-	        	prize_id,goodsId,gmt_created,gmt_modified
+	        	prize_id,goods_id,gmt_created,gmt_modified
 	        from phoenix.camp_prize_goods_ref 
 	        where (prize_id = #{value})
+	    ]]>
+    </select>
+
+    <select id="CAMP-SHOP-PRIZE-REF-GOODS-SELECT-GET-BY-GOODS-ID" resultMap="RM-CAMP-SHOP-PRIZE-REF-GOODS">
+	    <![CDATA[
+	        select
+				a.prize_id,a.goods_id,a.gmt_created,a.gmt_modified,b.camp_id,b.camp_name,c.prize_id
+			from phoenix.camp_prize_goods_ref a,  phoenix.camp_base b, phoenix.camp_prize c
+			where b.camp_status = 'CAMP_DRAFT' and a.prize_id = c.prize_id and c.camp_id = b.camp_id and (a.goods_id = #{value})
 	    ]]>
     </select>
     

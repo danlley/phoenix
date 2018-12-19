@@ -34,10 +34,10 @@ public class IbatisCampSingleShopPrizeGoodsRefDAO extends SqlSessionDaoSupport i
     }
 
     /** 
-     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeGoodsRefDAO#findCampBaseOnlineByPrizeId(java.lang.String)
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeGoodsRefDAO#findPrizeGoodsRefByPrizeId(java.lang.String)
      */
     @Override
-    public List<CampPrizeGoodsRefDO> findCampBaseOnlineByPrizeId(String prizeId) {
+    public List<CampPrizeGoodsRefDO> findPrizeGoodsRefByPrizeId(String prizeId) {
         return this.getSqlSession().selectList("CAMP-SHOP-PRIZE-REF-GOODS-SELECT-GET-BY-ID", prizeId);
     }
 
@@ -47,6 +47,14 @@ public class IbatisCampSingleShopPrizeGoodsRefDAO extends SqlSessionDaoSupport i
     @Override
     public void deleteById(String prizeId) {
         this.getSqlSession().delete("CAMP-PRIZE-REF-GOODS-DELETE-GET-BY-ID", prizeId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeGoodsRefDAO#findPrizeGoodsRefByGoodsId(java.lang.String)
+     */
+    @Override
+    public List<CampPrizeGoodsRefDO> findPrizeGoodsRefByGoodsId(String goodsId) {
+        return this.getSqlSession().selectList("CAMP-SHOP-PRIZE-REF-GOODS-SELECT-GET-BY-GOODS-ID", goodsId);
     }
 
 }

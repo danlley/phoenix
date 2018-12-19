@@ -29,7 +29,15 @@ public interface CampSingleShopPrizeGoodsRefDAO {
      * @param prizeId
      * @return
      */
-    List<CampPrizeGoodsRefDO> findCampBaseOnlineByPrizeId(String prizeId);
+    List<CampPrizeGoodsRefDO> findPrizeGoodsRefByPrizeId(String prizeId);
+
+    /**
+     * 通过商品ID查询所有已发布营销活动中已经关联了奖品的商品
+     * 
+     * @param goodsId
+     * @return
+     */
+    List<CampPrizeGoodsRefDO> findPrizeGoodsRefByGoodsId(String goodsId);
 
     /**
      * 通过奖品ID删除营销活动关联商品信息
