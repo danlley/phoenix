@@ -5,6 +5,7 @@
 package com.myteay.phoenix.core.service.camp.component.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventPublishService;
 import com.myteay.common.async.event.MtEvent;
@@ -16,6 +17,7 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
 import com.myteay.phoenix.core.service.camp.component.CampShopPrizeComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
@@ -34,6 +36,9 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
 
     /** 针对单个店铺店内消费到场营销活动操作仓储 */
     private CampShopPrizeRepository             campShopPrizeRepository;
+
+    /** 店内消费营销活动奖品关联商品仓储 */
+    private CampShopPrizeRefGoodsRepository     campShopPrizeRefGoodsRepository;
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<CampPrizeModel> pxCommonMngTemplate;
@@ -65,8 +70,15 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
     @Override
     public MtOperateResult<CampPrizeModel> modifyCampPrizeModel(CampPrizeModel campPrizeModel) {
         MtOperateResult<CampPrizeModel> result = new MtOperateResult<CampPrizeModel>();
+
         CampPrizeModel freshCampPrizeModel = null;
         try {
+
+            if (!validatePrizeBeforeUpdate(campPrizeModel)) {
+                logger.warn("奖品状态变更前的关联性检查未通过 campPrizeModel=" + campPrizeModel);
+                return new MtOperateResult<CampPrizeModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_PRIZE_UPDATE_REF_ERR);
+            }
+
             freshCampPrizeModel = campShopPrizeRepository.modifyCampPrizeInfo(campPrizeModel);
             result.setResult(freshCampPrizeModel);
         } catch (PxManageException e) {
@@ -86,6 +98,35 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
         }
 
         return result;
+    }
+
+    /**
+     * 对需要上架\下架的奖品进行关联性检查
+     * 
+     * @param campPrizeModel
+     * @return
+     * @throws PxManageException
+     */
+    private boolean validatePrizeBeforeUpdate(CampPrizeModel campPrizeModel) throws PxManageException {
+        CampPrizeModel model = queryCampPrizeModelByPrizeId(campPrizeModel.getPrizeId());
+
+        //状态无变更，则不进行检查
+        if (model != null && model.getPrizeStatus() == campPrizeModel.getPrizeStatus()) {
+            return true;
+        }
+
+        //上架奖品前，必须保证奖品已经关联特定商品
+        if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_ONLINE
+            && CollectionUtils.isEmpty(campShopPrizeRefGoodsRepository.findPrizeRefGoodsByPrizeId(campPrizeModel.getPrizeId()))) {
+            return false;
+        }
+
+        //下架奖品前，必须保证之前的奖品状态为已上架
+        if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_OFFLINE && model.getPrizeStatus() != CampPrizeStatusEnum.CAMP_PRIZE_ONLINE) {
+            return false;
+        }
+
+        return true;
     }
 
     /** 
@@ -287,6 +328,15 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
      */
     public void setEventPublishService(EventPublishService<String> eventPublishService) {
         this.eventPublishService = eventPublishService;
+    }
+
+    /**
+     * Setter method for property <tt>campShopPrizeRefGoodsRepository</tt>.
+     * 
+     * @param campShopPrizeRefGoodsRepository value to be assigned to property campShopPrizeRefGoodsRepository
+     */
+    public void setCampShopPrizeRefGoodsRepository(CampShopPrizeRefGoodsRepository campShopPrizeRefGoodsRepository) {
+        this.campShopPrizeRefGoodsRepository = campShopPrizeRefGoodsRepository;
     }
 
 }

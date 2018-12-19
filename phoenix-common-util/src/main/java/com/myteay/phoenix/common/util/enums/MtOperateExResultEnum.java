@@ -234,6 +234,8 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_BASE_UPDATE_REF_ERR("CAMP_BASE_UPDATE_REF_ERR", "00210014", "活动状态变更前的关联性检查未通过"),
 
+                                   CAMP_PRIZE_UPDATE_REF_ERR("CAMP_PRIZE_UPDATE_REF_ERR", "00210015", "奖品状态变更前的关联性检查未通过"),
+
     ;
 
     /** 枚举值 */
