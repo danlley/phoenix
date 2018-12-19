@@ -136,8 +136,8 @@ public class PxGoodsController {
      * @param pxShopModel
      * @return
      */
-    @RequestMapping(value = "/query/goods/condition/shopId/{shopId}/goodsType/{goodsType}/goodsTitle/{goodsTitle}", method = { RequestMethod.POST })
-    public MtServiceResult<List<PxGoodsModel>> querySingleAdv(@PathVariable String shopId, @PathVariable String goodsType, @PathVariable String goodsTitle) {
+    @RequestMapping(value = "/query/goods/condition/", method = { RequestMethod.POST })
+    public MtServiceResult<List<PxGoodsModel>> querySingleAdv(String shopId, String goodsType, String goodsTitle) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始执行商品多条件查询 shopId=" + shopId + " goodsType=" + goodsType + " goodsTitle=" + goodsTitle);

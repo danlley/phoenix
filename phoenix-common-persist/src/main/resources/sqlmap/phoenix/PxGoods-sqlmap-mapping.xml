@@ -108,7 +108,7 @@
 			and goods_type = #{goodsType}
 		</if>
 		<if test="goodsTitle!=null and goodsTitle!=''">
-			and goods_title like CONCAT('%','${goodsTitle}','%')
+			and goods_title like CONCAT('%',#{goodsTitle},'%')
 		</if>
     </select>
     
