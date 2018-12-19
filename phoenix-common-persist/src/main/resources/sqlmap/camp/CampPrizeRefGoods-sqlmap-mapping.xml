@@ -29,7 +29,7 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="CAMP-SHOP-PRIZE-REF-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeGoodsRefDO">
 		insert into phoenix.camp_prize_goods_ref (
-		    prizeId,goods_id,gmt_created,gmt_modified
+		    prize_id,goods_id,gmt_created,gmt_modified
 		)values(
 		    #{prizeId},#{goodsId},now(),now()
 		) ;
