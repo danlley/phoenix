@@ -230,6 +230,8 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_PRIZE_REF_GOODS_QRY_ERR("CAMP_PRIZE_REF_GOODS_QRY_ERR", "00210012", "查询店内营销活动奖品关联商品发生异常"),
 
+                                   CAMP_PRIZE_REF_GOODS_OVERFLOW("CAMP_PRIZE_REF_GOODS_OVERFLOW", "00210013", "奖品价值超过商品价值，将无法进行后续抵扣"),
+
     ;
 
     /** 枚举值 */
