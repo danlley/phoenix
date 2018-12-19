@@ -232,6 +232,8 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_PRIZE_REF_GOODS_OVERFLOW("CAMP_PRIZE_REF_GOODS_OVERFLOW", "00210013", "奖品价值超过商品价值，将无法进行后续抵扣"),
 
+                                   CAMP_BASE_UPDATE_REF_ERR("CAMP_BASE_UPDATE_REF_ERR", "00210014", "活动状态变更前的关联性检查未通过"),
+
     ;
 
     /** 枚举值 */
