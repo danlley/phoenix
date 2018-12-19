@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-CAMP-SHOP-PRIZE-REF-GOODS" type="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeGoodsRefDO">
+        <result property="prizeId" column="prize_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="CAMP-SHOP-PRIZE-REF-GOODS-INSERT" parameterType="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeGoodsRefDO">
+		insert into phoenix.camp_prize_goods_ref (
+		    prizeId,goodsId,gmt_created,gmt_modified
+		)values(
+		    #{prizeId},#{goodsId},now(),now()
+		) ;
+    </insert>
+
+    <select id="CAMP-SHOP-PRIZE-REF-GOODS-SELECT-GET-BY-ID" resultMap="RM-CAMP-SHOP-PRIZE-REF-GOODS">
+	    <![CDATA[
+	        select
+	        	prize_id,goodsId,gmt_created,gmt_modified
+	        from phoenix.camp_prize_goods_ref 
+	        where (prize_id = #{value})
+	    ]]>
+    </select>
+    
+    <delete id="CAMP-PRIZE-REF-GOODS-DELETE-GET-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.camp_prize_goods_ref where (prize_id = #{value})
+	    ]]>
+    </delete>
+</mapper>
