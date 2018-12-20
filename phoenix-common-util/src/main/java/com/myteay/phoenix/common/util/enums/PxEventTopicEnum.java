@@ -24,6 +24,10 @@ public enum PxEventTopicEnum {
 
                               PX_TASK_SHOP_EXPIRED("PX_TASK_SHOP_EXPIRED", "监控店铺过期时间事件"),
 
+                              CAMP_TASK_EXPIRED("CAMP_TASK_EXPIRED", "监控店铺营销活动过期时间事件"),
+
+                              CAMP_PRIZE_TASK_EXPIRED("CAMP_PRIZE_TASK_EXPIRED", "监控店铺营销活动奖品过期时间事件"),
+
     ;
     /** value */
     private final String value;

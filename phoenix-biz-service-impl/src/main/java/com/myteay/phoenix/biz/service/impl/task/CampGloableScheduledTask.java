@@ -15,15 +15,15 @@ import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 
 /**
- * 商品缓存定时加载
+ * 营销活动专用定时任务
  * 
- * @author min.weixm
- * @version $Id: PxGloableScheduledTask.java, v 0.1 Aug 18, 2018 12:30:07 PM min.weixm Exp $
+ * @author danlley
+ * @version $Id: CampGloableScheduledTask.java, v 0.1 Dec 20, 2018 5:58:17 PM danlley Exp $
  */
 @Component
 @Configurable
 @EnableScheduling
-public class PxGloableScheduledTask {
+public class CampGloableScheduledTask {
 
     /** 日志 */
     public static final Logger logger = Logger.getLogger(PxGloableScheduledTask.class);
@@ -33,21 +33,21 @@ public class PxGloableScheduledTask {
     private PxEventPublishTool pxEventPublishTool;
 
     /**
-     * 定期刷新手机端商品列表每30分钟执行一次
+     * 定期检查营销活动列表中已经过期的营销活动每30分钟执行一次
      */
     @Scheduled(cron = "0 */30 * * * ?")
-    public void refreshMobileGoodsListCacheByCron() {
-        logger.warn("[定时任务]商品列表定时加载任务启动");
-        pxEventPublishTool.publishEvent(PxEventTopicEnum.PX_TASK_MOBILE_GOODS_CACHE_LOAD);
+    public void checkExpiredShopCampByCron() {
+        logger.warn("[定时任务]定期检查营销活动列表中已经过期的营销活动每30分钟执行一次");
+        pxEventPublishTool.publishEvent(PxEventTopicEnum.CAMP_TASK_EXPIRED);
     }
 
     /**
-     * 定期刷新手机端商品列表每小时整点执行一次
+     * 定期检查营销活动奖品的列表每小时整点的第5秒执行一次
      */
-    @Scheduled(cron = "0 0 * * * ?")
-    public void scanExpiredShopByCron() {
-        logger.warn("[定时任务]监控店铺过期时间");
-        pxEventPublishTool.publishEvent(PxEventTopicEnum.PX_TASK_SHOP_EXPIRED);
+    @Scheduled(cron = "5 0 * * * ?")
+    public void checkExpiredShopCampPrizeByCron() {
+        logger.warn("[定时任务]定期检查营销活动奖品的列表每小时整点的第5秒执行一次");
+        pxEventPublishTool.publishEvent(PxEventTopicEnum.CAMP_PRIZE_TASK_EXPIRED);
     }
 
     /**

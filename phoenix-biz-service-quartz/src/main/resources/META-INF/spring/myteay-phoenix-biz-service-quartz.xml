@@ -32,4 +32,26 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<!-- 定时处理已经过期的营销活动 -->
+	<bean id="campExpiredScanEventListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampExpiredScanEventListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_TASK_EXPIRED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 定时处理已经过期的营销活动奖品 -->
+	<bean id="campPrizeExpiredScanEventListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeExpiredScanEventListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_PRIZE_TASK_EXPIRED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
 </beans>

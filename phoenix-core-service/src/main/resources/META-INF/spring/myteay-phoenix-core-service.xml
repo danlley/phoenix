@@ -46,6 +46,8 @@
 	
 	<bean id="campShopPrizeRefGoodsComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopPrizeRefGoodsComponentImpl"></bean>
 	
+	<bean id="pxEventPublishTool" class="com.myteay.phoenix.core.service.tools.PxEventPublishTool"></bean>
+	
 	<!-- 商品状态变更为上线监听器 -->
 	<bean id="pxGoodsStatusChangedEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxGoodsStatusChangedEventListener">
 		<property name="descriptor">
