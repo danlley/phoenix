@@ -146,6 +146,24 @@ public class CampShopBaseRepositoryImpl implements CampShopBaseRepository {
         return modelList;
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository#findCampBaseOnlineAll()
+     */
+    @Override
+    public List<CampBaseModel> findCampBaseOnlineAll() throws PxManageException {
+        List<CampBaseDO> campBaseDOs = campSingleShopBaseDAO.findCampBaseOnline();
+        if (CollectionUtils.isEmpty(campBaseDOs)) {
+            return null;
+        }
+
+        List<CampBaseModel> modelList = new ArrayList<>();
+        for (CampBaseDO campBaseDO : campBaseDOs) {
+            modelList.add(CampBaseConvertor.convertDO2Model(campBaseDO));
+        }
+
+        return modelList;
+    }
+
     /**
      * Setter method for property <tt>campSingleShopBaseDAO</tt>.
      * 

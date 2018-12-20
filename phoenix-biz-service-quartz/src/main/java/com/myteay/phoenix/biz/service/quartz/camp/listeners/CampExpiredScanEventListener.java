@@ -4,12 +4,14 @@
  */
 package com.myteay.phoenix.biz.service.quartz.camp.listeners;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
@@ -36,7 +38,7 @@ public class CampExpiredScanEventListener extends EventListener<String> {
             logger.info("开始检查当前运行中已经过期的活动，对已过期的活动执行关停动作" + event);
         }
 
-        List<CampBaseModel> list = findAllCampBase();
+        List<CampBaseModel> list = findAllCampBaseOnline();
         if (CollectionUtils.isEmpty(list)) {
             if (logger.isInfoEnabled()) {
                 logger.info("未找到待处理的营销活动 list is null");
@@ -45,11 +47,9 @@ public class CampExpiredScanEventListener extends EventListener<String> {
         }
 
         for (CampBaseModel campBaseModel : list) {
-            if (campBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE) {
-                campBaseModel = shutdownCampBase(campBaseModel);
-                if (logger.isInfoEnabled()) {
-                    logger.info("定时任务对营销活动执行过期处理结果：" + campBaseModel);
-                }
+            campBaseModel = shutdownCampBase(campBaseModel);
+            if (logger.isInfoEnabled()) {
+                logger.info("定时任务对营销活动执行过期处理结果：" + campBaseModel);
             }
         }
 
@@ -63,6 +63,19 @@ public class CampExpiredScanEventListener extends EventListener<String> {
      * @return
      */
     private CampBaseModel shutdownCampBase(CampBaseModel campBaseModel) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("当前活动过期处理 campBaseModel=" + campBaseModel);
+        }
+
+        Date expireTime = campBaseModel.getCampEnd();
+        if (!DateUtil.isBeforeNow(expireTime)) {
+            if (logger.isInfoEnabled()) {
+                logger.info("当前活动未到过期时间，无需进行过期处理 campBaseModel=" + campBaseModel);
+            }
+            return campBaseModel;
+        }
+
         campBaseModel.setCampStatus(CampStatusEnum.CAMP_EXPIRED);
         try {
             campBaseModel = campShopBaseRepository.modifyGoodsInfo(campBaseModel);
@@ -79,10 +92,10 @@ public class CampExpiredScanEventListener extends EventListener<String> {
      * 
      * @return
      */
-    private List<CampBaseModel> findAllCampBase() {
+    private List<CampBaseModel> findAllCampBaseOnline() {
         List<CampBaseModel> list = null;
         try {
-            list = campShopBaseRepository.findAll();
+            list = campShopBaseRepository.findCampBaseOnlineAll();
         } catch (PxManageException e) {
             logger.warn("定时任务查询所有营销活动出错 " + e.getMessage(), e);
         } catch (Throwable e) {

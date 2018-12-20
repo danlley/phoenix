@@ -33,20 +33,20 @@ public class CampGloableScheduledTask {
     private PxEventPublishTool pxEventPublishTool;
 
     /**
-     * 定期检查营销活动列表中已经过期的营销活动每30分钟执行一次
+     * 定期检查营销活动列表中已经过期的营销活动每1分钟执行一次
      */
-    @Scheduled(cron = "0 */30 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void checkExpiredShopCampByCron() {
-        logger.warn("[定时任务]定期检查营销活动列表中已经过期的营销活动每30分钟执行一次");
+        logger.warn("[定时任务]定期检查营销活动列表中已经过期的营销活动每1分钟执行一次");
         pxEventPublishTool.publishEvent(PxEventTopicEnum.CAMP_TASK_EXPIRED);
     }
 
     /**
      * 定期检查营销活动奖品的列表每小时整点的第5秒执行一次
      */
-    @Scheduled(cron = "5 0 * * * ?")
+    @Scheduled(cron = "5 */1 * * * ?")
     public void checkExpiredShopCampPrizeByCron() {
-        logger.warn("[定时任务]定期检查营销活动奖品的列表每小时整点的第5秒执行一次");
+        logger.warn("[定时任务]定期检查营销活动奖品的列表1分钟的第5秒执行一次");
         pxEventPublishTool.publishEvent(PxEventTopicEnum.CAMP_PRIZE_TASK_EXPIRED);
     }
 

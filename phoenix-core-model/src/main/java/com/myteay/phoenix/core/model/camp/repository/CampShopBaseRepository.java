@@ -52,6 +52,14 @@ public interface CampShopBaseRepository {
     public List<CampBaseModel> findAll() throws PxManageException;
 
     /**
+     * 查询所有单个店铺店内消费到场营销活动信息
+     * 
+     * @return
+     * @throws PxManageException 
+     */
+    public List<CampBaseModel> findCampBaseOnlineAll() throws PxManageException;
+
+    /**
      * 查询单个单个店铺店内消费到场营销活动信息
      * 
      * @param campId

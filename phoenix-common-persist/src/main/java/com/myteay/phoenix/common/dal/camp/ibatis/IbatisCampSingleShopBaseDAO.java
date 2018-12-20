@@ -42,6 +42,14 @@ public class IbatisCampSingleShopBaseDAO extends SqlSessionDaoSupport implements
     }
 
     /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseOnline()
+     */
+    @Override
+    public List<CampBaseDO> findCampBaseOnline() {
+        return this.getSqlSession().selectList("CAMP-BASE-ONLINE-SELECT-ALL");
+    }
+
+    /** 
      * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseOnlineByShopId(java.lang.String)
      */
     @Override
@@ -84,4 +92,5 @@ public class IbatisCampSingleShopBaseDAO extends SqlSessionDaoSupport implements
     public void deleteById(String campId) {
         this.getSqlSession().delete("CAMP-SHOP-BASE-DELETE-GET-BY-ID", campId);
     }
+
 }

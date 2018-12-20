@@ -5,6 +5,8 @@
 package com.myteay.phoenix.core.model.camp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.myteay.common.util.tools.ToStringUtil;
 
@@ -17,10 +19,52 @@ import com.myteay.common.util.tools.ToStringUtil;
 public class CampModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -1688949748454481158L;
+    private static final long    serialVersionUID   = -1688949748454481158L;
+
+    /** 活动ID */
+    private String               campId;
 
     /** 营销活动基本模型 */
-    private CampBaseModel     campBaseModel;
+    private CampBaseModel        campBaseModel      = new CampBaseModel();
+
+    /** 营销活动对应的奖品列表 */
+    private List<CampPrizeModel> campPrizeModelList = new ArrayList<CampPrizeModel>();
+
+    /**
+     * Getter method for property <tt>campId</tt>.
+     * 
+     * @return property value of campId
+     */
+    public String getCampId() {
+        return campId;
+    }
+
+    /**
+     * Setter method for property <tt>campId</tt>.
+     * 
+     * @param campId value to be assigned to property campId
+     */
+    public void setCampId(String campId) {
+        this.campId = campId;
+    }
+
+    /**
+     * Getter method for property <tt>campPrizeModelList</tt>.
+     * 
+     * @return property value of campPrizeModelList
+     */
+    public List<CampPrizeModel> getCampPrizeModelList() {
+        return campPrizeModelList;
+    }
+
+    /**
+     * Setter method for property <tt>campPrizeModelList</tt>.
+     * 
+     * @param campPrizeModelList value to be assigned to property campPrizeModelList
+     */
+    public void setCampPrizeModelList(List<CampPrizeModel> campPrizeModelList) {
+        this.campPrizeModelList = campPrizeModelList;
+    }
 
     /**
      * Getter method for property <tt>campBaseModel</tt>.

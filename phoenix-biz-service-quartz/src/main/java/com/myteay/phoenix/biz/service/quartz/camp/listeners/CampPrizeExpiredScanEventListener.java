@@ -4,12 +4,14 @@
  */
 package com.myteay.phoenix.biz.service.quartz.camp.listeners;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
@@ -62,6 +64,19 @@ public class CampPrizeExpiredScanEventListener extends EventListener<String> {
      * @return
      */
     private CampPrizeModel shutdownCampPrize(CampPrizeModel campPrizeModel) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("奖品过期处理 campPrizeModel=" + campPrizeModel);
+        }
+
+        Date expireTime = campPrizeModel.getPrizeExpired();
+        if (!DateUtil.isBeforeNow(expireTime)) {
+            if (logger.isInfoEnabled()) {
+                logger.info("当前奖品未到过期时间，无需进行过期处理 campPrizeModel=" + campPrizeModel);
+            }
+            return campPrizeModel;
+        }
+
         campPrizeModel.setPrizeStatus(CampPrizeStatusEnum.CAMP_PRIZE_EXPIRED);
         try {
             campPrizeModel = campShopPrizeRepository.modifyCampPrizeInfo(campPrizeModel);

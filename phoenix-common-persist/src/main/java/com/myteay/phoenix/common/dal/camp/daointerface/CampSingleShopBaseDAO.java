@@ -55,6 +55,13 @@ public interface CampSingleShopBaseDAO {
     List<CampBaseDO> findCampBaseOnlineByShopId(String shopId);
 
     /**
+     * 查询所有已发布营销活动基本信息列表(用于抽奖主流程对活动缓存进行初始化)
+     * 
+     * @return
+     */
+    List<CampBaseDO> findCampBaseOnline();
+
+    /**
      * 更新营销活动基本配置信息
      * 
      * @param campBaseDO
