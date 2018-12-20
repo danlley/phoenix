@@ -4,19 +4,25 @@
  */
 package com.myteay.phoenix.core.service.camp.component.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventPublishService;
 import com.myteay.common.async.event.MtEvent;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
+import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeRefGoodsModel;
+import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
 import com.myteay.phoenix.core.service.camp.component.CampShopPrizeComponent;
@@ -39,6 +45,9 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
 
     /** 店内消费营销活动奖品关联商品仓储 */
     private CampShopPrizeRefGoodsRepository     campShopPrizeRefGoodsRepository;
+
+    /** 针对单个店铺店内消费到场营销活动操作仓储 */
+    private CampShopBaseRepository              campShopBaseRepository;
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<CampPrizeModel> pxCommonMngTemplate;
@@ -115,13 +124,13 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
             return true;
         }
 
-        //上架奖品前，必须保证奖品已经关联特定商品
+        //上架奖品须保证奖品已经关联特定商品
         if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_ONLINE
             && CollectionUtils.isEmpty(campShopPrizeRefGoodsRepository.findPrizeRefGoodsByPrizeId(campPrizeModel.getPrizeId()))) {
             return false;
         }
 
-        //下架奖品前，必须保证之前的奖品状态为已上架
+        //非上架状态的奖品不允许进行下架操作
         if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_OFFLINE && model.getPrizeStatus() != CampPrizeStatusEnum.CAMP_PRIZE_ONLINE) {
             return false;
         }
@@ -187,9 +196,9 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
         }
 
         // step 2: 店内活动包含子项内容，则不允许删除
-        if (!isCanDeleteCampBase(campPrizeModel.getCampId())) {
-            logger.warn("店内活动包含子项，无法删除 campPrizeModel=" + campPrizeModel);
-            return new MtOperateResult<CampPrizeModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_HAS_CHILD_ERR);
+        if (!isCanDeleteCampPrize(campPrizeModel.getPrizeId())) {
+            logger.warn("店内活动奖品包含子项，无法删除 campPrizeModel=" + campPrizeModel);
+            return new MtOperateResult<CampPrizeModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_PRIZE_HAS_CHILD_ERR);
         }
 
         // step 3: 执行删除动作
@@ -207,12 +216,12 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
     /**
      * 检查是否允许删除商品
      * 
-     * @param goodsId
+     * @param prizeId
      * @return
      */
-    private boolean isCanDeleteCampBase(String campId) {
+    private boolean isCanDeleteCampPrize(String prizeId) {
 
-        if (isNoPrizeDetail(campId)) {
+        if (isNoPrizeRefGoodsDetail(prizeId)) {
             return true;
         }
 
@@ -222,19 +231,19 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
     /**
      * 检查当前商品是否包含套餐包信息
      * 
-     * @param campId
+     * @param prizeId
      * @return
      */
-    private boolean isNoPrizeDetail(String campId) {
-        //        try {
-        //            List<PxGoodsPackagesDetailModel> list = pxGoodsPackagesDetailRepository.findGoodsPackagesDetailByGoodsId(goodsId);
-        //            if (CollectionUtils.isEmpty(list)) {
-        //                return true;
-        //            }
-        //        } catch (PxManageException e) {
-        //            logger.warn("套餐包信息查询发生异常", e);
-        //        }
-        return true;
+    private boolean isNoPrizeRefGoodsDetail(String prizeId) {
+        try {
+            List<CampPrizeRefGoodsModel> list = campShopPrizeRefGoodsRepository.findPrizeRefGoodsByPrizeId(prizeId);
+            if (CollectionUtils.isEmpty(list)) {
+                return true;
+            }
+        } catch (PxManageException e) {
+            logger.warn("套餐包信息查询发生异常", e);
+        }
+        return false;
     }
 
     /**
@@ -247,6 +256,11 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
         MtOperateResult<CampPrizeModel> result = new MtOperateResult<CampPrizeModel>();
         CampPrizeModel freshCampPrizeModel = null;
         try {
+
+            if (!validateCampBeforeSave(campPrizeModel)) {
+                return new MtOperateResult<CampPrizeModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_ONLINE_ERR);
+            }
+
             freshCampPrizeModel = campShopPrizeRepository.saveCampPrizeInfo(campPrizeModel);
             result.setResult(freshCampPrizeModel);
         } catch (PxManageException e) {
@@ -255,6 +269,24 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
         }
 
         return result;
+    }
+
+    /**
+     * 对需要保存的奖品进行关联性检查
+     * 
+     * @param campPrizeModel
+     * @return
+     * @throws PxManageException
+     */
+    private boolean validateCampBeforeSave(CampPrizeModel campPrizeModel) throws PxManageException {
+        CampBaseModel model = campShopBaseRepository.findSingleCampBase(campPrizeModel.getCampId());
+
+        //非已过期或非已在线活动的活动允许添加奖品
+        if (model != null && model.getCampStatus() != CampStatusEnum.CAMP_ONLINE && model.getCampStatus() != CampStatusEnum.CAMP_EXPIRED) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -337,6 +369,15 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
      */
     public void setCampShopPrizeRefGoodsRepository(CampShopPrizeRefGoodsRepository campShopPrizeRefGoodsRepository) {
         this.campShopPrizeRefGoodsRepository = campShopPrizeRefGoodsRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campShopBaseRepository</tt>.
+     * 
+     * @param campShopBaseRepository value to be assigned to property campShopBaseRepository
+     */
+    public void setCampShopBaseRepository(CampShopBaseRepository campShopBaseRepository) {
+        this.campShopBaseRepository = campShopBaseRepository;
     }
 
 }

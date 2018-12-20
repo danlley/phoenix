@@ -236,6 +236,10 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_PRIZE_UPDATE_REF_ERR("CAMP_PRIZE_UPDATE_REF_ERR", "00210015", "奖品状态变更前的关联性检查未通过"),
 
+                                   CAMP_PRIZE_HAS_CHILD_ERR("CAMP_PRIZE_HAS_CHILD_ERR", "00210016", "店内营销活动奖品包含子项，无法删除"),
+
+                                   CAMP_BASE_ONLINE_ERR("CAMP_BASE_ONLINE_ERR", "00210016", "当前活动已启动，无法保存当前奖品"),
+
     ;
 
     /** 枚举值 */
