@@ -16,6 +16,79 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`phoenix` /*!40100 DEFAULT CHARACTER SET
 
 USE `phoenix`;
 
+/*Table structure for table `camp_base` */
+
+DROP TABLE IF EXISTS `camp_base`;
+
+CREATE TABLE `camp_base` (
+  `camp_id` bigint(16) NOT NULL AUTO_INCREMENT COMMENT '活动ID',
+  `camp_name` varchar(32) DEFAULT NULL COMMENT '营销活动名称',
+  `shop_id` varchar(32) DEFAULT NULL COMMENT '店铺ID',
+  `shop_name` varchar(32) DEFAULT NULL COMMENT '店铺名称',
+  `camp_status` varchar(32) DEFAULT NULL COMMENT '活动状态',
+  `camp_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '活动开始时间',
+  `camp_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '活动结束时间',
+  `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`camp_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=gbk;
+
+/*Table structure for table `camp_prize` */
+
+DROP TABLE IF EXISTS `camp_prize`;
+
+CREATE TABLE `camp_prize` (
+  `prize_id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '奖品ID',
+  `prize_name` varchar(32) DEFAULT NULL COMMENT '奖品名称',
+  `camp_id` varchar(32) DEFAULT NULL COMMENT '活动ID',
+  `shop_id` varchar(32) DEFAULT NULL COMMENT '店铺ID',
+  `prize_level` varchar(32) DEFAULT NULL COMMENT '奖品等级',
+  `prize_percent` varchar(32) DEFAULT NULL COMMENT '中奖概率: 一百以内的整数',
+  `distribution` varchar(512) DEFAULT NULL COMMENT '奖位分布 5/30 为每半小时出5个奖品',
+  `price` varchar(32) DEFAULT NULL COMMENT '单个奖品价值',
+  `prize_amount` varchar(32) DEFAULT NULL COMMENT '奖品数量',
+  `prize_status` varchar(32) DEFAULT NULL COMMENT '奖品状态',
+  `prize_effictive` timestamp NULL DEFAULT NULL COMMENT '奖品生效时间',
+  `prize_expired` timestamp NULL DEFAULT NULL COMMENT '奖品过期时间',
+  `gmt_created` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` timestamp NULL DEFAULT NULL COMMENT '最后修改时间',
+  PRIMARY KEY (`prize_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=gbk;
+
+/*Table structure for table `camp_prize_goods_ref` */
+
+DROP TABLE IF EXISTS `camp_prize_goods_ref`;
+
+CREATE TABLE `camp_prize_goods_ref` (
+  `prize_id` bigint(32) DEFAULT NULL COMMENT '奖品ID',
+  `goods_id` bigint(20) DEFAULT NULL COMMENT '商品ID',
+  `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+/*Table structure for table `camp_shop_prize_out` */
+
+DROP TABLE IF EXISTS `camp_shop_prize_out`;
+
+CREATE TABLE `camp_shop_prize_out` (
+  `camp_prize_out_id` varchar(32) DEFAULT NULL COMMENT '店内抽奖流水号',
+  `camp_id` varchar(32) DEFAULT NULL COMMENT '活动ID',
+  `camp_name` varchar(32) DEFAULT NULL COMMENT '活动名称',
+  `prize_id` varchar(32) DEFAULT NULL COMMENT '奖品ID',
+  `prize_name` varchar(32) DEFAULT NULL COMMENT '奖品名称',
+  `shop_id` varchar(32) DEFAULT NULL COMMENT '店铺ID',
+  `shop_name` varchar(32) DEFAULT NULL COMMENT '店铺名称',
+  `price` varchar(32) DEFAULT NULL COMMENT '奖品价值',
+  `prize_level` varchar(32) DEFAULT NULL COMMENT '奖品等级:一等奖、二等奖、三等奖、优秀奖',
+  `mobile_no` varchar(32) DEFAULT NULL COMMENT '中奖手机号',
+  `order_no` varchar(32) DEFAULT NULL COMMENT '订单号',
+  `prize_status` varchar(32) DEFAULT NULL COMMENT '奖品状态：已发放、已消费',
+  `prize_effictive` timestamp NULL DEFAULT NULL COMMENT '奖品起效时间',
+  `prize_expired` timestamp NULL DEFAULT NULL COMMENT '奖品过期时间',
+  `gmt_created` timestamp NULL DEFAULT NULL COMMENT '记录创建时间',
+  `gmt_modified` timestamp NULL DEFAULT NULL COMMENT '最后修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
 /*Table structure for table `px_goods` */
 
 DROP TABLE IF EXISTS `px_goods`;
@@ -30,6 +103,7 @@ CREATE TABLE `px_goods` (
   `goods_price` varchar(32) NOT NULL COMMENT '当前售价',
   `goods_comm_price` varchar(32) NOT NULL COMMENT '原始价格',
   `goods_online_time` varchar(32) NOT NULL COMMENT '营业时间',
+  `goods_type` varchar(32) DEFAULT NULL COMMENT '商品类型',
   `order_type` varchar(32) NOT NULL COMMENT '订购类型，如：免预约',
   `is_huiyuan` varchar(32) NOT NULL COMMENT '是否会员',
   `is_quan` varchar(32) NOT NULL COMMENT '是否有券',
@@ -39,11 +113,7 @@ CREATE TABLE `px_goods` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_goods` */
-
-insert  into `px_goods`(`goods_id`,`shop_id`,`goods_status`,`goods_image`,`goods_title`,`goods_desc`,`goods_price`,`goods_comm_price`,`goods_online_time`,`order_type`,`is_huiyuan`,`is_quan`,`is_tuan`,`goods_sell_amount`,`gmt_expired`,`gmt_created`,`gmt_modified`) values (16,14,NULL,'1533700759695.jpg','string1111','string111','11','string11','string--','PX_NEED_APPOINTMENT','PX_UNSUPPORT_HUIYUAN','PX_UNHAS_QUAN','PX_HAS_TUAN','string','2018-07-26 17:11:47','2018-07-26 18:32:36','2018-08-08 14:33:15'),(17,14,NULL,'string','string','string','string','string','string','PX_NON_APPOINTMENT','PX_SUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN','string','2018-07-26 17:11:47','2018-07-26 18:32:36','2018-07-26 18:32:36'),(20,16,NULL,'111111','肉夹馍','经典单人餐','6','7','周一至周日','PX_NON_APPOINTMENT','PX_UNSUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'1970-01-02 11:46:40','2018-07-29 11:56:24','2018-07-29 11:56:24'),(21,14,NULL,'thetr','gsfg反反复复付付付付付','sfdgfg','9','9','yr','PX_NON_APPOINTMENT','PX_UNSUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2018-08-10 22:06:06','2018-08-07 10:56:13','2018-08-08 18:06:33'),(22,14,NULL,'1533624249495.jpg','大的爽肤水','阿萨德饭店','按时打发第三方','爱的发第三方','发大是大非','PX_NON_APPOINTMENT','PX_SUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2018-08-07 13:49:53','2018-08-07 14:44:21','2018-08-07 14:44:21'),(23,14,NULL,'1533624323689.jpg','大幅度发','打发点','6','6','打啊打','PX_NON_APPOINTMENT','PX_SUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2018-08-07 14:45:10','2018-08-07 14:45:25','2018-08-07 14:45:25'),(24,14,NULL,'1533721286270.jpg','大沙发上','俺的沙发','3','3','爱的发','PX_NON_APPOINTMENT','PX_SUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2018-08-08 00:00:00','2018-08-08 17:41:27','2018-08-08 17:41:27'),(25,23,NULL,'1533800579672.jpg','油泼面','经典单人餐','7.00','8.00','周一至周日','PX_NON_APPOINTMENT','PX_UNSUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2018-08-31 00:00:00','2018-08-09 15:43:02','2018-08-09 15:43:02'),(26,23,NULL,'1533804856553.jpg','砂锅','经典单人餐','10','12','早8:00~晚21:00','PX_NON_APPOINTMENT','PX_SUPPORT_HUIYUAN','PX_HAS_QUAN','PX_HAS_TUAN',NULL,'2019-08-31 00:00:00','2018-08-09 16:54:18','2018-08-09 16:54:18');
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=gbk;
 
 /*Table structure for table `px_goods_packages_detail` */
 
@@ -56,11 +126,7 @@ CREATE TABLE `px_goods_packages_detail` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`packages_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_goods_packages_detail` */
-
-insert  into `px_goods_packages_detail`(`packages_detail_id`,`goods_id`,`package_detail_name`,`gmt_created`,`gmt_modified`) values (1,1,'待定111111111待定','2018-07-27 22:40:32','2018-07-27 22:46:53'),(5,17,'特色菜','2018-07-29 11:35:59','2018-07-29 11:35:59'),(6,17,'配菜2选1','2018-07-29 11:36:12','2018-07-29 11:36:12'),(7,17,'饮料2选1','2018-07-29 11:36:33','2018-07-29 11:36:33'),(8,17,'其他','2018-07-29 11:36:38','2018-07-29 11:36:38'),(10,20,'主食','2018-07-29 11:57:45','2018-08-05 12:14:35'),(11,20,'配菜2选1','2018-07-29 11:58:47','2018-08-05 12:15:40'),(12,20,'饮料2选1','2018-07-29 11:58:50','2018-08-05 12:16:40'),(13,16,'主食','2018-08-04 22:45:24','2018-08-04 22:46:27'),(14,16,'饮料','2018-08-04 22:46:40','2018-08-04 22:46:40'),(15,16,'其他','2018-08-04 22:47:23','2018-08-04 22:47:23'),(21,25,'特色菜','2018-08-09 15:54:11','2018-08-09 15:56:00'),(22,25,'配菜4选1','2018-08-09 15:57:03','2018-08-09 16:03:11'),(23,25,'饮料2选1','2018-08-09 15:58:46','2018-08-09 15:58:46'),(27,26,'特色菜','2018-08-09 17:05:19','2018-08-09 17:05:19'),(28,26,'配菜2选1','2018-08-09 17:06:08','2018-08-09 17:06:08'),(29,26,'饮料2选1','2018-08-09 17:07:16','2018-08-09 17:07:16'),(113,24,'特色菜','2018-08-09 20:26:46','2018-08-09 20:26:46'),(114,24,'配菜2选1','2018-08-09 20:26:46','2018-08-09 20:26:46'),(115,24,'饮料2选1','2018-08-09 20:26:46','2018-08-09 20:26:46'),(116,24,'其他','2018-08-09 20:26:46','2018-08-09 20:26:46'),(117,22,'特色菜','2018-08-09 20:47:41','2018-08-09 20:47:41'),(118,22,'配菜2选1','2018-08-09 20:47:42','2018-08-09 20:47:42'),(119,22,'饮料2选1','2018-08-09 20:47:42','2018-08-09 20:47:42'),(120,22,'其他','2018-08-09 20:47:42','2018-08-09 20:47:42');
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=gbk;
 
 /*Table structure for table `px_goods_packages_image` */
 
@@ -73,11 +139,7 @@ CREATE TABLE `px_goods_packages_image` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_goods_packages_image` */
-
-insert  into `px_goods_packages_image`(`image_id`,`goods_id`,`image`,`gmt_created`,`gmt_modified`) values (1,1,'string','2018-08-01 13:48:35','2018-08-01 13:48:35'),(2,1,'string','2018-08-01 13:50:11','2018-08-01 13:50:11'),(3,1,'string','2018-08-01 14:37:38','2018-08-01 14:37:38'),(13,16,'1533380377869.jpg','2018-08-04 18:59:37','2018-08-04 18:59:37'),(14,16,'1533380381482.jpg','2018-08-04 18:59:41','2018-08-04 18:59:41'),(15,17,'1533442273841.jpg','2018-08-05 12:11:14','2018-08-05 12:11:14'),(16,17,'1533442277855.jpg','2018-08-05 12:11:18','2018-08-05 12:11:18'),(17,20,'1533442699362.jpg','2018-08-05 12:18:19','2018-08-05 12:18:19'),(18,20,'1533442703508.jpg','2018-08-05 12:18:24','2018-08-05 12:18:24'),(20,25,'1533800858346.jpg','2018-08-09 15:47:40','2018-08-09 15:47:40'),(21,25,'1533800886604.jpg','2018-08-09 15:48:09','2018-08-09 15:48:09'),(22,25,'1533800919547.jpg','2018-08-09 15:48:41','2018-08-09 15:48:41'),(23,26,'1533805715477.jpg','2018-08-09 17:08:37','2018-08-09 17:08:37'),(24,26,'1533806319101.jpg','2018-08-09 17:18:41','2018-08-09 17:18:41');
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=gbk;
 
 /*Table structure for table `px_goods_packages_notice` */
 
@@ -90,11 +152,7 @@ CREATE TABLE `px_goods_packages_notice` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`packages_notice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_goods_packages_notice` */
-
-insert  into `px_goods_packages_notice`(`packages_notice_id`,`goods_id`,`packages_notice_name`,`gmt_created`,`gmt_modified`) values (1,1,'string','2018-08-05 23:45:09','2018-08-05 23:45:09'),(2,1,'string','2018-08-05 23:45:32','2018-08-05 23:45:32'),(3,1,'string','2018-08-05 23:45:33','2018-08-05 23:45:33'),(5,1,'test','2018-08-05 23:45:35','2018-08-05 23:47:02'),(6,17,'有效期','2018-08-06 10:27:14','2018-08-06 10:34:10'),(9,17,'使用规则','2018-08-06 10:34:45','2018-08-06 12:22:25'),(10,17,'使用时间','2018-08-06 10:34:55','2018-08-06 12:22:19'),(11,16,'有效期','2018-08-06 14:33:59','2018-08-06 14:33:59'),(12,16,'使用时间','2018-08-06 14:34:08','2018-08-06 14:34:08'),(13,16,'使用规则','2018-08-06 14:34:15','2018-08-06 14:34:15'),(17,25,'有效期','2018-08-09 16:11:08','2018-08-09 16:11:08'),(18,25,'使用时间','2018-08-09 16:14:10','2018-08-09 16:14:10'),(19,25,'使用规则','2018-08-09 16:16:13','2018-08-09 16:16:13'),(20,26,'有效期','2018-08-09 17:09:43','2018-08-09 17:09:43'),(21,26,'使用时间','2018-08-09 17:11:38','2018-08-09 17:11:38'),(22,26,'使用规则','2018-08-09 17:13:21','2018-08-09 17:13:21'),(39,21,'有效期','2018-08-09 18:59:30','2018-08-09 18:59:30'),(40,21,'使用时间','2018-08-09 18:59:30','2018-08-09 18:59:30'),(41,21,'使用规则','2018-08-09 18:59:30','2018-08-09 18:59:30'),(45,23,'有效期','2018-08-09 20:41:32','2018-08-09 20:41:32'),(46,23,'使用时间','2018-08-09 20:41:32','2018-08-09 20:41:32'),(47,23,'使用规则','2018-08-09 20:41:32','2018-08-09 20:41:32'),(48,22,'有效期','2018-08-09 20:47:59','2018-08-09 20:47:59'),(49,22,'使用时间','2018-08-09 20:48:00','2018-08-09 20:48:00'),(50,22,'使用规则','2018-08-09 20:48:00','2018-08-09 20:48:00');
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=gbk;
 
 /*Table structure for table `px_packages_sub_notice` */
 
@@ -107,11 +165,7 @@ CREATE TABLE `px_packages_sub_notice` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`packages_sub_notice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_packages_sub_notice` */
-
-insert  into `px_packages_sub_notice`(`packages_sub_notice_id`,`packages_notice_id`,`sub_notice_detail`,`gmt_created`,`gmt_modified`) values (1,5,'string','2018-08-05 23:48:45','2018-08-05 23:48:45'),(2,5,'string','2018-08-05 23:48:58','2018-08-05 23:48:58'),(3,5,'string','2018-08-05 23:48:58','2018-08-05 23:48:58'),(5,5,'4444444444','2018-08-05 23:48:58','2018-08-05 23:49:43'),(10,6,'2017.5.13 至 2017.6.6 （周末、法定节假日通用）','2018-08-06 14:19:53','2018-08-06 14:19:53'),(11,10,'11:00-21:30','2018-08-06 14:20:05','2018-08-06 14:20:05'),(12,9,'无需预约，消费高峰时可能需要等位','2018-08-06 14:20:19','2018-08-06 14:20:19'),(13,9,'每单限最多使用一张优惠券','2018-08-06 14:20:27','2018-08-06 14:20:27'),(14,9,'餐巾纸费: 本套餐已含餐巾纸','2018-08-06 14:20:40','2018-08-06 14:20:40'),(15,9,'不可使用包间','2018-08-06 14:20:50','2018-08-06 14:20:50'),(16,9,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-06 14:21:01','2018-08-06 14:21:01'),(17,9,'团购用户不可享受商家其他优惠','2018-08-06 14:21:12','2018-08-06 14:21:12'),(18,9,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-06 14:21:23','2018-08-06 14:21:23'),(19,9,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-06 14:21:33','2018-08-06 14:21:33'),(20,9,'提供免费wifi','2018-08-06 14:21:46','2018-08-06 14:21:46'),(22,9,'停车位等事宜请咨询商家','2018-08-06 14:25:12','2018-08-06 14:25:12'),(23,11,'2017.5.13 至 2017.6.6 （周末、法定节假日通用）','2018-08-06 14:34:24','2018-08-06 14:34:24'),(24,12,'11:00-21:30','2018-08-06 14:34:37','2018-08-06 14:34:37'),(25,13,'无需预约，消费高峰时可能需要等位','2018-08-06 14:34:50','2018-08-06 14:34:50'),(26,13,'每单限最多使用一张优惠券','2018-08-06 14:35:28','2018-08-06 14:35:28'),(27,13,'餐巾纸费: 本套餐已含餐巾纸','2018-08-06 14:35:35','2018-08-06 14:35:35'),(29,13,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-06 14:35:49','2018-08-06 14:35:49'),(30,13,'团购用户不可享受商家其他优惠','2018-08-06 14:35:57','2018-08-06 14:35:57'),(31,13,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-06 14:36:05','2018-08-06 14:36:05'),(32,13,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-06 14:36:13','2018-08-06 14:36:13'),(33,13,'提供免费wifi','2018-08-06 14:36:19','2018-08-06 14:36:19'),(34,13,'停车位等事宜请咨询商家','2018-08-06 14:36:31','2018-08-06 14:36:31'),(42,17,'2018.8.9    至   2019.9.9    （周末、法定节假日通用）','2018-08-09 16:13:05','2018-08-09 16:13:05'),(43,18,'8:00~21:00','2018-08-09 16:15:25','2018-08-09 16:15:25'),(44,19,'无需预约，消费高峰时可能需要等位','2018-08-09 16:16:48','2018-08-09 16:16:48'),(45,19,'每单限最多使用一张优惠券','2018-08-09 16:17:07','2018-08-09 16:17:07'),(46,19,'餐巾纸费: 本套餐已含餐巾纸','2018-08-09 16:17:21','2018-08-09 16:17:21'),(47,19,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-09 16:17:34','2018-08-09 16:17:34'),(48,19,'团购用户不可享受商家其他优惠','2018-08-09 16:17:47','2018-08-09 16:17:47'),(49,19,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-09 16:18:01','2018-08-09 16:18:01'),(50,19,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-09 16:18:21','2018-08-09 16:18:21'),(51,19,'提供免费wifi','2018-08-09 16:18:31','2018-08-09 16:18:31'),(52,19,'停车位等事宜请咨询商家','2018-08-09 16:18:44','2018-08-09 16:18:44'),(53,20,'2018.8.8  至  2019.9.9（周末、法定节假日通用）','2018-08-09 17:11:22','2018-08-09 17:11:22'),(54,21,'早上8:00~晚上21:00','2018-08-09 17:12:46','2018-08-09 17:12:46'),(55,22,'无需预约，消费高峰时可能需要等位','2018-08-09 17:14:05','2018-08-09 17:14:05'),(56,22,'每单限最多使用一张优惠券','2018-08-09 17:14:17','2018-08-09 17:14:17'),(57,22,'餐巾纸费: 本套餐已含餐巾纸','2018-08-09 17:14:27','2018-08-09 17:14:27'),(58,22,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-09 17:14:42','2018-08-09 17:14:42'),(59,22,'团购用户不可享受商家其他优惠','2018-08-09 17:14:55','2018-08-09 17:14:55'),(60,22,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-09 17:15:07','2018-08-09 17:15:07'),(61,22,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-09 17:15:20','2018-08-09 17:15:20'),(62,22,'提供免费wifi','2018-08-09 17:16:01','2018-08-09 17:16:01'),(63,22,'停车位等事宜请咨询商家','2018-08-09 17:16:10','2018-08-09 17:16:10'),(86,39,'2018.8.8 至 2019.9.9（周末、法定节假日通用）','2018-08-09 18:59:30','2018-08-09 18:59:30'),(87,40,'早上8:00~晚上21:00','2018-08-09 18:59:30','2018-08-09 18:59:30'),(88,41,'每单限最多使用一张优惠券','2018-08-09 18:59:30','2018-08-09 18:59:30'),(89,41,'无需预约，消费高峰时可能需要等位','2018-08-09 18:59:30','2018-08-09 18:59:30'),(90,41,'餐巾纸费: 本套餐已含餐巾纸','2018-08-09 18:59:30','2018-08-09 18:59:30'),(91,41,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-09 18:59:30','2018-08-09 18:59:30'),(92,41,'团购用户不可享受商家其他优惠','2018-08-09 18:59:30','2018-08-09 18:59:30'),(93,41,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-09 18:59:30','2018-08-09 18:59:30'),(94,41,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-09 18:59:30','2018-08-09 18:59:30'),(95,41,'停车位等事宜请咨询商家','2018-08-09 18:59:30','2018-08-09 18:59:30'),(96,41,'提供免费wifi','2018-08-09 18:59:30','2018-08-09 18:59:30'),(108,45,'2018.8.8 至 2019.9.9（周末、法定节假日通用）','2018-08-09 20:41:32','2018-08-09 20:41:32'),(109,46,'早上8:00~晚上21:00','2018-08-09 20:41:33','2018-08-09 20:41:33'),(110,47,'无需预约，消费高峰时可能需要等位','2018-08-09 20:41:33','2018-08-09 20:41:33'),(111,47,'每单限最多使用一张优惠券','2018-08-09 20:41:33','2018-08-09 20:41:33'),(112,47,'餐巾纸费: 本套餐已含餐巾纸','2018-08-09 20:41:33','2018-08-09 20:41:33'),(113,47,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-09 20:41:33','2018-08-09 20:41:33'),(114,47,'团购用户不可享受商家其他优惠','2018-08-09 20:41:34','2018-08-09 20:41:34'),(115,47,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-09 20:41:34','2018-08-09 20:41:34'),(116,47,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-09 20:41:34','2018-08-09 20:41:34'),(117,47,'提供免费wifi','2018-08-09 20:41:34','2018-08-09 20:41:34'),(118,47,'停车位等事宜请咨询商家','2018-08-09 20:41:34','2018-08-09 20:41:34'),(119,48,'2018.8.8 至 2019.9.9（周末、法定节假日通用）','2018-08-09 20:48:00','2018-08-09 20:48:00'),(120,49,'早上8:00~晚上21:00','2018-08-09 20:48:00','2018-08-09 20:48:00'),(121,50,'无需预约，消费高峰时可能需要等位','2018-08-09 20:48:00','2018-08-09 20:48:00'),(122,50,'每单限最多使用一张优惠券','2018-08-09 20:48:00','2018-08-09 20:48:00'),(123,50,'餐巾纸费: 本套餐已含餐巾纸','2018-08-09 20:48:00','2018-08-09 20:48:00'),(124,50,'仅限堂食，不提供餐前外带，餐毕未吃完可打包，打包费详情咨询商家','2018-08-09 20:48:01','2018-08-09 20:48:01'),(125,50,'团购用户不可享受商家其他优惠','2018-08-09 20:48:01','2018-08-09 20:48:01'),(126,50,'酒水饮料等问题，请致电商家咨询，以商家反馈为准','2018-08-09 20:48:01','2018-08-09 20:48:01'),(127,50,'因部分菜品因时令或其他不可抗因素导致无法提供，店内会用等价菜品替换，具体事宜请与店内协商','2018-08-09 20:48:01','2018-08-09 20:48:01'),(128,50,'提供免费wifi','2018-08-09 20:48:01','2018-08-09 20:48:01'),(129,50,'停车位等事宜请咨询商家','2018-08-09 20:48:02','2018-08-09 20:48:02');
+) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=gbk;
 
 /*Table structure for table `px_shop` */
 
@@ -133,10 +187,6 @@ CREATE TABLE `px_shop` (
   PRIMARY KEY (`shop_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=gbk;
 
-/*Data for the table `px_shop` */
-
-insert  into `px_shop`(`shop_id`,`shop_name`,`shop_address`,`shop_tel`,`waiter_name`,`owner_name`,`owner_phone`,`owner_idcard`,`shop_status`,`gmt_expired`,`gmt_created`,`gmt_modified`) values (14,'吃香了','大像山镇西关山货市丁家巷1号','09385631212','张君1','张君111','15294395456','610121199003127667','PX_SHOP_ONLINE','2018-08-30 10:52:37','2018-07-25 22:57:02','2018-08-08 18:18:52'),(15,'吃光光餐饮股份有限公司','大像山镇','0938-5631313','张君','张君','15294395456','610121199003127667','PX_SHOP_ONLINE','2020-01-12 21:46:40','2018-07-27 09:14:45','2018-08-07 10:52:00'),(16,'吃好了','丁家巷1号','15294395456','魏浩岩','张君','17793812373','610621199003127667','PX_SHOP_ONLINE','2020-01-12 21:46:40','2018-07-29 11:54:15','2018-08-07 10:52:23'),(19,'test11111111','adfad','sdafadf','adfad','adfad','afdadf','asdfasdf','PX_SHOP_EXPIRED','2021-08-12 22:58:58','2018-08-07 10:12:11','2018-08-07 10:21:33'),(23,'吃饱了','丁家巷1号','15294395456','张君','魏小敏','17793812373','610121199003127667','PX_SHOP_ONLINE','2020-08-09 00:00:00','2018-08-09 15:33:39','2018-08-09 15:33:39');
-
 /*Table structure for table `px_sub_packages` */
 
 DROP TABLE IF EXISTS `px_sub_packages`;
@@ -151,11 +201,7 @@ CREATE TABLE `px_sub_packages` (
   `gmt_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`sub_packages_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=gbk;
-
-/*Data for the table `px_sub_packages` */
-
-insert  into `px_sub_packages`(`sub_packages_id`,`packages_detail_id`,`sub_packages_name`,`sub_packages_amount`,`sub_packages_type`,`sub_package_price`,`gmt_created`,`gmt_modified`) values (11,6,'肉夹馍','1','PX_SUB_PKG_BIGGER','6.00','2018-07-29 13:08:37','2018-07-29 13:08:37'),(12,6,'cxC','打分三大','PX_SUB_PKG_BIGGER','爱的发','2018-07-29 13:10:08','2018-07-29 13:10:08'),(15,13,'豆浆','2','PX_SUB_PKG_SMALL','2.8','2018-08-04 22:45:49','2018-08-04 22:45:49'),(16,13,'油条','4','PX_SUB_PKG_BIGGER','6','2018-08-04 22:46:08','2018-08-04 22:46:08'),(17,14,'冰峰','2','PX_SUB_PKG_COMMON','3','2018-08-04 22:46:54','2018-08-04 22:46:54'),(18,14,'酸梅汤','3','PX_SUB_PKG_COMMON','6.00','2018-08-04 22:47:17','2018-08-04 22:47:17'),(19,15,'餐巾纸','1','PX_SUB_PKG_COMMON','1','2018-08-04 22:47:43','2018-08-04 22:47:43'),(20,15,'餐具','1','PX_SUB_PKG_COMMON','0.00','2018-08-04 22:48:07','2018-08-04 22:48:07'),(21,10,'麻辣米线','1','PX_SUB_PKG_BIGGER','7.00','2018-08-05 12:14:57','2018-08-05 12:14:57'),(22,10,'白吉馍','1','PX_SUB_PKG_COMMON','2.00','2018-08-05 12:15:22','2018-08-05 12:15:22'),(23,11,'糖蒜','1','PX_SUB_PKG_SMALL','1.00','2018-08-05 12:15:59','2018-08-05 12:15:59'),(24,11,'酱萝卜','1','PX_SUB_PKG_SMALL','1.00','2018-08-05 12:16:20','2018-08-05 12:16:20'),(25,12,'冰峰','1','PX_SUB_PKG_COMMON','2.00','2018-08-05 12:17:02','2018-08-05 12:17:02'),(26,12,'酸梅汤','1','PX_SUB_PKG_COMMON','2','2018-08-05 12:17:27','2018-08-05 12:17:27'),(30,21,'油泼面','1','PX_SUB_PKG_BIGGER','10','2018-08-09 15:56:30','2018-08-09 15:56:30'),(31,22,'小碟牛肉','1','PX_SUB_PKG_SMALL','8','2018-08-09 15:58:14','2018-08-09 15:58:14'),(32,23,'冰峰','1','PX_SUB_PKG_COMMON','2','2018-08-09 16:01:35','2018-08-09 16:01:35'),(33,23,'酸梅汤','1','PX_SUB_PKG_COMMON','2','2018-08-09 16:02:31','2018-08-09 16:02:31'),(34,22,'榨菜','1','PX_SUB_PKG_COMMON','2','2018-08-09 16:03:35','2018-08-09 16:03:35'),(35,22,'凉拌黄瓜','1','PX_SUB_PKG_COMMON','2','2018-08-09 16:04:29','2018-08-09 16:04:29'),(36,22,'凉拌海带丝','1','PX_SUB_PKG_COMMON','2','2018-08-09 16:05:01','2018-08-09 16:05:01'),(37,24,'砂锅米线','1','PX_SUB_PKG_BIGGER','10','2018-08-09 17:04:18','2018-08-09 17:04:18'),(38,27,'砂锅米线','1','PX_SUB_PKG_BIGGER','10','2018-08-09 17:05:43','2018-08-09 17:05:43'),(39,28,'白吉馍','1','PX_SUB_PKG_COMMON','2','2018-08-09 17:06:31','2018-08-09 17:06:31'),(40,28,'米饭','1','PX_SUB_PKG_COMMON','2','2018-08-09 17:06:50','2018-08-09 17:06:50'),(41,29,'冰峰','1','PX_SUB_PKG_COMMON','2','2018-08-09 17:07:34','2018-08-09 17:07:34'),(42,29,'酸梅汤','1','PX_SUB_PKG_COMMON','2','2018-08-09 17:08:01','2018-08-09 17:08:01');
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=gbk;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
