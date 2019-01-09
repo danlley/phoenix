@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-CAMP-ALGORITHM" type="com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO">
+        <result property="prizeId" column="prize_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="campId" column="camp_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="percent" column="percent" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="prizeLevel" column="prize_level" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="distribution" column="distribution" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="algorithmStatus" column="algorithm_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="prizeAmount" column="prize_amount" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="CAMP-ALGORITHM-INSERT" parameterType="com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO">
+		insert into phoenix.camp_algorithm (
+		    prize_id,camp_id,percent,prize_level,distribution,algorithm_status,prizeAmount,gmt_created,gmt_modified
+		)values(
+		    #{prizeId},#{campId},#{percent},#{prizeLevel},#{distribution},#{algorithm_status},#{prizeAmount},now(),now()
+		) ;
+    </insert>
+    
+    <select id="CAMP-ALGORITHM-SELECT-GET-BY-ID" resultMap="RM-CAMP-ALGORITHM">
+	    <![CDATA[
+	        select
+	        	prize_id,camp_id,percent,prize_level,distribution,algorithm_status,prizeAmount,gmt_created,gmt_modified
+	        from phoenix.camp_algorithm 
+	        where (prize_id = #{value})
+	    ]]>
+    </select>
+
+</mapper>
