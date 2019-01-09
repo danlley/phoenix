@@ -29,13 +29,13 @@ public enum PxGoodsTypeEnum implements EnumMessage {
 
                                                     PX_GOODS_YX_PKG("PX_GOODS_YX_PKG", "夜宵套餐"),
 
-                                                    PX_GOODS_HB("PX_GOODS_HB", "汉堡"),
+                                                    PX_GOODS_HB("PX_GOODS_HB", "主食"),
 
                                                     PX_GOODS_NC("PX_GOODS_NC", "奶茶"),
 
                                                     PX_GOODS_CY("PX_GOODS_CY", "茶饮"),
 
-                                                    PX_GOODS_PS("PX_GOODS_PS", "披萨"),
+                                                    PX_GOODS_PS("PX_GOODS_PS", "配餐"),
 
                                                     PX_GOODS_BQL("PX_GOODS_BQL", "冰淇淋"),
 

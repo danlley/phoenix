@@ -11,12 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventPublishService;
-import com.myteay.common.async.event.MtEvent;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
@@ -24,6 +22,9 @@ import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
+import com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent;
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
@@ -47,6 +48,9 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<CampBaseModel> pxCommonMngTemplate;
+
+    /** 抽奖组件 */
+    private CampAlgorithmComponent             campAlgorithmComponent;
 
     /** 事件发送组件 */
     private EventPublishService<String>        eventPublishService;
@@ -77,6 +81,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
     public MtOperateResult<CampBaseModel> modifyCampBaseModel(CampBaseModel campBaseModel) {
         MtOperateResult<CampBaseModel> result = new MtOperateResult<CampBaseModel>();
         CampBaseModel freshCampBaseModel = null;
+        boolean isErr = false;
         try {
 
             if (!this.validatePrize(campBaseModel)) {
@@ -89,17 +94,15 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
         } catch (PxManageException e) {
             logger.warn("修改店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
             result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_UPDATE_FAILD);
+            isErr = true;
         }
 
-        if (freshCampBaseModel != null
-            && (freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_EXPIRED || freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_OFFLINE
-                || freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE)) {
-            MtEvent<CampBaseModel> event = new MtEvent<CampBaseModel>(PxEventTopicEnum.PX_CAMP_BASE_STATUS_CHANGED.getValue(), freshCampBaseModel);
-            //            try {
-            //                eventPublishService.publishEvent(event);
-            //            } catch (MtEventException e) {
-            //                logger.warn("商品状态变更后，发送缓存刷新请求发生异常 " + e.getMessage(), e);
-            //            }
+        if (!isErr && freshCampBaseModel != null && freshCampBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE) {
+            try {
+                initPrizeProcessData(freshCampBaseModel);
+            } catch (PxManageException e) {
+                logger.warn("初始化抽奖主流程数据出错 freshCampBaseModel: " + freshCampBaseModel, e);
+            }
         }
 
         return result;
@@ -142,6 +145,86 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
         }
 
         return true;
+    }
+
+    /**
+     * 初始化抽奖主流程数据
+     * 
+     * @param campBaseModel
+     * @throws PxManageException
+     */
+    private void initPrizeProcessData(CampBaseModel campBaseModel) throws PxManageException {
+        List<CampPrizeModel> list = campShopPrizeRepository.findCampPrizeByCampId(campBaseModel.getCampId());
+
+        CampBaseModel model = campShopBaseRepository.findSingleCampBase(campBaseModel.getCampId());
+
+        // 非启动状态下的刷新不做营销活动主流程数据初始化动作
+        if (model != null && model.getCampStatus() == campBaseModel.getCampStatus() && campBaseModel.getCampStatus() != CampStatusEnum.CAMP_ONLINE) {
+            return;
+        }
+
+        List<CampPrizeModel> campPrizeModels = new ArrayList<>();
+        for (CampPrizeModel campPrizeModel : list) {
+
+            // 为已上架奖品的检查做准备工作
+            if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_ONLINE) {
+                campPrizeModels.add(campPrizeModel);
+            }
+
+            // 奖品的状态如果存在草稿状态的，则不允许对营销活动主流程数据进行初始化
+            if (campPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_DRAFT && campBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE) {
+                return;
+            }
+        }
+
+        // 活动为发起启动活动，且存在奖品列表，则初始化抽奖主流程
+        if (CollectionUtils.isEmpty(campPrizeModels) && campBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE
+            && model.getCampStatus() != CampStatusEnum.CAMP_ONLINE) {
+
+            List<CampAlgorithmModel> params = constructAlgorithmParams(campBaseModel, campPrizeModels);
+
+            for (CampAlgorithmModel algorithmModel : params) {
+                CampAlgorithmResult<String> result = campAlgorithmComponent.initAlgorithm(algorithmModel, 1);
+
+                if (logger.isInfoEnabled()) {
+                    logger.info("抽奖主流程初始化数据结果： result = " + result + " algorithmModel=" + algorithmModel);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 构建抽奖算法初始化数据接口入参
+     * 
+     * @param campBaseModel
+     * @param campPrizeModels
+     * @return
+     */
+    private List<CampAlgorithmModel> constructAlgorithmParams(CampBaseModel campBaseModel, List<CampPrizeModel> campPrizeModels) {
+
+        if (CollectionUtils.isEmpty(campPrizeModels)) {
+            return null;
+        }
+
+        List<CampAlgorithmModel> list = new ArrayList<>();
+
+        CampAlgorithmModel campAlgorithmModel = null;
+
+        for (CampPrizeModel prizeModel : campPrizeModels) {
+            campAlgorithmModel = new CampAlgorithmModel();
+            campAlgorithmModel.setCampId(campBaseModel.getCampId());
+            campAlgorithmModel.setDistribution(prizeModel.getDistribution());
+            campAlgorithmModel.setPercent(Integer.parseInt(prizeModel.getPrizePercent()));
+            campAlgorithmModel.setPrizeAmount(Integer.parseInt(prizeModel.getPrizeAmount()));
+            campAlgorithmModel.setPrizeId(prizeModel.getPrizeId());
+            campAlgorithmModel.setPrizeLevel(Integer.parseInt(prizeModel.getPrizeLevel()));
+
+            list.add(campAlgorithmModel);
+        }
+
+        return list;
+
     }
 
     /** 
@@ -354,6 +437,15 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
      */
     public void setCampShopPrizeRepository(CampShopPrizeRepository campShopPrizeRepository) {
         this.campShopPrizeRepository = campShopPrizeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campAlgorithmComponent</tt>.
+     * 
+     * @param campAlgorithmComponent value to be assigned to property campAlgorithmComponent
+     */
+    public void setCampAlgorithmComponent(CampAlgorithmComponent campAlgorithmComponent) {
+        this.campAlgorithmComponent = campAlgorithmComponent;
     }
 
 }

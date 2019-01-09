@@ -2,7 +2,7 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.camp.algorithm;
+package com.myteay.phoenix.core.service.camp.algorithm.model;
 
 import java.io.Serializable;
 
@@ -17,25 +17,46 @@ import com.myteay.common.util.tools.ToStringUtil;
 public class CampAlgorithmModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -7156879174232726370L;
+    private static final long     serialVersionUID = -7156879174232726370L;
 
     /** 中奖几率 */
-    private int               percent;
+    private int                   percent;
 
     /** 活动ID */
-    private String            campId;
+    private String                campId;
 
     /** 奖品ID */
-    private String            prizeId;
+    private String                prizeId;
 
     /** 奖品等级 */
-    private int               prizeLevel;
+    private int                   prizeLevel;
 
     /** 奖位分布 */
-    private String            distribution;
+    private String                distribution;
 
     /** 奖品数量 */
-    private int               prizeAmount;
+    private int                   prizeAmount;
+
+    /** 奖位分布模型 */
+    private CampDistributionModel distributionModel;
+
+    /**
+     * Getter method for property <tt>distributionModel</tt>.
+     * 
+     * @return property value of distributionModel
+     */
+    public CampDistributionModel getDistributionModel() {
+        return distributionModel;
+    }
+
+    /**
+     * Setter method for property <tt>distributionModel</tt>.
+     * 
+     * @param distributionModel value to be assigned to property distributionModel
+     */
+    public void setDistributionModel(CampDistributionModel distributionModel) {
+        this.distributionModel = distributionModel;
+    }
 
     /**
      * Getter method for property <tt>percent</tt>.

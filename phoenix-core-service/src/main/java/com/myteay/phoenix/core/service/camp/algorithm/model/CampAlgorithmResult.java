@@ -2,12 +2,14 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2015 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.camp.algorithm;
+package com.myteay.phoenix.core.service.camp.algorithm.model;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import com.myteay.phoenix.core.service.camp.algorithm.enums.CampResultEnum;
 
 /**
  * 返回结果

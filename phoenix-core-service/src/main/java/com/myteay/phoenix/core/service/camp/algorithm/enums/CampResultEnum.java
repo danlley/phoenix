@@ -2,7 +2,7 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2015 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.camp.algorithm;
+package com.myteay.phoenix.core.service.camp.algorithm.enums;
 
 import org.apache.commons.lang.StringUtils;
 

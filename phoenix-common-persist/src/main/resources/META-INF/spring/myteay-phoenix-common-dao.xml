@@ -30,4 +30,6 @@
 	<bean id="campSingleShopPrizeDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopPrizeDAO"/>
 	
 	<bean id="campSingleShopPrizeGoodsRefDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopPrizeGoodsRefDAO"/>
+	
+	<bean id="campAlgorithmDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampAlgorithmDAO"/>
 </beans>

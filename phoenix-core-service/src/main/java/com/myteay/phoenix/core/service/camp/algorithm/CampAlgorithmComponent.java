@@ -4,6 +4,9 @@
  */
 package com.myteay.phoenix.core.service.camp.algorithm;
 
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
+
 /**
  * 抽奖算法组件
  * 
@@ -51,5 +54,24 @@ public interface CampAlgorithmComponent {
      * @param campId    活动ID
      * @return
      */
-    public CampAlgorithmResult<String> execute(String campId);
+    public CampAlgorithmResult<CampAlgorithmModel> execute(String campId);
+
+    /**
+     * 初始化抽奖组件
+     * 
+     * <pre>
+     * 说明：
+     *      1、活动启动后，调用该组件接口对出奖模块进行初始化
+     *      
+     *      2、当模块发现奖品已经在当前模块中完成了初始化，同时收到操作等级为1，则直接忽略初始化动作，直接打开奖品开关参与抽奖，对于当前奖品是否发生过重要参数变更均不做检查直接忽略
+     *      
+     *      3、操作等级传参错误的情况下，对当前请求不做任何处理
+     *      
+     *      4、系统重新启动或当前接口收到请求数据均会对抽奖缓存进行再次刷新
+     * 
+     * @param campAlgorithmModel    出奖算法模型，用于出奖模块数据落地
+     * @param operationLevel        操作等级：1标识初始化，2标识暂停奖品（如活动暂停，或运行中的活动中奖品下架），3标识删除当前奖品不再参与相应的抽奖活动
+     * @return
+     */
+    public CampAlgorithmResult<String> initAlgorithm(CampAlgorithmModel campAlgorithmModel, int operationLevel);
 }

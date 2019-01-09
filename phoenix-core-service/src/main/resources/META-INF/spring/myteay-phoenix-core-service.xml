@@ -48,6 +48,8 @@
 	
 	<bean id="campShopCacheComponnet" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopCacheComponnetImpl"></bean>
 	
+	<bean id="campAlgorithmComponent" class="com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponentImpl"></bean>
+	
 	<bean id="pxEventPublishTool" class="com.myteay.phoenix.core.service.tools.PxEventPublishTool"></bean>
 	
 	<!-- 商品状态变更为上线监听器 -->
