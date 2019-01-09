@@ -16,7 +16,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusE
  * @author danlley
  * @version $Id: CampAlgorithmModel.java, v 0.1 Dec 21, 2018 12:20:43 AM danlley Exp $
  */
-public class CampAlgorithmModel implements Serializable {
+public class CampAlgorithmModel implements Serializable, Comparable<CampAlgorithmModel> {
 
     /** serialVersionUID */
     private static final long       serialVersionUID = -7156879174232726370L;
@@ -236,5 +236,14 @@ public class CampAlgorithmModel implements Serializable {
      */
     public String toString() {
         return ToStringUtil.toShortString(this);
+    }
+
+    /** 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(CampAlgorithmModel o) {
+        // TODO Auto-generated method stub
+        return this.prizeLevel - o.prizeLevel;
     }
 }

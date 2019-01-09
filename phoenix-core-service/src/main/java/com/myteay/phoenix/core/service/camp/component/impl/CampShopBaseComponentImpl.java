@@ -184,7 +184,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             List<CampAlgorithmModel> params = constructAlgorithmParams(campBaseModel, campPrizeModels);
 
             for (CampAlgorithmModel algorithmModel : params) {
-                CampAlgorithmResult<String> result = campAlgorithmComponent.initAlgorithm(algorithmModel, 1);
+                CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.initAlgorithm(algorithmModel, 1);
 
                 if (logger.isInfoEnabled()) {
                     logger.info("抽奖主流程初始化数据结果： result = " + result + " algorithmModel=" + algorithmModel);

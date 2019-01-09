@@ -5,6 +5,8 @@
 package com.myteay.phoenix.core.service.camp.algorithm.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.myteay.common.util.tools.ToStringUtil;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmTypeEnum;
@@ -27,13 +29,49 @@ public class CampDistributionModel implements Serializable {
     private CampAlgorithmTypeEnum algorithmType;
 
     /** GD模式的抽奖算法 */
-    private GDModel               gdModel;
+    private Map<String, GDModel>  gdModelMap       = new HashMap<>();
 
     /** GP模式的抽奖算法 */
     private GPModel               gpModel;
 
     /** GFP模式的抽奖算法 */
-    private GfpModel              gfpModel;
+    private Map<String, GfpModel> gfpModelMap      = new HashMap<>();
+
+    /**
+     * Getter method for property <tt>gdModelMap</tt>.
+     * 
+     * @return property value of gdModelMap
+     */
+    public Map<String, GDModel> getGdModelMap() {
+        return gdModelMap;
+    }
+
+    /**
+     * Setter method for property <tt>gdModelMap</tt>.
+     * 
+     * @param gdModelMap value to be assigned to property gdModelMap
+     */
+    public void setGdModelMap(Map<String, GDModel> gdModelMap) {
+        this.gdModelMap = gdModelMap;
+    }
+
+    /**
+     * Getter method for property <tt>gfpModelMap</tt>.
+     * 
+     * @return property value of gfpModelMap
+     */
+    public Map<String, GfpModel> getGfpModelMap() {
+        return gfpModelMap;
+    }
+
+    /**
+     * Setter method for property <tt>gfpModelMap</tt>.
+     * 
+     * @param gfpModelMap value to be assigned to property gfpModelMap
+     */
+    public void setGfpModelMap(Map<String, GfpModel> gfpModelMap) {
+        this.gfpModelMap = gfpModelMap;
+    }
 
     /**
      * Getter method for property <tt>algorithmType</tt>.
@@ -54,24 +92,6 @@ public class CampDistributionModel implements Serializable {
     }
 
     /**
-     * Getter method for property <tt>gdModel</tt>.
-     * 
-     * @return property value of gdModel
-     */
-    public GDModel getGdModel() {
-        return gdModel;
-    }
-
-    /**
-     * Setter method for property <tt>gdModel</tt>.
-     * 
-     * @param gdModel value to be assigned to property gdModel
-     */
-    public void setGdModel(GDModel gdModel) {
-        this.gdModel = gdModel;
-    }
-
-    /**
      * Getter method for property <tt>gpModel</tt>.
      * 
      * @return property value of gpModel
@@ -87,24 +107,6 @@ public class CampDistributionModel implements Serializable {
      */
     public void setGpModel(GPModel gpModel) {
         this.gpModel = gpModel;
-    }
-
-    /**
-     * Getter method for property <tt>gfpModel</tt>.
-     * 
-     * @return property value of gfpModel
-     */
-    public GfpModel getGfpModel() {
-        return gfpModel;
-    }
-
-    /**
-     * Setter method for property <tt>gfpModel</tt>.
-     * 
-     * @param gfpModel value to be assigned to property gfpModel
-     */
-    public void setGfpModel(GfpModel gfpModel) {
-        this.gfpModel = gfpModel;
     }
 
     /** 

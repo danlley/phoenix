@@ -48,5 +48,14 @@
 	        where (prize_id = #{value})
 	    ]]>
     </select>
+    
+    <select id="CAMP-ALGORITHM-SELECT-START" resultMap="RM-CAMP-ALGORITHM">
+	    <![CDATA[
+	        select
+	        	prize_id,camp_id,percent,prize_level,distribution,algorithm_status,prizeAmount,gmt_created,gmt_modified
+	        from phoenix.camp_algorithm 
+	        where (algorithm_status = 'CAMP_ALGORITHM_START')
+	    ]]>
+    </select>
 
 </mapper>

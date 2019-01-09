@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.common.dal.camp.ibatis;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
@@ -38,6 +40,14 @@ public class IbatisCampAlgorithmDAO extends SqlSessionDaoSupport implements Camp
     public CampAlgorithmDO findCampAlgorithmByPrizeId(String prizeId) {
         // TODO Auto-generated method stub
         return this.getSqlSession().selectOne("CAMP-ALGORITHM-SELECT-GET-BY-ID", prizeId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO#findCampAlgorithmStart()
+     */
+    @Override
+    public List<CampAlgorithmDO> findCampAlgorithmStart() {
+        return this.getSqlSession().selectList("CAMP-ALGORITHM-SELECT-START");
     }
 
 }

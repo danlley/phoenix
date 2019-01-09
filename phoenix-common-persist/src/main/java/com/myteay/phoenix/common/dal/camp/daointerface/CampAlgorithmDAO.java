@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.common.dal.camp.daointerface;
 
+import java.util.List;
+
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
 
 /**
@@ -28,4 +30,11 @@ public interface CampAlgorithmDAO {
      * @return
      */
     CampAlgorithmDO findCampAlgorithmByPrizeId(String prizeId);
+
+    /**
+     * 查询所有允许出奖的抽奖算法数据模型
+     * 
+     * @return
+     */
+    List<CampAlgorithmDO> findCampAlgorithmStart();
 }
