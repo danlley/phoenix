@@ -5,14 +5,22 @@
 package com.myteay.phoenix.core.service.camp.algorithm;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusEnum;
+import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmTypeEnum;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.GDHandler;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.GFPHandler;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.GPHandler;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.Handler;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 
@@ -22,16 +30,27 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
  * @author danlley
  * @version $Id: CampAlgorithmComponentImpl.java, v 0.1 Jan 7, 2019 1:11:08 PM danlley Exp $
  */
-public class CampAlgorithmComponentImpl implements CampAlgorithmComponent {
+public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, InitializingBean {
 
     /** 日志 */
-    public static final Logger          logger = Logger.getLogger(CampAlgorithmComponentImpl.class);
+    public static final Logger                logger     = Logger.getLogger(CampAlgorithmComponentImpl.class);
 
-    /**  */
-    private CampAlgorithmDAO            campAlgorithmDAO;
+    private static final Map<String, Handler> HANDLE_MAP = Collections.synchronizedMap(new HashMap<>());
 
-    /**  */
-    private CampAlgorithmCacheComponent campAlgorithmCacheComponent;
+    /** 抽奖算法管理DAO */
+    private CampAlgorithmDAO                  campAlgorithmDAO;
+
+    /** 抽奖算法缓存组件 */
+    private CampAlgorithmCacheComponent       campAlgorithmCacheComponent;
+
+    /** 按时段分布规则 */
+    private GDHandler                         gDHandler;
+
+    /** 按时段、频度分布规则 */
+    private GFPHandler                        gFPHandler;
+
+    /** 按频度分布规则 */
+    private GPHandler                         gPHandler;
 
     /** 
      * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#execute(java.lang.String)
@@ -72,19 +91,36 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent {
         }
 
         // step 2: 奖位分布不中奖的情况
+        return isHandler(campAlgorithmModel);
 
-        // step 3: 检查结束，直接出奖
-        return true;
     }
 
-    public static void main(String[] args) {
-        Random random = new Random();
-        System.out.println(random.nextInt(100));
-        System.out.println(random.nextInt(100));
-        System.out.println(random.nextInt(100));
-        System.out.println(random.nextInt(100));
-        System.out.println(random.nextInt(100));
-        System.out.println(random.nextInt(100));
+    /**
+     * 开始执行奖位段检查
+     * 
+     * @param campAlgorithmModel
+     * @return
+     */
+    private boolean isHandler(CampAlgorithmModel campAlgorithmModel) {
+        if (campAlgorithmModel == null || campAlgorithmModel.getDistributionModel() == null
+            || campAlgorithmModel.getDistributionModel().getAlgorithmType() == null) {
+            return false;
+        }
+
+        switch (campAlgorithmModel.getDistributionModel().getAlgorithmType()) {
+            case CAMP_GD:
+
+                return HANDLE_MAP.get(CampAlgorithmTypeEnum.CAMP_GD.getValue()).doDistribution(campAlgorithmModel);
+            case CAMP_GFD:
+
+                return HANDLE_MAP.get(CampAlgorithmTypeEnum.CAMP_GFD.getValue()).doDistribution(campAlgorithmModel);
+            case CAMP_GP:
+
+                return HANDLE_MAP.get(CampAlgorithmTypeEnum.CAMP_GP.getValue()).doDistribution(campAlgorithmModel);
+
+            default:
+                return false;
+        }
     }
 
     /** 
@@ -211,6 +247,18 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent {
      */
     public void setCampAlgorithmCacheComponent(CampAlgorithmCacheComponent campAlgorithmCacheComponent) {
         this.campAlgorithmCacheComponent = campAlgorithmCacheComponent;
+    }
+
+    /** 
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        synchronized (HANDLE_MAP) {
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GD.getValue(), gDHandler);
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GFD.getValue(), gFPHandler);
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GP.getValue(), gPHandler);
+        }
     }
 
 }

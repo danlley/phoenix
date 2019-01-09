@@ -54,6 +54,12 @@
 	
 	<bean id="pxEventPublishTool" class="com.myteay.phoenix.core.service.tools.PxEventPublishTool"></bean>
 	
+	<bean id="gPHandler" class="com.myteay.phoenix.core.service.camp.algorithm.handles.GPHandler"></bean>
+	
+	<bean id="gFPHandler" class="com.myteay.phoenix.core.service.camp.algorithm.handles.GFPHandler"></bean>
+	
+	<bean id="gDHandler" class="com.myteay.phoenix.core.service.camp.algorithm.handles.GDHandler"></bean>
+	
 	<!-- 商品状态变更为上线监听器 -->
 	<bean id="pxGoodsStatusChangedEventListener" class="com.myteay.phoenix.core.service.manage.listener.PxGoodsStatusChangedEventListener">
 		<property name="descriptor">
