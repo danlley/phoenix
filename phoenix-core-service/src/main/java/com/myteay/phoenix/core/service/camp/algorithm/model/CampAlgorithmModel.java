@@ -5,8 +5,10 @@
 package com.myteay.phoenix.core.service.camp.algorithm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusEnum;
 
 /**
  * 抽奖算法模型
@@ -17,28 +19,91 @@ import com.myteay.common.util.tools.ToStringUtil;
 public class CampAlgorithmModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long     serialVersionUID = -7156879174232726370L;
+    private static final long       serialVersionUID = -7156879174232726370L;
 
     /** 中奖几率 */
-    private int                   percent;
+    private int                     percent;
 
     /** 活动ID */
-    private String                campId;
+    private String                  campId;
 
     /** 奖品ID */
-    private String                prizeId;
+    private String                  prizeId;
+
+    /** 奖品ID */
+    private CampAlgorithmStatusEnum algorithmStatus;
 
     /** 奖品等级 */
-    private int                   prizeLevel;
+    private int                     prizeLevel;
 
     /** 奖位分布 */
-    private String                distribution;
+    private String                  distribution;
 
     /** 奖品数量 */
-    private int                   prizeAmount;
+    private int                     prizeAmount;
 
     /** 奖位分布模型 */
-    private CampDistributionModel distributionModel;
+    private CampDistributionModel   distributionModel;
+
+    /** 创建时间 */
+    private Date                    gmtCreated;
+
+    /** 最后修改时间 */
+    private Date                    gmtModified;
+
+    /**
+     * Getter method for property <tt>gmtCreated</tt>.
+     * 
+     * @return property value of gmtCreated
+     */
+    public Date getGmtCreated() {
+        return gmtCreated;
+    }
+
+    /**
+     * Setter method for property <tt>gmtCreated</tt>.
+     * 
+     * @param gmtCreated value to be assigned to property gmtCreated
+     */
+    public void setGmtCreated(Date gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    /**
+     * Getter method for property <tt>gmtModified</tt>.
+     * 
+     * @return property value of gmtModified
+     */
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    /**
+     * Setter method for property <tt>gmtModified</tt>.
+     * 
+     * @param gmtModified value to be assigned to property gmtModified
+     */
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    /**
+     * Getter method for property <tt>algorithmStatus</tt>.
+     * 
+     * @return property value of algorithmStatus
+     */
+    public CampAlgorithmStatusEnum getAlgorithmStatus() {
+        return algorithmStatus;
+    }
+
+    /**
+     * Setter method for property <tt>algorithmStatus</tt>.
+     * 
+     * @param algorithmStatus value to be assigned to property algorithmStatus
+     */
+    public void setAlgorithmStatus(CampAlgorithmStatusEnum algorithmStatus) {
+        this.algorithmStatus = algorithmStatus;
+    }
 
     /**
      * Getter method for property <tt>distributionModel</tt>.

@@ -73,5 +73,5 @@ public interface CampAlgorithmComponent {
      * @param operationLevel        操作等级：1标识初始化，2标识暂停奖品（如活动暂停，或运行中的活动中奖品下架），3标识删除当前奖品不再参与相应的抽奖活动
      * @return
      */
-    public CampAlgorithmResult<String> initAlgorithm(CampAlgorithmModel campAlgorithmModel, int operationLevel);
+    public CampAlgorithmResult<CampAlgorithmModel> initAlgorithm(CampAlgorithmModel campAlgorithmModel, int operationLevel);
 }
