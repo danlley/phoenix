@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.camp.algorithm.handles;
 
+import org.springframework.util.CollectionUtils;
+
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 
 /**
@@ -19,7 +21,10 @@ public class GFPHandler implements Handler {
      */
     @Override
     public boolean doDistribution(CampAlgorithmModel campAlgorithmModel) {
-        // TODO Auto-generated method stub
+        if (campAlgorithmModel == null || campAlgorithmModel.getDistributionModel() == null
+            || CollectionUtils.isEmpty(campAlgorithmModel.getDistributionModel().getGfpModelMap())) {
+            return false;
+        }
         return false;
     }
 

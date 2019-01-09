@@ -5,6 +5,7 @@
 package com.myteay.phoenix.core.service.camp.algorithm.handles;
 
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
+import com.myteay.phoenix.core.service.camp.algorithm.model.GPModel;
 
 /**
  * 按频度分布规则
@@ -19,7 +20,12 @@ public class GPHandler implements Handler {
      */
     @Override
     public boolean doDistribution(CampAlgorithmModel campAlgorithmModel) {
-        // TODO Auto-generated method stub
+        if (campAlgorithmModel == null || campAlgorithmModel.getDistributionModel() == null || campAlgorithmModel.getDistributionModel().getGpModel() == null) {
+            return false;
+        }
+
+        GPModel gpModel = campAlgorithmModel.getDistributionModel().getGpModel();
+
         return false;
     }
 
