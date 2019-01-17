@@ -11,6 +11,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 /**
  * 按时段分布规则
  * 
+ * 
  * @author danlley
  * @version $Id: GDHandler.java, v 0.1 Jan 3, 2019 11:18:57 PM danlley Exp $
  */

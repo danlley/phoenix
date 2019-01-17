@@ -7,7 +7,6 @@ package com.myteay.phoenix.core.service.component.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
@@ -38,11 +37,6 @@ public class PxMobileGoodsComponnetImpl implements PxMobileGoodsComponnet {
      */
     @Override
     public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) throws PxManageException {
-
-        List<PxMobileGoodsModel> list = pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds);
-        if (CollectionUtils.isEmpty(list)) {
-            return new MtOperateResult<>(list);
-        }
 
         return new MtOperateResult<>(pxGoodsStrategy.queryGoodsListFromCache(excludeGoodsIds));
     }
