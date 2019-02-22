@@ -15,21 +15,16 @@ import com.myteay.common.util.enums.EnumMessage;
  * @version $Id: PxGoodsTypeEnum.java, v 0.1 Dec 19, 2018 12:29:53 AM danlley Exp $
  */
 public enum PxGoodsTypeEnum implements EnumMessage {
-                                                    PX_GOODS_CR_CM_PKG("PX_GOODS_CR_CM_PKG", "成人普通套餐"),
 
-                                                    PX_GOODS_RT_CM_PKG("PX_GOODS_RT_CM_PKG", "儿童普通套餐"),
+                                                    PX_GOODS_TC("PX_GOODS_TC", "套餐"),
 
-                                                    PX_GOODS_RT_ZC_PKG("PX_GOODS_RT_ZC_PKG", "儿童早餐套餐"),
+                                                    PX_GOODS_DP("PX_GOODS_DP", "单品"),
 
-                                                    PX_GOODS_QSN_CM_PKG("PX_GOODS_QSN_CM_PKG", "青少年普通套餐"),
+                                                    PX_GOODS_JJG("PX_GOODS_JJG", "加价购"),
 
-                                                    PX_GOODS_QSN_ZC_PKG("PX_GOODS_QSN_ZC_PKG", "青少年早餐套餐"),
+                                                    PX_GOODS_LYH("PX_GOODS_LYH", "零元换"),
 
-                                                    PX_GOODS_CR_ZC_PKG("PX_GOODS_CR_ZC_PKG", "成人早餐套餐"),
-
-                                                    PX_GOODS_YX_PKG("PX_GOODS_YX_PKG", "夜宵套餐"),
-
-                                                    PX_GOODS_HB("PX_GOODS_HB", "主食"),
+                                                    PX_GOODS_RT_ZC("PX_GOODS_RT_ZC", "早餐"),
 
                                                     PX_GOODS_NC("PX_GOODS_NC", "奶茶"),
 

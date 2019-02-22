@@ -20,7 +20,7 @@ default-autowire="byName">
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://192.168.0.101:3306/phoenix?useUnicode=true&amp;characterEncoding=gbk</value>
+			<value>jdbc:mysql://192.168.56.102:3306/phoenix?useUnicode=true&amp;characterEncoding=gbk</value>
 		</property>
 		<property name="username">
 			<value>phoenix</value>
