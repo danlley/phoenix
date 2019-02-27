@@ -14,11 +14,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampModel;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
+import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
 import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 
 /**
@@ -30,16 +33,30 @@ import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, InitializingBean {
 
     /** 日志 */
-    public static final Logger                 logger           = Logger.getLogger(CampShopCacheComponnetImpl.class);
+    public static final Logger                   logger           = Logger.getLogger(CampShopCacheComponnetImpl.class);
 
     /** 活动缓存 */
-    public static final Map<String, CampModel> CAMP_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
+    public static final Map<String, CampModel>   CAMP_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
+
+    /** 活动缓存 */
+    public static final Map<String, PxShopModel> SHOP_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
 
     /** 针对单个店铺店内消费到场营销活动操作仓储 */
-    private CampShopBaseRepository             campShopBaseRepository;
+    private CampShopBaseRepository               campShopBaseRepository;
 
     /** 店内营销活动奖池仓储 */
-    private CampShopPrizeRepository            campShopPrizeRepository;
+    private CampShopPrizeRepository              campShopPrizeRepository;
+
+    /** 店铺管理仓储 */
+    private PxShopRepository                     pxShopRepository;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet#queryShopModelFromCache(java.lang.String)
+     */
+    @Override
+    public PxShopModel queryShopModelFromCache(String shopId) {
+        return SHOP_MODEL_CACHE.get(shopId);
+    }
 
     /** 
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
@@ -48,6 +65,7 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
     public void afterPropertiesSet() throws Exception {
         //初始化活动缓存
         initCache();
+        initShopCache();
     }
 
     /** 
@@ -59,6 +77,33 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
             logger.info("活动发生变更，准备刷新缓存 campId=" + campId);
         }
         initCache();
+
+    }
+
+    /**
+     * 初始化店铺缓存
+     */
+    private void initShopCache() {
+        List<PxShopModel> shopModels = null;
+        try {
+            shopModels = pxShopRepository.findAll();
+        } catch (PxManageException e) {
+            logger.warn("查询所有店铺出错" + e.getMessage(), e);
+        }
+
+        if (CollectionUtils.isEmpty(shopModels)) {
+            return;
+        }
+
+        Map<String, PxShopModel> map = new HashMap<>();
+        for (PxShopModel pxShopModel : shopModels) {
+            if (pxShopModel.getShopStatus() != PxShopStatusEnum.PX_SHOP_ONLINE) {
+                continue;
+            }
+            map.put(pxShopModel.getShopId(), pxShopModel);
+        }
+
+        SHOP_MODEL_CACHE.putAll(map);
     }
 
     /**
@@ -155,6 +200,15 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
      */
     public void setCampShopPrizeRepository(CampShopPrizeRepository campShopPrizeRepository) {
         this.campShopPrizeRepository = campShopPrizeRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxShopRepository</tt>.
+     * 
+     * @param pxShopRepository value to be assigned to property pxShopRepository
+     */
+    public void setPxShopRepository(PxShopRepository pxShopRepository) {
+        this.pxShopRepository = pxShopRepository;
     }
 
 }

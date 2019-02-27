@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS-ORDER-OUT" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
+        <result property="id" column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="order_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopName" column="shop_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="orderStatus" column="order_status" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsType" column="goods_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- mapped statement for IbatisUsersInfoDAO.insert -->
+    <insert id="PX-GOODS-ORDER-OUT-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
+		insert into phoenix.px_goods_order_out (
+		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,goods_price,goods_comm_price,
+		    goods_type,gmt_created,gmt_modified
+		)values(
+		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{goodsPrice},#{goodsCommPrice},
+		    #{goodsType},now(),now()
+		) ;
+	  <selectKey resultType="java.lang.String" keyProperty="id">  
+	    SELECT LAST_INSERT_ID()  
+	  </selectKey>
+    </insert>
+
+    <delete id="PX-GOODS-ORDER-OUT-DELETE-GET-BY-ID">
+	    <![CDATA[
+	        delete from phoenix.px_goods_order_out where (order_no = #{value})
+	    ]]>
+    </delete>
+    
+    <update id="PX-GOODS-ORDER-OUT-STATUS-UPDATE-GET-BY-ORDER-NO">
+        update phoenix.px_goods_order_out
+			set
+				<if test="goodsType!=null">
+					goods_type = #{goodsType},
+				</if>
+				gmt_modified = now()
+			where
+				order_no = #{orderNo}
+    </update>
+</mapper>

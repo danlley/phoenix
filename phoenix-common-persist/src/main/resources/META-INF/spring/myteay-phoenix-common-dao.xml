@@ -25,6 +25,8 @@
 	
 	<bean id="pxMobileGoodsDAO" class="com.myteay.phoenix.common.dal.mobile.ibatis.IbatisPxMobileGoodsDAO"/>
 	
+	<bean id="pxGoodsOrderOutDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsOrderOutDAO"/>
+	
 	<bean id="campSingleShopBaseDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopBaseDAO"/>
 	
 	<bean id="campSingleShopPrizeDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopPrizeDAO"/>

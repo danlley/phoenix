@@ -206,6 +206,10 @@ public enum MtOperateExResultEnum {
 
                                    PX_SUBNOTICE_ONLINE_ADD_ERR("PX_SUBNOTICE_ONLINE_ADD_ERR", "00110086", "当前商品不满足追加子提醒条件，请检查商品是否已发布或已下线"),
 
+                                   PX_GOODS_ORDER_OUT_MODEL_ERR("PX_GOODS_ORDER_OUT_MODEL_ERR", "00110087", "订单模型不可用"),
+
+                                   PX_GOODS_ORDER_OUT_OP_ERR("PX_GOODS_ORDER_OUT_OP_ERR", "00110088", "订单流水操作失败"),
+
                                    CAMP_BASE_MODEL_INVALID("CAMP_BASE_MODEL_INVALID", "00210001", "店内营销基本信息模型非法"),
 
                                    CAMP_BASE_DEL_STATUS_ERR("CAMP_BASE_DEL_STATUS_ERR", "00210002", "店内营销活动状态为已发布、已下线，则不允许进行删除"),

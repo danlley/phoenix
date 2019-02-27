@@ -6,6 +6,9 @@ package com.myteay.phoenix.biz.service.impl.cashier.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
+import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponent;
+import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 
 /**
@@ -41,6 +48,10 @@ public class CashierController {
     @Autowired
     private CampShopBaseComponent       campShopBaseComponent;
 
+    /** 订单流水操作组件 */
+    @Autowired
+    private PxGoodsOrderOutCompoonent   pxGoodsOrderOutCompoonent;
+
     /** 店内营销活动状态管理 */
     @Autowired
     private CampShopBaseStatusComponent campShopBaseStatusComponent;
@@ -51,6 +62,27 @@ public class CashierController {
 
     /** 当前订单编号 */
     private static int                  currentNo = 1;
+
+    @RequestMapping(value = "/order/", method = { RequestMethod.POST })
+    public MtServiceResult<String> manageGoodsImage(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
+                                                    HttpServletResponse response) {
+        MtServiceResult<String> result = new MtServiceResult<>();
+
+        //step 1: 填充上下文
+        PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
+
+        //step 2: 生成订单号
+        pxGoodsOrderModel.setOrderNo(PxOrderNoUtil.getUUID());
+
+        if (logger.isInfoEnabled()) {
+            logger.info("收到订单请求 pxGoodsOrderModel=" + pxGoodsOrderModel);
+        }
+
+        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.execute(pxGoodsOrderModel);
+        result.setResult(innerResult.getResult());
+
+        return result;
+    }
 
     /**
      * 通过店铺ID查询店铺下的所有店内营销活动

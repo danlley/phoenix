@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.camp.component;
 
+import com.myteay.phoenix.core.model.manage.PxShopModel;
+
 /**
  * 到店消费营销活动基础数据缓存
  * 
@@ -23,4 +25,12 @@ public interface CampShopCacheComponnet {
      *          6、活动状态从停止状态变更为启动状态
      */
     public void refreshCampShopCache(String campId);
+
+    /**
+     * 从缓存中获取店铺模型
+     * 
+     * @param shopId
+     * @return
+     */
+    public PxShopModel queryShopModelFromCache(String shopId);
 }
