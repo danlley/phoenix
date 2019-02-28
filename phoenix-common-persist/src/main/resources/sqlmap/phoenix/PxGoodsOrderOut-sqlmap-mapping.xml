@@ -30,6 +30,7 @@
         <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="orderStatus" column="order_status" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="sellerAmount" column="seller_amount" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsCommPrice" column="goods_comm_price" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="goodsType" column="goods_type" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -38,10 +39,10 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="PX-GOODS-ORDER-OUT-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
 		insert into phoenix.px_goods_order_out (
-		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,goods_price,goods_comm_price,
+		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,goods_price,seller_amount,goods_comm_price,
 		    goods_type,gmt_created,gmt_modified
 		)values(
-		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{goodsPrice},#{goodsCommPrice},
+		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{goodsPrice},#{sellerAmount},#{goodsCommPrice},
 		    #{goodsType},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="id">  

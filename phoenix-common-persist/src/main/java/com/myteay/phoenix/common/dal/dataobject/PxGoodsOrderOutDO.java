@@ -46,6 +46,9 @@ public class PxGoodsOrderOutDO implements Serializable {
     /** 商品售价 */
     private String            goodsPrice;
 
+    /** 商品数量 */
+    private String            sellerAmount;
+
     /** 商品原价 */
     private String            goodsCommPrice;
 
@@ -57,6 +60,24 @@ public class PxGoodsOrderOutDO implements Serializable {
 
     /** 最后修改时间 */
     private String            gmtModified;
+
+    /**
+     * Getter method for property <tt>sellerAmount</tt>.
+     * 
+     * @return property value of sellerAmount
+     */
+    public String getSellerAmount() {
+        return sellerAmount;
+    }
+
+    /**
+     * Setter method for property <tt>sellerAmount</tt>.
+     * 
+     * @param sellerAmount value to be assigned to property sellerAmount
+     */
+    public void setSellerAmount(String sellerAmount) {
+        this.sellerAmount = sellerAmount;
+    }
 
     /**
      * Getter method for property <tt>id</tt>.

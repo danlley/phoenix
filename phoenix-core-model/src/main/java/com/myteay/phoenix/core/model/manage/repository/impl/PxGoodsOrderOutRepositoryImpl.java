@@ -103,6 +103,7 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         pxGoodsOrderOutDO.setShopId(pxGoodsModel.getShopId());
         pxGoodsOrderOutDO.setShopName(shopName);
         pxGoodsOrderOutDO.setUserId(userId);
+        pxGoodsOrderOutDO.setSellerAmount(pxGoodsModel.getGoodsSellAmount());
 
         return pxGoodsOrderOutDO;
     }
