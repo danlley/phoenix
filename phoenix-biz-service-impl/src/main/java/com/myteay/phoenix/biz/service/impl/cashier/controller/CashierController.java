@@ -22,6 +22,8 @@ import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
 import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
@@ -63,9 +65,41 @@ public class CashierController {
     /** 当前订单编号 */
     private static int                  currentNo = 1;
 
+    /**
+     * 修改订单状态
+     * 
+     * @param orderNo
+     * @param pxPayTypeEnum
+     * @param pxOrderStatusEnum
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/order/change", method = { RequestMethod.POST })
+    public MtServiceResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
+                                                       HttpServletRequest request, HttpServletResponse response) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("收到订单请求 orderNo=" + orderNo + " pxPayTypeEnum=" + pxPayTypeEnum + " pxOrderStatusEnum=" + pxOrderStatusEnum);
+        }
+
+        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum);
+        MtServiceResult<String> result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+        result.setResult(innerResult.getResult());
+
+        return result;
+    }
+
+    /**
+     * 
+     * @param pxGoodsOrderModel
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/order/", method = { RequestMethod.POST })
-    public MtServiceResult<String> manageGoodsImage(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
-                                                    HttpServletResponse response) {
+    public MtServiceResult<String> manageGoodsOrderOut(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
+                                                       HttpServletResponse response) {
         MtServiceResult<String> result = new MtServiceResult<>();
 
         //step 1: 填充上下文

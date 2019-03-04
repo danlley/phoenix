@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
@@ -32,6 +34,22 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
 
     /** 订单流水仓储 */
     private CampShopCacheComponnet    campShopCacheComponnet;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
+     */
+    @Override
+    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
+        String result = null;
+        try {
+            result = pxGoodsOrderOutRepository.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum);
+        } catch (PxManageException e) {
+            logger.warn("修改订单流水状态发生异常 orderNo=" + orderNo + " pxPayTypeEnum=" + pxPayTypeEnum + " pxPayTypeEnum=" + pxPayTypeEnum, e);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_OP_ERR);
+        }
+
+        return new MtOperateResult<>(result);
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#execute(com.myteay.phoenix.core.model.PxGoodsOrderModel)

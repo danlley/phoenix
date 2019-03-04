@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 
 /**
@@ -31,11 +32,32 @@ public class PxGoodsOrderModel implements Serializable {
     /** 店铺名称 */
     private String                        shopName;
 
+    /** 支付方式 */
+    private PxPayTypeEnum                 payType;
+
     /** 订单列表 */
     private List<PxGoodsModel>            pxGoodsModelList;
 
     /** 订单上下文（不接受外部传值）， 关键字取值：PxOrderContextKeyEnum */
     private transient Map<String, String> orderContext;
+
+    /**
+     * Getter method for property <tt>payType</tt>.
+     * 
+     * @return property value of payType
+     */
+    public PxPayTypeEnum getPayType() {
+        return payType;
+    }
+
+    /**
+     * Setter method for property <tt>payType</tt>.
+     * 
+     * @param payType value to be assigned to property payType
+     */
+    public void setPayType(PxPayTypeEnum payType) {
+        this.payType = payType;
+    }
 
     /**
      * Getter method for property <tt>shopName</tt>.

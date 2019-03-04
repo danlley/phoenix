@@ -43,6 +43,9 @@ public class PxGoodsOrderOutDO implements Serializable {
     /** 订单状态 */
     private String            orderStatus;
 
+    /** 订单状态 */
+    private String            payType;
+
     /** 商品售价 */
     private String            goodsPrice;
 
@@ -60,6 +63,24 @@ public class PxGoodsOrderOutDO implements Serializable {
 
     /** 最后修改时间 */
     private String            gmtModified;
+
+    /**
+     * Getter method for property <tt>payType</tt>.
+     * 
+     * @return property value of payType
+     */
+    public String getPayType() {
+        return payType;
+    }
+
+    /**
+     * Setter method for property <tt>payType</tt>.
+     * 
+     * @param payType value to be assigned to property payType
+     */
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
 
     /**
      * Getter method for property <tt>sellerAmount</tt>.

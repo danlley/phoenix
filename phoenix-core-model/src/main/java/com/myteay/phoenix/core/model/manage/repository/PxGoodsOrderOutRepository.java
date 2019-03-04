@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.model.manage.repository;
 
+import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 
@@ -23,4 +25,15 @@ public interface PxGoodsOrderOutRepository {
      * @throws PxManageException 
      */
     public String saveGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) throws PxManageException;
+
+    /**
+     * 订单流水状态更新
+     * 
+     * @param orderNo
+     * @param pxPayTypeEnum
+     * @param pxOrderStatusEnum
+     * @return
+     * @throws PxManageException
+     */
+    public String modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) throws PxManageException;
 }

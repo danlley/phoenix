@@ -9,18 +9,18 @@ import org.apache.commons.lang.StringUtils;
 /**
  * 
  * @author danlley
- * @version $Id: PxOrderStatusEnum.java, v 0.1 Feb 27, 2019 12:47:13 PM danlley Exp $
+ * @version $Id: PxPayTypeEnum.java, v 0.1 Mar 2, 2019 12:04:15 PM danlley Exp $
  */
-public enum PxOrderStatusEnum {
+public enum PxPayTypeEnum {
 
-                               /** 初始状态 */
-                               PX_ORDER_INIT("PX_ORDER_INIT", "初始状态"),
+                           /** 现金支付 */
+                           PX_CASH_PAY("PX_CASH_PAY", "现金支付"),
 
-                               /** 已支付 */
-                               PX_ORDER_PAYED("PX_ORDER_PAYED", "已支付"),
+                           /** 现金支付 */
+                           PX_WEIXIN_PAY("PX_WEIXIN_PAY", "微信支付"),
 
-                               /** 已退款 */
-                               PX_ORDER_REFUND("PX_ORDER_REFUND", "已退款"),
+                           /** 现金支付 */
+                           PX_ALIPAY_PAY("PX_ALIPAY_PAY", "支付宝支付"),
 
     ;
     /** value */
@@ -34,7 +34,7 @@ public enum PxOrderStatusEnum {
     * @param code
     * @param description
     */
-    private PxOrderStatusEnum(String value, String message) {
+    private PxPayTypeEnum(String value, String message) {
         this.value = value;
         this.message = message;
     }
@@ -58,12 +58,12 @@ public enum PxOrderStatusEnum {
     * @param value
     * @return
     */
-    public static PxOrderStatusEnum getByCode(String value) {
+    public static PxPayTypeEnum getByCode(String value) {
         if (StringUtils.isBlank(value)) {
             return null;
         }
         value = value.trim();
-        for (PxOrderStatusEnum type : values()) {
+        for (PxPayTypeEnum type : values()) {
             if (type.getValue().equals(value))
                 return type;
         }
@@ -77,11 +77,11 @@ public enum PxOrderStatusEnum {
     * @param value
     * @return
     */
-    public static PxOrderStatusEnum getByValue(String value) {
+    public static PxPayTypeEnum getByValue(String value) {
         if (value == null) {
             return null;
         }
-        for (PxOrderStatusEnum result : values()) {
+        for (PxPayTypeEnum result : values()) {
             if (result.getValue().equals(value)) {
                 return result;
             }
@@ -95,11 +95,11 @@ public enum PxOrderStatusEnum {
     * @param message
     * @return
     */
-    public static PxOrderStatusEnum getByMessage(String message) {
+    public static PxPayTypeEnum getByMessage(String message) {
         if (StringUtils.isBlank(message)) {
             return null;
         }
-        for (PxOrderStatusEnum result : values()) {
+        for (PxPayTypeEnum result : values()) {
             if (result.getMessage().equals(message)) {
                 return result;
             }

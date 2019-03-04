@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.cashier.component;
 
+import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 
@@ -22,4 +24,14 @@ public interface PxGoodsOrderOutCompoonent {
      * @return
      */
     public MtOperateResult<String> execute(PxGoodsOrderModel pxGoodsOrderModel);
+
+    /**
+     * 修改订单状态
+     * 
+     * @param orderNo
+     * @param pxPayTypeEnum
+     * @param pxOrderStatusEnum
+     * @return
+     */
+    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum);
 }

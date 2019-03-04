@@ -25,6 +25,7 @@
         <result property="orderNo" column="order_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="payType" column="pay_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopName" column="shop_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -39,10 +40,10 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="PX-GOODS-ORDER-OUT-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
 		insert into phoenix.px_goods_order_out (
-		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,goods_price,seller_amount,goods_comm_price,
+		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,pay_type,goods_price,seller_amount,goods_comm_price,
 		    goods_type,gmt_created,gmt_modified
 		)values(
-		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{goodsPrice},#{sellerAmount},#{goodsCommPrice},
+		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{payType},#{goodsPrice},#{sellerAmount},#{goodsCommPrice},
 		    #{goodsType},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="id">  
@@ -59,8 +60,11 @@
     <update id="PX-GOODS-ORDER-OUT-STATUS-UPDATE-GET-BY-ORDER-NO">
         update phoenix.px_goods_order_out
 			set
-				<if test="goodsType!=null">
-					goods_type = #{goodsType},
+				<if test="orderStatus!=null">
+					order_status = #{orderStatus},
+				</if>
+				<if test="payType!=null">
+					pay_type = #{payType},
 				</if>
 				gmt_modified = now()
 			where

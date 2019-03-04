@@ -210,6 +210,8 @@ public enum MtOperateExResultEnum {
 
                                    PX_GOODS_ORDER_OUT_OP_ERR("PX_GOODS_ORDER_OUT_OP_ERR", "00110088", "订单流水操作失败"),
 
+                                   PX_GOODS_ORDER_OUT_UP_ERR("PX_GOODS_ORDER_OUT_UP_ERR", "00110089", "订单流水更新失败"),
+
                                    CAMP_BASE_MODEL_INVALID("CAMP_BASE_MODEL_INVALID", "00210001", "店内营销基本信息模型非法"),
 
                                    CAMP_BASE_DEL_STATUS_ERR("CAMP_BASE_DEL_STATUS_ERR", "00210002", "店内营销活动状态为已发布、已下线，则不允许进行删除"),

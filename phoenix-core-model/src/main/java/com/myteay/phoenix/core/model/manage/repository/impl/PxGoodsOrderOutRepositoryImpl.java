@@ -16,6 +16,7 @@ import com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
@@ -36,14 +37,44 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
     private PxGoodsOrderOutDAO pxGoodsOrderOutDAO;
 
     /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
+     */
+    @Override
+    public String modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) throws PxManageException {
+
+        if (StringUtils.isBlank(orderNo)) {
+            logger.warn("订单编号不可用，无法更新指定订单记录的状态 orderNo is null pxPayTypeEnum=" + pxPayTypeEnum + " pxOrderStatusEnum=" + pxOrderStatusEnum);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_UP_ERR);
+        }
+
+        PxGoodsOrderOutDO pxGoodsOrderOutDO = new PxGoodsOrderOutDO();
+        pxGoodsOrderOutDO.setOrderNo(orderNo);
+
+        if (pxPayTypeEnum != null) {
+            pxGoodsOrderOutDO.setPayType(pxPayTypeEnum.getValue());
+        }
+
+        if (pxOrderStatusEnum != null) {
+            pxGoodsOrderOutDO.setOrderStatus(pxOrderStatusEnum.getValue());
+        }
+
+        pxGoodsOrderOutDAO.updatePxGoods(pxGoodsOrderOutDO);
+
+        return orderNo;
+    }
+
+    /** 
      * @throws PxManageException 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#saveGoodsOrderOut(com.myteay.phoenix.core.model.PxGoodsOrderModel)
      */
     @Override
     public String saveGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) throws PxManageException {
 
-        if (pxGoodsOrderModel == null || StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
-            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
+        if (pxGoodsOrderModel == null || pxGoodsOrderModel.getPayType() == null || StringUtils.isBlank(pxGoodsOrderModel.getUserId())
+            || StringUtils.isBlank(pxGoodsOrderModel.getShopName()) || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo())
+            || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
+            logger.warn("模型不合法 pxGoodsOrderModel=" + pxGoodsOrderModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_OP_ERR);
         }
 
         String userId = pxGoodsOrderModel.getUserId();
@@ -54,7 +85,7 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         PxGoodsOrderOutDO pxGoodsOrderOutDO = null;
         List<PxGoodsOrderOutDO> list = new ArrayList<PxGoodsOrderOutDO>();
         for (PxGoodsModel pxGoodsModel : pxGoodsModels) {
-            pxGoodsOrderOutDO = constructOrderOutDO(userId, orderNo, shopName, pxGoodsModel);
+            pxGoodsOrderOutDO = constructOrderOutDO(pxGoodsOrderModel.getPayType(), userId, orderNo, shopName, pxGoodsModel);
             if (pxGoodsOrderOutDO == null) {
                 throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_MODEL_ERR);
             }
@@ -82,7 +113,7 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
      * @param pxGoodsModel
      * @return
      */
-    private PxGoodsOrderOutDO constructOrderOutDO(String userId, String orderNo, String shopName, PxGoodsModel pxGoodsModel) {
+    private PxGoodsOrderOutDO constructOrderOutDO(PxPayTypeEnum payType, String userId, String orderNo, String shopName, PxGoodsModel pxGoodsModel) {
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(shopName) || StringUtils.isBlank(orderNo) || pxGoodsModel == null) {
             return null;
         }
@@ -103,6 +134,11 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         pxGoodsOrderOutDO.setShopId(pxGoodsModel.getShopId());
         pxGoodsOrderOutDO.setShopName(shopName);
         pxGoodsOrderOutDO.setUserId(userId);
+
+        if (payType != null) {
+            pxGoodsOrderOutDO.setPayType(payType.getValue());
+        }
+
         pxGoodsOrderOutDO.setSellerAmount(pxGoodsModel.getGoodsSellAmount());
 
         return pxGoodsOrderOutDO;
