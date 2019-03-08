@@ -15,6 +15,9 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository;
+import com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent;
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
+import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
 
@@ -34,6 +37,9 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
 
     /** 订单流水仓储 */
     private CampShopCacheComponnet    campShopCacheComponnet;
+
+    /** 抽奖算法组件 */
+    private CampAlgorithmComponent    campAlgorithmComponent;
 
     /** 
      * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
@@ -68,7 +74,19 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_OP_ERR);
         }
 
+        CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute("26");
+        logger.warn("订单抽奖结束 campId = 26 ，抽奖结果： " + result);
+
         return new MtOperateResult<>(orderNo);
+    }
+
+    /**
+     * Setter method for property <tt>campAlgorithmComponent</tt>.
+     * 
+     * @param campAlgorithmComponent value to be assigned to property campAlgorithmComponent
+     */
+    public void setCampAlgorithmComponent(CampAlgorithmComponent campAlgorithmComponent) {
+        this.campAlgorithmComponent = campAlgorithmComponent;
     }
 
     /**

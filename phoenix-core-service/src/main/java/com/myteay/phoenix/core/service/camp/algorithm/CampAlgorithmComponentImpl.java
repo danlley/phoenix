@@ -12,6 +12,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
@@ -53,18 +54,40 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
     private GPHandler                         gPHandler;
 
     /** 
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        synchronized (HANDLE_MAP) {
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GD.getValue(), gDHandler);
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GFD.getValue(), gFPHandler);
+            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GP.getValue(), gPHandler);
+        }
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#execute(java.lang.String)
      */
     @Override
     public CampAlgorithmResult<CampAlgorithmModel> execute(String campId) {
         logger.warn("开始抽奖 campId=" + campId);
         List<CampAlgorithmModel> list = campAlgorithmCacheComponent.findPrizeListByCampId(campId).getResult();
+
+        if (CollectionUtils.isEmpty(list)) {
+            logger.warn("当前活动未找到对应的奖品信息 campId=" + campId);
+            return new CampAlgorithmResult<>();
+        }
+
         Collections.sort(list);
 
         for (CampAlgorithmModel campAlgorithmModel : list) {
             if (doAlgorithm(campAlgorithmModel)) {
                 return new CampAlgorithmResult<>(campAlgorithmModel);
             }
+        }
+
+        if (logger.isInfoEnabled()) {
+            logger.info("当前活动抽奖执行结束，未中奖， campId=" + campId);
         }
 
         return new CampAlgorithmResult<>();
@@ -86,7 +109,7 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         int currentPercent = random.nextInt(100);
 
         // step 1: 中奖概率出奖为满足条件，不中奖的情况
-        if (currentPercent < percent) {
+        if (currentPercent >= percent) {
             return false;
         }
 
@@ -249,16 +272,31 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         this.campAlgorithmCacheComponent = campAlgorithmCacheComponent;
     }
 
-    /** 
-     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+    /**
+     * Setter method for property <tt>gDHandler</tt>.
+     * 
+     * @param gDHandler value to be assigned to property gDHandler
      */
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        synchronized (HANDLE_MAP) {
-            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GD.getValue(), gDHandler);
-            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GFD.getValue(), gFPHandler);
-            HANDLE_MAP.put(CampAlgorithmTypeEnum.CAMP_GP.getValue(), gPHandler);
-        }
+    public void setgDHandler(GDHandler gDHandler) {
+        this.gDHandler = gDHandler;
+    }
+
+    /**
+     * Setter method for property <tt>gFPHandler</tt>.
+     * 
+     * @param gFPHandler value to be assigned to property gFPHandler
+     */
+    public void setgFPHandler(GFPHandler gFPHandler) {
+        this.gFPHandler = gFPHandler;
+    }
+
+    /**
+     * Setter method for property <tt>gPHandler</tt>.
+     * 
+     * @param gPHandler value to be assigned to property gPHandler
+     */
+    public void setgPHandler(GPHandler gPHandler) {
+        this.gPHandler = gPHandler;
     }
 
 }

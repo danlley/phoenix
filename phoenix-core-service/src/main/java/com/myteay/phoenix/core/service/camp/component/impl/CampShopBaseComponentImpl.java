@@ -178,8 +178,7 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
         }
 
         // 活动为发起启动活动，且存在奖品列表，则初始化抽奖主流程
-        if (CollectionUtils.isEmpty(campPrizeModels) && campBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE
-            && model.getCampStatus() != CampStatusEnum.CAMP_ONLINE) {
+        if (!CollectionUtils.isEmpty(campPrizeModels) && campBaseModel.getCampStatus() == CampStatusEnum.CAMP_ONLINE) {//&& model.getCampStatus() != CampStatusEnum.CAMP_ONLINE
 
             List<CampAlgorithmModel> params = constructAlgorithmParams(campBaseModel, campPrizeModels);
 

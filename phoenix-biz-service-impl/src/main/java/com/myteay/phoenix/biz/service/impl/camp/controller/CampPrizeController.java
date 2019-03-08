@@ -50,7 +50,7 @@ public class CampPrizeController {
      * @return
      */
     @RequestMapping(value = "/list/prize/{campId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<CampPrizeModel>> queryGoodsByShopId(@PathVariable String campId) {
+    public MtServiceResult<List<CampPrizeModel>> queryPrizeListByShopId(@PathVariable String campId) {
         MtServiceResult<List<CampPrizeModel>> result = null;
 
         MtOperateResult<List<CampPrizeModel>> componentResult = null;
@@ -73,7 +73,7 @@ public class CampPrizeController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<CampPrizeModel> manageGoods(@RequestBody CampPrizeModel campPrizeModel) {
+    public MtServiceResult<CampPrizeModel> manageShopPrize(@RequestBody CampPrizeModel campPrizeModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动信息 campPrizeModel=" + campPrizeModel);

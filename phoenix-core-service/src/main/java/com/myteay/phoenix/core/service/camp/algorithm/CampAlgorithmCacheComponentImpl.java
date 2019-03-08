@@ -196,6 +196,7 @@ public class CampAlgorithmCacheComponentImpl implements CampAlgorithmCacheCompon
             GPModel gpModel = new GPModel();
             gpModel.setMinute(Integer.parseInt(minuteData[1]));
             gpModel.setMinuteAmount(Integer.parseInt(minuteData[0]));
+            campDistributionModel.setGpModel(gpModel);
 
             campAlgorithmModel.setDistributionModel(campDistributionModel);
             return;
