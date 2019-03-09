@@ -4,10 +4,13 @@
  */
 package com.myteay.phoenix.core.service.cashier.component.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOrderContextKeyEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -74,10 +77,30 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_OP_ERR);
         }
 
-        CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute("26");
-        logger.warn("订单抽奖结束 campId = 26 ，抽奖结果： " + result);
+        doCamp(pxGoodsOrderModel);
 
         return new MtOperateResult<>(orderNo);
+    }
+
+    /**
+     * 完成抽奖动作
+     * 
+     * @param pxGoodsOrderModel
+     */
+    private void doCamp(PxGoodsOrderModel pxGoodsOrderModel) {
+        if (pxGoodsOrderModel == null || CollectionUtils.isEmpty(pxGoodsOrderModel.getOrderContext())) {
+            logger.warn("订单上下文不可用，无法进行抽奖 pxGoodsOrderModel=" + pxGoodsOrderModel);
+            return;
+        }
+
+        String campId = pxGoodsOrderModel.getOrderContext().get(PxOrderContextKeyEnum.PX_ORDER_CAMP_ID.getValue());
+        if (StringUtils.isBlank(campId)) {
+            logger.warn("订单上下文中未找到合法的活动ID，无法参与抽奖活动");
+            return;
+        }
+
+        CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute(campId);
+        logger.warn("订单抽奖结束 campId = " + campId + " ，抽奖结果： " + result);
     }
 
     /**

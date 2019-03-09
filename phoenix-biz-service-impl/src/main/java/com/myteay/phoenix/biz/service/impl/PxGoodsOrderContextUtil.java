@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.PxOrderContextKeyEnum;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
@@ -29,7 +30,10 @@ public class PxGoodsOrderContextUtil {
      * @param request
      */
     public static void fillOrderContext(PxGoodsOrderModel message, HttpServletRequest request) {
-        message.setOrderContext(new HashMap<String, String>());
+        if (CollectionUtils.isEmpty(message.getOrderContext())) {
+            message.setOrderContext(new HashMap<String, String>());
+        }
+
         Map<String, String> orderContext = message.getOrderContext();
 
         if (StringUtils.isBlank(message.getUserId())) {

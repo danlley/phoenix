@@ -7,6 +7,7 @@ package com.myteay.phoenix.common.util.enums;
 import org.apache.commons.lang.StringUtils;
 
 /**
+ * 订单上下文关键字管理枚举
  * 
  * @author danlley
  * @version $Id: PxOrderContextKeyEnum.java, v 0.1 Feb 26, 2019 11:51:48 AM danlley Exp $
@@ -27,6 +28,9 @@ public enum PxOrderContextKeyEnum {
 
                                    /** 主机名 */
                                    PX_ORDER_SECURITY_HOST("PX_ORDER_SECURITY_HOST", "主机名"),
+
+                                   /** 活动 */
+                                   PX_ORDER_CAMP_ID("PX_ORDER_CAMP_ID", "活动ID"),
 
     ;
     /** value */
