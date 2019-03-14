@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -32,6 +33,10 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder;
+
+    /** 套餐详情图片管理 */
+    @Autowired
+    private Environment                 env;
 
     @Bean
     public MappingJackson2HttpMessageConverter MappingJsonpHttpMessageConverter() {
@@ -56,7 +61,8 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         //上传的图片在D盘下的OTA目录下，访问路径如：http://localhost:8081/OTA/d3cf0281-bb7f-40e0-ab77-406db95ccf2c.jpg
         //其中OTA表示访问的前缀。"file:D:/OTA/"是文件真实的存储路径
-        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations("file:/D:/git_repository/dev/packages/images/");
+        String path = "file:/" + env.getProperty("myteay.phoenix.images.path");
+        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations(path);
     }
 
     /** 
