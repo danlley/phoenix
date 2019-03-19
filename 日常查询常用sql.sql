@@ -9,11 +9,11 @@ select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm from
  */
 select * from (
 select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm, date_format(gmt_created,'%Y-%c-%d') sum_date  from px_goods_order_out group by sum_date
-) as a where sum_date = '2019-3-08'
+) as a where sum_date = '2019-3-15'
 
 -- 查询用户是否下单成功
 select * from (
-select *,date_format(gmt_created,'%Y-%c-%d') sum_date from px_goods_order_out) as a where sum_date = '2019-3-08' order by gmt_created desc
+select *,date_format(gmt_created,'%Y-%c-%d') sum_date from px_goods_order_out) as a where sum_date = '2019-3-15' order by gmt_created desc
 
 -- 查询一周订单情况
 select * from px_goods_order_out where gmt_created between '2019-3-04' and '2019-3-11'
@@ -23,7 +23,7 @@ select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm  fro
 
 -- 查询一周内每天的销售情况
 select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm , date_format(gmt_created,'%Y-%c-%d') sum_date 
-from px_goods_order_out where gmt_created between '2019-3-04' and '2019-3-11'  group by sum_date desc
+from px_goods_order_out where gmt_created between '2019-2-25' and '2019-3-12'  group by sum_date desc
 
 
 -- 查询冰淇淋的单日销量
