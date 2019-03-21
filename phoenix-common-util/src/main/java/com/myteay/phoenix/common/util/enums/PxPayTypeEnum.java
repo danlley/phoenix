@@ -22,6 +22,9 @@ public enum PxPayTypeEnum {
                            /** 现金支付 */
                            PX_ALIPAY_PAY("PX_ALIPAY_PAY", "支付宝支付"),
 
+                           /** 未支付 */
+                           PX_UN_PAY("PX_UN_PAY", "未支付"),
+
     ;
     /** value */
     private final String value;

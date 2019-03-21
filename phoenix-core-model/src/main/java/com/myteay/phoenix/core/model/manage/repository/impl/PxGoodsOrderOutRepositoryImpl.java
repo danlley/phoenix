@@ -85,7 +85,7 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         PxGoodsOrderOutDO pxGoodsOrderOutDO = null;
         List<PxGoodsOrderOutDO> list = new ArrayList<PxGoodsOrderOutDO>();
         for (PxGoodsModel pxGoodsModel : pxGoodsModels) {
-            pxGoodsOrderOutDO = constructOrderOutDO(pxGoodsOrderModel.getPayType(), userId, orderNo, shopName, pxGoodsModel);
+            pxGoodsOrderOutDO = constructOrderOutDO(PxPayTypeEnum.PX_UN_PAY, userId, orderNo, shopName, pxGoodsModel);
             if (pxGoodsOrderOutDO == null) {
                 throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_MODEL_ERR);
             }
@@ -99,7 +99,8 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         //TODO 放入事务中处理
         String result = null;
         for (PxGoodsOrderOutDO orderDO : list) {
-            result = saveSingleGoodsOrderOut(orderDO);
+            saveSingleGoodsOrderOut(orderDO);
+            result = orderDO.getOrderNo();
         }
 
         return result;
