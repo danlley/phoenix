@@ -26,6 +26,13 @@ public interface PxGoodsOrderOutCompoonent {
     public MtOperateResult<String> execute(PxGoodsOrderModel pxGoodsOrderModel);
 
     /**
+     * 查询所有店内消费的过期订单
+     * 
+     * @return
+     */
+    public MtOperateResult<PxGoodsOrderModel> findAllShopExpiredOrder();
+
+    /**
      * 修改订单状态
      * 
      * @param orderNo

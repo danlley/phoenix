@@ -50,10 +50,24 @@
 	    SELECT LAST_INSERT_ID()  
 	  </selectKey>
     </insert>
-
+    
+    <select id="PX-GOODS-ORDER-SELECT-GET-BY-EXPIRED" resultMap="RM-PX-GOODS-ORDER-OUT">
+	    <![CDATA[
+			select 
+				id, order_no,user_id,goods_id,shop_id,shop_name,goods_title,
+				order_status,pay_type,goods_price,seller_amount,goods_comm_price,
+				goods_type,gmt_created,gmt_modified
+			from
+				px_goods_order_out
+			where
+				gmt_created<date_sub(now(),interval 1 hour) and
+				order_status='PX_ORDER_INIT' and pay_type='PX_UN_PAY'
+	    ]]>
+    </select>
+    
     <delete id="PX-GOODS-ORDER-OUT-DELETE-GET-BY-ID">
 	    <![CDATA[
-	        delete from phoenix.px_goods_order_out where (order_no = #{value})
+	        delete from phoenix.px_goods_order_out where (id = #{value})
 	    ]]>
     </delete>
     

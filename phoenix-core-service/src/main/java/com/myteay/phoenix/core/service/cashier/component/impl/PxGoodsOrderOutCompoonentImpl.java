@@ -61,6 +61,21 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
     }
 
     /** 
+     * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#findAllShopExpiredOrder()
+     */
+    @Override
+    public MtOperateResult<PxGoodsOrderModel> findAllShopExpiredOrder() {
+        PxGoodsOrderModel pxGoodsOrderModel = null;
+        try {
+            pxGoodsOrderModel = pxGoodsOrderOutRepository.findAllShopExpiredOrder();
+        } catch (Exception e) {
+            logger.warn("查询店内消费的过期单据失败 " + e.getMessage(), e);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_DEL_STATUS_ERR);
+        }
+        return new MtOperateResult<>(pxGoodsOrderModel);
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#execute(com.myteay.phoenix.core.model.PxGoodsOrderModel)
      */
     @Override

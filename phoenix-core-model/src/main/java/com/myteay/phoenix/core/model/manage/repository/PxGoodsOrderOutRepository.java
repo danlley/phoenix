@@ -18,6 +18,13 @@ import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 public interface PxGoodsOrderOutRepository {
 
     /**
+     * 查询所有已经过期、废弃的订单信息为下一步进行清理做准备
+     * 
+     * @return
+     */
+    public PxGoodsOrderModel findAllShopExpiredOrder();
+
+    /**
      * 保存订单流水
      * 
      * @param pxGoodsOrderModel

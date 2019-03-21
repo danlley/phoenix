@@ -5,6 +5,7 @@
 package com.myteay.phoenix.core.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 public class PxGoodsOrderModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long             serialVersionUID = -7943137818618714563L;
+    private static final long             serialVersionUID         = -7943137818618714563L;
 
     /** 会员ID */
     private String                        userId;
@@ -40,6 +41,27 @@ public class PxGoodsOrderModel implements Serializable {
 
     /** 订单上下文（不接受外部传值）， 关键字取值：PxOrderContextKeyEnum */
     private transient Map<String, String> orderContext;
+
+    /** 订单流水清单 */
+    private List<PxGoodsOrderOutModel>    pxGoodsOrderOutModelList = new ArrayList<>();
+
+    /**
+     * Getter method for property <tt>pxGoodsOrderOutModelList</tt>.
+     * 
+     * @return property value of pxGoodsOrderOutModelList
+     */
+    public List<PxGoodsOrderOutModel> getPxGoodsOrderOutModelList() {
+        return pxGoodsOrderOutModelList;
+    }
+
+    /**
+     * Setter method for property <tt>pxGoodsOrderOutModelList</tt>.
+     * 
+     * @param pxGoodsOrderOutModelList value to be assigned to property pxGoodsOrderOutModelList
+     */
+    public void setPxGoodsOrderOutModelList(List<PxGoodsOrderOutModel> pxGoodsOrderOutModelList) {
+        this.pxGoodsOrderOutModelList = pxGoodsOrderOutModelList;
+    }
 
     /**
      * Getter method for property <tt>payType</tt>.

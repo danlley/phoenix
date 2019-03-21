@@ -4,8 +4,16 @@
  */
 package com.myteay.phoenix.biz.service.quartz.listeners;
 
+import java.util.List;
+
+import org.springframework.util.CollectionUtils;
+
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
 
 /**
@@ -25,6 +33,23 @@ public class PxShopExpiredOrderScanListener extends EventListener<String> {
     @Override
     public String handleEvent(MtEvent<?> event) {
         logger.warn("[店内消费废单检测] 收到废单检测请求，准备处理废单");
+
+        MtOperateResult<PxGoodsOrderModel> result = pxGoodsOrderOutCompoonent.findAllShopExpiredOrder();
+        if (result == null || result.getOperateResult() != MtOperateResultEnum.CAMP_OPERATE_SUCCESS) {
+            logger.warn("[店内消费废单检测] 获取废单列表失败 result = " + result);
+            return null;
+        }
+
+        List<PxGoodsOrderOutModel> list = (result.getResult() == null ? null : result.getResult().getPxGoodsOrderOutModelList());
+        if (CollectionUtils.isEmpty(list)) {
+            logger.warn("当前没有需要处理的废单列表 result=" + result);
+            return null;
+        }
+
+        for (PxGoodsOrderOutModel pxGoodsOrderOutModel : list) {
+            logger.warn("查到废单 pxGoodsOrderOutModel=" + pxGoodsOrderOutModel);
+        }
+
         return null;
     }
 

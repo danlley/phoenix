@@ -18,7 +18,9 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsTypeEnum;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository;
 
@@ -35,6 +37,81 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
 
     /** 订单流水操作DAO */
     private PxGoodsOrderOutDAO pxGoodsOrderOutDAO;
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#findAllShopExpiredOrder()
+     */
+    @Override
+    public PxGoodsOrderModel findAllShopExpiredOrder() {
+        List<PxGoodsOrderOutDO> expiredOrderList = pxGoodsOrderOutDAO.selectExpiredGoodsOrderOutDOs();
+
+        if (CollectionUtils.isEmpty(expiredOrderList)) {
+            return null;
+        }
+
+        PxGoodsOrderModel pxGoodsOrderModel = new PxGoodsOrderModel();
+        List<PxGoodsOrderOutModel> pxGoodsOrderOutModels = pxGoodsOrderModel.getPxGoodsOrderOutModelList();
+        for (PxGoodsOrderOutDO pxGoodsOrderOutDO : expiredOrderList) {
+            fillOrderOutModel(pxGoodsOrderOutModels, pxGoodsOrderOutDO);
+        }
+
+        return pxGoodsOrderModel;
+    }
+
+    /**
+     * 填充订单流水模型
+     * 
+     * @param pxGoodsOrderOutDO
+     * @return
+     */
+    private void fillOrderOutModel(List<PxGoodsOrderOutModel> pxGoodsOrderOutModels, PxGoodsOrderOutDO pxGoodsOrderOutDO) {
+
+        PxGoodsOrderOutModel pxGoodsOrderOutModel = constructOrderOutModel(pxGoodsOrderOutDO);
+
+        if (pxGoodsOrderOutModel != null) {
+            pxGoodsOrderOutModels.add(pxGoodsOrderOutModel);
+        }
+    }
+
+    /**
+     * 构建订单流水模型
+     * 
+     * @param pxGoodsOrderOutDO
+     * @return
+     */
+    private PxGoodsOrderOutModel constructOrderOutModel(PxGoodsOrderOutDO pxGoodsOrderOutDO) {
+        if (pxGoodsOrderOutDO == null) {
+            return null;
+        }
+
+        PxGoodsOrderOutModel pxGoodsOrderOutModel = new PxGoodsOrderOutModel();
+        pxGoodsOrderOutModel.setGmtCreated(pxGoodsOrderOutDO.getGmtCreated());
+        pxGoodsOrderOutModel.setGmtModified(pxGoodsOrderOutDO.getGmtModified());
+        pxGoodsOrderOutModel.setGoodsCommPrice(pxGoodsOrderOutDO.getGoodsCommPrice());
+        pxGoodsOrderOutModel.setGoodsId(pxGoodsOrderOutDO.getGoodsId());
+        pxGoodsOrderOutModel.setGoodsPrice(pxGoodsOrderOutDO.getGoodsPrice());
+        pxGoodsOrderOutModel.setGoodsTitle(pxGoodsOrderOutDO.getGoodsTitle());
+
+        if (StringUtils.isNotBlank(pxGoodsOrderOutDO.getGoodsType())) {
+            pxGoodsOrderOutModel.setGoodsType(PxGoodsTypeEnum.getByCode(pxGoodsOrderOutDO.getGoodsType()));
+        }
+        pxGoodsOrderOutModel.setId(pxGoodsOrderOutDO.getGoodsId());
+        pxGoodsOrderOutModel.setOrderNo(pxGoodsOrderOutDO.getOrderNo());
+
+        if (StringUtils.isNotBlank(pxGoodsOrderOutDO.getOrderStatus())) {
+            pxGoodsOrderOutModel.setOrderStatus(PxOrderStatusEnum.getByCode(pxGoodsOrderOutDO.getOrderStatus()));
+        }
+
+        if (StringUtils.isNotBlank(pxGoodsOrderOutDO.getPayType())) {
+            pxGoodsOrderOutModel.setPayType(PxPayTypeEnum.getByCode(pxGoodsOrderOutDO.getPayType()));
+        }
+        pxGoodsOrderOutModel.setSellerAmount(pxGoodsOrderOutDO.getSellerAmount());
+        pxGoodsOrderOutModel.setShopId(pxGoodsOrderOutDO.getShopId());
+        pxGoodsOrderOutModel.setShopName(pxGoodsOrderOutDO.getShopName());
+        pxGoodsOrderOutModel.setUserId(pxGoodsOrderOutDO.getUserId());
+
+        return pxGoodsOrderOutModel;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
