@@ -51,6 +51,15 @@ public class PxGloableScheduledTask {
     }
 
     /**
+     * 定期刷新手机端商品列表每小时整点执行一次
+     */
+    @Scheduled(cron = "0 0 * * * ?")
+    public void scanShopExpiredOrdersByCron() {
+        logger.warn("[定时任务]监控店铺过期订单");
+        pxEventPublishTool.publishEvent(PxEventTopicEnum.PX_TASK_SHOP_EXPIRED_ORDERS);
+    }
+
+    /**
      * Setter method for property <tt>pxEventPublishTool</tt>.
      * 
      * @param pxEventPublishTool value to be assigned to property pxEventPublishTool

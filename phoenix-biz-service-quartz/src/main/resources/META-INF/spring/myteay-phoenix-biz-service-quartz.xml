@@ -54,4 +54,15 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<!-- 定时处理已经过期的营销活动奖品 -->
+	<bean id="pxShopExpiredOrderScanListener" class="com.myteay.phoenix.biz.service.quartz.listeners.PxShopExpiredOrderScanListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_TASK_SHOP_EXPIRED_ORDERS"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
 </beans>
