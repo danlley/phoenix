@@ -20,7 +20,7 @@
     <!-- ============================================= -->
     <!-- mapped statements for IbatisUsersInfoDAO -->
     <!-- ============================================= -->
-    <resultMap id="RM-PX-GOODS-ORDER-OUT" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
+    <resultMap id="RM-PX-GOODS-ORDER-OUT" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
         <result property="id" column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="orderNo" column="order_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -67,7 +67,7 @@
     
     <delete id="PX-GOODS-ORDER-OUT-DELETE-GET-BY-ID">
 	    <![CDATA[
-	        delete from phoenix.px_goods_order_out where (id = #{value})
+	        delete from phoenix.px_goods_order_out where (id = #{value}) and order_status='PX_ORDER_INIT' and pay_type='PX_UN_PAY'
 	    ]]>
     </delete>
     

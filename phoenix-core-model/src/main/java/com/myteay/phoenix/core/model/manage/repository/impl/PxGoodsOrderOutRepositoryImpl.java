@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.exception.MtException;
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
@@ -37,6 +38,21 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
 
     /** 订单流水操作DAO */
     private PxGoodsOrderOutDAO pxGoodsOrderOutDAO;
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#deleteExpiredOrder(com.myteay.phoenix.core.model.PxGoodsOrderOutModel)
+     */
+    @Override
+    public String deleteExpiredOrder(PxGoodsOrderOutModel pxGoodsOrderOutModel) throws MtException {
+        if (pxGoodsOrderOutModel == null || StringUtils.isBlank(pxGoodsOrderOutModel.getId())) {
+            logger.warn("当前订单模型不合法，无法完成废单清理工作 pxGoodsOrderOutModel=" + pxGoodsOrderOutModel);
+            throw new MtException("当前订单模型不合法，无法完成废单清理工作");
+        }
+
+        pxGoodsOrderOutDAO.deleteByIdWithStatus(pxGoodsOrderOutModel.getId());
+
+        return pxGoodsOrderOutModel.getId();
+    }
 
     /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#findAllShopExpiredOrder()
@@ -95,7 +111,7 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         if (StringUtils.isNotBlank(pxGoodsOrderOutDO.getGoodsType())) {
             pxGoodsOrderOutModel.setGoodsType(PxGoodsTypeEnum.getByCode(pxGoodsOrderOutDO.getGoodsType()));
         }
-        pxGoodsOrderOutModel.setId(pxGoodsOrderOutDO.getGoodsId());
+        pxGoodsOrderOutModel.setId(pxGoodsOrderOutDO.getId());
         pxGoodsOrderOutModel.setOrderNo(pxGoodsOrderOutDO.getOrderNo());
 
         if (StringUtils.isNotBlank(pxGoodsOrderOutDO.getOrderStatus())) {

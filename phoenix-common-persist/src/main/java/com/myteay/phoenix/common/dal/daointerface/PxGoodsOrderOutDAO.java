@@ -43,6 +43,6 @@ public interface PxGoodsOrderOutDAO {
      * 
      * @param id
      */
-    void deleteByOrderNo(String id);
+    void deleteByIdWithStatus(String id);
 
 }

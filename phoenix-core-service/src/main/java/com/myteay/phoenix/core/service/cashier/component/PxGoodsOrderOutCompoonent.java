@@ -18,6 +18,14 @@ import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 public interface PxGoodsOrderOutCompoonent {
 
     /**
+     * 订单废单清理组件
+     * 
+     * @param pxGoodsOrderModel
+     * @return
+     */
+    public MtOperateResult<String> deleteExpiredOrder(PxGoodsOrderModel pxGoodsOrderModel);
+
+    /**
      * 执行流水落地
      * 
      * @param pxGoodsOrderModel

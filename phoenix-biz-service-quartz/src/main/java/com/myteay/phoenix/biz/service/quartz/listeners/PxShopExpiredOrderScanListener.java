@@ -46,10 +46,7 @@ public class PxShopExpiredOrderScanListener extends EventListener<String> {
             return null;
         }
 
-        for (PxGoodsOrderOutModel pxGoodsOrderOutModel : list) {
-            logger.warn("查到废单 pxGoodsOrderOutModel=" + pxGoodsOrderOutModel);
-        }
-
+        pxGoodsOrderOutCompoonent.deleteExpiredOrder(result.getResult());
         return null;
     }
 

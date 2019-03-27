@@ -49,7 +49,7 @@ public class IbatisPxGoodsOrderOutDAO extends SqlSessionDaoSupport implements Px
      * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO#deleteByOrderNo(java.lang.String)
      */
     @Override
-    public void deleteByOrderNo(String id) {
+    public void deleteByIdWithStatus(String id) {
         this.getSqlSession().delete("PX-GOODS-ORDER-OUT-DELETE-GET-BY-ID", id);
     }
 

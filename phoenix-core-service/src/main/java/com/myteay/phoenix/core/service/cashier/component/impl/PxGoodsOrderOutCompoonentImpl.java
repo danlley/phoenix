@@ -4,10 +4,13 @@
  */
 package com.myteay.phoenix.core.service.cashier.component.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.exception.MtException;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderContextKeyEnum;
@@ -16,6 +19,7 @@ import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository;
 import com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent;
@@ -43,6 +47,35 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
 
     /** 抽奖算法组件 */
     private CampAlgorithmComponent    campAlgorithmComponent;
+
+    /** 
+     * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#deleteExpiredOrder(com.myteay.phoenix.core.model.PxGoodsOrderModel)
+     */
+    @Override
+    public MtOperateResult<String> deleteExpiredOrder(PxGoodsOrderModel pxGoodsOrderModel) {
+
+        if (pxGoodsOrderModel == null || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsOrderOutModelList())) {
+            logger.warn("订单模型不合法，无法完成清理废单的动作 pxGoodsOrderModel=" + pxGoodsOrderModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_UN_SUPPORT);
+        }
+
+        if (logger.isInfoEnabled()) {
+            logger.info("开始清理废单 pxGoodsOrderModel=" + pxGoodsOrderModel);
+        }
+
+        List<PxGoodsOrderOutModel> orderOutModelList = pxGoodsOrderModel.getPxGoodsOrderOutModelList();
+
+        try {
+            for (PxGoodsOrderOutModel pxGoodsOrderOutModel : orderOutModelList) {
+                pxGoodsOrderOutRepository.deleteExpiredOrder(pxGoodsOrderOutModel);
+            }
+        } catch (MtException e) {
+            logger.warn("废单清理失败： " + e.getMessage(), e);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
+        }
+
+        return new MtOperateResult<String>();
+    }
 
     /** 
      * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)

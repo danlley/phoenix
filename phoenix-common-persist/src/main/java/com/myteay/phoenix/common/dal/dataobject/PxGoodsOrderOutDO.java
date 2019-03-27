@@ -5,6 +5,7 @@
 package com.myteay.phoenix.common.dal.dataobject;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
 
@@ -59,10 +60,10 @@ public class PxGoodsOrderOutDO implements Serializable {
     private String            goodsType;
 
     /** 创建时间 */
-    private String            gmtCreated;
+    private Date              gmtCreated;
 
     /** 最后修改时间 */
-    private String            gmtModified;
+    private Date              gmtModified;
 
     /**
      * Getter method for property <tt>payType</tt>.
@@ -303,7 +304,7 @@ public class PxGoodsOrderOutDO implements Serializable {
      * 
      * @return property value of gmtCreated
      */
-    public String getGmtCreated() {
+    public Date getGmtCreated() {
         return gmtCreated;
     }
 
@@ -312,7 +313,7 @@ public class PxGoodsOrderOutDO implements Serializable {
      * 
      * @param gmtCreated value to be assigned to property gmtCreated
      */
-    public void setGmtCreated(String gmtCreated) {
+    public void setGmtCreated(Date gmtCreated) {
         this.gmtCreated = gmtCreated;
     }
 
@@ -321,7 +322,7 @@ public class PxGoodsOrderOutDO implements Serializable {
      * 
      * @return property value of gmtModified
      */
-    public String getGmtModified() {
+    public Date getGmtModified() {
         return gmtModified;
     }
 
@@ -330,7 +331,7 @@ public class PxGoodsOrderOutDO implements Serializable {
      * 
      * @param gmtModified value to be assigned to property gmtModified
      */
-    public void setGmtModified(String gmtModified) {
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 
