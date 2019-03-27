@@ -18,5 +18,6 @@
 		<mapper resource="sqlmap/camp/CampPrize-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/camp/CampPrizeRefGoods-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/camp/CampAlgorithm-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/camp/CampShopPrizeOut-sqlmap-mapping.xml"/>
 	</mappers>
 </configuration>
