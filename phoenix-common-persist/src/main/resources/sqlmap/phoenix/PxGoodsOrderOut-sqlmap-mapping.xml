@@ -60,7 +60,7 @@
 			from
 				px_goods_order_out
 			where
-				gmt_created<date_sub(now(),interval 1 hour) and
+				now()>date_sub(gmt_created, interval -5 minute) and
 				order_status='PX_ORDER_INIT' and pay_type='PX_UN_PAY'
 	    ]]>
     </select>
