@@ -62,7 +62,7 @@
 	        select
 	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
-	        from phoenix.camp_prize where prize_status = 'CAMP_ONLINE' and camp_id = #{value} order by gmt_modified desc
+	        from phoenix.camp_prize where prize_status = 'CAMP_PRIZE_ONLINE' and camp_id = #{value} order by gmt_modified desc
 	    ]]>
     </select>
 

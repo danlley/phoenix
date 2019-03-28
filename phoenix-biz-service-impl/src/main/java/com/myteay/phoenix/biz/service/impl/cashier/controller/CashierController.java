@@ -9,8 +9,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
 import com.myteay.phoenix.common.util.PxOrderNoUtil;
+import com.myteay.phoenix.common.util.QRCodeUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
@@ -28,6 +31,7 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponent;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
@@ -61,6 +65,10 @@ public class CashierController {
     /** 后台一般性简单业务管理组件 */
     @Autowired
     private PxCommonManageComponent     pxCommonManageComponent;
+
+    /** 套餐详情图片管理 */
+    @Autowired
+    private Environment                 env;
 
     /** 当前订单编号 */
     private static int                  currentNo = 1;
@@ -98,9 +106,9 @@ public class CashierController {
      * @return
      */
     @RequestMapping(value = "/order/", method = { RequestMethod.POST })
-    public MtServiceResult<String> manageGoodsOrderOut(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
-                                                       HttpServletResponse response) {
-        MtServiceResult<String> result = new MtServiceResult<>();
+    public MtServiceResult<CampCashierModel> manageGoodsOrderOut(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
+                                                                 HttpServletResponse response) {
+        MtServiceResult<CampCashierModel> result = new MtServiceResult<>();
 
         //step 1: 填充上下文
         PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
@@ -112,9 +120,29 @@ public class CashierController {
             logger.info("收到订单请求 pxGoodsOrderModel=" + pxGoodsOrderModel);
         }
 
-        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.execute(pxGoodsOrderModel);
-        result.setResult(innerResult.getResult());
+        MtOperateResult<CampCashierModel> innerResult = pxGoodsOrderOutCompoonent.execute(pxGoodsOrderModel);
 
+        if (innerResult.getResult().isCampSuccess()) {
+
+            if (logger.isInfoEnabled()) {
+                logger.info("执行生成二维码动作  innerResult=" + innerResult);
+            }
+
+            String filename = null;
+            String path = env.getProperty("myteay.phoenix.images.qrcode.path");
+            try {
+                filename = QRCodeUtil.encode(innerResult.getResult().getPrizeOutId(), null, true, path);
+            } catch (Exception e) {
+                logger.warn("生成二维码失败，当前处理失败 " + e.getMessage(), e);
+            }
+
+            if (StringUtils.isBlank(filename)) {
+                logger.warn("生成二维码失败，当前处理失败 " + innerResult);
+            }
+            innerResult.getResult().setQrCodeName(filename);
+        }
+
+        result.setResult(innerResult.getResult());
         return result;
     }
 
@@ -214,4 +242,14 @@ public class CashierController {
 
         return result;
     }
+
+    /**
+     * Setter method for property <tt>env</tt>.
+     * 
+     * @param env value to be assigned to property env
+     */
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
+
 }

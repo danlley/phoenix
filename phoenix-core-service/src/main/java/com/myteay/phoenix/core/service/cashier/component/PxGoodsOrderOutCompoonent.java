@@ -8,6 +8,7 @@ import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.camp.CampCashierModel;
 
 /**
  * 订单流水操作组件
@@ -31,7 +32,7 @@ public interface PxGoodsOrderOutCompoonent {
      * @param pxGoodsOrderModel
      * @return
      */
-    public MtOperateResult<String> execute(PxGoodsOrderModel pxGoodsOrderModel);
+    public MtOperateResult<CampCashierModel> execute(PxGoodsOrderModel pxGoodsOrderModel);
 
     /**
      * 查询所有店内消费的过期订单

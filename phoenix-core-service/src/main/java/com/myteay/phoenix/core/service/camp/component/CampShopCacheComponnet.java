@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.camp.component;
 
+import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 
 /**
@@ -13,6 +15,23 @@ import com.myteay.phoenix.core.model.manage.PxShopModel;
  * @version $Id: CampShopCacheComponnet.java, v 0.1 Dec 20, 2018 9:48:04 PM danlley Exp $
  */
 public interface CampShopCacheComponnet {
+
+    /**
+     * 在缓存中查找活动基本信息模型
+     * 
+     * @param campId
+     * @return
+     */
+    public CampBaseModel queryCampBaseModelFromCache(String campId);
+
+    /**
+     * 在缓存中查询特定的奖品信息模型
+     * 
+     * @param campId
+     * @param prizeId
+     * @return
+     */
+    public CampPrizeModel queryCampPrizeModelFromCache(String campId, String prizeId);
 
     /**
      * 刷新活动缓存

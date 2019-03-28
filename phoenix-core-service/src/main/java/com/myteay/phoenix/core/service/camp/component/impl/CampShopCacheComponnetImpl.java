@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
@@ -33,30 +34,25 @@ import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, InitializingBean {
 
     /** 日志 */
-    public static final Logger                   logger           = Logger.getLogger(CampShopCacheComponnetImpl.class);
+    public static final Logger                      logger                 = Logger.getLogger(CampShopCacheComponnetImpl.class);
 
     /** 活动缓存 */
-    public static final Map<String, CampModel>   CAMP_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
+    public static final Map<String, CampModel>      CAMP_MODEL_CACHE       = Collections.synchronizedMap(new HashMap<>());
+
+    /** 活动奖品缓存 */
+    public static final Map<String, CampPrizeModel> CAMP_PRIZE_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
 
     /** 活动缓存 */
-    public static final Map<String, PxShopModel> SHOP_MODEL_CACHE = Collections.synchronizedMap(new HashMap<>());
+    public static final Map<String, PxShopModel>    SHOP_MODEL_CACHE       = Collections.synchronizedMap(new HashMap<>());
 
     /** 针对单个店铺店内消费到场营销活动操作仓储 */
-    private CampShopBaseRepository               campShopBaseRepository;
+    private CampShopBaseRepository                  campShopBaseRepository;
 
     /** 店内营销活动奖池仓储 */
-    private CampShopPrizeRepository              campShopPrizeRepository;
+    private CampShopPrizeRepository                 campShopPrizeRepository;
 
     /** 店铺管理仓储 */
-    private PxShopRepository                     pxShopRepository;
-
-    /** 
-     * @see com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet#queryShopModelFromCache(java.lang.String)
-     */
-    @Override
-    public PxShopModel queryShopModelFromCache(String shopId) {
-        return SHOP_MODEL_CACHE.get(shopId);
-    }
+    private PxShopRepository                        pxShopRepository;
 
     /** 
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
@@ -66,6 +62,41 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
         //初始化活动缓存
         initCache();
         initShopCache();
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet#queryCampBaseModelFromCache(java.lang.String)
+     */
+    @Override
+    public CampBaseModel queryCampBaseModelFromCache(String campId) {
+        if (CollectionUtils.isEmpty(CAMP_MODEL_CACHE) || StringUtils.isBlank(campId)) {
+            logger.warn("未找到对应的活动基本信息模型 campId=" + campId);
+            return null;
+        }
+
+        return (CAMP_MODEL_CACHE.get(campId) == null ? null : CAMP_MODEL_CACHE.get(campId).getCampBaseModel());
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet#queryCampPrizeModelFromCache(java.lang.String, java.lang.String)
+     */
+    @Override
+    public CampPrizeModel queryCampPrizeModelFromCache(String campId, String prizeId) {
+
+        if (CollectionUtils.isEmpty(CAMP_PRIZE_MODEL_CACHE) || StringUtils.isBlank(campId) || StringUtils.isBlank(prizeId)) {
+            logger.warn("通过活动Id和奖品ID从缓存中查询奖品模型失败 campId=" + campId + " prizeId=" + prizeId);
+            return null;
+        }
+
+        return CAMP_PRIZE_MODEL_CACHE.get(campId + "_" + prizeId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet#queryShopModelFromCache(java.lang.String)
+     */
+    @Override
+    public PxShopModel queryShopModelFromCache(String shopId) {
+        return SHOP_MODEL_CACHE.get(shopId);
     }
 
     /** 
@@ -115,6 +146,43 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
             return;
         }
         CAMP_MODEL_CACHE.putAll(campModelMap);
+
+        initCampPrizeCache();
+    }
+
+    /**
+     * 初始化奖品缓存
+     */
+    private void initCampPrizeCache() {
+        List<CampBaseModel> campBaseModels = getOnlineCampBaseModels();
+        if (CollectionUtils.isEmpty(campBaseModels)) {
+            logger.warn("当前没有需要加载到缓存中的营销活动");
+            return;
+        }
+
+        List<CampPrizeModel> campPrizeModels = null;
+        Map<String, CampPrizeModel> campPrizeModelMap = new HashMap<>();
+        String campId = null;
+        String prizeId = null;
+        String key = null;
+        for (CampBaseModel campBaseModel : campBaseModels) {
+            if (campBaseModel == null) {
+                continue;
+            }
+
+            campId = campBaseModel.getCampId();
+            campPrizeModels = getOnlineCampPrizeByCampId(campId);
+            if (CollectionUtils.isEmpty(campPrizeModels)) {
+                continue;
+            }
+
+            for (CampPrizeModel campPrizeModel : campPrizeModels) {
+                prizeId = campPrizeModel.getPrizeId();
+                key = campId + "_" + prizeId;
+                campPrizeModelMap.put(key, campPrizeModel);
+            }
+        }
+        CAMP_PRIZE_MODEL_CACHE.putAll(campPrizeModelMap);
     }
 
     /**

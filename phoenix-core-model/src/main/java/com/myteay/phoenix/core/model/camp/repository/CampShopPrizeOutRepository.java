@@ -4,6 +4,9 @@
  */
 package com.myteay.phoenix.core.model.camp.repository;
 
+import com.myteay.phoenix.common.util.exception.PxManageException;
+import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
+
 /**
  * 抽奖流水操作仓储
  * 
@@ -12,4 +15,11 @@ package com.myteay.phoenix.core.model.camp.repository;
  */
 public interface CampShopPrizeOutRepository {
 
+    /**
+     * 保存抽奖流水
+     * 
+     * @param campShopPrizeOutModel
+     * @return
+     */
+    public String saveCampShopPrizeOut(CampShopPrizeOutModel campShopPrizeOutModel) throws PxManageException;
 }
