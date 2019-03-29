@@ -32,6 +32,7 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseStatusComponent;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
@@ -72,6 +73,20 @@ public class CashierController {
 
     /** 当前订单编号 */
     private static int                  currentNo = 1;
+
+    /**
+     * 通过奖品编号查询奖品信息
+     * 
+     * @param prizeOutId
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/order/prize/info/", method = { RequestMethod.POST })
+    public MtServiceResult<CampShopPrizeOutModel> queryPrizeOut(String prizeOutId, HttpServletRequest request, HttpServletResponse response) {
+        MtServiceResult<CampShopPrizeOutModel> result = new MtServiceResult<>();
+        return result;
+    }
 
     /**
      * 修改订单状态

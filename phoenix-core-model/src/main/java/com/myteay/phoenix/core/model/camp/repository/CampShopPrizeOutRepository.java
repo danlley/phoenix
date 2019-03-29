@@ -22,4 +22,13 @@ public interface CampShopPrizeOutRepository {
      * @return
      */
     public String saveCampShopPrizeOut(CampShopPrizeOutModel campShopPrizeOutModel) throws PxManageException;
+
+    /**
+     * 查询中奖优惠券信息
+     * 
+     * @param campPrizeOutId
+     * @return
+     * @throws PxManageException
+     */
+    public CampShopPrizeOutModel queryCampShopPrizeOutById(String campPrizeOutId) throws PxManageException;
 }

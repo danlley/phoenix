@@ -4,10 +4,13 @@
  */
 package com.myteay.phoenix.core.model.camp.repository.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampShopPrizeOutDO;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -27,6 +30,64 @@ public class CampShopPrizeOutRepositoryImpl implements CampShopPrizeOutRepositor
 
     /** 奖品流水操作DAO */
     private CampShopPrizeOutDAO campShopPrizeOutDAO;
+
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#queryCampShopPrizeOutById(java.lang.String)
+     */
+    @Override
+    public CampShopPrizeOutModel queryCampShopPrizeOutById(String campPrizeOutId) throws PxManageException {
+        CampShopPrizeOutDO campShopPrizeOutDO = null;
+        try {
+            campShopPrizeOutDO = campShopPrizeOutDAO.selectCampShopPrizeOutById(campPrizeOutId);
+        } catch (Throwable e) {
+            logger.warn("通过campPrizeOutId查询中奖信息发生异常 campPrizeOutId=" + campPrizeOutId, e);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+        }
+        return convertDO2Model(campShopPrizeOutDO);
+    }
+
+    /**
+     * convert data object to model
+     * 
+     * @param campShopPrizeOutDO
+     * @return
+     */
+    private CampShopPrizeOutModel convertDO2Model(CampShopPrizeOutDO campShopPrizeOutDO) {
+        if (campShopPrizeOutDO == null) {
+            logger.warn("campShopPrizeOutDO 不可用，无法得到中奖流水模型 campShopPrizeOutDO is null");
+            return null;
+        }
+
+        CampShopPrizeOutModel campShopPrizeOutModel = new CampShopPrizeOutModel();
+
+        campShopPrizeOutModel.setCampId(campShopPrizeOutDO.getCampId());
+        campShopPrizeOutModel.setCampName(campShopPrizeOutDO.getCampName());
+        campShopPrizeOutModel.setCampPrizeOutId(campShopPrizeOutDO.getCampPrizeOutId());
+        campShopPrizeOutModel.setGmtCreated(campShopPrizeOutDO.getGmtCreated());
+        campShopPrizeOutModel.setGmtModified(campShopPrizeOutDO.getGmtModified());
+        campShopPrizeOutModel.setMobileNo(campShopPrizeOutDO.getMobileNo());
+        campShopPrizeOutModel.setOrderNo(campShopPrizeOutDO.getOrderNo());
+        campShopPrizeOutModel.setPrice(campShopPrizeOutDO.getPrice());
+        campShopPrizeOutModel.setPrizeEffictive(campShopPrizeOutDO.getPrizeEffictive());
+        campShopPrizeOutModel.setPrizeExpired(campShopPrizeOutDO.getPrizeExpired());
+        campShopPrizeOutModel.setPrizeId(campShopPrizeOutDO.getPrizeId());
+        campShopPrizeOutModel.setPrizeLevel(campShopPrizeOutDO.getPrizeLevel());
+        campShopPrizeOutModel.setPrizeName(campShopPrizeOutDO.getPrizeName());
+
+        if (StringUtils.isNotBlank(campShopPrizeOutDO.getPrizeOutStatus())) {
+            campShopPrizeOutModel.setPrizeOutStatus(CampPrizeOutStatusEnum.getByCode(campShopPrizeOutDO.getPrizeOutStatus()));
+        }
+
+        if (StringUtils.isNotBlank(campShopPrizeOutDO.getPrizeStatus())) {
+            campShopPrizeOutModel.setPrizeStatus(CampPrizeStatusEnum.getByCode(campShopPrizeOutDO.getPrizeStatus()));
+        }
+
+        campShopPrizeOutModel.setShopId(campShopPrizeOutDO.getShopId());
+        campShopPrizeOutModel.setShopName(campShopPrizeOutDO.getShopName());
+        campShopPrizeOutModel.setUserId(campShopPrizeOutDO.getUserId());
+
+        return campShopPrizeOutModel;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#saveCampShopPrizeOut(com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel)

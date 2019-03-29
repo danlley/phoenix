@@ -19,7 +19,7 @@ import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
  */
 public class CampShopPrizeOutModel implements Serializable {
 
-    /**  */
+    /** serialVersionUID */
     private static final long      serialVersionUID = 1959003033730190246L;
 
     /** 奖品流水 */

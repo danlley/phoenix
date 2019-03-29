@@ -30,4 +30,12 @@ public class IbatisCampShopPrizeOutDAO extends SqlSessionDaoSupport implements C
         return campShopPrizeOutDO.getCampPrizeOutId();
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO#selectCampShopPrizeOutById(java.lang.String)
+     */
+    @Override
+    public CampShopPrizeOutDO selectCampShopPrizeOutById(String campPrizeOutId) {
+        return this.getSqlSession().selectOne("PX-SHOP-PRIZE-OUT-SELECT-GET-BY-ID", campPrizeOutId);
+    }
+
 }

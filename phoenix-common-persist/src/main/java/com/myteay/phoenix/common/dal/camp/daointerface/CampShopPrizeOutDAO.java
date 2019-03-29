@@ -21,4 +21,12 @@ public interface CampShopPrizeOutDAO {
      * @return
      */
     String insert(CampShopPrizeOutDO campShopPrizeOutDO);
+
+    /**
+     * 通过奖品流水ID，查询指定的奖品信息
+     * 
+     * @param campPrizeOutId
+     * @return
+     */
+    CampShopPrizeOutDO selectCampShopPrizeOutById(String campPrizeOutId);
 }
