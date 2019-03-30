@@ -76,6 +76,27 @@ public class CampShopPrizeOutModel implements Serializable {
     /** 记录最后修改时间 */
     private Date                   gmtModified;
 
+    /** 奖品模型 */
+    private CampPrizeModel         campPrizeModel;
+
+    /**
+     * Getter method for property <tt>campPrizeModel</tt>.
+     * 
+     * @return property value of campPrizeModel
+     */
+    public CampPrizeModel getCampPrizeModel() {
+        return campPrizeModel;
+    }
+
+    /**
+     * Setter method for property <tt>campPrizeModel</tt>.
+     * 
+     * @param campPrizeModel value to be assigned to property campPrizeModel
+     */
+    public void setCampPrizeModel(CampPrizeModel campPrizeModel) {
+        this.campPrizeModel = campPrizeModel;
+    }
+
     /**
      * Getter method for property <tt>campPrizeOutId</tt>.
      * 

@@ -6,6 +6,7 @@ package com.myteay.phoenix.core.model.camp;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.myteay.common.util.tools.ToStringUtil;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
@@ -20,52 +21,73 @@ import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 public class CampPrizeModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long   serialVersionUID = 8056263012831762393L;
+    private static final long            serialVersionUID = 8056263012831762393L;
 
     /** 奖品ID */
-    private String              prizeId;
+    private String                       prizeId;
 
     /** 奖品名称 */
-    private String              prizeName;
+    private String                       prizeName;
 
     /** 活动ID */
-    private String              campId;
+    private String                       campId;
 
     /** 店铺ID */
-    private String              shopId;
+    private String                       shopId;
 
     /** 奖品等级 */
-    private String              prizeLevel;
+    private String                       prizeLevel;
 
     /** 奖品比率 */
-    private String              prizePercent;
+    private String                       prizePercent;
 
     /** 奖位分布 */
-    private String              distribution;
+    private String                       distribution;
 
     /** 奖品单位价值 */
-    private String              price;
+    private String                       price;
 
     /** 奖品数量 */
-    private String              prizeAmount;
+    private String                       prizeAmount;
 
     /** 奖品起效时间 */
-    private Date                prizeEffictive;
+    private Date                         prizeEffictive;
 
     /** 奖品过期时间 */
-    private Date                prizeExpired;
+    private Date                         prizeExpired;
 
     /** 创建时间 */
-    private Date                gmtCreated;
+    private Date                         gmtCreated;
 
     /** 最后修改时间 */
-    private Date                gmtModified;
+    private Date                         gmtModified;
 
     /** 奖品状态 */
-    private CampPrizeStatusEnum prizeStatus;
+    private CampPrizeStatusEnum          prizeStatus;
 
     /** 操作类型 */
-    private PxOperationTypeEnum operationType;
+    private PxOperationTypeEnum          operationType;
+
+    /** 奖品关联商品模型列表 */
+    private List<CampPrizeRefGoodsModel> campPrizeRefGoodsModels;
+
+    /**
+     * Getter method for property <tt>campPrizeRefGoodsModels</tt>.
+     * 
+     * @return property value of campPrizeRefGoodsModels
+     */
+    public List<CampPrizeRefGoodsModel> getCampPrizeRefGoodsModels() {
+        return campPrizeRefGoodsModels;
+    }
+
+    /**
+     * Setter method for property <tt>campPrizeRefGoodsModels</tt>.
+     * 
+     * @param campPrizeRefGoodsModels value to be assigned to property campPrizeRefGoodsModels
+     */
+    public void setCampPrizeRefGoodsModels(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModels) {
+        this.campPrizeRefGoodsModels = campPrizeRefGoodsModels;
+    }
 
     /**
      * Getter method for property <tt>prizeStatus</tt>.

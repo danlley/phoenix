@@ -19,7 +19,9 @@ import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampModel;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.myteay.phoenix.core.model.camp.CampPrizeRefGoodsModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
+import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxShopRepository;
@@ -53,6 +55,9 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
 
     /** 店铺管理仓储 */
     private PxShopRepository                        pxShopRepository;
+
+    /** 店内消费营销活动奖品关联商品仓储 */
+    private CampShopPrizeRefGoodsRepository         campShopPrizeRefGoodsRepository;
 
     /** 
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
@@ -177,6 +182,15 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
             }
 
             for (CampPrizeModel campPrizeModel : campPrizeModels) {
+                List<CampPrizeRefGoodsModel> prizeRefGoodsModels = null;
+                try {
+                    prizeRefGoodsModels = campShopPrizeRefGoodsRepository.findPrizeRefGoodsByPrizeId(campPrizeModel.getPrizeId());
+                } catch (PxManageException e) {
+                    logger.warn("[构建奖品缓存]查询奖品关联商品列表出错 " + e.getMessage(), e);
+                }
+
+                campPrizeModel.setCampPrizeRefGoodsModels(prizeRefGoodsModels);
+
                 prizeId = campPrizeModel.getPrizeId();
                 key = campId + "_" + prizeId;
                 campPrizeModelMap.put(key, campPrizeModel);
@@ -277,6 +291,15 @@ public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, Initi
      */
     public void setPxShopRepository(PxShopRepository pxShopRepository) {
         this.pxShopRepository = pxShopRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campShopPrizeRefGoodsRepository</tt>.
+     * 
+     * @param campShopPrizeRefGoodsRepository value to be assigned to property campShopPrizeRefGoodsRepository
+     */
+    public void setCampShopPrizeRefGoodsRepository(CampShopPrizeRefGoodsRepository campShopPrizeRefGoodsRepository) {
+        this.campShopPrizeRefGoodsRepository = campShopPrizeRefGoodsRepository;
     }
 
 }

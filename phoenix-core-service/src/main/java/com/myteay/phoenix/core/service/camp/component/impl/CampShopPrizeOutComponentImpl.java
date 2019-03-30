@@ -10,8 +10,10 @@ import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository;
+import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 import com.myteay.phoenix.core.service.camp.component.CampShopPrizeOutComponent;
 
 /**
@@ -27,6 +29,9 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
 
     /** 抽奖流水操作仓储 */
     private CampShopPrizeOutRepository campShopPrizeOutRepository;
+
+    /** 到店消费营销活动基础数据缓存 */
+    private CampShopCacheComponnet     campShopCacheComponnet;
 
     /** 
      * @see com.myteay.phoenix.core.service.camp.component.CampShopPrizeOutComponent#queryCampShopPrizeOutById(java.lang.String)
@@ -45,6 +50,13 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
             logger.warn("通过campPrizeOutId查询中奖模型失败 " + e.getMessage(), e);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
+
+        if (campShopPrizeOutModel != null) {
+            CampPrizeModel campPrizeModel = campShopCacheComponnet.queryCampPrizeModelFromCache(campShopPrizeOutModel.getCampId(),
+                campShopPrizeOutModel.getPrizeId());
+            campShopPrizeOutModel.setCampPrizeModel(campPrizeModel);
+        }
+
         return new MtOperateResult<>(campShopPrizeOutModel);
     }
 
@@ -55,6 +67,15 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
      */
     public void setCampShopPrizeOutRepository(CampShopPrizeOutRepository campShopPrizeOutRepository) {
         this.campShopPrizeOutRepository = campShopPrizeOutRepository;
+    }
+
+    /**
+     * Setter method for property <tt>campShopCacheComponnet</tt>.
+     * 
+     * @param campShopCacheComponnet value to be assigned to property campShopCacheComponnet
+     */
+    public void setCampShopCacheComponnet(CampShopCacheComponnet campShopCacheComponnet) {
+        this.campShopCacheComponnet = campShopCacheComponnet;
     }
 
 }

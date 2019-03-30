@@ -6,17 +6,20 @@ package com.myteay.phoenix.common.util.camp.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
+ * 奖品状态
  * 
  * @author danlley
  * @version $Id: CampPrizeOutStatusEnum.java, v 0.1 Mar 27, 2019 11:13:19 PM danlley Exp $
  */
-public enum CampPrizeOutStatusEnum {
-                                    CAMP_PRIZE_OUT_GIVEN("CAMP_PRIZE_OUT_GIVEN", "已发放"),
+public enum CampPrizeOutStatusEnum implements EnumMessage {
+                                                           CAMP_PRIZE_OUT_GIVEN("CAMP_PRIZE_OUT_GIVEN", "已发放"),
 
-                                    CAMP_PRIZE_OUT_CONSUMED("CAMP_PRIZE_OUT_CONSUMED", "已消费"),
+                                                           CAMP_PRIZE_OUT_CONSUMED("CAMP_PRIZE_OUT_CONSUMED", "已消费"),
 
-                                    CAMP_PRIZE_OUT_EXPIRED("CAMP_PRIZE_OUT_EXPIRED", "已过期"),
+                                                           CAMP_PRIZE_OUT_EXPIRED("CAMP_PRIZE_OUT_EXPIRED", "已过期"),
 
     ;
 
