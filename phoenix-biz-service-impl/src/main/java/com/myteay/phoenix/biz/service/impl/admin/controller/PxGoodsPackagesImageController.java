@@ -153,7 +153,7 @@ public class PxGoodsPackagesImageController {
     private PxGoodsPackagesImageModel upload(String goodsId, MultipartFile file) {
         String image = null;
         try {
-            image = MtFileUtils.upload(file, env.getProperty("myteay.phoenix.images.path"));
+            image = MtFileUtils.upload(file, env.getProperty("uploadpic.path"));
         } catch (Throwable e) {
             logger.warn("文件上传过程发生异常 goodsId=" + goodsId, e);
         }
