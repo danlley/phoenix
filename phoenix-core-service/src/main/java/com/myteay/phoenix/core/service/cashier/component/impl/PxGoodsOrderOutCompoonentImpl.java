@@ -136,8 +136,14 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
      */
     @Override
     public MtOperateResult<CampCashierModel> execute(PxGoodsOrderModel pxGoodsOrderModel) {
+        String shopId = (CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList()) ? null : pxGoodsOrderModel.getPxGoodsModelList().get(0).getShopId());
 
-        PxShopModel pxShopModel = campShopCacheComponnet.queryShopModelFromCache(pxGoodsOrderModel.getPxGoodsModelList().get(0).getShopId());
+        PxShopModel pxShopModel = campShopCacheComponnet.queryShopModelFromCache(shopId);
+        if (pxShopModel == null) {
+            logger.warn("保存订单流水时，查询店铺缓存发生异常 pxGoodsOrderModel=" + pxGoodsOrderModel);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+        }
+
         pxGoodsOrderModel.setShopName(pxShopModel.getShopName());
 
         String orderNo = null;

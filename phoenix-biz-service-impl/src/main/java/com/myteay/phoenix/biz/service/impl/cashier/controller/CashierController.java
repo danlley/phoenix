@@ -124,7 +124,8 @@ public class CashierController {
 
         MtOperateResult<CampCashierModel> innerResult = pxGoodsOrderOutCompoonent.execute(pxGoodsOrderModel);
 
-        if (innerResult.getResult().isCampSuccess()) {
+        if (innerResult != null && innerResult.getOperateResult() == MtOperateResultEnum.CAMP_OPERATE_SUCCESS && innerResult.getResult() != null
+            && innerResult.getResult().isCampSuccess()) {
 
             if (logger.isInfoEnabled()) {
                 logger.info("执行生成二维码动作  innerResult=" + innerResult);
