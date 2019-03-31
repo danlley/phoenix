@@ -32,6 +32,24 @@ public class CampShopPrizeOutRepositoryImpl implements CampShopPrizeOutRepositor
     private CampShopPrizeOutDAO campShopPrizeOutDAO;
 
     /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#modifyCampShopPrizeOutStatusById(com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel)
+     */
+    @Override
+    public void modifyCampShopPrizeOutStatusById(CampShopPrizeOutModel campShopPrizeOutModel) throws PxManageException {
+
+        if (campShopPrizeOutModel == null || StringUtils.isBlank(campShopPrizeOutModel.getCampPrizeOutId())
+            || campShopPrizeOutModel.getPrizeOutStatus() == null) {
+            logger.warn("变更中奖记录状态时，关键信息不可用 campShopPrizeOutModel=" + campShopPrizeOutModel);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+        }
+
+        CampShopPrizeOutDO campShopPrizeOutDO = new CampShopPrizeOutDO();
+        campShopPrizeOutDO.setCampPrizeOutId(campShopPrizeOutModel.getCampPrizeOutId());
+        campShopPrizeOutDO.setPrizeOutStatus(campShopPrizeOutModel.getPrizeOutStatus().getValue());
+        campShopPrizeOutDAO.updateCampShopPrizeOut(campShopPrizeOutDO);
+    }
+
+    /** 
      * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#queryCampShopPrizeOutById(java.lang.String)
      */
     @Override

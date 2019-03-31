@@ -88,16 +88,29 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
     }
 
     /** 
-     * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
+     * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum, com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel)
      */
     @Override
-    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
+    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
+                                                       CampShopPrizeOutModel campShopPrizeOutModel) {
+        //需要放入同一个事务中处理
+
+        // step 1: 变更订单流水记录
         String result = null;
         try {
             result = pxGoodsOrderOutRepository.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum);
         } catch (PxManageException e) {
             logger.warn("修改订单流水状态发生异常 orderNo=" + orderNo + " pxPayTypeEnum=" + pxPayTypeEnum + " pxPayTypeEnum=" + pxPayTypeEnum, e);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_ORDER_OUT_OP_ERR);
+        }
+
+        // step2: 变更抵扣优惠券的状态(不允许影响出流程处理)
+        try {
+            campShopPrizeOutRepository.modifyCampShopPrizeOutStatusById(campShopPrizeOutModel);
+        } catch (PxManageException e) {
+            logger.warn("PxManageException更新优惠券流水失败 campShopPrizeOutModel=" + campShopPrizeOutModel, e);
+        } catch (Throwable e) {
+            logger.warn("Throwable更新优惠券流水失败 campShopPrizeOutModel=" + campShopPrizeOutModel, e);
         }
 
         return new MtOperateResult<>(result);

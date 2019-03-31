@@ -75,20 +75,6 @@ public class CashierController {
     private static int                  currentNo = 1;
 
     /**
-     * 通过奖品编号查询奖品信息
-     * 
-     * @param prizeOutId
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/order/prize/info/", method = { RequestMethod.POST })
-    public MtServiceResult<CampShopPrizeOutModel> queryPrizeOut(String prizeOutId, HttpServletRequest request, HttpServletResponse response) {
-        MtServiceResult<CampShopPrizeOutModel> result = new MtServiceResult<>();
-        return result;
-    }
-
-    /**
      * 修改订单状态
      * 
      * @param orderNo
@@ -100,13 +86,14 @@ public class CashierController {
      */
     @RequestMapping(value = "/order/change", method = { RequestMethod.POST })
     public MtServiceResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
-                                                       HttpServletRequest request, HttpServletResponse response) {
+                                                       @RequestBody CampShopPrizeOutModel campShopPrizeOutModel, HttpServletRequest request,
+                                                       HttpServletResponse response) {
 
         if (logger.isInfoEnabled()) {
             logger.info("收到订单请求 orderNo=" + orderNo + " pxPayTypeEnum=" + pxPayTypeEnum + " pxOrderStatusEnum=" + pxOrderStatusEnum);
         }
 
-        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum);
+        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum, campShopPrizeOutModel);
         MtServiceResult<String> result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
         result.setResult(innerResult.getResult());
 

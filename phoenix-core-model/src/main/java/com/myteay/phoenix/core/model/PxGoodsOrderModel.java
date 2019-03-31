@@ -11,6 +11,7 @@ import java.util.Map;
 
 import com.myteay.common.util.tools.ToStringUtil;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
+import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
 
 /**
@@ -44,6 +45,27 @@ public class PxGoodsOrderModel implements Serializable {
 
     /** 订单流水清单 */
     private List<PxGoodsOrderOutModel>    pxGoodsOrderOutModelList = new ArrayList<>();
+
+    /** 中奖流水操作模型 */
+    private CampShopPrizeOutModel         campShopPrizeOutModel;
+
+    /**
+     * Getter method for property <tt>campShopPrizeOutModel</tt>.
+     * 
+     * @return property value of campShopPrizeOutModel
+     */
+    public CampShopPrizeOutModel getCampShopPrizeOutModel() {
+        return campShopPrizeOutModel;
+    }
+
+    /**
+     * Setter method for property <tt>campShopPrizeOutModel</tt>.
+     * 
+     * @param campShopPrizeOutModel value to be assigned to property campShopPrizeOutModel
+     */
+    public void setCampShopPrizeOutModel(CampShopPrizeOutModel campShopPrizeOutModel) {
+        this.campShopPrizeOutModel = campShopPrizeOutModel;
+    }
 
     /**
      * Getter method for property <tt>pxGoodsOrderOutModelList</tt>.

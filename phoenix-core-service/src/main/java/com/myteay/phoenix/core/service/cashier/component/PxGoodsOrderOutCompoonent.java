@@ -9,6 +9,7 @@ import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 
 /**
  * 订单流水操作组件
@@ -47,7 +48,9 @@ public interface PxGoodsOrderOutCompoonent {
      * @param orderNo
      * @param pxPayTypeEnum
      * @param pxOrderStatusEnum
+     * @param campShopPrizeOutModel
      * @return
      */
-    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum);
+    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
+                                                       CampShopPrizeOutModel campShopPrizeOutModel);
 }

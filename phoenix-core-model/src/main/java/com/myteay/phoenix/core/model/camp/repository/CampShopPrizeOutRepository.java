@@ -16,6 +16,14 @@ import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 public interface CampShopPrizeOutRepository {
 
     /**
+     * 通过中奖流水ID，变更中奖记录状态
+     * 
+     * @param campShopPrizeOutModel
+     * @throws PxManageException 
+     */
+    public void modifyCampShopPrizeOutStatusById(CampShopPrizeOutModel campShopPrizeOutModel) throws PxManageException;
+
+    /**
      * 保存抽奖流水
      * 
      * @param campShopPrizeOutModel

@@ -38,4 +38,16 @@ public class IbatisCampShopPrizeOutDAO extends SqlSessionDaoSupport implements C
         return this.getSqlSession().selectOne("PX-SHOP-PRIZE-OUT-SELECT-GET-BY-ID", campPrizeOutId);
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO#updateCampShopPrizeOut(com.myteay.phoenix.common.dal.camp.dataobject.CampShopPrizeOutDO)
+     */
+    @Override
+    public void updateCampShopPrizeOut(CampShopPrizeOutDO campShopPrizeOutDO) {
+        if (campShopPrizeOutDO == null) {
+            throw new IllegalArgumentException("Can't update by a null data object.");
+        }
+
+        this.getSqlSession().update("CAMP-SHOP-PRIZE-OUT-UPDATE-BY-ID", campShopPrizeOutDO);
+    }
+
 }

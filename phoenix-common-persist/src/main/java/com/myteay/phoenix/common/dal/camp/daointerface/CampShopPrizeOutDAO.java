@@ -29,4 +29,11 @@ public interface CampShopPrizeOutDAO {
      * @return
      */
     CampShopPrizeOutDO selectCampShopPrizeOutById(String campPrizeOutId);
+
+    /**
+     * 变更中奖流水状态
+     * 
+     * @param campShopPrizeOutDO
+     */
+    public void updateCampShopPrizeOut(CampShopPrizeOutDO campShopPrizeOutDO);
 }

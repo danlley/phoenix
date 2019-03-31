@@ -65,5 +65,16 @@
 				(camp_prize_out_id = #{value})
 	    ]]>
     </select>
+    
+    <update id="CAMP-SHOP-PRIZE-OUT-UPDATE-BY-ID">
+        update phoenix.camp_shop_prize_out
+			set
+				<if test="prizeOutStatus!=null">
+					prize_out_status = #{prizeOutStatus},
+				</if>
+				gmt_modified = now()
+			where
+				camp_prize_out_id = #{campPrizeOutId}
+    </update>
 
 </mapper>
