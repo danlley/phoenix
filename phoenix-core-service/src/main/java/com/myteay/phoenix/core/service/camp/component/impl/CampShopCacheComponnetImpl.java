@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
@@ -36,7 +38,7 @@ import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 public class CampShopCacheComponnetImpl implements CampShopCacheComponnet, InitializingBean {
 
     /** 日志 */
-    public static final Logger                      logger                 = Logger.getLogger(CampShopCacheComponnetImpl.class);
+    private static final Logger                     logger                 = LoggerFactory.getLogger(LoggerNames.PX_CACHE_DEFAULT);
 
     /** 活动缓存 */
     public static final Map<String, CampModel>      CAMP_MODEL_CACHE       = Collections.synchronizedMap(new HashMap<>());

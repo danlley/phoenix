@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmTypeEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
@@ -35,7 +37,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.GfpModel;
 public class CampAlgorithmCacheComponentImpl implements CampAlgorithmCacheComponent, InitializingBean {
 
     /** 日志 */
-    public static final Logger                                        logger                  = Logger.getLogger(CampAlgorithmCacheComponentImpl.class);
+    private static final Logger                                       logger                  = LoggerFactory.getLogger(LoggerNames.PX_CACHE_DEFAULT);
 
     /** 查询缓存 */
     private static final Map<String, Map<String, CampAlgorithmModel>> ALGORITHM_CACHE         = Collections.synchronizedMap(new HashMap<>());

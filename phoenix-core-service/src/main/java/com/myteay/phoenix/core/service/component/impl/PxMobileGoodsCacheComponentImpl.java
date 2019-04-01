@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
@@ -31,11 +33,6 @@ import com.myteay.phoenix.core.model.mobile.PxMobileGoodsSubPackageModel;
 import com.myteay.phoenix.core.model.mobile.repository.PxMobileGoodsRepository;
 import com.myteay.phoenix.core.service.component.PxMobileGoodsCacheComponent;
 import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesDetailComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesNoticeComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesSubNoticeComponent;
-import com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent;
 
 /**
  * 手机端商品缓存管理组件
@@ -46,7 +43,7 @@ import com.myteay.phoenix.core.service.manage.component.PxSubPackagesComponent;
 public class PxMobileGoodsCacheComponentImpl implements PxMobileGoodsCacheComponent, InitializingBean {
 
     /** 日志 */
-    public static final Logger                     logger         = Logger.getLogger(PxMobileGoodsCacheComponentImpl.class);
+    private static final Logger                    logger         = LoggerFactory.getLogger(LoggerNames.PX_CACHE_DEFAULT);
 
     /** 商品列表缓存 */
     private static Map<String, PxMobileGoodsModel> PX_GOODS_CACHE = Collections.synchronizedMap(new HashMap<>());
@@ -56,21 +53,6 @@ public class PxMobileGoodsCacheComponentImpl implements PxMobileGoodsCacheCompon
 
     /** 后台简单业务管理组件 */
     private PxCommonManageComponent                pxCommonManageComponent;
-
-    /** 套餐包组件 */
-    private PxGoodsPackagesDetailComponent         pxGoodsPackagesDetailComponent;
-
-    /** 子套餐管理组件 */
-    private PxSubPackagesComponent                 pxSubPackagesComponent;
-
-    /** 套餐详情图片管理组件 */
-    private PxGoodsPackagesImageComponent          pxGoodsPackagesImageComponent;
-
-    /** 温馨提醒分类管理组件 */
-    private PxGoodsPackagesNoticeComponent         pxGoodsPackagesNoticeComponent;
-
-    /** 温馨提醒子项管理组件 */
-    private PxGoodsPackagesSubNoticeComponent      pxGoodsPackagesSubNoticeComponent;
 
     /** 
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
@@ -375,51 +357,6 @@ public class PxMobileGoodsCacheComponentImpl implements PxMobileGoodsCacheCompon
      */
     public void setPxMobileGoodsRepository(PxMobileGoodsRepository pxMobileGoodsRepository) {
         this.pxMobileGoodsRepository = pxMobileGoodsRepository;
-    }
-
-    /**
-     * Setter method for property <tt>pxGoodsPackagesDetailComponent</tt>.
-     * 
-     * @param pxGoodsPackagesDetailComponent value to be assigned to property pxGoodsPackagesDetailComponent
-     */
-    public void setPxGoodsPackagesDetailComponent(PxGoodsPackagesDetailComponent pxGoodsPackagesDetailComponent) {
-        this.pxGoodsPackagesDetailComponent = pxGoodsPackagesDetailComponent;
-    }
-
-    /**
-     * Setter method for property <tt>pxSubPackagesComponent</tt>.
-     * 
-     * @param pxSubPackagesComponent value to be assigned to property pxSubPackagesComponent
-     */
-    public void setPxSubPackagesComponent(PxSubPackagesComponent pxSubPackagesComponent) {
-        this.pxSubPackagesComponent = pxSubPackagesComponent;
-    }
-
-    /**
-     * Setter method for property <tt>pxGoodsPackagesImageComponent</tt>.
-     * 
-     * @param pxGoodsPackagesImageComponent value to be assigned to property pxGoodsPackagesImageComponent
-     */
-    public void setPxGoodsPackagesImageComponent(PxGoodsPackagesImageComponent pxGoodsPackagesImageComponent) {
-        this.pxGoodsPackagesImageComponent = pxGoodsPackagesImageComponent;
-    }
-
-    /**
-     * Setter method for property <tt>pxGoodsPackagesNoticeComponent</tt>.
-     * 
-     * @param pxGoodsPackagesNoticeComponent value to be assigned to property pxGoodsPackagesNoticeComponent
-     */
-    public void setPxGoodsPackagesNoticeComponent(PxGoodsPackagesNoticeComponent pxGoodsPackagesNoticeComponent) {
-        this.pxGoodsPackagesNoticeComponent = pxGoodsPackagesNoticeComponent;
-    }
-
-    /**
-     * Setter method for property <tt>pxGoodsPackagesSubNoticeComponent</tt>.
-     * 
-     * @param pxGoodsPackagesSubNoticeComponent value to be assigned to property pxGoodsPackagesSubNoticeComponent
-     */
-    public void setPxGoodsPackagesSubNoticeComponent(PxGoodsPackagesSubNoticeComponent pxGoodsPackagesSubNoticeComponent) {
-        this.pxGoodsPackagesSubNoticeComponent = pxGoodsPackagesSubNoticeComponent;
     }
 
     /**

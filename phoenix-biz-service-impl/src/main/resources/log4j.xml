@@ -74,6 +74,15 @@
 			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
 		</layout>
 	</appender>
+	<!-- 缓存管理日志 -->
+	<appender name="MT-CACHE-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="/etc/myteay/plateform/logs/phoenix/mt-phoenix-cache.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
+		</layout>
+	</appender>
 	<!-- 定时任务日志 -->
 	<appender name="MT-TASK-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="file" value="/etc/myteay/plateform/logs/phoenix/mt-phoenix-task.log" />
@@ -122,7 +131,6 @@
 	<logger name="DAL-DIGEST" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="DAL-DIGEST-APPENDER" />
-		<appender-ref ref="STDOUT-APPENDER" />
 	</logger>
 	<logger name="PX-CASHIER-DIGEST" additivity="false">
 		<level value="INFO" />
@@ -134,6 +142,11 @@
 		<appender-ref ref="MT-CASHIER-DEFAULT-APPENDER" />
 		<appender-ref ref="MT-ERROR-APPENDER" />
 		<appender-ref ref="STDOUT-APPENDER" />
+	</logger>
+	<logger name="PX-CACHE-DEFAULT" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="MT-CACHE-APPENDER" />
+		<appender-ref ref="MT-ERROR-APPENDER" />
 	</logger>
 	<logger name="PX-MNG" additivity="false">
 		<level value="INFO" />
