@@ -101,7 +101,7 @@ public class CampExpiredScanEventListener extends EventListener<String> {
     private List<CampBaseModel> findAllCampBaseOnline() {
         List<CampBaseModel> list = null;
         try {
-            list = campShopBaseRepository.findCampBaseOnlineAll();
+            list = campShopBaseRepository.findCampBaseOnlineExpired();
         } catch (PxManageException e) {
             logger.warn("定时任务查询所有营销活动出错 " + e.getMessage(), e);
         } catch (Throwable e) {

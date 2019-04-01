@@ -18,6 +18,14 @@ import com.myteay.phoenix.core.model.camp.CampBaseModel;
 public interface CampShopBaseRepository {
 
     /**
+     * 查询已经过期的营销活动
+     * 
+     * @return
+     * @throws PxManageException
+     */
+    public List<CampBaseModel> findCampBaseOnlineExpired() throws PxManageException;
+
+    /**
      * 删除单个店铺店内消费到场营销活动
      * 
      * @param campBaseModel

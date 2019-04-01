@@ -67,6 +67,14 @@
 	    ]]>
     </select>
 
+    <select id="CAMP-BASE-ONLINE-SELECT-EXPIRED" resultMap="RM-CAMP-SHOP-BASE">
+	    <![CDATA[
+	        select
+	        	camp_id,camp_name,shop_id,shop_name,camp_status,camp_start,camp_end,gmt_created,gmt_modified
+	        from phoenix.camp_base where camp_status = 'CAMP_ONLINE' and now()>camp_end order by gmt_modified asc
+	    ]]>
+    </select>
+
     <select id="CAMP-SHOP-BASE-SELECT-GET-BY-ID" resultMap="RM-CAMP-SHOP-BASE">
 	    <![CDATA[
 	        select

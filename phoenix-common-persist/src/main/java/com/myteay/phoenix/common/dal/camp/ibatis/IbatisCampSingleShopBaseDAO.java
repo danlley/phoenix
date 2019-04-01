@@ -49,6 +49,11 @@ public class IbatisCampSingleShopBaseDAO extends SqlSessionDaoSupport implements
         return this.getSqlSession().selectList("CAMP-BASE-ONLINE-SELECT-ALL");
     }
 
+    @Override
+    public List<CampBaseDO> findCampBaseOnlineExpired() {
+        return this.getSqlSession().selectList("CAMP-BASE-ONLINE-SELECT-EXPIRED");
+    }
+
     /** 
      * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO#findCampBaseOnlineByShopId(java.lang.String)
      */

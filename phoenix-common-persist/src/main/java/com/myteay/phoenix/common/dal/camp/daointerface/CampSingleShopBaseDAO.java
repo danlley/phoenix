@@ -15,6 +15,14 @@ import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
  * @version $Id: CampSingleShopBaseDAO.java, v 0.1 Dec 16, 2018 6:46:29 PM danlley Exp $
  */
 public interface CampSingleShopBaseDAO {
+
+    /**
+     * 查询所有已经过期的营销活动
+     * 
+     * @return
+     */
+    public List<CampBaseDO> findCampBaseOnlineExpired();
+
     /**
      * 插入营销活动基本信息
      * 
