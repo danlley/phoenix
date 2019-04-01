@@ -42,6 +42,14 @@ public class IbatisCampSingleShopPrizeDAO extends SqlSessionDaoSupport implement
     }
 
     /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeDAO#findCampPrizeExpired()
+     */
+    @Override
+    public List<CampPrizeDO> findCampPrizeExpired() {
+        return this.getSqlSession().selectList("CAMP-PRIZE-SELECT-EXPIRED");
+    }
+
+    /** 
      * @see com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeDAO#findCampPrizeById(java.lang.String)
      */
     @Override

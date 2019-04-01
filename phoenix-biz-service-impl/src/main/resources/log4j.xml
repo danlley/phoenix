@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<!-- change the path before deploy to: logs/ -->
 	<appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/common-default.log" />
+		<param name="file" value="logs/phoenix/common-default.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -12,17 +12,17 @@
 	</appender>
 
 	<appender name="MT-ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/common-error.log" />
+		<param name="file" value="logs/phoenix/common-error.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
-		<param name="threshold" value="error" />
+		<param name="threshold" value="warn" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
 		</layout>
 	</appender>
 
 	<appender name="DAL-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/common-dal.log" />
+		<param name="file" value="logs/phoenix/common-dal.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -31,7 +31,7 @@
 	</appender>
 
 	<appender name="MT-DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/myteay-default.log" />
+		<param name="file" value="logs/phoenix/myteay-default.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -40,16 +40,43 @@
 	</appender>
 
 	<appender name="MT-UTILS-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/myteay-utils.log" />
+		<param name="file" value="logs/phoenix/myteay-utils.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
 		</layout>
 	</appender>
-	<!-- [公共Appender] 控制台STDOUT -->
-	<appender name="MT-CHECKCODE-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/mt-phoenix-checkcode.log" />
+	<!-- 收银台摘要日志 -->
+	<appender name="MT-CASHIER-DIGEST-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/phoenix/mt-phoenix-cashier-digest.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
+		</layout>
+	</appender>
+	<!-- 收银台日志 -->
+	<appender name="MT-CASHIER-DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/phoenix/mt-phoenix-cashier-default.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
+		</layout>
+	</appender>
+	<!-- 后台基础数据管理日志 -->
+	<appender name="MT-MNG-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/phoenix/mt-phoenix-mng.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
+		</layout>
+	</appender>
+	<!-- 定时任务日志 -->
+	<appender name="MT-TASK-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/phoenix/mt-phoenix-task.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -66,7 +93,7 @@
 	</appender>
 	<!-- [公共Appender] 控制台STDOUT -->
 	<appender name="DAL-DIGEST-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="/etc/myteay/plateform/logs/phoenix/dal-digest.log" />
+		<param name="file" value="logs/phoenix/dal-digest.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -97,10 +124,26 @@
 		<appender-ref ref="DAL-DIGEST-APPENDER" />
 		<appender-ref ref="STDOUT-APPENDER" />
 	</logger>
-	<logger name="MT-CHECKCODE" additivity="false">
+	<logger name="PX-CASHIER-DIGEST" additivity="false">
 		<level value="INFO" />
-		<appender-ref ref="MT-CHECKCODE-APPENDER" />
+		<appender-ref ref="MT-CASHIER-DIGEST-APPENDER" />
 		<appender-ref ref="STDOUT-APPENDER" />
+	</logger>
+	<logger name="PX-CASHIER-DEFAULT" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="MT-CASHIER-DEFAULT-APPENDER" />
+		<appender-ref ref="MT-ERROR-APPENDER" />
+		<appender-ref ref="STDOUT-APPENDER" />
+	</logger>
+	<logger name="PX-MNG" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="MT-MNG-APPENDER" />
+		<appender-ref ref="MT-ERROR-APPENDER" />
+	</logger>
+	<logger name="PX-TASK" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="MT-TASK-APPENDER" />
+		<appender-ref ref="MT-ERROR-APPENDER" />
 	</logger>
 	<logger name="org.apache.ibatis" additivity="false">
 		<level value="DEBUG" />

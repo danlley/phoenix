@@ -5,8 +5,9 @@
 package com.myteay.phoenix.core.model.manage.tools;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackageDetailDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO;
@@ -14,6 +15,7 @@ import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesSubNoticeDO;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
 import com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -34,7 +36,7 @@ import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
 public class PxManageValidateTool {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxManageValidateTool.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * 检查商品概要模型合法性

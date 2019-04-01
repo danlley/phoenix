@@ -6,9 +6,11 @@ package com.myteay.phoenix.core.service.manage.component.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
@@ -33,7 +35,7 @@ import com.myteay.phoenix.core.service.utils.PxMngUtil;
 public class PxGoodsPackagesNoticeComponentImpl implements PxGoodsPackagesNoticeComponent {
 
     /** 日志 */
-    public static final Logger                              logger = Logger.getLogger(PxGoodsPackagesNoticeComponentImpl.class);
+    private static final Logger                             logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxGoodsPackagesNoticeModel> pxCommonMngTemplate;
@@ -120,8 +122,8 @@ public class PxGoodsPackagesNoticeComponentImpl implements PxGoodsPackagesNotice
     private MtOperateResult<PxGoodsPackagesNoticeModel> deleteGoodsModel(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) {
 
         try {
-            List<PxGoodsPackagesSubNoticeModel> list = pxGoodsPackagesSubNoticeRepository.findPackagesSubNoticeByGoodsId(pxGoodsPackagesNoticeModel
-                .getPackagesNoticeId());
+            List<PxGoodsPackagesSubNoticeModel> list = pxGoodsPackagesSubNoticeRepository
+                .findPackagesSubNoticeByGoodsId(pxGoodsPackagesNoticeModel.getPackagesNoticeId());
             if (!CollectionUtils.isEmpty(list)) {
                 logger.warn("商品温馨提醒包含子项，无法删除 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
                 return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PACKAGES_NOTICE_DEL_ERR);

@@ -4,13 +4,15 @@
  */
 package com.myteay.phoenix.biz.service.impl.task;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 
@@ -26,11 +28,11 @@ import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 public class PxGloableScheduledTask {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxGloableScheduledTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 事件发送组件 */
     @Autowired
-    private PxEventPublishTool pxEventPublishTool;
+    private PxEventPublishTool  pxEventPublishTool;
 
     /**
      * 定期刷新手机端商品列表每30分钟执行一次

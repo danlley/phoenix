@@ -6,6 +6,9 @@ package com.myteay.phoenix.biz.service.quartz.listeners;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.service.component.PxMobileGoodsCacheComponent;
 
 /**
@@ -15,6 +18,9 @@ import com.myteay.phoenix.core.service.component.PxMobileGoodsCacheComponent;
  * @version $Id: PxMobileGoodsListCacheRefreshListener.java, v 0.1 Aug 18, 2018 6:03:02 PM min.weixm Exp $
  */
 public class PxMobileGoodsListCacheRefreshListener extends EventListener<String> {
+
+    /** 日志 */
+    private static final Logger         logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 手机端商品缓存管理组件 */
     private PxMobileGoodsCacheComponent pxMobileGoodsCacheComponent;

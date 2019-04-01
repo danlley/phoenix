@@ -5,9 +5,11 @@
 package com.myteay.phoenix.core.model.camp.tools;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeGoodsRefDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -21,7 +23,7 @@ import com.myteay.phoenix.common.util.exception.PxManageException;
 public class CampPrizeRefGoodsValidateTool {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(CampPrizeRefGoodsValidateTool.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * 校验奖品关联商品数据模型

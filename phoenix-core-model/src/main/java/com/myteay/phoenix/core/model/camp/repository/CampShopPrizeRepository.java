@@ -18,6 +18,14 @@ import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 public interface CampShopPrizeRepository {
 
     /**
+     * 查询店铺中已经过期的奖品
+     * 
+     * @return
+     * @throws PxManageException
+     */
+    public List<CampPrizeModel> findCampPrizeExpired() throws PxManageException;
+
+    /**
      * 删除单个店铺店内消费到场营销活动奖品
      * 
      * @param campPrizeModel

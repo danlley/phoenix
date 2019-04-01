@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.model.camp.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopPrizeDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -29,7 +31,7 @@ import com.myteay.phoenix.core.model.camp.tools.CampValidateTool;
 public class CampShopPrizeRepositoryImpl implements CampShopPrizeRepository {
 
     /** 日志 */
-    public static final Logger     logger = Logger.getLogger(CampShopPrizeRepositoryImpl.class);
+    private static final Logger    logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 店内营销活动奖品操作DAO */
     private CampSingleShopPrizeDAO campSingleShopPrizeDAO;
@@ -87,6 +89,25 @@ public class CampShopPrizeRepositoryImpl implements CampShopPrizeRepository {
     @Override
     public List<CampPrizeModel> findAll() throws PxManageException {
         List<CampPrizeDO> list = campSingleShopPrizeDAO.findCampPrizeAll();
+
+        List<CampPrizeModel> modelList = new ArrayList<>();
+        CampPrizeModel campPrizeModel = null;
+        for (CampPrizeDO campPrizeDO : list) {
+            campPrizeModel = CampPrizeConvertor.convertDO2Model(campPrizeDO);
+            if (campPrizeModel != null) {
+                modelList.add(campPrizeModel);
+            }
+        }
+
+        return modelList;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository#findCampPrizeExpired()
+     */
+    @Override
+    public List<CampPrizeModel> findCampPrizeExpired() throws PxManageException {
+        List<CampPrizeDO> list = campSingleShopPrizeDAO.findCampPrizeExpired();
 
         List<CampPrizeModel> modelList = new ArrayList<>();
         CampPrizeModel campPrizeModel = null;

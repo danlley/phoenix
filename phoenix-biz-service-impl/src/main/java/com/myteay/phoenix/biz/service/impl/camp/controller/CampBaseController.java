@@ -6,7 +6,6 @@ package com.myteay.phoenix.biz.service.impl.camp.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -35,7 +37,7 @@ import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
 public class CampBaseController {
 
     /** 日志 */
-    public static final Logger          logger = Logger.getLogger(CampBaseController.class);
+    private static final Logger         logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 店内营销活动基本信息管理组件 */
     @Autowired

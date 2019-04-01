@@ -5,9 +5,11 @@
 package com.myteay.phoenix.core.model.manage.convertor;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.dataobject.PxShopDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -24,7 +26,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxShopConvertor {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxShopConvertor.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * convert DO to model
@@ -39,8 +41,8 @@ public class PxShopConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将数据模型转为对应的店铺模型 pxShopDO=" + pxShopDO);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将数据模型转为对应的店铺模型 pxShopDO=" + pxShopDO);
         }
 
         PxShopModel pxShopModel = new PxShopModel();
@@ -92,8 +94,8 @@ public class PxShopConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_SHOP_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将店铺模型转为对应的数据模型 pxShopModel=" + pxShopModel);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将店铺模型转为对应的数据模型 pxShopModel=" + pxShopModel);
         }
 
         PxShopDO pxShopDO = new PxShopDO();

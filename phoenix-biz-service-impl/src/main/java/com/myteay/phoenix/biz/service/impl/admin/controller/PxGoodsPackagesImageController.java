@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.MtFileUtils;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -41,7 +43,7 @@ import com.myteay.phoenix.core.service.manage.component.PxGoodsPackagesImageComp
 public class PxGoodsPackagesImageController {
 
     /** 日志 */
-    public static final Logger            logger = Logger.getLogger(PxGoodsPackagesImageController.class);
+    private static final Logger           logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台一般性简单业务管理组件 */
     @Autowired

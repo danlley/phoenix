@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.phoenix.common.util.enums.PxOrderContextKeyEnum;
@@ -35,10 +34,6 @@ public class PxGoodsOrderContextUtil {
         }
 
         Map<String, String> orderContext = message.getOrderContext();
-
-        if (StringUtils.isBlank(message.getUserId())) {
-            message.setUserId("741200201802250955144140000");
-        }
 
         // 浏览器地址
         orderContext.put(PxOrderContextKeyEnum.PX_ORDER_SECURITY_EXPLORE.getValue(), getRequestBrowserInfo(request));

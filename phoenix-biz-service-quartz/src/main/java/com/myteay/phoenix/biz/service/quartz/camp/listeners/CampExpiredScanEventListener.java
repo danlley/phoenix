@@ -11,7 +11,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.tools.DateUtil;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
@@ -24,6 +27,9 @@ import com.myteay.phoenix.core.model.camp.repository.CampShopBaseRepository;
  * @version $Id: CampExpiredScanEventListener.java, v 0.1 Dec 20, 2018 6:14:26 PM danlley Exp $
  */
 public class CampExpiredScanEventListener extends EventListener<String> {
+
+    /** 日志 */
+    private static final Logger    logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 针对单个店铺店内消费到场营销活动操作仓储 */
     private CampShopBaseRepository campShopBaseRepository;

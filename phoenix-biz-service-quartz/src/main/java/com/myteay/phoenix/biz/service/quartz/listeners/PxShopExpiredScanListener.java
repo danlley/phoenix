@@ -11,6 +11,9 @@ import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
@@ -24,6 +27,9 @@ import com.myteay.phoenix.core.service.manage.component.PxShopComponent;
  * @version $Id: PxShopExpiredScanListener.java, v 0.1 Aug 18, 2018 10:32:18 PM danlley Exp $
  */
 public class PxShopExpiredScanListener extends EventListener<String> {
+
+    /** 日志 */
+    private static final Logger     logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 后台一般性简单业务管理组件 */
     private PxCommonManageComponent pxCommonManageComponent;

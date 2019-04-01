@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.model.manage.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsPackagesImageDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -29,7 +31,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxGoodsPackagesImageRepositoryImpl implements PxGoodsPackagesImageRepository {
 
     /** 日志 */
-    public static final Logger      logger = Logger.getLogger(PxGoodsPackagesImageRepositoryImpl.class);
+    private static final Logger     logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 商品详情图片管理 */
     private PxGoodsPackagesImageDAO pxGoodsPackagesImageDAO;

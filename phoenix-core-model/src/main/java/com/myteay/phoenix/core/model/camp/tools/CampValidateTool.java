@@ -4,10 +4,11 @@
  */
 package com.myteay.phoenix.core.model.camp.tools;
 
-import org.apache.log4j.Logger;
-
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.model.camp.CampBaseModel;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 
@@ -20,7 +21,7 @@ import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 public class CampValidateTool {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(CampValidateTool.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * 校验店内消费营销活动基本模型

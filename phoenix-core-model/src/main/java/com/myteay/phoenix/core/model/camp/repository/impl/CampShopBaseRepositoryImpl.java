@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.model.camp.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.daointerface.CampSingleShopBaseDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampBaseDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -29,7 +31,7 @@ import com.myteay.phoenix.core.model.camp.tools.CampValidateTool;
 public class CampShopBaseRepositoryImpl implements CampShopBaseRepository {
 
     /** 日志 */
-    public static final Logger    logger = Logger.getLogger(CampShopBaseRepositoryImpl.class);
+    private static final Logger   logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 针对单个店铺店内消费到场营销活动操作DAO */
     private CampSingleShopBaseDAO campSingleShopBaseDAO;

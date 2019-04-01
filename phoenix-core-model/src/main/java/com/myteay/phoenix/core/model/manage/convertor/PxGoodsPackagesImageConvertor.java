@@ -4,9 +4,10 @@
  */
 package com.myteay.phoenix.core.model.manage.convertor;
 
-import org.apache.log4j.Logger;
-
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesImageDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -22,7 +23,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxGoodsPackagesImageConvertor {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxGoodsPackagesImageConvertor.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * convert DO to model
@@ -37,8 +38,8 @@ public class PxGoodsPackagesImageConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将数据模型转为对应的套餐详情图片模型 pxGoodsPackagesImageDO=" + pxGoodsPackagesImageDO);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将数据模型转为对应的套餐详情图片模型 pxGoodsPackagesImageDO=" + pxGoodsPackagesImageDO);
         }
 
         PxGoodsPackagesImageModel pxGoodsPackagesImageModel = new PxGoodsPackagesImageModel();
@@ -71,8 +72,8 @@ public class PxGoodsPackagesImageConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_PKG_IMAGE_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将套餐详情图片模型转为对应的数据模型 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将套餐详情图片模型转为对应的数据模型 pxGoodsPackagesImageModel=" + pxGoodsPackagesImageModel);
         }
 
         PxGoodsPackagesImageDO pxGoodsPackagesImageDO = new PxGoodsPackagesImageDO();

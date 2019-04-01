@@ -5,8 +5,10 @@
 package com.myteay.phoenix.core.service.manage.component.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
@@ -34,7 +36,7 @@ import com.myteay.phoenix.core.service.utils.PxMngUtil;
 public class PxSubPackagesComponentImpl implements PxSubPackagesComponent {
 
     /** 日志 */
-    public static final Logger                      logger = Logger.getLogger(PxSubPackagesComponentImpl.class);
+    private static final Logger                     logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxSubPackagesModel> pxCommonMngTemplate;

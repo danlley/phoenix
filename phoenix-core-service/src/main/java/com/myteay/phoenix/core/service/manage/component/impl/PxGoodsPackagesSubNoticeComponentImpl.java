@@ -5,8 +5,10 @@
 package com.myteay.phoenix.core.service.manage.component.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
@@ -34,7 +36,7 @@ import com.myteay.phoenix.core.service.utils.PxMngUtil;
 public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSubNoticeComponent {
 
     /** 日志 */
-    public static final Logger                                 logger = Logger.getLogger(PxGoodsPackagesSubNoticeComponentImpl.class);
+    private static final Logger                                logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxGoodsPackagesSubNoticeModel> pxCommonMngTemplate;
@@ -79,8 +81,8 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
         MtOperateResult<PxGoodsPackagesSubNoticeModel> result = new MtOperateResult<PxGoodsPackagesSubNoticeModel>();
         PxGoodsPackagesSubNoticeModel freshPxGoodsPackagesSubNoticeModel = null;
         try {
-            freshPxGoodsPackagesSubNoticeModel = pxGoodsPackagesSubNoticeRepository.findSinglePackagesSubNotice(pxGoodsPackagesSubNoticeModel
-                .getPackagesSuNoticeId());
+            freshPxGoodsPackagesSubNoticeModel = pxGoodsPackagesSubNoticeRepository
+                .findSinglePackagesSubNotice(pxGoodsPackagesSubNoticeModel.getPackagesSuNoticeId());
             result.setResult(freshPxGoodsPackagesSubNoticeModel);
         } catch (PxManageException e) {
             logger.warn("保存温馨提醒子项信息发生异常 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel, e);
@@ -173,8 +175,8 @@ public class PxGoodsPackagesSubNoticeComponentImpl implements PxGoodsPackagesSub
      * @throws PxManageException
      */
     private PxGoodsModel queryGoodsModelBySubNotice(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) throws PxManageException {
-        PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = pxGoodsPackagesNoticeRepository.findSingleGoodsPackagesNotice(pxGoodsPackagesSubNoticeModel
-            .getPackagesNoticeId());
+        PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = pxGoodsPackagesNoticeRepository
+            .findSingleGoodsPackagesNotice(pxGoodsPackagesSubNoticeModel.getPackagesNoticeId());
         if (pxGoodsPackagesNoticeModel == null || StringUtils.isBlank(pxGoodsPackagesNoticeModel.getGoodsId())) {
             return null;
         }

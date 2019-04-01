@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.model.manage.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.daointerface.PxSubPackagesDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxSubPackagesDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -29,10 +31,10 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxSubPackagesRepositoryImpl implements PxSubPackagesRepository {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxSubPackagesRepositoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 子套餐管理DAO */
-    private PxSubPackagesDAO   pxSubPackagesDAO;
+    private PxSubPackagesDAO    pxSubPackagesDAO;
 
     /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxSubPackagesRepository#removeSubPackagesInfo(com.myteay.phoenix.core.model.manage.PxSubPackagesModel)

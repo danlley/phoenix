@@ -15,6 +15,14 @@ import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO;
  * @version $Id: CampSingleShopPrizeDAO.java, v 0.1 Dec 17, 2018 6:31:48 PM danlley Exp $
  */
 public interface CampSingleShopPrizeDAO {
+
+    /**
+     * 查询店铺中已经过期的奖品
+     * 
+     * @return
+     */
+    public List<CampPrizeDO> findCampPrizeExpired();
+
     /**
      * 插入店内营销活动奖品信息
      * 

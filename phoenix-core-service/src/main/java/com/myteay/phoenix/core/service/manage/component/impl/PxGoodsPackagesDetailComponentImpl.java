@@ -6,9 +6,11 @@ package com.myteay.phoenix.core.service.manage.component.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
@@ -33,7 +35,7 @@ import com.myteay.phoenix.core.service.utils.PxMngUtil;
 public class PxGoodsPackagesDetailComponentImpl implements PxGoodsPackagesDetailComponent {
 
     /** 日志 */
-    public static final Logger                              logger = Logger.getLogger(PxGoodsPackagesDetailComponentImpl.class);
+    private static final Logger                             logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台管理业务处理分流模板 */
     private PxCommonMngTemplate<PxGoodsPackagesDetailModel> pxCommonMngTemplate;

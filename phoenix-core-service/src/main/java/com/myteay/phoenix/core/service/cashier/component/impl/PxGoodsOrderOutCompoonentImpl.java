@@ -7,10 +7,12 @@ package com.myteay.phoenix.core.service.cashier.component.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.exception.MtException;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
@@ -44,7 +46,7 @@ import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoone
 public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent {
 
     /** 日志 */
-    public static final Logger         logger = Logger.getLogger(PxGoodsOrderOutCompoonentImpl.class);
+    private static final Logger        logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
 
     /** 订单流水仓储 */
     private PxGoodsOrderOutRepository  pxGoodsOrderOutRepository;
@@ -105,6 +107,12 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
         }
 
         // step2: 变更抵扣优惠券的状态(不允许影响出流程处理)
+        if (campShopPrizeOutModel == null) {
+            logger.warn("当前未使用优惠券，不做优惠券状态变更orderNo=" + orderNo + " pxPayTypeEnum=" + pxPayTypeEnum + " pxOrderStatusEnum=" + pxOrderStatusEnum
+                        + " campShopPrizeOutModel=" + campShopPrizeOutModel);
+            return new MtOperateResult<>(result);
+        }
+
         try {
             campShopPrizeOutRepository.modifyCampShopPrizeOutStatusById(campShopPrizeOutModel);
         } catch (PxManageException e) {

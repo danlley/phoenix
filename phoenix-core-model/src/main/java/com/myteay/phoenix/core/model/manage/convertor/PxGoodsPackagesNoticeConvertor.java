@@ -4,9 +4,10 @@
  */
 package com.myteay.phoenix.core.model.manage.convertor;
 
-import org.apache.log4j.Logger;
-
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -22,7 +23,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxGoodsPackagesNoticeConvertor {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxGoodsPackagesNoticeConvertor.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /**
      * convert DO to model
@@ -37,8 +38,8 @@ public class PxGoodsPackagesNoticeConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将数据模型转为对应的温馨提醒摘要模型 pxGoodsPackagesNoticeDO=" + pxGoodsPackagesNoticeDO);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将数据模型转为对应的温馨提醒摘要模型 pxGoodsPackagesNoticeDO=" + pxGoodsPackagesNoticeDO);
         }
 
         PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel = new PxGoodsPackagesNoticeModel();
@@ -71,8 +72,8 @@ public class PxGoodsPackagesNoticeConvertor {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_MODEL_INVALID);
         }
 
-        if (logger.isInfoEnabled()) {
-            logger.info("准备将温馨提醒摘要模型转为对应的数据模型 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
+        if (logger.isDebugEnabled()) {
+            logger.debug("准备将温馨提醒摘要模型转为对应的数据模型 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
         }
 
         PxGoodsPackagesNoticeDO pxGoodsPackagesNoticeDO = new PxGoodsPackagesNoticeDO();

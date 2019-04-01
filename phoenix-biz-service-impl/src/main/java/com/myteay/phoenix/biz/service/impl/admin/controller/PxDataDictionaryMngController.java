@@ -6,15 +6,17 @@ package com.myteay.phoenix.biz.service.impl.admin.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
@@ -31,7 +33,7 @@ import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
 public class PxDataDictionaryMngController {
 
     /** 日志 */
-    public static final Logger        logger = Logger.getLogger(PxDataDictionaryMngController.class);
+    private static final Logger       logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 数据字典管理组件 */
     @Autowired

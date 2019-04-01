@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.exception.MtException;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
@@ -34,10 +36,10 @@ import com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository
 public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository {
 
     /** 日志 */
-    public static final Logger logger = Logger.getLogger(PxGoodsOrderOutRepositoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
 
     /** 订单流水操作DAO */
-    private PxGoodsOrderOutDAO pxGoodsOrderOutDAO;
+    private PxGoodsOrderOutDAO  pxGoodsOrderOutDAO;
 
     /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#deleteExpiredOrder(com.myteay.phoenix.core.model.PxGoodsOrderOutModel)

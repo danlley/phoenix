@@ -11,7 +11,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.tools.DateUtil;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
@@ -24,6 +27,9 @@ import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRepository;
  * @version $Id: CampPrizeExpiredScanEventListener.java, v 0.1 Dec 20, 2018 6:14:26 PM danlley Exp $
  */
 public class CampPrizeExpiredScanEventListener extends EventListener<String> {
+
+    /** 日志 */
+    private static final Logger     logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 店内营销活动奖池仓储 */
     private CampShopPrizeRepository campShopPrizeRepository;
@@ -98,7 +104,7 @@ public class CampPrizeExpiredScanEventListener extends EventListener<String> {
 
         List<CampPrizeModel> list = null;
         try {
-            list = campShopPrizeRepository.findAll();
+            list = campShopPrizeRepository.findCampPrizeExpired();
         } catch (PxManageException e) {
             logger.warn("定时任务对营销活动的奖品执行过期处理出错 " + e.getMessage(), e);
         } catch (Throwable e) {

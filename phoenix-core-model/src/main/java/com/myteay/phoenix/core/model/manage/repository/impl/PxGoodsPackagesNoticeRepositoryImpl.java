@@ -7,11 +7,13 @@ package com.myteay.phoenix.core.model.manage.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsPackagesNoticeDAO;
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsPackagesNoticeDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
@@ -29,7 +31,7 @@ import com.myteay.phoenix.core.model.manage.tools.PxManageValidateTool;
 public class PxGoodsPackagesNoticeRepositoryImpl implements PxGoodsPackagesNoticeRepository {
 
     /** 日志 */
-    public static final Logger       logger = Logger.getLogger(PxGoodsPackagesNoticeRepositoryImpl.class);
+    private static final Logger      logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 温馨提醒摘要管理操作DAO */
     private PxGoodsPackagesNoticeDAO pxGoodsPackagesNoticeDAO;
@@ -57,8 +59,8 @@ public class PxGoodsPackagesNoticeRepositoryImpl implements PxGoodsPackagesNotic
 
         pxGoodsPackagesNoticeDAO.updatePxGoodsPackagesNotice(pxGoodsPackagesNoticeDO);
 
-        PxGoodsPackagesNoticeDO freshPxGoodsPackagesNoticeDO = pxGoodsPackagesNoticeDAO.findPxGoodsPackagesNoticeById(pxGoodsPackagesNoticeDO
-            .getPackagesNoticeId());
+        PxGoodsPackagesNoticeDO freshPxGoodsPackagesNoticeDO = pxGoodsPackagesNoticeDAO
+            .findPxGoodsPackagesNoticeById(pxGoodsPackagesNoticeDO.getPackagesNoticeId());
         return PxGoodsPackagesNoticeConvertor.convertDO2Model(freshPxGoodsPackagesNoticeDO);
     }
 

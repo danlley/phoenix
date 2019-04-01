@@ -10,6 +10,9 @@ import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.async.event.EventListener;
 import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
@@ -23,6 +26,9 @@ import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoone
  * @version $Id: PxShopExpiredOrderScanListener.java, v 0.1 Mar 21, 2019 1:45:18 PM danlley Exp $
  */
 public class PxShopExpiredOrderScanListener extends EventListener<String> {
+
+    /** 日志 */
+    private static final Logger       logger = LoggerFactory.getLogger(LoggerNames.PX_TASK);
 
     /** 订单流水操作组件 */
     private PxGoodsOrderOutCompoonent pxGoodsOrderOutCompoonent;

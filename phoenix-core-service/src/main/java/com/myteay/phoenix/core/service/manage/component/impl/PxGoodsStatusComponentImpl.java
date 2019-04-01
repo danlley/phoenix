@@ -9,10 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.tools.DateUtil;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.PxConstants;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -47,7 +49,7 @@ import com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent;
 public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
 
     /** 日志 */
-    public static final Logger                 logger = Logger.getLogger(PxGoodsStatusComponentImpl.class);
+    private static final Logger                logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 商品概要管理仓储 */
     private PxGoodsRepository                  pxGoodsRepository;
@@ -190,8 +192,8 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
      * @throws PxManageException
      */
     private void validateSubPackageNotice(PxGoodsPackagesNoticeModel pxGoodsPackagesNoticeModel) throws PxManageException {
-        List<PxGoodsPackagesSubNoticeModel> list = pxGoodsPackagesSubNoticeRepository.findPackagesSubNoticeByGoodsId(pxGoodsPackagesNoticeModel
-            .getPackagesNoticeId());
+        List<PxGoodsPackagesSubNoticeModel> list = pxGoodsPackagesSubNoticeRepository
+            .findPackagesSubNoticeByGoodsId(pxGoodsPackagesNoticeModel.getPackagesNoticeId());
 
         if (CollectionUtils.isEmpty(list)) {
             logger.warn("商品温馨提醒子项数量不合法 pxGoodsPackagesNoticeModel=" + pxGoodsPackagesNoticeModel);
@@ -427,8 +429,8 @@ public class PxGoodsStatusComponentImpl implements PxGoodsStatusComponent {
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_EXPIRE_ERR);
         }
 
-        if (pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel.getIsTuan() == null || pxGoodsModel
-            .getOrderType() == null) {
+        if (pxGoodsModel.getIsHuiyuan() == null || pxGoodsModel.getIsQuan() == null || pxGoodsModel.getIsTuan() == null
+            || pxGoodsModel.getOrderType() == null) {
             logger.warn("商品团、券、会员支持、预约类型等信息不完整, pxGoodsModel= " + pxGoodsModel);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.PX_GOODS_TYPE_UNCOVERED);
         }
