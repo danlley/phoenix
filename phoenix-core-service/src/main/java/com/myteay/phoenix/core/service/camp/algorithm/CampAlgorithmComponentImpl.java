@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
@@ -181,8 +182,11 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
     private CampAlgorithmResult<CampAlgorithmModel> saveAlgorithmResult(CampAlgorithmModel campAlgorithmModel) {
         logger.warn("开始保存抽奖算法数据 campAlgorithmModel=" + campAlgorithmModel);
 
-        CampAlgorithmDO campAlgorithmDO = constructAlgorithmDO(campAlgorithmModel);
-        String prizeId = campAlgorithmDAO.insert(campAlgorithmDO);
+        String prizeId = campAlgorithmModel.getPrizeId();
+        if (isNeedAlgorithmSave(prizeId)) {
+            CampAlgorithmDO campAlgorithmDO = constructAlgorithmDO(campAlgorithmModel);
+            campAlgorithmDAO.insert(campAlgorithmDO);
+        }
 
         CampAlgorithmDO freshAlgorithmDO = campAlgorithmDAO.findCampAlgorithmByPrizeId(prizeId);
         CampAlgorithmModel freshAlgorithmModel = constructAlgorithmModel(freshAlgorithmDO);
@@ -190,6 +194,25 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         refreshAlgorithmCache(freshAlgorithmModel);
 
         return new CampAlgorithmResult<>(freshAlgorithmModel);
+    }
+
+    /**
+     * 检查是否需要对当前奖品进行奖品算法表的写入动作
+     * 
+     * @param prizeId
+     * @return
+     */
+    private boolean isNeedAlgorithmSave(String prizeId) {
+        if (StringUtils.isBlank(prizeId)) {
+            return false;
+        }
+
+        CampAlgorithmDO freshAlgorithmDO = campAlgorithmDAO.findCampAlgorithmByPrizeId(prizeId);
+        if (freshAlgorithmDO == null) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
