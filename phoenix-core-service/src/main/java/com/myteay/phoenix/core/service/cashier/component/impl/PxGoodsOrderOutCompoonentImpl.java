@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.exception.MtException;
+import com.myteay.common.util.lang.Money;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.logs.LoggerNames;
@@ -36,6 +37,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
+import com.myteay.phoenix.core.service.utils.PxCashierUtil;
 
 /**
  * 订单流水操作组件
@@ -189,6 +191,11 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
         if (StringUtils.isBlank(campId)) {
             logger.warn("订单上下文中未找到合法的活动ID，无法参与抽奖活动");
             return null;
+        }
+
+        Money orderPriceAmount = PxCashierUtil.calculateOrderPriceAmount(pxGoodsOrderModel);
+        if (logger.isInfoEnabled()) {
+            logger.info("订单实付金额 orderPriceAmount=" + orderPriceAmount);
         }
 
         CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute(campId);
