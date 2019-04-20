@@ -54,7 +54,7 @@ default-autowire="byName">
     
     <!-- 单个DAO方法的执行长度阈值暂定为80毫秒，超过之后会在日志中记录 -->
  	<bean id="daoPerformanceMonitorInterceptor" class="com.myteay.common.aop.monitor.logger.PerformanceMonitorInterceptor">
-		<property name="threshold"><value>1</value></property>
+		<property name="threshold"><value>100</value></property>
 	</bean>
 	<bean id="dalMonitorInterceptor" class="com.myteay.common.aop.monitor.logger.DalMonitorInterceptor"/>
 	<bean id="daoAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
