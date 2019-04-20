@@ -23,6 +23,8 @@
     <resultMap id="RM-CAMP-PRIZE" type="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO">
         <result property="prizeId" column="prize_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="prizeName" column="prize_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="prizeType" column="prize_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="prizeLimit" column="prize_limit" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="campId" column="camp_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="prizeLevel" column="prize_level" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -39,9 +41,9 @@
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
     <insert id="CAMP-PRIZE-INSERT" parameterType="com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO">
 		insert into phoenix.camp_prize (
-		    prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
+		    prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 		)values(
-		    #{prizeName},#{campId},#{shopId},#{prizeLevel},#{prizePercent},#{distribution},#{price},#{prizeAmount},#{prizeStatus},#{prizeEffictive},#{prizeExpired},now(),now()
+		    #{prizeName},#{prizeType},#{prizeLimit},#{campId},#{shopId},#{prizeLevel},#{prizePercent},#{distribution},#{price},#{prizeAmount},#{prizeStatus},#{prizeEffictive},#{prizeExpired},now(),now()
 		) ;
 	  <selectKey resultType="java.lang.String" keyProperty="prizeId">  
 	    SELECT LAST_INSERT_ID()  
@@ -51,7 +53,7 @@
     <select id="CAMP-PRIZE-SELECT-ALL" resultMap="RM-CAMP-PRIZE">
 	    <![CDATA[
 	        select
-	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
+	        	prize_id,prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 	        from phoenix.camp_prize order by gmt_modified desc
 	    ]]>
@@ -60,7 +62,7 @@
     <select id="CAMP-PRIZE-SELECT-EXPIRED" resultMap="RM-CAMP-PRIZE">
 	    <![CDATA[
 	        select
-	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
+	        	prize_id,prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 	        from phoenix.camp_prize where now()>prize_expired order by gmt_modified desc
 	    ]]>
@@ -69,7 +71,7 @@
     <select id="CAMP-PRIZE-ONLINE-SELECT-ALL" resultMap="RM-CAMP-PRIZE">
 	    <![CDATA[
 	        select
-	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
+	        	prize_id,prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 	        from phoenix.camp_prize where prize_status = 'CAMP_PRIZE_ONLINE' and camp_id = #{value} order by gmt_modified desc
 	    ]]>
@@ -78,7 +80,7 @@
     <select id="CAMP-PRIZE-SELECT-GET-BY-ID" resultMap="RM-CAMP-PRIZE">
 	    <![CDATA[
 	        select
-	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
+	        	prize_id,prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 	        from phoenix.camp_prize 
 	        where (prize_id = #{value})
@@ -88,7 +90,7 @@
     <select id="CAMP-PRIZE-SELECT-GET-BY-CAMP-ID" resultMap="RM-CAMP-PRIZE">
 	    <![CDATA[
 	        select
-	        	prize_id,prize_name,camp_id,shop_id,prize_level,prize_percent,distribution,price,
+	        	prize_id,prize_name,prize_type,prize_limit,camp_id,shop_id,prize_level,prize_percent,distribution,price,
 	        	prize_amount,prize_status,prize_effictive,prize_expired,gmt_created,gmt_modified
 	        from phoenix.camp_prize 
 	        where (camp_id = #{value})
@@ -106,6 +108,12 @@
 			set
 				<if test="prizeName!=null">
 					prize_name = #{prizeName},
+				</if>
+				<if test="prizeType!=null">
+					prize_type = #{prizeType},
+				</if>
+				<if test="prizeLimit!=null">
+					prize_limit = #{prizeLimit},
 				</if>
 				<if test="prizeLevel!=null">
 					prize_level = #{prizeLevel},

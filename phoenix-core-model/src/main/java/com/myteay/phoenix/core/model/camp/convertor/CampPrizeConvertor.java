@@ -7,7 +7,9 @@ package com.myteay.phoenix.core.model.camp.convertor;
 import org.apache.commons.lang.StringUtils;
 
 import com.myteay.phoenix.common.dal.camp.dataobject.CampPrizeDO;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeLimitEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeTypeEnum;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
 import com.myteay.phoenix.core.model.camp.tools.CampValidateTool;
 
@@ -43,6 +45,15 @@ public class CampPrizeConvertor {
         campPrizeModel.setPrizeId(campPrizeDO.getPrizeId());
         campPrizeModel.setPrizeLevel(campPrizeDO.getPrizeLevel());
         campPrizeModel.setPrizeName(campPrizeDO.getPrizeName());
+
+        if (StringUtils.isNotBlank(campPrizeDO.getPrizeLimit())) {
+            campPrizeModel.setPrizeLimit(CampPrizeLimitEnum.getByValue(campPrizeDO.getPrizeLimit()));
+        }
+
+        if (StringUtils.isNotBlank(campPrizeDO.getPrizeType())) {
+            campPrizeModel.setPrizeType(CampPrizeTypeEnum.getByValue(campPrizeDO.getPrizeType()));
+        }
+
         campPrizeModel.setPrizePercent(campPrizeDO.getPrizePercent());
         if (StringUtils.isNotBlank(campPrizeDO.getPrizeStatus())) {
             campPrizeModel.setPrizeStatus(CampPrizeStatusEnum.getByCode(campPrizeDO.getPrizeStatus()));
@@ -80,6 +91,14 @@ public class CampPrizeConvertor {
         campPrizeDO.setPrizeLevel(campPrizeModel.getPrizeLevel());
         campPrizeDO.setPrizeName(campPrizeModel.getPrizeName());
         campPrizeDO.setPrizePercent(campPrizeModel.getPrizePercent());
+
+        if (campPrizeModel.getPrizeLimit() != null) {
+            campPrizeDO.setPrizeLimit(campPrizeModel.getPrizeLimit().getValue());
+        }
+
+        if (campPrizeModel.getPrizeType() != null) {
+            campPrizeDO.setPrizeType(campPrizeModel.getPrizeType().getValue());
+        }
 
         campPrizeDO.setShopId(campPrizeModel.getShopId());
 

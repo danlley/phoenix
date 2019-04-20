@@ -26,6 +26,12 @@ public class CampPrizeDO implements Serializable {
     /** 奖品名称 */
     private String            prizeName;
 
+    /** 奖品类型 */
+    private String            prizeType;
+
+    /** 奖品使用人群 */
+    private String            prizeLimit;
+
     /** 活动ID */
     private String            campId;
 
@@ -61,6 +67,42 @@ public class CampPrizeDO implements Serializable {
 
     /** 最后修改时间 */
     private Date              gmtModified;
+
+    /**
+     * Getter method for property <tt>prizeType</tt>.
+     * 
+     * @return property value of prizeType
+     */
+    public String getPrizeType() {
+        return prizeType;
+    }
+
+    /**
+     * Setter method for property <tt>prizeType</tt>.
+     * 
+     * @param prizeType value to be assigned to property prizeType
+     */
+    public void setPrizeType(String prizeType) {
+        this.prizeType = prizeType;
+    }
+
+    /**
+     * Getter method for property <tt>prizeLimit</tt>.
+     * 
+     * @return property value of prizeLimit
+     */
+    public String getPrizeLimit() {
+        return prizeLimit;
+    }
+
+    /**
+     * Setter method for property <tt>prizeLimit</tt>.
+     * 
+     * @param prizeLimit value to be assigned to property prizeLimit
+     */
+    public void setPrizeLimit(String prizeLimit) {
+        this.prizeLimit = prizeLimit;
+    }
 
     /**
      * Getter method for property <tt>prizeStatus</tt>.

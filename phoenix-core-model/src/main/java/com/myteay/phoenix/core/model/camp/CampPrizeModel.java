@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeLimitEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeTypeEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 
 /**
@@ -28,6 +30,12 @@ public class CampPrizeModel implements Serializable {
 
     /** 奖品名称 */
     private String                       prizeName;
+
+    /** 奖品类型 */
+    private CampPrizeTypeEnum            prizeType;
+
+    /** 奖品使用人群 */
+    private CampPrizeLimitEnum           prizeLimit;
 
     /** 活动ID */
     private String                       campId;
@@ -70,6 +78,42 @@ public class CampPrizeModel implements Serializable {
 
     /** 奖品关联商品模型列表 */
     private List<CampPrizeRefGoodsModel> campPrizeRefGoodsModels;
+
+    /**
+     * Getter method for property <tt>prizeType</tt>.
+     * 
+     * @return property value of prizeType
+     */
+    public CampPrizeTypeEnum getPrizeType() {
+        return prizeType;
+    }
+
+    /**
+     * Setter method for property <tt>prizeType</tt>.
+     * 
+     * @param prizeType value to be assigned to property prizeType
+     */
+    public void setPrizeType(CampPrizeTypeEnum prizeType) {
+        this.prizeType = prizeType;
+    }
+
+    /**
+     * Getter method for property <tt>prizeLimit</tt>.
+     * 
+     * @return property value of prizeLimit
+     */
+    public CampPrizeLimitEnum getPrizeLimit() {
+        return prizeLimit;
+    }
+
+    /**
+     * Setter method for property <tt>prizeLimit</tt>.
+     * 
+     * @param prizeLimit value to be assigned to property prizeLimit
+     */
+    public void setPrizeLimit(CampPrizeLimitEnum prizeLimit) {
+        this.prizeLimit = prizeLimit;
+    }
 
     /**
      * Getter method for property <tt>campPrizeRefGoodsModels</tt>.
