@@ -109,6 +109,15 @@
 			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
 		</layout>
 	</appender>
+	<!-- [公共Appender] 控制台STDOUT -->
+	<appender name="MT-CAMP-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="/etc/myteay/plateform/logs/phoenix/mt-phoenix-camp.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %-5p - %m%n" />
+		</layout>
+	</appender>
 
 	<!-- [公共Appender] 控制台STDERR -->
 	<appender name="STDERR-APPENDER" class="org.apache.log4j.ConsoleAppender">
@@ -135,6 +144,11 @@
 	<logger name="PX-CASHIER-DIGEST" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="MT-CASHIER-DIGEST-APPENDER" />
+		<appender-ref ref="STDOUT-APPENDER" />
+	</logger>
+	<logger name="PX-CAMP" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="MT-CAMP-APPENDER" />
 		<appender-ref ref="STDOUT-APPENDER" />
 	</logger>
 	<logger name="PX-CASHIER-DEFAULT" additivity="false">

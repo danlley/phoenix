@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmTypeEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.GDHandler;
@@ -36,7 +38,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, InitializingBean {
 
     /** 日志 */
-    public static final Logger                logger     = Logger.getLogger(CampAlgorithmComponentImpl.class);
+    public static final Logger                logger     = LoggerFactory.getLogger(LoggerNames.PX_CAMP);
 
     private static final Map<String, Handler> HANDLE_MAP = Collections.synchronizedMap(new HashMap<>());
 
@@ -84,6 +86,7 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
 
         for (CampAlgorithmModel campAlgorithmModel : list) {
             if (doAlgorithm(campAlgorithmModel, checkers)) {
+                logger.warn("当前抽奖请求命中奖品 campAlgorithmModel=" + campAlgorithmModel);
                 return new CampAlgorithmResult<>(campAlgorithmModel);
             }
         }

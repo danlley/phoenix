@@ -4,8 +4,9 @@
  */
 package com.myteay.phoenix.core.service.camp.algorithm.handles;
 
-import org.apache.log4j.Logger;
-
+import com.myteay.common.util.log.Logger;
+import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 
 /**
@@ -17,7 +18,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 public abstract class SinglePrizeChecker implements Comparable<SinglePrizeChecker> {
 
     /** 日志 */
-    public static final Logger logger   = Logger.getLogger(SinglePrizeChecker.class);
+    public static final Logger logger   = LoggerFactory.getLogger(LoggerNames.PX_CAMP);
 
     /** 执行等级 */
     private int                priority = 999;

@@ -241,18 +241,14 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
      */
     private List<SinglePrizeChecker> buildCheckList(PxGoodsOrderModel pxGoodsOrderModel) {
 
-        if (pxGoodsOrderModel == null || pxGoodsOrderModel.getCampShopPrizeOutModel() == null) {
+        if (pxGoodsOrderModel == null) {
             return null;
         }
-
-        CampShopPrizeOutModel campShopPrizeOutModel = pxGoodsOrderModel.getCampShopPrizeOutModel();
-        CampPrizeModel campPrizeModel = campShopCacheComponnet.queryCampPrizeModelFromCache(campShopPrizeOutModel.getCampId(),
-            campShopPrizeOutModel.getPrizeId());
 
         List<SinglePrizeChecker> checkers = new ArrayList<SinglePrizeChecker>();
 
         // 订单总金额检查器
-        checkers.add(new OrderTotalAmountChecker(pxGoodsOrderModel, campPrizeModel));
+        checkers.add(new OrderTotalAmountChecker(pxGoodsOrderModel, this.campShopCacheComponnet));
 
         //对检查器列表进行排序
         Collections.sort(checkers);
