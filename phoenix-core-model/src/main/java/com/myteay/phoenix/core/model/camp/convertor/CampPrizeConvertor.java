@@ -45,6 +45,7 @@ public class CampPrizeConvertor {
         campPrizeModel.setPrizeId(campPrizeDO.getPrizeId());
         campPrizeModel.setPrizeLevel(campPrizeDO.getPrizeLevel());
         campPrizeModel.setPrizeName(campPrizeDO.getPrizeName());
+        campPrizeModel.setOrderTotalAmount(campPrizeDO.getOrderTotalAmount());
 
         if (StringUtils.isNotBlank(campPrizeDO.getPrizeLimit())) {
             campPrizeModel.setPrizeLimit(CampPrizeLimitEnum.getByValue(campPrizeDO.getPrizeLimit()));
@@ -91,6 +92,7 @@ public class CampPrizeConvertor {
         campPrizeDO.setPrizeLevel(campPrizeModel.getPrizeLevel());
         campPrizeDO.setPrizeName(campPrizeModel.getPrizeName());
         campPrizeDO.setPrizePercent(campPrizeModel.getPrizePercent());
+        campPrizeDO.setOrderTotalAmount(campPrizeModel.getOrderTotalAmount());
 
         if (campPrizeModel.getPrizeLimit() != null) {
             campPrizeDO.setPrizeLimit(campPrizeModel.getPrizeLimit().getValue());

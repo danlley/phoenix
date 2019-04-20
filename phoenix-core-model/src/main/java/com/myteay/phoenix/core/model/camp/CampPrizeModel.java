@@ -37,6 +37,9 @@ public class CampPrizeModel implements Serializable {
     /** 奖品使用人群 */
     private CampPrizeLimitEnum           prizeLimit;
 
+    /** 订单总金额 */
+    private String                       orderTotalAmount;
+
     /** 活动ID */
     private String                       campId;
 
@@ -78,6 +81,24 @@ public class CampPrizeModel implements Serializable {
 
     /** 奖品关联商品模型列表 */
     private List<CampPrizeRefGoodsModel> campPrizeRefGoodsModels;
+
+    /**
+     * Getter method for property <tt>orderTotalAmount</tt>.
+     * 
+     * @return property value of orderTotalAmount
+     */
+    public String getOrderTotalAmount() {
+        return orderTotalAmount;
+    }
+
+    /**
+     * Setter method for property <tt>orderTotalAmount</tt>.
+     * 
+     * @param orderTotalAmount value to be assigned to property orderTotalAmount
+     */
+    public void setOrderTotalAmount(String orderTotalAmount) {
+        this.orderTotalAmount = orderTotalAmount;
+    }
 
     /**
      * Getter method for property <tt>prizeType</tt>.

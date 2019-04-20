@@ -6,16 +6,18 @@ package com.myteay.phoenix.common.util.camp.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 奖品类型枚举
  * 
  * @author danlley
  * @version $Id: CampPrizeTypeEnum.java, v 0.1 Apr 20, 2019 6:26:14 PM danlley Exp $
  */
-public enum CampPrizeTypeEnum {
-                               CAMP_COMMON_PRIZE("CAMP_COMMON_PRIZE", "通用无限制奖品"),
+public enum CampPrizeTypeEnum implements EnumMessage {
+                                                      CAMP_COMMON_PRIZE("CAMP_COMMON_PRIZE", "通用无限制奖品"),
 
-                               CAMP_PRICE_LIMIT("CAMP_PRICE_LIMIT", "价格限制奖品"),
+                                                      CAMP_PRICE_LIMIT("CAMP_PRICE_LIMIT", "价格限制奖品"),
 
     ;
 

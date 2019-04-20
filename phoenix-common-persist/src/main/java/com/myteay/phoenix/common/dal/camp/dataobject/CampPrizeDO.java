@@ -32,6 +32,9 @@ public class CampPrizeDO implements Serializable {
     /** 奖品使用人群 */
     private String            prizeLimit;
 
+    /** 订单总金额 */
+    private String            orderTotalAmount;
+
     /** 活动ID */
     private String            campId;
 
@@ -67,6 +70,24 @@ public class CampPrizeDO implements Serializable {
 
     /** 最后修改时间 */
     private Date              gmtModified;
+
+    /**
+     * Getter method for property <tt>orderTotalAmount</tt>.
+     * 
+     * @return property value of orderTotalAmount
+     */
+    public String getOrderTotalAmount() {
+        return orderTotalAmount;
+    }
+
+    /**
+     * Setter method for property <tt>orderTotalAmount</tt>.
+     * 
+     * @param orderTotalAmount value to be assigned to property orderTotalAmount
+     */
+    public void setOrderTotalAmount(String orderTotalAmount) {
+        this.orderTotalAmount = orderTotalAmount;
+    }
 
     /**
      * Getter method for property <tt>prizeType</tt>.

@@ -14,9 +14,9 @@ import org.springframework.context.annotation.PropertySource;
  * 
  * 发布前变更日志路径：/etc/myteay/plateform/logs/customer
  * 
- * 测试接口地址：http://192.168.56.102:40001/swagger-ui.html
+ * 测试接口地址：http://192.168.56.102:40009/swagger-ui.html
  * 
- * 容器启动指令：docker run -p 40001:40001 -v /home/danlley/docker/share/logs/customer:/etc/myteay/plateform/logs/customer -v /home/danlley/docker/share/upload/qrcode/usercode:/etc/myteay/plateform/qrcode/usercode customer_201712031740
+ * 容器启动指令：docker run -p 40009:40009 -v /home/danlley/docker/share/logs/customer:/etc/myteay/plateform/logs/customer -v /home/danlley/docker/share/upload/qrcode/usercode:/etc/myteay/plateform/qrcode/usercode customer_201712031740
  * 
  * @author min.weixm
  * @version $Id: Application.java, v 0.1 Nov 19, 2017 4:09:56 PM min.weixm Exp $

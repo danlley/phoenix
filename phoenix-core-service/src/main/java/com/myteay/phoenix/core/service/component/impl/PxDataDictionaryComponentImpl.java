@@ -17,8 +17,10 @@ import org.springframework.util.CollectionUtils;
 import com.myteay.common.util.exception.MtException;
 import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.common.util.tools.EnumUtil;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeLimitEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
+import com.myteay.phoenix.common.util.camp.enums.CampPrizeTypeEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
@@ -112,6 +114,12 @@ public class PxDataDictionaryComponentImpl implements PxDataDictionaryComponent,
 
         list = EnumUtil.getDataDictionaryModelFromEnum(CampPrizeOutStatusEnum.class);
         DATA_DIC_CACHE.put("CampPrizeOutStatusEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(CampPrizeLimitEnum.class);
+        DATA_DIC_CACHE.put("CampPrizeLimitEnum", list);
+
+        list = EnumUtil.getDataDictionaryModelFromEnum(CampPrizeTypeEnum.class);
+        DATA_DIC_CACHE.put("CampPrizeTypeEnum", list);
 
         logger.warn("缓存初始化结果： " + DATA_DIC_CACHE);
     }

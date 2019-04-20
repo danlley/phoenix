@@ -6,18 +6,20 @@ package com.myteay.phoenix.common.util.camp.enums;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.myteay.common.util.enums.EnumMessage;
+
 /**
  * 奖品会员限制枚举
  * 
  * @author danlley
  * @version $Id: CampPrizeLimitEnum.java, v 0.1 Apr 20, 2019 7:02:21 PM danlley Exp $
  */
-public enum CampPrizeLimitEnum {
-                                CAMP_ALL_LIMIT("CAMP_ALL_LIMIT", "全员通用"),
+public enum CampPrizeLimitEnum implements EnumMessage {
+                                                       CAMP_ALL_LIMIT("CAMP_ALL_LIMIT", "全员通用"),
 
-                                CAMP_COMMON_LIMIT("CAMP_COMMON_LIMIT", "普通会员专享"),
+                                                       CAMP_COMMON_LIMIT("CAMP_COMMON_LIMIT", "普通会员专享"),
 
-                                CAMP_GOLDEN_LIMIT("CAMP_GOLDEN_LIMIT", "黄金会员专享"),
+                                                       CAMP_GOLDEN_LIMIT("CAMP_GOLDEN_LIMIT", "黄金会员专享"),
 
     ;
 
