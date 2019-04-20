@@ -4,6 +4,9 @@
  */
 package com.myteay.phoenix.core.service.camp.algorithm;
 
+import java.util.List;
+
+import com.myteay.phoenix.core.service.camp.algorithm.handles.SinglePrizeChecker;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 
@@ -52,9 +55,10 @@ public interface CampAlgorithmComponent {
      * 
      * 
      * @param campId    活动ID
+     * @param checker   个性化抽奖检查器
      * @return
      */
-    public CampAlgorithmResult<CampAlgorithmModel> execute(String campId);
+    public CampAlgorithmResult<CampAlgorithmModel> execute(String campId, List<SinglePrizeChecker> checkers);
 
     /**
      * 初始化抽奖组件

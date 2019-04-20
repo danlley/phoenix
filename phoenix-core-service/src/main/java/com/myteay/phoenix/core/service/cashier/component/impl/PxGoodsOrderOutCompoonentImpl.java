@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.cashier.component.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,8 +35,10 @@ import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository;
 import com.myteay.phoenix.core.model.manage.PxShopModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository;
 import com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.SinglePrizeChecker;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
+import com.myteay.phoenix.core.service.camp.checkers.OrderTotalAmountChecker;
 import com.myteay.phoenix.core.service.camp.component.CampShopCacheComponnet;
 import com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent;
 import com.myteay.phoenix.core.service.utils.PxCashierUtil;
@@ -198,7 +202,8 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
             logger.info("订单实付金额 orderPriceAmount=" + orderPriceAmount);
         }
 
-        CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute(campId);
+        List<SinglePrizeChecker> checkers = buildCheckList(pxGoodsOrderModel);
+        CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.execute(campId, checkers);
         logger.warn("订单抽奖结束 campId = " + campId + " ，抽奖结果： " + result);
 
         CampShopPrizeOutModel campShopPrizeOutModel = constructPrizeOutModel(pxGoodsOrderModel, result);
@@ -226,6 +231,33 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
         campCashierModel.setCampSuccess(true);
 
         return campCashierModel;
+    }
+
+    /**
+     * 构建检查器列表
+     * 
+     * @param pxGoodsOrderModel
+     * @return
+     */
+    private List<SinglePrizeChecker> buildCheckList(PxGoodsOrderModel pxGoodsOrderModel) {
+
+        if (pxGoodsOrderModel == null || pxGoodsOrderModel.getCampShopPrizeOutModel() == null) {
+            return null;
+        }
+
+        CampShopPrizeOutModel campShopPrizeOutModel = pxGoodsOrderModel.getCampShopPrizeOutModel();
+        CampPrizeModel campPrizeModel = campShopCacheComponnet.queryCampPrizeModelFromCache(campShopPrizeOutModel.getCampId(),
+            campShopPrizeOutModel.getPrizeId());
+
+        List<SinglePrizeChecker> checkers = new ArrayList<SinglePrizeChecker>();
+
+        // 订单总金额检查器
+        checkers.add(new OrderTotalAmountChecker(pxGoodsOrderModel, campPrizeModel));
+
+        //对检查器列表进行排序
+        Collections.sort(checkers);
+
+        return checkers;
     }
 
     /**

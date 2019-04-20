@@ -23,6 +23,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.handles.GDHandler;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.GFPHandler;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.GPHandler;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.Handler;
+import com.myteay.phoenix.core.service.camp.algorithm.handles.SinglePrizeChecker;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel;
 import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 
@@ -67,10 +68,10 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
     }
 
     /** 
-     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#execute(java.lang.String)
+     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#execute(java.lang.String, java.util.List)
      */
     @Override
-    public CampAlgorithmResult<CampAlgorithmModel> execute(String campId) {
+    public CampAlgorithmResult<CampAlgorithmModel> execute(String campId, List<SinglePrizeChecker> checkers) {
         logger.warn("开始抽奖 campId=" + campId);
         List<CampAlgorithmModel> list = campAlgorithmCacheComponent.findPrizeListByCampId(campId).getResult();
 
@@ -82,7 +83,7 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         Collections.sort(list);
 
         for (CampAlgorithmModel campAlgorithmModel : list) {
-            if (doAlgorithm(campAlgorithmModel)) {
+            if (doAlgorithm(campAlgorithmModel, checkers)) {
                 return new CampAlgorithmResult<>(campAlgorithmModel);
             }
         }
@@ -100,9 +101,15 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
      * @param campAlgorithmModel
      * @return
      */
-    private boolean doAlgorithm(CampAlgorithmModel campAlgorithmModel) {
+    private boolean doAlgorithm(CampAlgorithmModel campAlgorithmModel, List<SinglePrizeChecker> checkers) {
+        if (!doCheckLimit(campAlgorithmModel, checkers)) {
+            logger.warn("奖品前置约束条件检查未通过，本次不出奖 campAlgorithmModel=" + campAlgorithmModel);
+            return false;
+        }
+
         int percent = campAlgorithmModel.getPercent();
         if (percent <= 0) {
+            logger.warn("中奖概率不满足中奖条件，当前不出奖percent <= 0 campAlgorithmModel=" + campAlgorithmModel);
             return false;
         }
 
@@ -117,6 +124,28 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         // step 2: 奖位分布不中奖的情况
         return isHandler(campAlgorithmModel);
 
+    }
+
+    /**
+     * 执行检查器列表
+     * 
+     * @param campAlgorithmModel
+     * @param checkers
+     * @return
+     */
+    private boolean doCheckLimit(CampAlgorithmModel campAlgorithmModel, List<SinglePrizeChecker> checkers) {
+
+        if (CollectionUtils.isEmpty(checkers)) {
+            return false;
+        }
+
+        for (SinglePrizeChecker checker : checkers) {
+            if (!checker.doCheck(campAlgorithmModel)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
