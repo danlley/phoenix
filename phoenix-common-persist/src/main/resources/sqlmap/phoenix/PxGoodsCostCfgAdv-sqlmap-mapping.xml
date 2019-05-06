@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsCostCfgDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS-COST-CFG-ADV" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsCost" column="goods_cost" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="goodsImage" column="goods_image" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsStatus" column="goods_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="gmtExpired" column="gmt_expired" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="PX-GOODS-COST-CFG-SELECT-ALL" resultMap="RM-PX-GOODS-COST-CFG-ADV">
+	    <![CDATA[
+	        select
+			    a.goods_id, a.shop_id, a.goods_price, b.goods_cost, a.goods_image,
+			    a.goods_title, a.goods_desc, a.goods_status, a.gmt_expired, a.gmt_created
+			from px_goods a left join px_goods_cost_cfg b
+			on a.shop_id = b.shop_id and a.goods_id = b.goods_id
+	    ]]>
+    </select>
+</mapper>

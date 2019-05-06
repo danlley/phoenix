@@ -12,6 +12,8 @@
 		<mapper resource="sqlmap/phoenix/PxPackagesSubNotice-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxMobileGoods-sqlmap-mapping.xml"/>
 		<mapper resource="sqlmap/phoenix/PxGoodsOrderOut-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/phoenix/PxGoodsCostCfgAdv-sqlmap-mapping.xml"/>
+		<mapper resource="sqlmap/phoenix/PxGoodsCostCfg-sqlmap-mapping.xml"/>
 		
 		<!-- 营销平台 -->
 		<mapper resource="sqlmap/camp/CampBase-sqlmap-mapping.xml"/>
