@@ -88,7 +88,7 @@
 	        	goods_id,shop_id,goods_status,goods_image,goods_title,goods_desc,goods_price,goods_comm_price,goods_online_time,
 	        	order_type,goods_type,is_huiyuan,is_quan,is_tuan,goods_sell_amount,gmt_expired,gmt_created,gmt_modified
 	        from phoenix.px_goods 
-	        where (shop_id = #{value})
+	        where (shop_id = #{value}) order by gmt_modified desc
 	    ]]>
     </select>
 

@@ -36,4 +36,6 @@
 	<bean id="campShopPrizeRefGoodsRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopPrizeRefGoodsRepositoryImpl"></bean>
 	
 	<bean id="campShopPrizeOutRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopPrizeOutRepositoryImpl"></bean>
+	
+	<bean id="campShopPrizeOutHistoryRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopPrizeOutHistoryRepositoryImpl"></bean>
 </beans>

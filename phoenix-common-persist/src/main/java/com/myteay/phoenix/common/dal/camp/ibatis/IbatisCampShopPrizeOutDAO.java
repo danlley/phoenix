@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.common.dal.camp.ibatis;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO;
@@ -48,6 +50,22 @@ public class IbatisCampShopPrizeOutDAO extends SqlSessionDaoSupport implements C
         }
 
         this.getSqlSession().update("CAMP-SHOP-PRIZE-OUT-UPDATE-BY-ID", campShopPrizeOutDO);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO#deleteById(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void deleteById(String campPrizeOutId, String prizeOutStatus) {
+        this.getSqlSession().delete("PX-SHOP-PRIZE-OUT-DELETE-GET-BY-ID", campPrizeOutId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampShopPrizeOutDAO#selectCampShopPrizeOutListById(java.lang.String)
+     */
+    @Override
+    public List<CampShopPrizeOutDO> selectCampShopPrizeOutListById(String prizeOutStatus) {
+        return this.getSqlSession().selectList("PX-SHOP-PRIZE-OUT-SELECT-GET-OUT-STATUS", prizeOutStatus);
     }
 
 }

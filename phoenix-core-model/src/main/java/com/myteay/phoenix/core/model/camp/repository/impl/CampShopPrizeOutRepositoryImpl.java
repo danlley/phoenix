@@ -28,10 +28,19 @@ import com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository;
 public class CampShopPrizeOutRepositoryImpl implements CampShopPrizeOutRepository {
 
     /** 日志 */
-    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerNames.PX_CAMP);
 
     /** 奖品流水操作DAO */
     private CampShopPrizeOutDAO campShopPrizeOutDAO;
+
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#removeCampShopPrizeOutById(java.lang.String, com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum)
+     */
+    @Override
+    public String removeCampShopPrizeOutById(String campPrizeOutId, CampPrizeOutStatusEnum prizeOutStatus) throws PxManageException {
+        campShopPrizeOutDAO.deleteById(campPrizeOutId, prizeOutStatus.getValue());
+        return campPrizeOutId;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#modifyCampShopPrizeOutStatusById(com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel)

@@ -24,4 +24,17 @@ public interface CampShopPrizeOutComponent {
      * @throws PxManageException
      */
     public MtOperateResult<CampShopPrizeOutModel> queryCampShopPrizeOutById(String campPrizeOutId);
+
+    /**
+     * 通过中奖号码迁移中奖流水进历史表
+     * 
+     * 注：
+     *      1、已经抵扣掉的中奖信息迁移至历史表
+     *      2、已经过期的中奖信息迁移至历史表
+     * 
+     * @param campPrizeOutId
+     * @return
+     * @throws PxManageException
+     */
+    public MtOperateResult<String> moveCampShopPrizeOut2History(String campPrizeOutId);
 }
