@@ -39,6 +39,12 @@ public class PxGoodsCostModel implements Serializable {
     /** 当日实际成本 */
     private Money             actrualCost;
 
+    /** 当日实际销量（去除优惠） */
+    private String            actrualSellerPriceString;
+
+    /** 当日实际成本 */
+    private String            actrualCostString;
+
     /** 统计日期 */
     private String            reportDate;
 
@@ -47,6 +53,44 @@ public class PxGoodsCostModel implements Serializable {
 
     /** 修改日期 */
     private Date              gmtModified;
+
+    /**
+     * Getter method for property <tt>actrualSellerPriceString</tt>.
+     * 
+     * @return property value of actrualSellerPriceString
+     */
+    public String getActrualSellerPriceString() {
+        return actrualSellerPrice.toString();
+    }
+
+    /**
+     * Setter method for property <tt>actrualSellerPriceString</tt>.
+     * 
+     * @param actrualSellerPriceString value to be assigned to property actrualSellerPriceString
+     */
+    public void setActrualSellerPriceString(String actrualSellerPriceString) {
+        this.actrualSellerPrice = new Money(actrualSellerPriceString);
+        this.actrualSellerPriceString = this.actrualSellerPrice.toString();
+    }
+
+    /**
+     * Getter method for property <tt>actrualCostString</tt>.
+     * 
+     * @return property value of actrualCostString
+     */
+    public String getActrualCostString() {
+        return this.actrualCost.toString();
+    }
+
+    /**
+     * Setter method for property <tt>actrualCostString</tt>.
+     * 
+     * @param actrualCostString value to be assigned to property actrualCostString
+     */
+    public void setActrualCostString(String actrualCostString) {
+        this.actrualCost = new Money(actrualCostString);
+        this.actrualCostString = this.actrualCost.toString();
+    }
 
     /**
      * Getter method for property <tt>goodsId</tt>.
@@ -216,4 +260,5 @@ public class PxGoodsCostModel implements Serializable {
     public String toString() {
         return ToStringUtil.toShortString(this);
     }
+
 }

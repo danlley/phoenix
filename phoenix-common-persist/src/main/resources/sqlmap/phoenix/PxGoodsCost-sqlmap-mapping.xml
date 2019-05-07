@@ -49,6 +49,15 @@
 	    ]]>
     </select>
     
+    <select id="PX-CUR-GOODS-COST-GET-BY-SHOP-ID" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO" resultMap="RM-PX-GOODS-COST">
+	    <![CDATA[
+	        select
+	        	goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+	        from phoenix.px_goods_cost 
+	        where (shop_id = #{shopId}) and report_date = #{reportDate}
+	    ]]>
+    </select>
+    
     <update id="PX-GOODS-COST-UPDATE-GET-BY-ID">
         update phoenix.px_goods_cost
 			set

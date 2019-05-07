@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.model.manage.repository;
 
+import java.util.List;
+
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.manage.PxGoodsCostModel;
 
@@ -14,6 +16,15 @@ import com.myteay.phoenix.core.model.manage.PxGoodsCostModel;
  * @version $Id: PxGoodsCostRepository.java, v 0.1 May 8, 2019 12:01:12 AM danlley Exp $
  */
 public interface PxGoodsCostRepository {
+
+    /**
+     * 查询店铺指定日期的商品销售成本清单
+     * 
+     * @param shopId
+     * @param reportDate
+     * @return
+     */
+    public List<PxGoodsCostModel> findPxGoodsCostByShopId(String shopId, String reportDate);
 
     /**
      * 修改商品成本信息

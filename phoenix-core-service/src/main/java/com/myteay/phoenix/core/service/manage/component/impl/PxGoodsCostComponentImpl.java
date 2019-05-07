@@ -5,6 +5,7 @@
 package com.myteay.phoenix.core.service.manage.component.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import com.myteay.common.util.lang.Money;
 import com.myteay.common.util.log.Logger;
@@ -54,6 +55,14 @@ public class PxGoodsCostComponentImpl implements PxGoodsCostComponent {
         pxGoodsCostRepository.modifyGoodsCostInfo(pxGoodsCostModelFresh);
 
         return new MtOperateResult<>(pxGoodsCostModelFresh);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.manage.component.PxGoodsCostComponent#findPxGoodsCostByShopId(java.lang.String, java.lang.String)
+     */
+    @Override
+    public MtOperateResult<List<PxGoodsCostModel>> findPxGoodsCostByShopId(String shopId, String reportDate) {
+        return new MtOperateResult<List<PxGoodsCostModel>>(pxGoodsCostRepository.findPxGoodsCostByShopId(shopId, reportDate));
     }
 
     /**

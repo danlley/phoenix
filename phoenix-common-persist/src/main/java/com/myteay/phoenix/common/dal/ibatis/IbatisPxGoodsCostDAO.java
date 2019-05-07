@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.common.dal.ibatis;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsCostDAO;
@@ -52,6 +54,17 @@ public class IbatisPxGoodsCostDAO extends SqlSessionDaoSupport implements PxGood
         }
 
         this.getSqlSession().update("PX-GOODS-COST-UPDATE-GET-BY-ID", pxGoodsCostDO);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsCostDAO#findPxGoodsCostByShopId(java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<PxGoodsCostDO> findPxGoodsCostByShopId(String shopId, String reportDate) {
+        PxGoodsCostDO pxGoodsCostDO = new PxGoodsCostDO();
+        pxGoodsCostDO.setShopId(shopId);
+        pxGoodsCostDO.setReportDate(reportDate);
+        return this.getSqlSession().selectList("PX-CUR-GOODS-COST-GET-BY-SHOP-ID", pxGoodsCostDO);
     }
 
 }

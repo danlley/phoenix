@@ -4,6 +4,11 @@
  */
 package com.myteay.phoenix.core.model.manage.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.util.CollectionUtils;
+
 import com.myteay.common.util.lang.Money;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
@@ -27,6 +32,33 @@ public class PxGoodsCostRepositoryImpl implements PxGoodsCostRepository {
 
     /** 商品成本信息记录操作DAO */
     private PxGoodsCostDAO      pxGoodsCostDAO;
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsCostRepository#findPxGoodsCostByShopId(java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<PxGoodsCostModel> findPxGoodsCostByShopId(String shopId, String reportDate) {
+
+        List<PxGoodsCostDO> pxGoodsCostDOs = pxGoodsCostDAO.findPxGoodsCostByShopId(shopId, reportDate);
+        if (CollectionUtils.isEmpty(pxGoodsCostDOs)) {
+            return null;
+        }
+
+        List<PxGoodsCostModel> pxGoodsCostModels = new ArrayList<>();
+        PxGoodsCostModel pxGoodsCostModel = null;
+        for (PxGoodsCostDO pxGoodsCostDO : pxGoodsCostDOs) {
+            if (pxGoodsCostDO == null) {
+                continue;
+            }
+            pxGoodsCostModel = constructDO2Model(pxGoodsCostDO);
+            if (pxGoodsCostModel != null) {
+                pxGoodsCostModels.add(pxGoodsCostModel);
+            }
+
+        }
+
+        return pxGoodsCostModels;
+    }
 
     /** 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsCostRepository#modifyGoodsCostInfo(com.myteay.phoenix.core.model.manage.PxGoodsCostModel)

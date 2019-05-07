@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.service.manage.component;
 
+import java.util.List;
+
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsCostModel;
@@ -24,5 +26,14 @@ public interface PxGoodsCostComponent {
      * @throws PxManageException 
      */
     public MtOperateResult<PxGoodsCostModel> manageGoodsCostInfo(PxGoodsCostModel pxGoodsCostModel) throws PxManageException;
+
+    /**
+     * 查询指定日期的店铺运营成本商品清单
+     * 
+     * @param shopId
+     * @param reportDate
+     * @return
+     */
+    public MtOperateResult<List<PxGoodsCostModel>> findPxGoodsCostByShopId(String shopId, String reportDate);
 
 }

@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.common.dal.daointerface;
 
+import java.util.List;
+
 import com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO;
 
 /**
@@ -30,6 +32,15 @@ public interface PxGoodsCostDAO {
      * @return
      */
     PxGoodsCostDO findPxGoodsCostById(String goodsId, String reportDate);
+
+    /**
+     * 通过店铺ID查询特定日期商品成本数据模型列表
+     * 
+     * @param shopId
+     * @param reportDate
+     * @return
+     */
+    List<PxGoodsCostDO> findPxGoodsCostByShopId(String shopId, String reportDate);
 
     /**
      * 更新商品成本信息
