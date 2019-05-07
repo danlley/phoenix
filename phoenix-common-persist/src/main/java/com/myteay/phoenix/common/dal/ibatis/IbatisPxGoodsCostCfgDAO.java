@@ -47,7 +47,7 @@ public class IbatisPxGoodsCostCfgDAO extends SqlSessionDaoSupport implements PxG
      */
     @Override
     public List<PxGoodsCostCfgAdvDO> findPxGoodsCostCfgAll(String shopId) {
-        return this.getSqlSession().selectList("PX-GOODS-COST-CFG-SELECT-ALL", shopId);
+        return this.getSqlSession().selectList("PX-GOODS-COST-CFG-SELECT-ALL-BY-SHOP", shopId);
     }
 
     /** 
@@ -60,6 +60,14 @@ public class IbatisPxGoodsCostCfgDAO extends SqlSessionDaoSupport implements PxG
         }
 
         this.getSqlSession().update("PX-GOODS-COST-CFG-UPDATE-GET-BY-ID", pxGoodsCostCfgDO);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsCostCfgDAO#findPxGoodsCostCfgsAll()
+     */
+    @Override
+    public List<PxGoodsCostCfgAdvDO> findPxGoodsCostCfgsAll() {
+        return this.getSqlSession().selectList("PX-GOODS-COST-CFG-SELECT-ALL");
     }
 
 }

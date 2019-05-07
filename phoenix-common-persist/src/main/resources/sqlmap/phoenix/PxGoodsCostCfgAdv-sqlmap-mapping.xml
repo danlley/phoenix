@@ -33,13 +33,23 @@
         <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <select id="PX-GOODS-COST-CFG-SELECT-ALL" resultMap="RM-PX-GOODS-COST-CFG-ADV">
+    <select id="PX-GOODS-COST-CFG-SELECT-ALL-BY-SHOP" resultMap="RM-PX-GOODS-COST-CFG-ADV">
 	    <![CDATA[
 	        select
 			    a.goods_id, a.shop_id, a.goods_price, b.goods_cost, a.goods_image,
 			    a.goods_title, a.goods_desc, a.goods_status, a.gmt_expired, a.gmt_created
 			from px_goods a left join px_goods_cost_cfg b
 			on a.shop_id = b.shop_id and a.goods_id = b.goods_id and a.shop_id = #{value}
+	    ]]>
+    </select>
+
+    <select id="PX-GOODS-COST-CFG-SELECT-ALL" resultMap="RM-PX-GOODS-COST-CFG-ADV">
+	    <![CDATA[
+	        select
+			    a.goods_id, a.shop_id, a.goods_price, b.goods_cost, a.goods_image,
+			    a.goods_title, a.goods_desc, a.goods_status, a.gmt_expired, a.gmt_created
+			from px_goods a left join px_goods_cost_cfg b
+			on a.shop_id = b.shop_id and a.goods_id = b.goods_id
 	    ]]>
     </select>
 </mapper>

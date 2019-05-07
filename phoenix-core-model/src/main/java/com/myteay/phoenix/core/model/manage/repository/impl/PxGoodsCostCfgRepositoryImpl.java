@@ -199,4 +199,30 @@ public class PxGoodsCostCfgRepositoryImpl implements PxGoodsCostCfgRepository {
         this.pxGoodsCostCfgDAO = pxGoodsCostCfgDAO;
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsCostCfgRepository#findAllGoodsCostCfg()
+     */
+    @Override
+    public List<PxGoodsCostCfgAdvModel> findAllGoodsCostCfg() throws PxManageException {
+
+        List<PxGoodsCostCfgAdvDO> pxGoodsCostCfgAdvDOs = pxGoodsCostCfgDAO.findPxGoodsCostCfgsAll();
+
+        if (CollectionUtils.isEmpty(pxGoodsCostCfgAdvDOs)) {
+            logger.warn("findAllGoodsCostCfg()查询成本配置清单为空，请检查相关配置是否正确");
+            return null;
+        }
+        List<PxGoodsCostCfgAdvModel> pxGoodsCostCfgAdvModels = new ArrayList<PxGoodsCostCfgAdvModel>();
+        PxGoodsCostCfgAdvModel pxGoodsCostCfgAdvModel = null;
+        for (PxGoodsCostCfgAdvDO pxGoodsCostCfgAdvDO : pxGoodsCostCfgAdvDOs) {
+            pxGoodsCostCfgAdvModel = constructPxGoodsCostCfgAdvDO2Model(pxGoodsCostCfgAdvDO);
+            if (pxGoodsCostCfgAdvModel == null) {
+                continue;
+            }
+
+            pxGoodsCostCfgAdvModels.add(pxGoodsCostCfgAdvModel);
+        }
+
+        return pxGoodsCostCfgAdvModels;
+    }
+
 }

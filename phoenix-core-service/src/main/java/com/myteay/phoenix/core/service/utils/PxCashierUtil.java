@@ -76,7 +76,7 @@ public class PxCashierUtil {
      * @param pxGoodsOrderModel
      * @return
      */
-    private static Money calculatorCampPriceAmount(PxGoodsOrderModel pxGoodsOrderModel) {
+    public static Money calculatorCampPriceAmount(PxGoodsOrderModel pxGoodsOrderModel) {
         if (pxGoodsOrderModel == null || pxGoodsOrderModel.getCampShopPrizeOutModel() == null) {
             return new Money();
         }

@@ -42,6 +42,13 @@ public interface PxGoodsCostCfgDAO {
     List<PxGoodsCostCfgAdvDO> findPxGoodsCostCfgAll(String shopId);
 
     /**
+     * 查询所有商品成本数据模型
+     * 
+     * @return
+     */
+    List<PxGoodsCostCfgAdvDO> findPxGoodsCostCfgsAll();
+
+    /**
      * 更新商品成本信息
      * 
      * @param pxGoodsCostCfgDO

@@ -31,6 +31,8 @@
 	
 	<bean id="pxGoodsCostCfgRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsCostCfgRepositoryImpl"></bean>
 	
+	<bean id="pxGoodsCostRepository" class="com.myteay.phoenix.core.model.manage.repository.impl.PxGoodsCostRepositoryImpl"></bean>
+	
 	<bean id="campShopBaseRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopBaseRepositoryImpl"></bean>
 	
 	<bean id="campShopPrizeRepository" class="com.myteay.phoenix.core.model.camp.repository.impl.CampShopPrizeRepositoryImpl"></bean>

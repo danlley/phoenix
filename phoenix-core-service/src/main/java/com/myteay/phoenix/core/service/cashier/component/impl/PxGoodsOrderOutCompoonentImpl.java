@@ -11,6 +11,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import com.myteay.common.async.event.EventPublishService;
+import com.myteay.common.async.event.MtEvent;
+import com.myteay.common.async.event.MtEventException;
 import com.myteay.common.util.exception.MtException;
 import com.myteay.common.util.lang.Money;
 import com.myteay.common.util.log.Logger;
@@ -20,6 +23,7 @@ import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderContextKeyEnum;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
@@ -52,19 +56,22 @@ import com.myteay.phoenix.core.service.utils.PxCashierUtil;
 public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent {
 
     /** 日志 */
-    private static final Logger        logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
+    private static final Logger         logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
 
     /** 订单流水仓储 */
-    private PxGoodsOrderOutRepository  pxGoodsOrderOutRepository;
+    private PxGoodsOrderOutRepository   pxGoodsOrderOutRepository;
 
     /** 订单流水仓储 */
-    private CampShopCacheComponnet     campShopCacheComponnet;
+    private CampShopCacheComponnet      campShopCacheComponnet;
 
     /** 抽奖算法组件 */
-    private CampAlgorithmComponent     campAlgorithmComponent;
+    private CampAlgorithmComponent      campAlgorithmComponent;
 
     /** 抽奖流水操作仓储 */
-    private CampShopPrizeOutRepository campShopPrizeOutRepository;
+    private CampShopPrizeOutRepository  campShopPrizeOutRepository;
+
+    /** 事件发送组件 */
+    private EventPublishService<String> eventPublishService;
 
     /** 
      * @see com.myteay.phoenix.core.service.cashier.component.PxGoodsOrderOutCompoonent#deleteExpiredOrder(com.myteay.phoenix.core.model.PxGoodsOrderModel)
@@ -175,6 +182,14 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
             campCashierModel.setOrderNo(orderNo);
             campCashierModel.setUserId(pxGoodsOrderModel.getUserId());
             campCashierModel.setShopName(pxGoodsOrderModel.getShopName());
+        }
+
+        //异步更新缓存信息
+        MtEvent<PxGoodsOrderModel> event = new MtEvent<PxGoodsOrderModel>(PxEventTopicEnum.PX_GOODS_COST_CHANGED.getValue(), pxGoodsOrderModel);
+        try {
+            eventPublishService.publishEvent(event);
+        } catch (MtEventException e) {
+            logger.warn("商品成本变更后，发送异步更新请求发生异常 " + e.getMessage(), e);
         }
 
         return new MtOperateResult<>(campCashierModel);
@@ -337,6 +352,15 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
      */
     public void setCampShopPrizeOutRepository(CampShopPrizeOutRepository campShopPrizeOutRepository) {
         this.campShopPrizeOutRepository = campShopPrizeOutRepository;
+    }
+
+    /**
+     * Setter method for property <tt>eventPublishService</tt>.
+     * 
+     * @param eventPublishService value to be assigned to property eventPublishService
+     */
+    public void setEventPublishService(EventPublishService<String> eventPublishService) {
+        this.eventPublishService = eventPublishService;
     }
 
 }

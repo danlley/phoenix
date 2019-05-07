@@ -42,6 +42,10 @@
 	
 	<bean id="pxGoodsCostCfgComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxGoodsCostCfgComponentImpl"></bean>
 	
+	<bean id="pxGoodsCostComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxGoodsCostComponentImpl"></bean>
+	
+	<bean id="pxGoodsCostCfgCacheComponent" class="com.myteay.phoenix.core.service.component.impl.PxGoodsCostCfgCacheComponentImpl"></bean>
+	
 	<bean id="campShopBaseComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseComponentImpl"></bean>
 	
 	<bean id="campShopBaseStatusComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseStatusComponentImpl"></bean>
@@ -71,6 +75,17 @@
 		<property name="descriptor">
 			<bean class="com.myteay.common.async.event.ListenerDescriptor">
 				<property name="topic" value="PX_GOODS_STATUS_CHANGED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 当前商品成本数据变化监听 -->
+	<bean id="pxGoodsCostMngListener" class="com.myteay.phoenix.core.service.manage.listener.PxGoodsCostMngListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_GOODS_COST_CHANGED"></property>
 				<property name="async" value="true"></property>
 				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
 			</bean>

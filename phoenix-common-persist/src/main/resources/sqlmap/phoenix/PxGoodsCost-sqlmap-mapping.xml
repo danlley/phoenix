@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+<!-- ============================================================================= -->
+<!-- This file is a DAL (Data Access Layer)                                        -->
+<!-- code generation utility specially developed for <tt>myteay</tt> project.      -->
+<!--                                                                               -->
+<!-- PLEASE DO NOT MODIFY THIS FILE MANUALLY, or else your modification may be     -->
+<!-- OVERWRITTEN by someone else. To modify the file,                              -->
+<!-- Modify those files according to your needs, then run                          -->
+<!--                                                                               -->
+<!-- @author Wei Xiaomin                                                           -->
+<!-- ============================================================================= -->
+
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsCostDAO">
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisUsersInfoDAO -->
+    <!-- ============================================= -->
+    <resultMap id="RM-PX-GOODS-COST" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO">
+        <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="actrualSellerPrice" column="actrual_seller_price" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="actrualCost" column="actrual_cost" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="reportDate" column="report_date" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="PX-GOODS-COST-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO">
+		insert into phoenix.px_goods_cost (
+		    goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+		) values (
+		    #{goodsId}, #{goodsTitle}, #{goodsDesc}, #{shopId}, #{actrualSellerPrice}, #{actrualCost}, #{reportDate}, now(), now()
+		) ;
+    </insert>
+    
+    <select id="PX-GOODS-COST-GET-BY-GOODS-ID" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO" resultMap="RM-PX-GOODS-COST">
+	    <![CDATA[
+	        select
+	        	goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+	        from phoenix.px_goods_cost 
+	        where (goods_id = #{goodsId}) and report_date = #{reportDate}
+	    ]]>
+    </select>
+    
+    <update id="PX-GOODS-COST-UPDATE-GET-BY-ID">
+        update phoenix.px_goods_cost
+			set
+				<if test="actrualSellerPrice!=null">
+					actrual_seller_price = #{actrualSellerPrice},
+				</if>
+				<if test="actrualCost!=null">
+					actrual_cost = #{actrualCost},
+				</if>
+				gmt_modified = now()
+			where
+				goods_id = #{goodsId} and report_date = #{reportDate}
+    </update>
+</mapper>
