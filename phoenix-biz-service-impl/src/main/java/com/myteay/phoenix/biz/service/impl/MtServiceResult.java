@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.core.model.MtOperateResult;
 
 /**
  * 对外服务返回结果
@@ -46,6 +47,18 @@ public class MtServiceResult<T> implements Serializable {
         this.operateResult = MtOperateResultEnum.CAMP_OPERATE_SUCCESS.getValue();
         this.operateExResult = MtOperateExResultEnum.CAMP_OPERATE_SUCCESS.getValue();
         this.isSuccess = true;
+    }
+
+    /**
+     * @param result
+     */
+    public MtServiceResult(MtOperateResult<T> result) {
+        this.result = result.getResult();
+        this.errorDetail = result.getOperateResult().getMessage();
+        this.operateResult = result.getOperateResult().getValue();
+        this.operateExResult = result.getOperateExResult().getValue();
+        this.errorCode = result.getOperateExResult().getCode();
+
     }
 
     /**

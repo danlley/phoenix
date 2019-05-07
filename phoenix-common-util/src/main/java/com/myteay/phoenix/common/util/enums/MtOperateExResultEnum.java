@@ -246,6 +246,10 @@ public enum MtOperateExResultEnum {
 
                                    CAMP_BASE_ONLINE_ERR("CAMP_BASE_ONLINE_ERR", "00210016", "当前活动已启动，无法保存当前奖品"),
 
+                                   COST_MODEL_ERR("COST_MODEL_ERR", "00310001", "成本模型不可用"),
+
+                                   COST_MODEL_OP_MNG_FAILD("COST_MODEL_OP_MNG_FAILD", "00310002", "成本模型管理失败"),
+
     ;
 
     /** 枚举值 */

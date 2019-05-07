@@ -40,6 +40,8 @@
 	
 	<bean id="pxGoodsOrderOutCompoonent" class="com.myteay.phoenix.core.service.cashier.component.impl.PxGoodsOrderOutCompoonentImpl"></bean>
 	
+	<bean id="pxGoodsCostCfgComponent" class="com.myteay.phoenix.core.service.manage.component.impl.PxGoodsCostCfgComponentImpl"></bean>
+	
 	<bean id="campShopBaseComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseComponentImpl"></bean>
 	
 	<bean id="campShopBaseStatusComponent" class="com.myteay.phoenix.core.service.camp.component.impl.CampShopBaseStatusComponentImpl"></bean>

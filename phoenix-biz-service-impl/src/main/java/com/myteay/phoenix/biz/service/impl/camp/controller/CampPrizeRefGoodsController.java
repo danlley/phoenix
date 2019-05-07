@@ -55,7 +55,7 @@ public class CampPrizeRefGoodsController {
             componentResult = campShopPrizeRefGoodsComponent.findPrizeRefGoodsByPrizeId(prizeId);
             result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             logger.warn("查询所有店内营销活动关联奖品信息发生未知异常  prizeId=" + prizeId + " " + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_PRIZE_REF_GOODS_QRY_ERR);
         }
@@ -82,7 +82,7 @@ public class CampPrizeRefGoodsController {
             MtOperateResult<List<CampPrizeRefGoodsModel>> innerResult = campShopPrizeRefGoodsComponent.managePrizeRefGoodsInfo(campPrizeRefGoodsModelList);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             logger.warn("管理店内营销活动关联奖品信息发生异常" + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }

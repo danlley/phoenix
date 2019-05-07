@@ -2,23 +2,24 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2019 All Rights Reserved.
  */
-package com.myteay.phoenix.common.dal.dataobject;
+package com.myteay.phoenix.core.model.manage;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.myteay.common.util.tools.ToStringUtil;
+import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 
 /**
- * 商品成本高级数据模型
+ * 商品成本管理高级模型
  * 
  * @author danlley
- * @version $Id: PxGoodsCostCfgAdvDO.java, v 0.1 May 6, 2019 11:15:06 PM danlley Exp $
+ * @version $Id: PxGoodsCostCfgAdvModel.java, v 0.1 May 7, 2019 12:43:30 PM danlley Exp $
  */
-public class PxGoodsCostCfgAdvDO implements Serializable {
+public class PxGoodsCostCfgAdvModel implements Serializable {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -5638846984636317691L;
+    private static final long serialVersionUID = -9073159445377653952L;
 
     /** 商品ID */
     private String            goodsId;
@@ -42,13 +43,16 @@ public class PxGoodsCostCfgAdvDO implements Serializable {
     private String            goodsCost;
 
     /** 商品成本 */
-    private String            goodsStatus;
+    private PxGoodsStatusEnum goodsStatus;
 
     /** 创建时间 */
     private Date              gmtCreated;
 
     /** 最后修改时间 */
     private Date              gmtExpired;
+
+    /** 最后修改时间 */
+    private Date              gmtModified;
 
     /**
      * Getter method for property <tt>goodsId</tt>.
@@ -181,7 +185,7 @@ public class PxGoodsCostCfgAdvDO implements Serializable {
      * 
      * @return property value of goodsStatus
      */
-    public String getGoodsStatus() {
+    public PxGoodsStatusEnum getGoodsStatus() {
         return goodsStatus;
     }
 
@@ -190,7 +194,7 @@ public class PxGoodsCostCfgAdvDO implements Serializable {
      * 
      * @param goodsStatus value to be assigned to property goodsStatus
      */
-    public void setGoodsStatus(String goodsStatus) {
+    public void setGoodsStatus(PxGoodsStatusEnum goodsStatus) {
         this.goodsStatus = goodsStatus;
     }
 
@@ -228,6 +232,24 @@ public class PxGoodsCostCfgAdvDO implements Serializable {
      */
     public void setGmtExpired(Date gmtExpired) {
         this.gmtExpired = gmtExpired;
+    }
+
+    /**
+     * Getter method for property <tt>gmtModified</tt>.
+     * 
+     * @return property value of gmtModified
+     */
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    /**
+     * Setter method for property <tt>gmtModified</tt>.
+     * 
+     * @param gmtModified value to be assigned to property gmtModified
+     */
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
     /** 

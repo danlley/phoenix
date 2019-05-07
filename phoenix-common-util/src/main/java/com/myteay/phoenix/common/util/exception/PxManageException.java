@@ -14,7 +14,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
  * @author Administrator
  * @version $Id: MtException.java, v 0.1 2015年11月15日 下午6:30:08 Administrator Exp $
  */
-public class PxManageException extends Exception {
+public class PxManageException extends Throwable {
 
     /** serialVersionUID */
     private static final long     serialVersionUID = -1698555152104131128L;
