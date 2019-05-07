@@ -38,10 +38,11 @@ public interface PxGoodsCostCfgRepository {
     /**
      * 查询所有商品成本信息
      * 
+     * @param shopId
      * @return
-     * @throws PxManageException 
+     * @throws PxManageException
      */
-    public List<PxGoodsCostCfgAdvModel> findAllGoodsCostCfg() throws PxManageException;
+    public List<PxGoodsCostCfgAdvModel> findAllGoodsCostCfg(String shopId) throws PxManageException;
 
     /**
      * 查询单个商品成本信息

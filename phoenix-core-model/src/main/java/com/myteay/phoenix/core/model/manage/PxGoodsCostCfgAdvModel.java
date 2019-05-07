@@ -40,7 +40,7 @@ public class PxGoodsCostCfgAdvModel implements Serializable {
     private String            goodsPrice;
 
     /** 商品成本 */
-    private String            goodsCost;
+    private String            goodsCost        = "0.00";
 
     /** 商品成本 */
     private PxGoodsStatusEnum goodsStatus;

@@ -7,6 +7,8 @@ package com.myteay.phoenix.biz.service.impl.admin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +46,7 @@ public class PxGoodsCostCfgController {
      * @throws PxManageException 
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsCostCfgAdvModel> manageGoodsCostCfgInfo(PxGoodsCostCfgAdvModel pxGoodsCostCfgAdvModel) {
+    public MtServiceResult<PxGoodsCostCfgAdvModel> manageGoodsCostCfgInfo(@RequestBody PxGoodsCostCfgAdvModel pxGoodsCostCfgAdvModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理商品成本 pxGoodsCostCfgAdvModel=" + pxGoodsCostCfgAdvModel);
@@ -59,9 +61,9 @@ public class PxGoodsCostCfgController {
      * @return
      * @throws PxManageException 
      */
-    @RequestMapping(value = "/all", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg() throws PxManageException {
+    @RequestMapping(value = "/all/{shopId}", method = { RequestMethod.GET })
+    public MtServiceResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg(@PathVariable String shopId) throws PxManageException {
 
-        return new MtServiceResult<>(pxGoodsCostCfgComponent.queryAllGoodsCostCfg());
+        return new MtServiceResult<>(pxGoodsCostCfgComponent.queryAllGoodsCostCfg(shopId));
     }
 }

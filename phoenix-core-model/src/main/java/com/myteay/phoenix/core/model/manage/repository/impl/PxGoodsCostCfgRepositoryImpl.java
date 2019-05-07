@@ -94,12 +94,12 @@ public class PxGoodsCostCfgRepositoryImpl implements PxGoodsCostCfgRepository {
     }
 
     /** 
-     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsCostCfgRepository#findAllGoodsCostCfg()
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsCostCfgRepository#findAllGoodsCostCfg(java.lang.String)
      */
     @Override
-    public List<PxGoodsCostCfgAdvModel> findAllGoodsCostCfg() throws PxManageException {
+    public List<PxGoodsCostCfgAdvModel> findAllGoodsCostCfg(String shopId) throws PxManageException {
 
-        List<PxGoodsCostCfgAdvDO> pxGoodsCostCfgAdvDOs = pxGoodsCostCfgDAO.findPxGoodsCostCfgAll();
+        List<PxGoodsCostCfgAdvDO> pxGoodsCostCfgAdvDOs = pxGoodsCostCfgDAO.findPxGoodsCostCfgAll(shopId);
 
         if (CollectionUtils.isEmpty(pxGoodsCostCfgAdvDOs)) {
             logger.warn("查询成本配置清单为空，请检查相关配置是否正确");
@@ -133,7 +133,10 @@ public class PxGoodsCostCfgRepositoryImpl implements PxGoodsCostCfgRepository {
 
         pxGoodsCostCfgAdvModel.setGmtCreated(pxGoodsCostCfgAdvDO.getGmtCreated());
         pxGoodsCostCfgAdvModel.setGmtExpired(pxGoodsCostCfgAdvDO.getGmtExpired());
-        pxGoodsCostCfgAdvModel.setGoodsCost(pxGoodsCostCfgAdvDO.getGoodsCost());
+
+        if (StringUtils.isNotBlank(pxGoodsCostCfgAdvDO.getGoodsCost())) {
+            pxGoodsCostCfgAdvModel.setGoodsCost(pxGoodsCostCfgAdvDO.getGoodsCost());
+        }
         pxGoodsCostCfgAdvModel.setGoodsDesc(pxGoodsCostCfgAdvDO.getGoodsDesc());
         pxGoodsCostCfgAdvModel.setGoodsId(pxGoodsCostCfgAdvDO.getGoodsId());
         pxGoodsCostCfgAdvModel.setGoodsImage(pxGoodsCostCfgAdvDO.getGoodsImage());
@@ -174,7 +177,10 @@ public class PxGoodsCostCfgRepositoryImpl implements PxGoodsCostCfgRepository {
 
         pxGoodsCostCfgAdvModel.setGmtCreated(pxGoodsCostCfgDO.getGmtCreated());
         pxGoodsCostCfgAdvModel.setGmtModified(pxGoodsCostCfgDO.getGmtModified());
-        pxGoodsCostCfgAdvModel.setGoodsCost(pxGoodsCostCfgDO.getGoodsCost());
+
+        if (StringUtils.isNotBlank(pxGoodsCostCfgDO.getGoodsCost())) {
+            pxGoodsCostCfgAdvModel.setGoodsCost(pxGoodsCostCfgDO.getGoodsCost());
+        }
         pxGoodsCostCfgAdvModel.setGoodsDesc(pxGoodsCostCfgDO.getGoodsDesc());
         pxGoodsCostCfgAdvModel.setGoodsId(pxGoodsCostCfgDO.getGoodsId());
         pxGoodsCostCfgAdvModel.setGoodsImage(pxGoodsCostCfgDO.getGoodsImage());

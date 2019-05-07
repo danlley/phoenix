@@ -78,9 +78,9 @@ public class PxGoodsCostCfgComponentImpl implements PxGoodsCostCfgComponent {
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsCostCfgComponent#queryAllGoodsCostCfg()
      */
     @Override
-    public MtOperateResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg() throws PxManageException {
+    public MtOperateResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg(String shopId) throws PxManageException {
 
-        List<PxGoodsCostCfgAdvModel> pxGoodsCostCfgAdvModels = pxGoodsCostCfgRepository.findAllGoodsCostCfg();
+        List<PxGoodsCostCfgAdvModel> pxGoodsCostCfgAdvModels = pxGoodsCostCfgRepository.findAllGoodsCostCfg(shopId);
 
         return new MtOperateResult<List<PxGoodsCostCfgAdvModel>>(pxGoodsCostCfgAdvModels);
     }

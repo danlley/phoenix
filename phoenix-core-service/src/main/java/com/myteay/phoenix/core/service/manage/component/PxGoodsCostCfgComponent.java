@@ -33,6 +33,6 @@ public interface PxGoodsCostCfgComponent {
      * @return
      * @throws PxManageException 
      */
-    public MtOperateResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg() throws PxManageException;
+    public MtOperateResult<List<PxGoodsCostCfgAdvModel>> queryAllGoodsCostCfg(String shopId) throws PxManageException;
 
 }

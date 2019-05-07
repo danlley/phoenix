@@ -20,7 +20,7 @@
     <!-- ============================================= -->
     <!-- mapped statements for IbatisUsersInfoDAO -->
     <!-- ============================================= -->
-    <resultMap id="RM-PX-GOODS-COST-CFG-ADV" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsDO">
+    <resultMap id="RM-PX-GOODS-COST-CFG-ADV" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostCfgAdvDO">
         <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsPrice" column="goods_price" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
 			    a.goods_id, a.shop_id, a.goods_price, b.goods_cost, a.goods_image,
 			    a.goods_title, a.goods_desc, a.goods_status, a.gmt_expired, a.gmt_created
 			from px_goods a left join px_goods_cost_cfg b
-			on a.shop_id = b.shop_id and a.goods_id = b.goods_id
+			on a.shop_id = b.shop_id and a.goods_id = b.goods_id and a.shop_id = #{value}
 	    ]]>
     </select>
 </mapper>
