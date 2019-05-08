@@ -55,7 +55,7 @@
 		</property>
 	</bean>
 	
-	<!-- 定时处理已经过期的营销活动奖品 -->
+	<!-- 定时处理营销活动奖品 -->
 	<bean id="campPrizeOutExpiredScanEventListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeOutExpiredScanEventListener">
 		<property name="descriptor">
 			<bean class="com.myteay.common.async.event.ListenerDescriptor">
@@ -71,6 +71,28 @@
 		<property name="descriptor">
 			<bean class="com.myteay.common.async.event.ListenerDescriptor">
 				<property name="topic" value="CAMP_PRIZE_OUT_EXPIRED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 定时处理已消费的营销活动奖品 -->
+	<bean id="campPrizeOutConsumedMvListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeOutConsumedMvListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_PRIZE_OUT_CONSUMED_MV"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 定时处理已消费的营销活动奖品 -->
+	<bean id="campPrizeOutExpiredMvListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeOutExpiredMvListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_PRIZE_OUT_EXPIRED_MV"></property>
 				<property name="async" value="true"></property>
 				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
 			</bean>

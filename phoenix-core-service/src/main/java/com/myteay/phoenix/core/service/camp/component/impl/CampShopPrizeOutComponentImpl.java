@@ -49,7 +49,15 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
     @Override
     public MtOperateResult<String> moveCampShopPrizeOut2History(String campPrizeOutId) {
 
+        if (logger.isInfoEnabled()) {
+            logger.info("开始迁移指定奖品 campPrizeOutId = " + campPrizeOutId);
+        }
+
         CampShopPrizeOutModel campShopPrizeOutModel = queryCampShopPrizeOutById(campPrizeOutId).getResult();
+
+        if (logger.isInfoEnabled()) {
+            logger.info("迁移指定奖品 campShopPrizeOutModel = " + campShopPrizeOutModel);
+        }
 
         // 事务执行
         String result = this.pxTransactionTemplate.execute(new TransactionCallback<String>() {
@@ -61,7 +69,11 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
             public String doInTransaction(TransactionStatus ts) {
                 try {
 
+                    //迁移奖品至历史表
                     campShopPrizeOutHistoryRepository.saveCampShopPrizeOutHistory(campShopPrizeOutModel);
+
+                    // 删除流水表中的奖品信息
+                    campShopPrizeOutRepository.removeCampShopPrizeOutById(campPrizeOutId, campShopPrizeOutModel.getPrizeOutStatus());
                 } catch (PxManageException e) {
                     logger.warn("中奖流水迁移过程中发生业务处理异常 campPrizeOutId=" + campPrizeOutId, e);
 
@@ -127,6 +139,15 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
      */
     public void setCampShopPrizeOutHistoryRepository(CampShopPrizeOutHistoryRepository campShopPrizeOutHistoryRepository) {
         this.campShopPrizeOutHistoryRepository = campShopPrizeOutHistoryRepository;
+    }
+
+    /**
+     * Setter method for property <tt>pxTransactionTemplate</tt>.
+     * 
+     * @param pxTransactionTemplate value to be assigned to property pxTransactionTemplate
+     */
+    public void setPxTransactionTemplate(TransactionTemplate pxTransactionTemplate) {
+        this.pxTransactionTemplate = pxTransactionTemplate;
     }
 
 }

@@ -81,7 +81,7 @@
     
     <delete id="PX-SHOP-PRIZE-OUT-DELETE-GET-BY-ID">
 	    <![CDATA[
-	        delete from phoenix.camp_shop_prize_out where (id = #{value})
+	        delete from phoenix.camp_shop_prize_out where (camp_prize_out_id = #{value})
 	    ]]>
     </delete>
     

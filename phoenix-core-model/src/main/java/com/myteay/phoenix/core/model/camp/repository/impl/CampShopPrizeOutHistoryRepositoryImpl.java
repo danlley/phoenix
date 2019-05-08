@@ -60,6 +60,8 @@ public class CampShopPrizeOutHistoryRepositoryImpl implements CampShopPrizeOutHi
         campShopPrizeOutHistoryDO.setPrizeId(campShopPrizeOutModel.getPrizeId());
         campShopPrizeOutHistoryDO.setPrizeLevel(campShopPrizeOutModel.getPrizeLevel());
         campShopPrizeOutHistoryDO.setPrizeName(campShopPrizeOutModel.getPrizeName());
+        campShopPrizeOutHistoryDO.setGmtCreated(campShopPrizeOutModel.getGmtCreated());
+        campShopPrizeOutHistoryDO.setGmtModified(campShopPrizeOutModel.getGmtModified());
 
         if (campShopPrizeOutModel.getPrizeOutStatus() != null) {
             campShopPrizeOutHistoryDO.setPrizeOutStatus(campShopPrizeOutModel.getPrizeOutStatus().getValue());
