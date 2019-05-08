@@ -7,10 +7,9 @@ package com.myteay.phoenix.core.service.manage.component.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.myteay.common.async.event.EventPublishService;
-import com.myteay.common.async.event.MtEvent;
-import com.myteay.common.async.event.MtEventException;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.logs.LoggerNames;
@@ -22,6 +21,7 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsCostCfgAdvModel;
 import com.myteay.phoenix.core.model.manage.repository.PxGoodsCostCfgRepository;
 import com.myteay.phoenix.core.service.manage.component.PxGoodsCostCfgComponent;
+import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 
 /**
  * 商品成本管理组件
@@ -39,6 +39,10 @@ public class PxGoodsCostCfgComponentImpl implements PxGoodsCostCfgComponent {
 
     /** 事件发送组件 */
     private EventPublishService<String> eventPublishService;
+
+    /** 事件发送组件 */
+    @Autowired
+    private PxEventPublishTool          pxEventPublishTool;
 
     /** 
      * @see com.myteay.phoenix.core.service.manage.component.PxGoodsCostCfgComponent#manageGoodsCostCfgInfo(com.myteay.phoenix.core.model.manage.PxGoodsCostCfgAdvModel)
@@ -66,6 +70,8 @@ public class PxGoodsCostCfgComponentImpl implements PxGoodsCostCfgComponent {
                 logger.warn("manageGoodsCostCfgInfo --> saveGoodsCostCfgInfo error:  pxGoodsCostCfgAdvModel=" + pxGoodsCostCfgAdvModel);
                 return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.COST_MODEL_OP_MNG_FAILD);
             }
+            //异步更新缓存信息
+            pxEventPublishTool.publishEventWithObject(PxEventTopicEnum.PX_GOODS_COST_CFG_CHANGED, pxGoodsCostCfgAdvModel);
             return new MtOperateResult<>(originalModel);
         }
 
@@ -79,13 +85,7 @@ public class PxGoodsCostCfgComponentImpl implements PxGoodsCostCfgComponent {
         }
 
         //异步更新缓存信息
-        MtEvent<PxGoodsCostCfgAdvModel> event = new MtEvent<PxGoodsCostCfgAdvModel>(PxEventTopicEnum.PX_GOODS_COST_CFG_CHANGED.getValue(),
-            pxGoodsCostCfgAdvModel);
-        try {
-            eventPublishService.publishEvent(event);
-        } catch (MtEventException e) {
-            logger.warn("商品成本变更后，发送异步更新请求发生异常 " + e.getMessage(), e);
-        }
+        pxEventPublishTool.publishEventWithObject(PxEventTopicEnum.PX_GOODS_COST_CFG_CHANGED, pxGoodsCostCfgAdvModel);
 
         return new MtOperateResult<PxGoodsCostCfgAdvModel>(originalModel);
     }
@@ -117,6 +117,15 @@ public class PxGoodsCostCfgComponentImpl implements PxGoodsCostCfgComponent {
      */
     public void setEventPublishService(EventPublishService<String> eventPublishService) {
         this.eventPublishService = eventPublishService;
+    }
+
+    /**
+     * Setter method for property <tt>pxEventPublishTool</tt>.
+     * 
+     * @param pxEventPublishTool value to be assigned to property pxEventPublishTool
+     */
+    public void setPxEventPublishTool(PxEventPublishTool pxEventPublishTool) {
+        this.pxEventPublishTool = pxEventPublishTool;
     }
 
 }

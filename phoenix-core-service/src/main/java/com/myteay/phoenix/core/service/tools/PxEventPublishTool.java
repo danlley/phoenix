@@ -42,6 +42,23 @@ public class PxEventPublishTool {
     }
 
     /**
+     * 发布异步事件
+     * 
+     * @param topicEnum
+     * @param obj
+     */
+    public void publishEventWithObject(PxEventTopicEnum topicEnum, Object obj) {
+        try {
+            eventPublishService.publishEvent(new MtEvent<>(topicEnum.getValue(), obj));
+        } catch (MtEventException e) {
+            logger.error("发送异步事件过程中出现异常", e);
+        } catch (Throwable e) {
+            logger.error("发送异步事件过程中出现未知异常", e);
+        }
+
+    }
+
+    /**
      * Setter method for property <tt>eventPublishService</tt>.
      * 
      * @param eventPublishService value to be assigned to property eventPublishService
