@@ -180,6 +180,8 @@ public class PxGoodsCostMngListener extends EventListener<Object> {
         PxGoodsCostModel pxGoodsCostModel = new PxGoodsCostModel();
 
         Money actrualCost = pxGoodsCostCfgCacheComponent.queryGoodsCostCfgByGoodsId(pxGoodsModel.getGoodsId());
+        int amount = Integer.parseInt(pxGoodsModel.getGoodsSellAmount());
+        actrualCost.multiply(amount);
         pxGoodsCostModel.setActrualCost(actrualCost);
 
         pxGoodsCostModel.setActrualSellerPrice(getGoodsOrderPrice(pxGoodsModel));

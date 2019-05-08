@@ -26,6 +26,8 @@ public enum PxEventTopicEnum {
 
                               PX_GOODS_COST_CHANGED("PX_GOODS_COST_CHANGED", "商品当日经营成本变更事件"),
 
+                              PX_GOODS_COST_CFG_CHANGED("PX_GOODS_COST_CFG_CHANGED", "商品成本配置变更事件"),
+
                               CAMP_TASK_EXPIRED("CAMP_TASK_EXPIRED", "监控店铺营销活动过期时间事件"),
 
                               CAMP_PRIZE_TASK_EXPIRED("CAMP_PRIZE_TASK_EXPIRED", "监控店铺营销活动奖品过期时间事件"),
