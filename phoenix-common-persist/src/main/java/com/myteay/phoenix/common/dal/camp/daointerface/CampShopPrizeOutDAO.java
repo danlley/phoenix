@@ -46,7 +46,7 @@ public interface CampShopPrizeOutDAO {
      * @param campPrizeOutId
      * @return
      */
-    List<CampShopPrizeOutDO> selectCampShopPrizeOutListById(String prizeOutStatus);
+    List<CampShopPrizeOutDO> selectCampShopPrizeOutListByStatus(String prizeOutStatus);
 
     /**
      * 变更中奖流水状态

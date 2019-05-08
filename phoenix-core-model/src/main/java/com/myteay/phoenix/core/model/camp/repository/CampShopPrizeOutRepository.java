@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.model.camp.repository;
 
+import java.util.List;
+
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
@@ -40,6 +42,15 @@ public interface CampShopPrizeOutRepository {
      * @throws PxManageException
      */
     public CampShopPrizeOutModel queryCampShopPrizeOutById(String campPrizeOutId) throws PxManageException;
+
+    /**
+     * 查询指定状态的奖品信息
+     * 
+     * @param prizeOutStatus
+     * @return
+     * @throws PxManageException
+     */
+    public List<CampShopPrizeOutModel> selectCampShopPrizeOutListByStatus(CampPrizeOutStatusEnum prizeOutStatus) throws PxManageException;
 
     /**
      * 通过中奖ID删除已经过期和已经完成抵扣的奖品

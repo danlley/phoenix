@@ -66,6 +66,17 @@
 		</property>
 	</bean>
 	
+	<!-- 定时处理已经过期的营销活动奖品 -->
+	<bean id="campPrizeOutExpiredEventListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeOutExpiredEventListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_PRIZE_OUT_EXPIRED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
+	
 	<!-- 定时处理已经过期的收银台订单 -->
 	<bean id="pxShopExpiredOrderScanListener" class="com.myteay.phoenix.biz.service.quartz.listeners.PxShopExpiredOrderScanListener">
 		<property name="descriptor">

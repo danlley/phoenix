@@ -75,7 +75,7 @@
 			from
 				phoenix.camp_shop_prize_out
 			where
-				(prize_out_status = #{value}) limit 0,10;
+				(prize_out_status = #{value}) and now()>prize_expired limit 0,100;
 	    ]]>
     </select>
     

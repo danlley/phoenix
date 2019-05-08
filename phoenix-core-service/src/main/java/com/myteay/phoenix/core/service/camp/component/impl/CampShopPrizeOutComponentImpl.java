@@ -40,7 +40,7 @@ public class CampShopPrizeOutComponentImpl implements CampShopPrizeOutComponent 
     /** 到店消费营销活动基础数据缓存 */
     private CampShopCacheComponnet            campShopCacheComponnet;
 
-    /**  */
+    /** 事务模板 */
     private TransactionTemplate               pxTransactionTemplate;
 
     /** 

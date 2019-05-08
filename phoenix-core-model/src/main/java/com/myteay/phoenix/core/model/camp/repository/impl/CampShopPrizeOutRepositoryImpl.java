@@ -4,7 +4,11 @@
  */
 package com.myteay.phoenix.core.model.camp.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
@@ -139,10 +143,43 @@ public class CampShopPrizeOutRepositoryImpl implements CampShopPrizeOutRepositor
         try {
             id = campShopPrizeOutDAO.insert(campShopPrizeOutDO);
         } catch (Throwable e) {
-            logger.warn("保存奖品流水数据模型失败  campShopPrizeOutModel" + campShopPrizeOutModel, e);
+            logger.warn("保存奖品流水数据模型失败  campShopPrizeOutModel=" + campShopPrizeOutModel, e);
             throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
         return id;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeOutRepository#selectCampShopPrizeOutListByStatus(com.myteay.phoenix.common.util.camp.enums.CampPrizeOutStatusEnum)
+     */
+    @Override
+    public List<CampShopPrizeOutModel> selectCampShopPrizeOutListByStatus(CampPrizeOutStatusEnum prizeOutStatus) throws PxManageException {
+
+        String status = (prizeOutStatus == null ? null : prizeOutStatus.getValue());
+        List<CampShopPrizeOutDO> campShopPrizeOutDOs = null;
+        try {
+            campShopPrizeOutDOs = campShopPrizeOutDAO.selectCampShopPrizeOutListByStatus(status);
+        } catch (Throwable e) {
+            logger.warn("查询奖品流水数据模型失败  prizeOutStatus=" + prizeOutStatus, e);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
+        }
+
+        if (CollectionUtils.isEmpty(campShopPrizeOutDOs)) {
+            return null;
+        }
+
+        List<CampShopPrizeOutModel> campShopPrizeOutModels = new ArrayList<CampShopPrizeOutModel>();
+        CampShopPrizeOutModel campShopPrizeOutModel = null;
+        for (CampShopPrizeOutDO campShopPrizeOutDO : campShopPrizeOutDOs) {
+            campShopPrizeOutModel = convertDO2Model(campShopPrizeOutDO);
+            if (campShopPrizeOutModel == null) {
+                continue;
+            }
+
+            campShopPrizeOutModels.add(campShopPrizeOutModel);
+        }
+
+        return campShopPrizeOutModels;
     }
 
     /**

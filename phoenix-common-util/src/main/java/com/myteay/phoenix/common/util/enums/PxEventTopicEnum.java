@@ -34,6 +34,8 @@ public enum PxEventTopicEnum {
 
                               CAMP_PRIZE_OUT_TASK_EXPIRED("CAMP_PRIZE_OUT_TASK_EXPIRED", "监控店铺营销活动奖品中奖流水过期时间事件"),
 
+                              CAMP_PRIZE_OUT_EXPIRED("CAMP_PRIZE_OUT_EXPIRED", "对过期的已发放奖品进行过期处理"),
+
                               PX_TASK_SHOP_EXPIRED_ORDERS("PX_TASK_SHOP_EXPIRED_ORDERS", "监控店铺过期订单事件"),
 
     ;
