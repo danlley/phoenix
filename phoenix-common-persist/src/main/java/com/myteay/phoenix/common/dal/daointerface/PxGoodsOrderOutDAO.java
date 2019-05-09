@@ -24,7 +24,14 @@ public interface PxGoodsOrderOutDAO {
     List<PxGoodsOrderOutDO> selectExpiredGoodsOrderOutDOs();
 
     /**
-     * 插入商品概要信息
+     * 查询当日零点之前已经完成支付的订单，每次100条
+     * 
+     * @return
+     */
+    List<PxGoodsOrderOutDO> selectPayedGoodsOrderOutDOs();
+
+    /**
+     * 插入订单流水信息
      * 
      * @param pxGoodsOrderOutDO   数据模型
      * @return
@@ -32,17 +39,24 @@ public interface PxGoodsOrderOutDAO {
     String insert(PxGoodsOrderOutDO pxGoodsOrderOutDO);
 
     /**
-     * 更新商品概要配置信息
+     * 更新订单流水配置信息
      * 
      * @param pxGoodsOrderOutDO
      */
     void updatePxGoods(PxGoodsOrderOutDO pxGoodsOrderOutDO);
 
     /**
-     * 通过ID 删除商品概要信息
+     * 通过ID 删除订单流水信息
      * 
      * @param id
      */
     void deleteByIdWithStatus(String id);
+
+    /**
+     * 通过ID删除订单流水
+     * 
+     * @param id
+     */
+    public void deletePayedOrderOutById(String id);
 
 }

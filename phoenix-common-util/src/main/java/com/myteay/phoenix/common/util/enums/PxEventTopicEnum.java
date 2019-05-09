@@ -44,6 +44,8 @@ public enum PxEventTopicEnum {
 
                               PX_TASK_SHOP_EXPIRED_ORDERS("PX_TASK_SHOP_EXPIRED_ORDERS", "监控店铺过期订单事件"),
 
+                              PX_TASK_SHOP_PAYED_ORDERS("PX_TASK_SHOP_PAYED_ORDERS", "监控店铺已支付待迁移订单事件"),
+
     ;
     /** value */
     private final String value;

@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
-import com.myteay.common.util.exception.MtException;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO;
@@ -45,15 +44,28 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
      * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#deleteExpiredOrder(com.myteay.phoenix.core.model.PxGoodsOrderOutModel)
      */
     @Override
-    public String deleteExpiredOrder(PxGoodsOrderOutModel pxGoodsOrderOutModel) throws MtException {
+    public String deleteExpiredOrder(PxGoodsOrderOutModel pxGoodsOrderOutModel) throws PxManageException {
         if (pxGoodsOrderOutModel == null || StringUtils.isBlank(pxGoodsOrderOutModel.getId())) {
             logger.warn("当前订单模型不合法，无法完成废单清理工作 pxGoodsOrderOutModel=" + pxGoodsOrderOutModel);
-            throw new MtException("当前订单模型不合法，无法完成废单清理工作");
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
         }
 
         pxGoodsOrderOutDAO.deleteByIdWithStatus(pxGoodsOrderOutModel.getId());
 
         return pxGoodsOrderOutModel.getId();
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#deletePayedOrderOutById(java.lang.String)
+     */
+    @Override
+    public void deletePayedOrderOutById(String id) throws PxManageException {
+        if (StringUtils.isBlank(id)) {
+            logger.warn("当前订单模型不合法，无法完成废单清理工作 id=" + id);
+            throw new PxManageException(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+        }
+
+        pxGoodsOrderOutDAO.deletePayedOrderOutById(id);
     }
 
     /** 
@@ -74,6 +86,25 @@ public class PxGoodsOrderOutRepositoryImpl implements PxGoodsOrderOutRepository 
         }
 
         return pxGoodsOrderModel;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.model.manage.repository.PxGoodsOrderOutRepository#findAllPayedOrder()
+     */
+    @Override
+    public List<PxGoodsOrderOutModel> findAllPayedOrder() {
+        List<PxGoodsOrderOutDO> expiredOrderList = pxGoodsOrderOutDAO.selectPayedGoodsOrderOutDOs();
+
+        if (CollectionUtils.isEmpty(expiredOrderList)) {
+            return null;
+        }
+
+        PxGoodsOrderModel pxGoodsOrderModel = new PxGoodsOrderModel();
+        List<PxGoodsOrderOutModel> pxGoodsOrderOutModels = pxGoodsOrderModel.getPxGoodsOrderOutModelList();
+        for (PxGoodsOrderOutDO pxGoodsOrderOutDO : expiredOrderList) {
+            fillOrderOutModel(pxGoodsOrderOutModels, pxGoodsOrderOutDO);
+        }
+        return pxGoodsOrderOutModels;
     }
 
     /**

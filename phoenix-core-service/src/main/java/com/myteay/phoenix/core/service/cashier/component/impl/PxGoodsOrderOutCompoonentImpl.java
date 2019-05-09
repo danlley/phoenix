@@ -14,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 import com.myteay.common.async.event.EventPublishService;
 import com.myteay.common.async.event.MtEvent;
 import com.myteay.common.async.event.MtEventException;
-import com.myteay.common.util.exception.MtException;
 import com.myteay.common.util.lang.Money;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
@@ -94,7 +93,7 @@ public class PxGoodsOrderOutCompoonentImpl implements PxGoodsOrderOutCompoonent 
             for (PxGoodsOrderOutModel pxGoodsOrderOutModel : orderOutModelList) {
                 pxGoodsOrderOutRepository.deleteExpiredOrder(pxGoodsOrderOutModel);
             }
-        } catch (MtException e) {
+        } catch (PxManageException e) {
             logger.warn("废单清理失败： " + e.getMessage(), e);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }

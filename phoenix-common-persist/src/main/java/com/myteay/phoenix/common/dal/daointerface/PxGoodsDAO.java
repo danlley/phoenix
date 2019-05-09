@@ -77,4 +77,5 @@ public interface PxGoodsDAO {
      * @param goodsId
      */
     void deleteById(String goodsId);
+
 }

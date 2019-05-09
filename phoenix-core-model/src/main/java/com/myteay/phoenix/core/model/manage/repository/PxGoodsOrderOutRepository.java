@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.core.model.manage.repository;
 
+import java.util.List;
+
 import com.myteay.common.util.exception.MtException;
 import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
@@ -26,7 +28,15 @@ public interface PxGoodsOrderOutRepository {
      * @return
      * @throws MtException 
      */
-    public String deleteExpiredOrder(PxGoodsOrderOutModel pxGoodsOrderOutModel) throws MtException;
+    public String deleteExpiredOrder(PxGoodsOrderOutModel pxGoodsOrderOutModel) throws PxManageException;
+
+    /**
+     * 删除已支付订单
+     * 
+     * @param id
+     * @throws PxManageException
+     */
+    public void deletePayedOrderOutById(String id) throws PxManageException;
 
     /**
      * 查询所有已经过期、废弃的订单信息为下一步进行清理做准备
@@ -34,6 +44,13 @@ public interface PxGoodsOrderOutRepository {
      * @return
      */
     public PxGoodsOrderModel findAllShopExpiredOrder();
+
+    /**
+     * 查询当日之前所有的已支付订单，每次查询100条
+     * 
+     * @return
+     */
+    public List<PxGoodsOrderOutModel> findAllPayedOrder();
 
     /**
      * 保存订单流水

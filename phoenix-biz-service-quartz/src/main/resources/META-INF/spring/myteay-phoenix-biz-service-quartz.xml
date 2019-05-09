@@ -55,6 +55,17 @@
 		</property>
 	</bean>
 	
+	<!-- 定时处理已支付的待迁移订单 -->
+	<bean id="pxPayedOrderNeedMvListener" class="com.myteay.phoenix.biz.service.quartz.listeners.PxPayedOrderNeedMvListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="PX_TASK_SHOP_PAYED_ORDERS"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayCommonTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>
+	
 	<!-- 定时处理营销活动奖品 -->
 	<bean id="campPrizeOutExpiredScanEventListener" class="com.myteay.phoenix.biz.service.quartz.camp.listeners.CampPrizeOutExpiredScanEventListener">
 		<property name="descriptor">

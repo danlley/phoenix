@@ -16,11 +16,11 @@
 <!-- @author Wei Xiaomin                                                           -->
 <!-- ============================================================================= -->
 
-<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO">
+<mapper namespace="com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutHistoryDAO">
     <!-- ============================================= -->
     <!-- mapped statements for IbatisUsersInfoDAO -->
     <!-- ============================================= -->
-    <resultMap id="RM-PX-GOODS-ORDER-OUT" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
+    <resultMap id="RM-PX-GOODS-ORDER-OUT-HISTORY" type="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutHistoryDO">
         <result property="id" column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="orderNo" column="order_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -38,71 +38,15 @@
         <result property="gmtModified" column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
     <!-- mapped statement for IbatisUsersInfoDAO.insert -->
-    <insert id="PX-GOODS-ORDER-OUT-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutDO">
-		insert into phoenix.px_goods_order_out (
+    <insert id="PX-GOODS-ORDER-OUT-HISTORY-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsOrderOutHistoryDO">
+		insert into phoenix.px_goods_order_out_history (
 		    order_no,user_id,goods_id,shop_id,shop_name,goods_title,order_status,pay_type,goods_price,seller_amount,goods_comm_price,
 		    goods_type,gmt_created,gmt_modified
 		)values(
 		    #{orderNo},#{userId},#{goodsId},#{shopId},#{shopName},#{goodsTitle},#{orderStatus},#{payType},#{goodsPrice},#{sellerAmount},#{goodsCommPrice},
-		    #{goodsType},now(),now()
+		    #{goodsType},#{gmtCreated},#{gmtModified}
 		) ;
-	  <selectKey resultType="java.lang.String" keyProperty="id">  
-	    SELECT LAST_INSERT_ID()  
-	  </selectKey>
     </insert>
     
-    <select id="PX-GOODS-ORDER-SELECT-GET-BY-EXPIRED" resultMap="RM-PX-GOODS-ORDER-OUT">
-	    <![CDATA[
-			select 
-				id, order_no,user_id,goods_id,shop_id,shop_name,goods_title,
-				order_status,pay_type,goods_price,seller_amount,goods_comm_price,
-				goods_type,gmt_created,gmt_modified
-			from
-				px_goods_order_out
-			where
-				now()>date_sub(gmt_created, interval -5 minute) and
-				order_status='PX_ORDER_INIT' and pay_type='PX_UN_PAY'
-	    ]]>
-    </select>
-    
-    
-    <select id="PX-GOODS-ORDER-SELECT-GET-BY-PAYED" resultMap="RM-PX-GOODS-ORDER-OUT">
-	    <![CDATA[
-			select 
-				id, order_no,user_id,goods_id,shop_id,shop_name,goods_title,
-				order_status,pay_type,goods_price,seller_amount,goods_comm_price,
-				goods_type,gmt_created,gmt_modified
-			from
-				px_goods_order_out
-			where
-				now()>date_format(now(),'%Y-%m-%d') and
-				order_status='PX_ORDER_PAYED' order by gmt_created desc  limit 0,200;
-	    ]]>
-    </select>
-    
-    <delete id="PX-GOODS-ORDER-OUT-DELETE-GET-BY-ID">
-	    <![CDATA[
-	        delete from phoenix.px_goods_order_out where (id = #{value}) and order_status='PX_ORDER_INIT' and pay_type='PX_UN_PAY'
-	    ]]>
-    </delete>
-    
-    <delete id="PX-GOODS-ORDER-OUT-DELETE-PAYED-GET-BY-ID">
-	    <![CDATA[
-	        delete from phoenix.px_goods_order_out where (id = #{value}) and order_status='PX_ORDER_PAYED'
-	    ]]>
-    </delete>
-    
-    <update id="PX-GOODS-ORDER-OUT-STATUS-UPDATE-GET-BY-ORDER-NO">
-        update phoenix.px_goods_order_out
-			set
-				<if test="orderStatus!=null">
-					order_status = #{orderStatus},
-				</if>
-				<if test="payType!=null">
-					pay_type = #{payType},
-				</if>
-				gmt_modified = now()
-			where
-				order_no = #{orderNo}
-    </update>
+
 </mapper>

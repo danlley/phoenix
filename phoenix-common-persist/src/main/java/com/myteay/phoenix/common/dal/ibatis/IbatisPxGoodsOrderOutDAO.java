@@ -54,10 +54,26 @@ public class IbatisPxGoodsOrderOutDAO extends SqlSessionDaoSupport implements Px
     }
 
     /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO#deletePayedOrderOutById(java.lang.String)
+     */
+    @Override
+    public void deletePayedOrderOutById(String id) {
+        this.getSqlSession().delete("PX-GOODS-ORDER-OUT-DELETE-PAYED-GET-BY-ID", id);
+    }
+
+    /** 
      * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO#selectExpiredGoodsOrderOutDOs()
      */
     @Override
     public List<PxGoodsOrderOutDO> selectExpiredGoodsOrderOutDOs() {
         return this.getSqlSession().selectList("PX-GOODS-ORDER-SELECT-GET-BY-EXPIRED");
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.dal.daointerface.PxGoodsOrderOutDAO#selectPayedGoodsOrderOutDOs()
+     */
+    @Override
+    public List<PxGoodsOrderOutDO> selectPayedGoodsOrderOutDOs() {
+        return this.getSqlSession().selectList("PX-GOODS-ORDER-SELECT-GET-BY-PAYED");
     }
 }

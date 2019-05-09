@@ -27,6 +27,8 @@
 	
 	<bean id="pxGoodsOrderOutDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsOrderOutDAO"/>
 	
+	<bean id="pxGoodsOrderOutHistoryDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsOrderOutHistoryDAO"/>
+	
 	<bean id="pxGoodsCostCfgDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsCostCfgDAO"/>
 	
 	<bean id="pxGoodsCostDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsCostDAO"/>
