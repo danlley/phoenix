@@ -23,7 +23,7 @@ public interface CampAlgorithmCacheComponent {
      * @param freshAlgorithmModel
      * @return
      */
-    public CampAlgorithmResult<CampAlgorithmModel> initCache(CampAlgorithmModel freshAlgorithmModel);
+    public CampAlgorithmResult<String> initCache();
 
     /**
      * 获取当前可参与抽奖的奖品列表

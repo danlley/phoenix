@@ -58,5 +58,11 @@
 	    ]]>
 	     <!--  where (algorithm_status = 'CAMP_ALGORITHM_START') -->
     </select>
+    
+     <delete id="CAMP-PRIZE-DELETE-GET-BY-CAMP-ID">
+	    <![CDATA[
+	        delete from phoenix.camp_algorithm where (camp_id = #{value})
+	    ]]>
+    </delete>
 
 </mapper>

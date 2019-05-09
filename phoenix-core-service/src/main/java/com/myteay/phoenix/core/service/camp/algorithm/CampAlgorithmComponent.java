@@ -73,9 +73,18 @@ public interface CampAlgorithmComponent {
      *      
      *      4、系统重新启动或当前接口收到请求数据均会对抽奖缓存进行再次刷新
      * 
-     * @param campAlgorithmModel    出奖算法模型，用于出奖模块数据落地
-     * @param operationLevel        操作等级：1标识初始化，2标识暂停奖品（如活动暂停，或运行中的活动中奖品下架），3标识删除当前奖品不再参与相应的抽奖活动
+     * @param campId                 活动ID
+     * @param campAlgorithmModels    出奖算法模型，用于出奖模块数据落地
+     * @param operationLevel         操作等级：1标识初始化，2标识暂停奖品（如活动暂停，或运行中的活动中奖品下架），3标识删除当前奖品不再参与相应的抽奖活动
      * @return
      */
-    public CampAlgorithmResult<CampAlgorithmModel> initAlgorithm(CampAlgorithmModel campAlgorithmModel, int operationLevel);
+    public CampAlgorithmResult<List<CampAlgorithmModel>> initAlgorithm(String campId, List<CampAlgorithmModel> campAlgorithmModels, int operationLevel);
+
+    /**
+     * 关停抽奖模块中的奖品列表（携带刷新缓存功能）
+     * 
+     * @param campId
+     * @return
+     */
+    public CampAlgorithmResult<String> closeCertainCamp(String campId);
 }

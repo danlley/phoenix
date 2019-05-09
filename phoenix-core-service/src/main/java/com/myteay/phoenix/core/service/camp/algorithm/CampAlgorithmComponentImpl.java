@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
@@ -19,7 +18,6 @@ import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO;
 import com.myteay.phoenix.common.dal.camp.dataobject.CampAlgorithmDO;
 import com.myteay.phoenix.common.logs.LoggerNames;
-import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmStatusEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.enums.CampAlgorithmTypeEnum;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.GDHandler;
 import com.myteay.phoenix.core.service.camp.algorithm.handles.GFPHandler;
@@ -179,30 +177,69 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
         }
     }
 
+    /**
+     * 初始化抽奖主模块奖品信息
+     * 
+     * @param campId
+     * @param campAlgorithmModels
+     */
+    private void initAlgorithm(String campId, List<CampAlgorithmModel> campAlgorithmModels) {
+
+        campAlgorithmDAO.deleteCampAlgorithmByCampId(campId);
+
+        if (CollectionUtils.isEmpty(campAlgorithmModels)) {
+
+            // 刷新缓存
+            campAlgorithmCacheComponent.initCache();
+            return;
+        }
+
+        for (CampAlgorithmModel campAlgorithmModel : campAlgorithmModels) {
+            logger.warn("开始准备抽奖数据 campAlgorithmModel=" + campAlgorithmModel);
+            saveAlgorithmResult(campAlgorithmModel);
+        }
+
+        // 刷新缓存
+        campAlgorithmCacheComponent.initCache();
+    }
+
     /** 
-     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#initAlgorithm(com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel, int)
+     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#closeCertainCamp(java.lang.String)
      */
     @Override
-    public CampAlgorithmResult<CampAlgorithmModel> initAlgorithm(CampAlgorithmModel campAlgorithmModel, int operationLevel) {
-        logger.warn("开始准备抽奖数据 campAlgorithmModel=" + campAlgorithmModel + " operationLevel=" + operationLevel);
+    public CampAlgorithmResult<String> closeCertainCamp(String campId) {
+        //清理目标活动的奖品信息
+        campAlgorithmDAO.deleteCampAlgorithmByCampId(campId);
 
-        CampAlgorithmModel freshAlgorithmModel = null;
+        // 刷新缓存
+        campAlgorithmCacheComponent.initCache();
+
+        return new CampAlgorithmResult<>(campId);
+    }
+
+    /** 
+     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmComponent#initAlgorithm(java.lang.String, java.util.List, int)
+     */
+    @Override
+    public CampAlgorithmResult<List<CampAlgorithmModel>> initAlgorithm(String campId, List<CampAlgorithmModel> campAlgorithmModels, int operationLevel) {
+        logger.warn("开始准备抽奖数据 campAlgorithmModels=" + campAlgorithmModels + " operationLevel=" + operationLevel);
+
         switch (operationLevel) {
             case 1:
-                return saveAlgorithmResult(campAlgorithmModel);
+                initAlgorithm(campId, campAlgorithmModels);
             case 2:
-                logger.warn("当前不支持的数据操作等级 campAlgorithmModel=" + campAlgorithmModel + " operationLevel=" + operationLevel);
+                logger.warn("当前不支持的数据操作等级 campAlgorithmModels=" + campAlgorithmModels + " operationLevel=" + operationLevel);
                 break;
             case 3:
-                logger.warn("当前不支持的数据操作等级 campAlgorithmModel=" + campAlgorithmModel + " operationLevel=" + operationLevel);
+                logger.warn("当前不支持的数据操作等级 campAlgorithmModels=" + campAlgorithmModels + " operationLevel=" + operationLevel);
                 break;
 
             default:
-                logger.warn("当前不支持的数据操作等级 campAlgorithmModel=" + campAlgorithmModel + " operationLevel=" + operationLevel);
+                logger.warn("当前不支持的数据操作等级 campAlgorithmModels=" + campAlgorithmModels + " operationLevel=" + operationLevel);
                 break;
         }
 
-        return new CampAlgorithmResult<>(freshAlgorithmModel);
+        return new CampAlgorithmResult<>(campAlgorithmModels);
     }
 
     /**
@@ -211,72 +248,11 @@ public class CampAlgorithmComponentImpl implements CampAlgorithmComponent, Initi
      * @param campAlgorithmModel
      * @return
      */
-    private CampAlgorithmResult<CampAlgorithmModel> saveAlgorithmResult(CampAlgorithmModel campAlgorithmModel) {
+    private CampAlgorithmModel saveAlgorithmResult(CampAlgorithmModel campAlgorithmModel) {
         logger.warn("开始保存抽奖算法数据 campAlgorithmModel=" + campAlgorithmModel);
 
-        String prizeId = campAlgorithmModel.getPrizeId();
-        if (isNeedAlgorithmSave(prizeId)) {
-            CampAlgorithmDO campAlgorithmDO = constructAlgorithmDO(campAlgorithmModel);
-            campAlgorithmDAO.insert(campAlgorithmDO);
-        }
-
-        CampAlgorithmDO freshAlgorithmDO = campAlgorithmDAO.findCampAlgorithmByPrizeId(prizeId);
-        CampAlgorithmModel freshAlgorithmModel = constructAlgorithmModel(freshAlgorithmDO);
-
-        refreshAlgorithmCache(freshAlgorithmModel);
-
-        return new CampAlgorithmResult<>(freshAlgorithmModel);
-    }
-
-    /**
-     * 检查是否需要对当前奖品进行奖品算法表的写入动作
-     * 
-     * @param prizeId
-     * @return
-     */
-    private boolean isNeedAlgorithmSave(String prizeId) {
-        if (StringUtils.isBlank(prizeId)) {
-            return false;
-        }
-
-        CampAlgorithmDO freshAlgorithmDO = campAlgorithmDAO.findCampAlgorithmByPrizeId(prizeId);
-        if (freshAlgorithmDO == null) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * 刷新缓存
-     * 
-     * @param freshAlgorithmModel
-     */
-    private void refreshAlgorithmCache(CampAlgorithmModel freshAlgorithmModel) {
-        campAlgorithmCacheComponent.initCache(freshAlgorithmModel);
-    }
-
-    /**
-     * 获取算法模型
-     * 
-     * @param freshAlgorithmDO
-     * @return
-     */
-    private CampAlgorithmModel constructAlgorithmModel(CampAlgorithmDO freshAlgorithmDO) {
-        if (freshAlgorithmDO == null) {
-            return null;
-        }
-
-        CampAlgorithmModel campAlgorithmModel = new CampAlgorithmModel();
-        campAlgorithmModel.setAlgorithmStatus(CampAlgorithmStatusEnum.getByValue(freshAlgorithmDO.getAlgorithmStatus()));
-        campAlgorithmModel.setCampId(freshAlgorithmDO.getCampId());
-        campAlgorithmModel.setDistribution(freshAlgorithmDO.getDistribution());
-        campAlgorithmModel.setPercent(freshAlgorithmDO.getPercent());
-        campAlgorithmModel.setPrizeAmount(freshAlgorithmDO.getPrizeAmount());
-        campAlgorithmModel.setPrizeId(freshAlgorithmDO.getPrizeId());
-        campAlgorithmModel.setPrizeLevel(freshAlgorithmDO.getPrizeLevel());
-        campAlgorithmModel.setGmtCreated(freshAlgorithmDO.getGmtCreated());
-        campAlgorithmModel.setGmtModified(freshAlgorithmDO.getGmtModified());
+        CampAlgorithmDO campAlgorithmDO = constructAlgorithmDO(campAlgorithmModel);
+        campAlgorithmDAO.insert(campAlgorithmDO);
 
         return campAlgorithmModel;
     }

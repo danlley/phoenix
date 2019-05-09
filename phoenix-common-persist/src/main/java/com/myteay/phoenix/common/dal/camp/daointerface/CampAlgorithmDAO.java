@@ -32,6 +32,13 @@ public interface CampAlgorithmDAO {
     CampAlgorithmDO findCampAlgorithmByPrizeId(String prizeId);
 
     /**
+     * 清理指定活动ID下的所有奖品
+     * 
+     * @param campId
+     */
+    void deleteCampAlgorithmByCampId(String campId);
+
+    /**
      * 查询所有允许出奖的抽奖算法数据模型
      * 
      * @return

@@ -110,6 +110,10 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
             }
         }
 
+        if (campBaseModel.getCampStatus() == CampStatusEnum.CAMP_OFFLINE) {
+            campAlgorithmComponent.closeCertainCamp(campBaseModel.getCampId());
+        }
+
         return result;
     }
 
@@ -187,12 +191,10 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
 
             List<CampAlgorithmModel> params = constructAlgorithmParams(campBaseModel, campPrizeModels);
 
-            for (CampAlgorithmModel algorithmModel : params) {
-                CampAlgorithmResult<CampAlgorithmModel> result = campAlgorithmComponent.initAlgorithm(algorithmModel, 1);
+            CampAlgorithmResult<List<CampAlgorithmModel>> result = campAlgorithmComponent.initAlgorithm(campBaseModel.getCampId(), params, 1);
 
-                if (logger.isInfoEnabled()) {
-                    logger.info("抽奖主流程初始化数据结果： result = " + result + " algorithmModel=" + algorithmModel);
-                }
+            if (logger.isInfoEnabled()) {
+                logger.info("抽奖主流程初始化数据结果： result = " + result + " campBaseModel.getCampId()=" + campBaseModel.getCampId());
             }
         }
 

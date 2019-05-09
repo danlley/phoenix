@@ -57,12 +57,12 @@ public class CampAlgorithmCacheComponentImpl implements CampAlgorithmCacheCompon
     }
 
     /** 
-     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmCacheComponent#initCache(com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmModel)
+     * @see com.myteay.phoenix.core.service.camp.algorithm.CampAlgorithmCacheComponent#initCache()
      */
     @Override
-    public CampAlgorithmResult<CampAlgorithmModel> initCache(CampAlgorithmModel freshAlgorithmModel) {
+    public CampAlgorithmResult<String> initCache() {
         refresh();
-        return new CampAlgorithmResult<>(freshAlgorithmModel);
+        return new CampAlgorithmResult<>();
     }
 
     /** 

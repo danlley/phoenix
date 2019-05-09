@@ -50,4 +50,12 @@ public class IbatisCampAlgorithmDAO extends SqlSessionDaoSupport implements Camp
         return this.getSqlSession().selectList("CAMP-ALGORITHM-SELECT-START");
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.dal.camp.daointerface.CampAlgorithmDAO#deleteCampAlgorithmByCampId(java.lang.String)
+     */
+    @Override
+    public void deleteCampAlgorithmByCampId(String campId) {
+        this.getSqlSession().delete("CAMP-PRIZE-DELETE-GET-BY-CAMP-ID", campId);
+    }
+
 }
