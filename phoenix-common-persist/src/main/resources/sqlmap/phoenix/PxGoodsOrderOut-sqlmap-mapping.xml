@@ -75,7 +75,7 @@
 			from
 				px_goods_order_out
 			where
-				now()>date_format(now(),'%Y-%m-%d') and
+				date_format(now(),'%Y-%m-%d')>date_format(gmt_created,'%Y-%m-%d') and
 				order_status='PX_ORDER_PAYED' order by gmt_created desc  limit 0,200;
 	    ]]>
     </select>
