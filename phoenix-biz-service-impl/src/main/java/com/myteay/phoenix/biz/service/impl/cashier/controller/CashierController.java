@@ -4,6 +4,8 @@
  */
 package com.myteay.phoenix.biz.service.impl.cashier.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
+import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
 import com.myteay.phoenix.common.logs.LoggerNames;
@@ -53,12 +57,11 @@ public class CashierController {
     @Autowired
     private PxGoodsOrderOutCompoonent pxGoodsOrderOutCompoonent;
 
-    /** 套餐详情图片管理 */
-    @Autowired
-    private Environment               env;
-
     /** 当前订单编号 */
     private static int                currentNo      = 1;
+
+    /** 当前日期 */
+    private static String             currentDate;
 
     /**
      * 修改订单状态
@@ -147,23 +150,6 @@ public class CashierController {
                                 + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
         }
 
-        if (innerResult != null && innerResult.getOperateResult() == MtOperateResultEnum.CAMP_OPERATE_SUCCESS && innerResult.getResult() != null
-            && innerResult.getResult().isCampSuccess()) {
-
-            String filename = null;
-            String path = env.getProperty("myteay.phoenix.images.qrcode.path");
-            try {
-                filename = QRCodeUtil.encode(innerResult.getResult().getPrizeOutId(), null, true, path);
-            } catch (Exception e) {
-                logger.warn("生成二维码失败，当前处理失败 " + e.getMessage(), e);
-            }
-
-            if (StringUtils.isBlank(filename)) {
-                logger.warn("生成二维码失败，当前处理失败 " + innerResult);
-            }
-            innerResult.getResult().setQrCodeName(filename);
-        }
-
         result.setResult(innerResult.getResult());
         return result;
     }
@@ -174,9 +160,33 @@ public class CashierController {
      * @param shopId
      * @return
      */
+    @RequestMapping(value = "/list/shop/order/camp/image/{prizeOutId}", method = { RequestMethod.GET })
+    public void queryOrderNum(@PathVariable String prizeOutId, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            QRCodeUtil.encodeWithoutPath(prizeOutId, null, true, response);
+            response.setContentType("image/jpeg");//设置相应类型,告诉浏览器输出的内容为图片
+            response.setHeader("Pragma", "No-cache");//设置响应头信息，告诉浏览器不要缓存此内容
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expire", 0);
+        } catch (Exception e) {
+            logger.warn("生成二维码失败，当前处理失败 " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 生成小票中的订单编号（仅支持单一店铺，多店铺需要重新设计）
+     * 
+     * @return
+     */
     @RequestMapping(value = "/list/shop/order/number", method = { RequestMethod.GET })
     public MtServiceResult<String> queryOrderNum() {
         MtServiceResult<String> result = new MtServiceResult<>();
+
+        String reportDate = DateUtil.format(new Date(), DateUtil.shortFormat);
+        if (!StringUtils.equals(currentDate, reportDate)) {
+            currentDate = reportDate;
+            currentNo = 1;
+        }
 
         currentNo++;
         result.setResult(currentNo + "");

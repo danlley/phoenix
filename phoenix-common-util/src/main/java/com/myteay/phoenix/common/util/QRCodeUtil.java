@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -151,6 +152,25 @@ public class QRCodeUtil {
         }
 
         logger.warn("二维码生成路径为 path=" + path);
+    }
+
+    /**
+     * 二维码编码
+     * 
+     * @param content       二维码内容
+     * @param imgPath       中心图片存放路径
+     * @param destPath      目标二维码生成后的图片存放路径
+     * @param needCompress  是否压缩
+     * @throws Exception    异常处理
+     */
+    public static void encodeWithoutPath(String content, String imgPath, boolean needCompress, HttpServletResponse response) throws Exception {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("开始创建二维码content=" + content + " imgPath=" + imgPath + " needCompress=" + needCompress);
+        }
+
+        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+        ImageIO.write(image, "JPEG", response.getOutputStream());
     }
 
     /**
