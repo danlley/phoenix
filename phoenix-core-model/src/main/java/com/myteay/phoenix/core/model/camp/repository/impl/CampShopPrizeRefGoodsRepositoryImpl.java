@@ -61,6 +61,14 @@ public class CampShopPrizeRefGoodsRepositoryImpl implements CampShopPrizeRefGood
         return savePrizeRefGoodsInfo(campPrizeRefGoodsModelList);
     }
 
+    /** 
+     * @see com.myteay.phoenix.core.model.camp.repository.CampShopPrizeRefGoodsRepository#cleanPrizeRefGoodsInfo(java.lang.String)
+     */
+    @Override
+    public void cleanPrizeRefGoodsInfo(String prizeId) throws PxManageException {
+        campSingleShopPrizeGoodsRefDAO.deleteById(prizeId);
+    }
+
     /**
      * 保存店内到场营销活动奖品关联商品列表模型
      * 

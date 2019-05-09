@@ -27,6 +27,14 @@ public interface CampShopPrizeRefGoodsRepository {
     public List<CampPrizeRefGoodsModel> modifyPrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException;
 
     /**
+     * 清空当前奖品关联的所有可抵扣商品
+     * 
+     * @param prizeId
+     * @throws PxManageException
+     */
+    public void cleanPrizeRefGoodsInfo(String prizeId) throws PxManageException;
+
+    /**
      * 通过奖品ID查询已发布店内到场营销活动奖品关联商品列表信息
      * 
      * @param prizeId

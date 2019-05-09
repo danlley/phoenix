@@ -40,13 +40,17 @@ public class CampShopPrizeRefGoodsComponentImpl implements CampShopPrizeRefGoods
     private CampShopPrizeComponent          campShopPrizeComponent;
 
     /** 
-     * @see com.myteay.phoenix.core.service.camp.component.CampShopPrizeRefGoodsComponent#managePrizeRefGoodsInfo(java.util.List)
+     * @see com.myteay.phoenix.core.service.camp.component.CampShopPrizeRefGoodsComponent#managePrizeRefGoodsInfo(java.lang.String, java.util.List)
      */
     @Override
-    public MtOperateResult<List<CampPrizeRefGoodsModel>> managePrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException {
+    public MtOperateResult<List<CampPrizeRefGoodsModel>> managePrizeRefGoodsInfo(String prizeId,
+                                                                                 List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException {
+
+        MtOperateResult<List<CampPrizeRefGoodsModel>> result = new MtOperateResult<>();
+
         if (CollectionUtils.isEmpty(campPrizeRefGoodsModelList)) {
-            logger.warn("当前奖品关联商品列表不可用，无法完成奖品关联商品修改动作 campPrizeRefGoodsModelList is null");
-            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_PRIZE_REF_GOODS_MNG_ERR);
+            campShopPrizeRefGoodsRepository.cleanPrizeRefGoodsInfo(prizeId);
+            return result;
         }
 
         for (CampPrizeRefGoodsModel e : campPrizeRefGoodsModelList) {
@@ -57,7 +61,6 @@ public class CampShopPrizeRefGoodsComponentImpl implements CampShopPrizeRefGoods
             }
         }
 
-        MtOperateResult<List<CampPrizeRefGoodsModel>> result = new MtOperateResult<>();
         List<CampPrizeRefGoodsModel> list = null;
         try {
             list = campShopPrizeRefGoodsRepository.modifyPrizeRefGoodsInfo(campPrizeRefGoodsModelList);

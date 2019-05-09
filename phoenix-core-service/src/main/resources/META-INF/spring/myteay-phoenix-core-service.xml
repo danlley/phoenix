@@ -102,4 +102,15 @@
 			</bean>
 		</property>
 	</bean>	
+	
+	<!-- 当前商品成本配置信息变化监听 -->
+	<bean id="campStatusChangedListener" class="com.myteay.phoenix.core.service.manage.listener.CampStatusChangedListener">
+		<property name="descriptor">
+			<bean class="com.myteay.common.async.event.ListenerDescriptor">
+				<property name="topic" value="CAMP_STATUS_CHANGED"></property>
+				<property name="async" value="true"></property>
+				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
+			</bean>
+		</property>
+	</bean>	
 </beans>

@@ -185,9 +185,8 @@ public class CampShopPrizeComponentImpl implements CampShopPrizeComponent {
         try {
             CampPrizeModel freshCampPrizeModel = campShopPrizeRepository.findSingleCampPrizeById(campPrizeModel.getPrizeId());
             if (freshCampPrizeModel != null && (freshCampPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_ONLINE
-                                                || freshCampPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_OFFLINE
                                                 || freshCampPrizeModel.getPrizeStatus() == CampPrizeStatusEnum.CAMP_PRIZE_EXPIRED)) {
-                logger.warn("商品状态为已发布、已下线，则不允许进行删除 campPrizeModel=" + campPrizeModel);
+                logger.warn("商品状态为已发布，则不允许进行删除 campPrizeModel=" + campPrizeModel);
                 return new MtOperateResult<CampPrizeModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_DEL_STATUS_ERR);
             }
         } catch (PxManageException e) {

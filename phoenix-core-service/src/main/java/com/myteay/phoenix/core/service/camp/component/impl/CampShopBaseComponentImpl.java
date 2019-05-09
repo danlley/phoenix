@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import com.myteay.common.async.event.EventPublishService;
 import com.myteay.phoenix.common.util.camp.enums.CampPrizeStatusEnum;
 import com.myteay.phoenix.common.util.camp.enums.CampStatusEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
@@ -28,6 +29,7 @@ import com.myteay.phoenix.core.service.camp.algorithm.model.CampAlgorithmResult;
 import com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent;
 import com.myteay.phoenix.core.service.manage.template.PxCommonCallback;
 import com.myteay.phoenix.core.service.manage.template.PxCommonMngTemplate;
+import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 
 /**
  * 店内营销活动基本信息管理组件
@@ -53,7 +55,8 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
     private CampAlgorithmComponent             campAlgorithmComponent;
 
     /** 事件发送组件 */
-    private EventPublishService<String>        eventPublishService;
+    @Autowired
+    private PxEventPublishTool                 pxEventPublishTool;
 
     /** 
      * @see com.myteay.phoenix.core.service.camp.component.CampShopBaseComponent#manageCampBase(com.myteay.phoenix.core.model.camp.CampBaseModel)
@@ -91,6 +94,8 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
 
             freshCampBaseModel = campShopBaseRepository.modifyGoodsInfo(campBaseModel);
             result.setResult(freshCampBaseModel);
+            //异步更新缓存信息
+            pxEventPublishTool.publishEventWithObject(PxEventTopicEnum.CAMP_STATUS_CHANGED, campBaseModel);
         } catch (PxManageException e) {
             logger.warn("修改店内营销活动信息信息发生异常 campBaseModel=" + campBaseModel, e);
             result = new MtOperateResult<CampBaseModel>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_BASE_UPDATE_FAILD);
@@ -421,15 +426,6 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
     }
 
     /**
-     * Setter method for property <tt>eventPublishService</tt>.
-     * 
-     * @param eventPublishService value to be assigned to property eventPublishService
-     */
-    public void setEventPublishService(EventPublishService<String> eventPublishService) {
-        this.eventPublishService = eventPublishService;
-    }
-
-    /**
      * Setter method for property <tt>campShopPrizeRepository</tt>.
      * 
      * @param campShopPrizeRepository value to be assigned to property campShopPrizeRepository
@@ -445,6 +441,15 @@ public class CampShopBaseComponentImpl implements CampShopBaseComponent {
      */
     public void setCampAlgorithmComponent(CampAlgorithmComponent campAlgorithmComponent) {
         this.campAlgorithmComponent = campAlgorithmComponent;
+    }
+
+    /**
+     * Setter method for property <tt>pxEventPublishTool</tt>.
+     * 
+     * @param pxEventPublishTool value to be assigned to property pxEventPublishTool
+     */
+    public void setPxEventPublishTool(PxEventPublishTool pxEventPublishTool) {
+        this.pxEventPublishTool = pxEventPublishTool;
     }
 
 }

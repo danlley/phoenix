@@ -21,11 +21,13 @@ public interface CampShopPrizeRefGoodsComponent {
     /**
      * 管理店内到场营销活动奖品关联商品列表信息
      * 
+     * @param prizeId
      * @param campPrizeRefGoodsModelList
      * @return
-     * @throws PxManageException 
+     * @throws PxManageException
      */
-    public MtOperateResult<List<CampPrizeRefGoodsModel>> managePrizeRefGoodsInfo(List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException;
+    public MtOperateResult<List<CampPrizeRefGoodsModel>> managePrizeRefGoodsInfo(String prizeId,
+                                                                                 List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) throws PxManageException;
 
     /**
      * 通过奖品ID查询已发布店内到场营销活动奖品关联商品列表信息

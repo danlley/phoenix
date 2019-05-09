@@ -44,7 +44,7 @@ default-autowire="byName">
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="myteayDataSource"></property>
     </bean>
-    <tx:annotation-driven transaction-manager="phoenixTxManager" />
+    <tx:annotation-driven transaction-manager="phoenixTxManager"/>
     
 	<bean id="pxTransactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="transactionManager">

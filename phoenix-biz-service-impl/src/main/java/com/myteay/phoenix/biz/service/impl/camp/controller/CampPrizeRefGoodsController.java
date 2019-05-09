@@ -71,15 +71,17 @@ public class CampPrizeRefGoodsController {
      * @param campPrizeModel
      * @return
      */
-    @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<List<CampPrizeRefGoodsModel>> manageGoods(@RequestBody List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) {
+    @RequestMapping(value = "/manage/{prizeId}", method = { RequestMethod.POST })
+    public MtServiceResult<List<CampPrizeRefGoodsModel>> managePrizeGoodsRefList(@PathVariable String prizeId,
+                                                                                 @RequestBody List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动关联奖品信息 campPrizeRefGoodsModelList=" + campPrizeRefGoodsModelList);
         }
         MtServiceResult<List<CampPrizeRefGoodsModel>> result = null;
         try {
-            MtOperateResult<List<CampPrizeRefGoodsModel>> innerResult = campShopPrizeRefGoodsComponent.managePrizeRefGoodsInfo(campPrizeRefGoodsModelList);
+            MtOperateResult<List<CampPrizeRefGoodsModel>> innerResult = campShopPrizeRefGoodsComponent.managePrizeRefGoodsInfo(prizeId,
+                campPrizeRefGoodsModelList);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Throwable e) {
