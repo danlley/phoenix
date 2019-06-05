@@ -40,7 +40,7 @@ public class PxPayedOrderNeedMvListener extends EventListener<String> {
      */
     @Override
     public String handleEvent(MtEvent<?> event) {
-        List<PxGoodsOrderOutModel> pxGoodsOrderOutModels = pxGoodsOrderOutRepository.findAllPayedOrder();
+        List<PxGoodsOrderOutModel> pxGoodsOrderOutModels = pxGoodsOrderOutRepository.findAllCostedOrder();
         if (CollectionUtils.isEmpty(pxGoodsOrderOutModels)) {
             if (logger.isInfoEnabled()) {
                 logger.info("未找到待迁移的已支付订单列表");
