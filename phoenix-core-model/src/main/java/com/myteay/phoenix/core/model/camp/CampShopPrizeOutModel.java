@@ -55,8 +55,11 @@ public class CampShopPrizeOutModel implements Serializable {
     /** 手机号 */
     private String                 mobileNo;
 
-    /** 订单号 */
+    /** 订单号(产生了优惠券的订单) */
     private String                 orderNo;
+
+    /** 订单号(使用过优惠券的订单) */
+    private String                 consumedOrderNo;
 
     /** 奖品状态 */
     private CampPrizeStatusEnum    prizeStatus;
@@ -78,6 +81,24 @@ public class CampShopPrizeOutModel implements Serializable {
 
     /** 奖品模型 */
     private CampPrizeModel         campPrizeModel;
+
+    /**
+     * Getter method for property <tt>consumedOrderNo</tt>.
+     * 
+     * @return property value of consumedOrderNo
+     */
+    public String getConsumedOrderNo() {
+        return consumedOrderNo;
+    }
+
+    /**
+     * Setter method for property <tt>consumedOrderNo</tt>.
+     * 
+     * @param consumedOrderNo value to be assigned to property consumedOrderNo
+     */
+    public void setConsumedOrderNo(String consumedOrderNo) {
+        this.consumedOrderNo = consumedOrderNo;
+    }
 
     /**
      * Getter method for property <tt>campPrizeModel</tt>.
