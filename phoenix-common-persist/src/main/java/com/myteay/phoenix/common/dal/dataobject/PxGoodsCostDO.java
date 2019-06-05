@@ -35,6 +35,9 @@ public class PxGoodsCostDO implements Serializable {
     /** 当日实际销量（去除优惠） */
     private String            actrualSellerPrice;
 
+    /** 当日实际单品销售数量 */
+    private int               sellerAmount;
+
     /** 当日实际成本 */
     private String            actrualCost;
 
@@ -46,6 +49,24 @@ public class PxGoodsCostDO implements Serializable {
 
     /** 修改日期 */
     private Date              gmtModified;
+
+    /**
+     * Getter method for property <tt>sellerAmount</tt>.
+     * 
+     * @return property value of sellerAmount
+     */
+    public int getSellerAmount() {
+        return sellerAmount;
+    }
+
+    /**
+     * Setter method for property <tt>sellerAmount</tt>.
+     * 
+     * @param sellerAmount value to be assigned to property sellerAmount
+     */
+    public void setSellerAmount(int sellerAmount) {
+        this.sellerAmount = sellerAmount;
+    }
 
     /**
      * Getter method for property <tt>goodsId</tt>.

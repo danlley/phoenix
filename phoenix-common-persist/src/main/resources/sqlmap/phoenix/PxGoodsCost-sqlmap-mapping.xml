@@ -24,6 +24,7 @@
         <result property="goodsId" column="goods_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsTitle" column="goods_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="goodsDesc" column="goods_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="sellerAmount" column="seller_amount" javaType="java.lang.Integer" jdbcType="TINYINT" />
         <result property="shopId" column="shop_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="actrualSellerPrice" column="actrual_seller_price" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="actrualCost" column="actrual_cost" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -34,16 +35,16 @@
 
     <insert id="PX-GOODS-COST-INSERT" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO">
 		insert into phoenix.px_goods_cost (
-		    goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+		    goods_id, goods_title, goods_desc, seller_amount, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
 		) values (
-		    #{goodsId}, #{goodsTitle}, #{goodsDesc}, #{shopId}, #{actrualSellerPrice}, #{actrualCost}, #{reportDate}, now(), now()
+		    #{goodsId}, #{goodsTitle}, #{goodsDesc}, #{sellerAmount}, #{shopId}, #{actrualSellerPrice}, #{actrualCost}, #{reportDate}, now(), now()
 		) ;
     </insert>
     
     <select id="PX-GOODS-COST-GET-BY-GOODS-ID" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO" resultMap="RM-PX-GOODS-COST">
 	    <![CDATA[
 	        select
-	        	goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+	        	goods_id, goods_title, goods_desc, seller_amount, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
 	        from phoenix.px_goods_cost 
 	        where (goods_id = #{goodsId}) and report_date = #{reportDate}
 	    ]]>
@@ -52,7 +53,7 @@
     <select id="PX-CUR-GOODS-COST-GET-BY-SHOP-ID" parameterType="com.myteay.phoenix.common.dal.dataobject.PxGoodsCostDO" resultMap="RM-PX-GOODS-COST">
 	    <![CDATA[
 	        select
-	        	goods_id, goods_title, goods_desc, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
+	        	goods_id, goods_title, goods_desc, seller_amount, shop_id, actrual_seller_price, actrual_cost, report_date, gmt_created, gmt_modified
 	        from phoenix.px_goods_cost 
 	        where (shop_id = #{shopId}) and report_date = #{reportDate}
 	    ]]>
@@ -63,6 +64,9 @@
 			set
 				<if test="actrualSellerPrice!=null">
 					actrual_seller_price = #{actrualSellerPrice},
+				</if>
+				<if test="sellerAmount!=null">
+					, seller_amount = #{sellerAmount},
 				</if>
 				<if test="actrualCost!=null">
 					actrual_cost = #{actrualCost},
