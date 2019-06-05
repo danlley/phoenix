@@ -19,6 +19,9 @@ public enum PxOrderStatusEnum {
                                /** 已支付 */
                                PX_ORDER_PAYED("PX_ORDER_PAYED", "已支付"),
 
+                               /** 已统计 */
+                               PX_ORDER_COSTED("PX_ORDER_COSTED", "已统计"),
+
                                /** 已退款 */
                                PX_ORDER_REFUND("PX_ORDER_REFUND", "已退款"),
 
