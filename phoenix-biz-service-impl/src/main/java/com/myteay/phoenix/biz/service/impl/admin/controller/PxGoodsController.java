@@ -21,17 +21,14 @@ import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.logs.LoggerNames;
+import com.myteay.phoenix.common.service.integration.PxGoodsControllerIntg;
 import com.myteay.phoenix.common.util.MtFileUtils;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
-import com.myteay.phoenix.common.util.exception.PxManageException;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
 import com.myteay.phoenix.core.model.manage.PxGoodsModel;
-import com.myteay.phoenix.core.service.manage.component.PxCommonManageComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsComponent;
-import com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent;
 
 /**
  * 商品摘要管理
@@ -44,23 +41,15 @@ import com.myteay.phoenix.core.service.manage.component.PxGoodsStatusComponent;
 public class PxGoodsController {
 
     /** 日志 */
-    private static final Logger     logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
+    private static final Logger   logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 后台一般性简单业务管理组件 */
     @Autowired
-    private PxCommonManageComponent pxCommonManageComponent;
-
-    /** 商品管理组件 */
-    @Autowired
-    private PxGoodsComponent        pxGoodsComponent;
-
-    /** 商品状态管理组件 */
-    @Autowired
-    private PxGoodsStatusComponent  pxGoodsStatusComponent;
+    private PxGoodsControllerIntg pxGoodsControllerIntg;
 
     /** 套餐详情图片管理 */
     @Autowired
-    private Environment             env;
+    private Environment           env;
 
     /**
      * 查询所有商品概要信息
@@ -73,7 +62,7 @@ public class PxGoodsController {
 
         MtOperateResult<List<PxGoodsModel>> componentResult = null;
         try {
-            componentResult = pxCommonManageComponent.queryGoodsAll();
+            componentResult = pxGoodsControllerIntg.queryGoodsAll();
             result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
@@ -96,7 +85,7 @@ public class PxGoodsController {
 
         MtOperateResult<List<PxGoodsModel>> componentResult = null;
         try {
-            componentResult = pxCommonManageComponent.queryGoodsListByShopId(shopId);
+            componentResult = pxGoodsControllerIntg.queryGoodsListByShopId(shopId);
             result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
@@ -121,7 +110,7 @@ public class PxGoodsController {
         }
         MtServiceResult<PxGoodsAdvModel> result = null;
         try {
-            MtOperateResult<PxGoodsAdvModel> innerResult = pxCommonManageComponent.queryGoodsAdvAll(goodsId);
+            MtOperateResult<PxGoodsAdvModel> innerResult = pxGoodsControllerIntg.queryGoodsAdvAll(goodsId);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -146,7 +135,7 @@ public class PxGoodsController {
         }
         MtServiceResult<List<PxGoodsModel>> result = null;
         try {
-            MtOperateResult<List<PxGoodsModel>> innerResult = pxCommonManageComponent.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
+            MtOperateResult<List<PxGoodsModel>> innerResult = pxGoodsControllerIntg.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -172,7 +161,7 @@ public class PxGoodsController {
         MtServiceResult<PxGoodsModel> result = null;
         try {
             uploadFile(file, pxGoodsModel);
-            MtOperateResult<PxGoodsModel> innerResult = pxGoodsComponent.manageGoods(pxGoodsModel);
+            MtOperateResult<PxGoodsModel> innerResult = pxGoodsControllerIntg.manageGoods(pxGoodsModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
@@ -197,12 +186,9 @@ public class PxGoodsController {
         }
         MtServiceResult<PxGoodsModel> result = null;
         try {
-            MtOperateResult<PxGoodsModel> innerResult = pxGoodsStatusComponent.manageGoodsStatus(pxGoodsModel);
+            MtOperateResult<PxGoodsModel> innerResult = pxGoodsControllerIntg.manageGoodsStatus(pxGoodsModel);
             result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
-        } catch (PxManageException e) {
-            logger.warn("商品下架及商品发布过程发生业务异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(e.getResultEnum(), e.getExResultEnum());
         } catch (Exception e) {
             logger.warn("商品下架及商品发布过程发生未知异常" + e.getMessage(), e);
             result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
@@ -268,7 +254,7 @@ public class PxGoodsController {
         PxGoodsModel queryModel = new PxGoodsModel();
         queryModel.setOperationType(PxOperationTypeEnum.PX_QUERY_ONE);
         queryModel.setGoodsId(pxGoodsModel.getGoodsId());
-        MtOperateResult<PxGoodsModel> innerResult = pxGoodsComponent.manageGoods(queryModel);
+        MtOperateResult<PxGoodsModel> innerResult = pxGoodsControllerIntg.manageGoods(queryModel);
         if (innerResult == null || innerResult.getResult() == null) {
             return false;
         }
@@ -278,24 +264,6 @@ public class PxGoodsController {
         }
 
         return false;
-    }
-
-    /**
-     * Setter method for property <tt>pxCommonManageComponent</tt>.
-     * 
-     * @param pxCommonManageComponent value to be assigned to property pxCommonManageComponent
-     */
-    public void setPxCommonManageComponent(PxCommonManageComponent pxCommonManageComponent) {
-        this.pxCommonManageComponent = pxCommonManageComponent;
-    }
-
-    /**
-     * Setter method for property <tt>pxGoodsComponent</tt>.
-     * 
-     * @param pxGoodsComponent value to be assigned to property pxGoodsComponent
-     */
-    public void setPxGoodsComponent(PxGoodsComponent pxGoodsComponent) {
-        this.pxGoodsComponent = pxGoodsComponent;
     }
 
     /**

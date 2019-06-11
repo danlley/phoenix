@@ -8,40 +8,6 @@
          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd"
 	default-autowire="byName">
+
 	
-	<bean id="pxShopDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxShopDAO"/>
-	
-	<bean id="pxGoodsPackageDetailDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackageDetailDAO"/>
-	
-	<bean id="pxGoodsDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsDAO"/>
-	
-	<bean id="pxSubPackagesDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxSubPackagesDAO"/>
-	
-	<bean id="pxGoodsPackagesImageDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesImageDAO"/>
-	
-	<bean id="pxGoodsPackagesNoticeDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesNoticeDAO"/>
-	
-	<bean id="pxGoodsPackagesSubNoticeDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsPackagesSubNoticeDAO"/>
-	
-	<bean id="pxMobileGoodsDAO" class="com.myteay.phoenix.common.dal.mobile.ibatis.IbatisPxMobileGoodsDAO"/>
-	
-	<bean id="pxGoodsOrderOutDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsOrderOutDAO"/>
-	
-	<bean id="pxGoodsOrderOutHistoryDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsOrderOutHistoryDAO"/>
-	
-	<bean id="pxGoodsCostCfgDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsCostCfgDAO"/>
-	
-	<bean id="pxGoodsCostDAO" class="com.myteay.phoenix.common.dal.ibatis.IbatisPxGoodsCostDAO"/>
-	
-	<bean id="campSingleShopBaseDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopBaseDAO"/>
-	
-	<bean id="campSingleShopPrizeDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopPrizeDAO"/>
-	
-	<bean id="campSingleShopPrizeGoodsRefDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampSingleShopPrizeGoodsRefDAO"/>
-	
-	<bean id="campAlgorithmDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampAlgorithmDAO"/>
-	
-	<bean id="campShopPrizeOutDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampShopPrizeOutDAO"/>
-	
-	<bean id="campShopPrizeOutHistoryDAO" class="com.myteay.phoenix.common.dal.camp.ibatis.IbatisCampShopPrizeOutHistoryDAO"/>
 </beans>
