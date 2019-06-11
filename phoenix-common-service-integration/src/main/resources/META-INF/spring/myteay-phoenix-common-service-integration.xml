@@ -12,4 +12,8 @@
 	default-autowire="byName">
 	
 	<bean id="pxGoodsControllerIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsControllerIntgImpl"></bean>
+	
+	<bean id="pxGoodsPackagesDetailIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesDetailIntgImpl"></bean>
+	
+	<bean id="pxGoodsPackagesImageIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesImageIntgImpl"></bean>
 </beans>
