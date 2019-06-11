@@ -22,4 +22,6 @@
 	<bean id="pxGoodsPackagesSubNoticeIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesSubNoticeIntgImpl"></bean>
 	
 	<bean id="pxShopIntg" class="com.myteay.phoenix.common.service.integration.impl.PxShopIntgImpl"></bean>
+	
+	<bean id="pxSubPackagesIntg" class="com.myteay.phoenix.common.service.integration.impl.PxSubPackagesIntgImpl"></bean>
 </beans>
