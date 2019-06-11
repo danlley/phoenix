@@ -16,4 +16,8 @@
 	<bean id="pxGoodsPackagesDetailIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesDetailIntgImpl"></bean>
 	
 	<bean id="pxGoodsPackagesImageIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesImageIntgImpl"></bean>
+	
+	<bean id="pxGoodsPackagesNoticeIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesNoticeIntgImpl"></bean>
+	
+	<bean id="pxGoodsPackagesSubNoticeIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesSubNoticeIntgImpl"></bean>
 </beans>
