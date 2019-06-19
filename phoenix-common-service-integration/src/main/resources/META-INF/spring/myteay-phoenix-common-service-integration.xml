@@ -28,4 +28,6 @@
 	<bean id="pxMobileGoodsIntg" class="com.myteay.phoenix.common.service.integration.impl.PxMobileGoodsIntgImpl"></bean>
 	
 	<bean id="campBaseIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampBaseIntgImpl"></bean>
+	
+	<bean id="campPrizeIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampPrizeIntgImpl"></bean>
 </beans>
