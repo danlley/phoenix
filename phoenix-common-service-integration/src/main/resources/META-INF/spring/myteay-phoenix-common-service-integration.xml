@@ -30,4 +30,6 @@
 	<bean id="campBaseIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampBaseIntgImpl"></bean>
 	
 	<bean id="campPrizeIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampPrizeIntgImpl"></bean>
+	
+	<bean id="campPrizeRefGoodsIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampPrizeRefGoodsIntgImpl"></bean>
 </beans>
