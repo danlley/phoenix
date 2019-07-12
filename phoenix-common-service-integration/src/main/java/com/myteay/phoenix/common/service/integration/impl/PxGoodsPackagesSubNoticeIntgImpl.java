@@ -25,7 +25,7 @@ public class PxGoodsPackagesSubNoticeIntgImpl implements PxGoodsPackagesSubNotic
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryPackagesNoticeListByNoticeId(String packagesNoticeId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/list/notice/" + packagesNoticeId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/list/notice/" + packagesNoticeId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> obj = (MtOperateResult<List<PxGoodsPackagesSubNoticeModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsPackagesSubNoticeModel>>>() {
@@ -38,7 +38,7 @@ public class PxGoodsPackagesSubNoticeIntgImpl implements PxGoodsPackagesSubNotic
      */
     @Override
     public MtOperateResult<PxGoodsPackagesSubNoticeModel> manageSubPackages(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/manage";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsPackagesSubNoticeModel));
         MtOperateResult<PxGoodsPackagesSubNoticeModel> obj = (MtOperateResult<PxGoodsPackagesSubNoticeModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsPackagesSubNoticeModel>>() {

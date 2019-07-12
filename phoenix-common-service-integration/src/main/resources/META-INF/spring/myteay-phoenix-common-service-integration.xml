@@ -36,4 +36,6 @@
 	<bean id="campShopPrizeOutIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampShopPrizeOutIntgImpl"></bean>
 	
 	<bean id="pxTradeServiceIntg" class="com.myteay.phoenix.common.service.trade.integration.impl.PxTradeServiceIntgImpl"></bean>
+	
+	<bean id="pxCampPrizeServiceIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.PxCampPrizeServiceIntgImpl"></bean>
 </beans>

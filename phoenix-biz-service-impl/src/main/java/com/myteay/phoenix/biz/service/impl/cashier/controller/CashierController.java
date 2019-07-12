@@ -24,7 +24,6 @@ import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
 import com.myteay.phoenix.common.logs.LoggerNames;
-import com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg;
 import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.QRCodeUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
@@ -32,6 +31,7 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.myteay.phoenix.core.service.component.PxProcessComponent;
 
 /**
  * 收银台商品查询及点餐入口
@@ -57,7 +57,7 @@ public class CashierController {
 
     /**  */
     @Autowired
-    private PxTradeServiceIntg  pxTradeServiceIntg;
+    private PxProcessComponent  pxProcessComponent;
     //
     //    /**
     //     * 修改订单状态
@@ -188,7 +188,7 @@ public class CashierController {
         }
 
         // step 5: 执行订单流水落地业务
-        MtOperateResult<CampCashierModel> innerResult = pxTradeServiceIntg.createGoodsOrderOut(pxGoodsOrderModel);
+        MtOperateResult<CampCashierModel> innerResult = pxProcessComponent.doProcess(pxGoodsOrderModel);
 
         // step 6: 记录订单流水落地结果
         if (logger_cashier.isInfoEnabled()) {
@@ -241,12 +241,12 @@ public class CashierController {
     }
 
     /**
-     * Setter method for property <tt>pxTradeServiceIntg</tt>.
+     * Setter method for property <tt>pxProcessComponent</tt>.
      * 
-     * @param pxTradeServiceIntg value to be assigned to property pxTradeServiceIntg
+     * @param pxProcessComponent value to be assigned to property pxProcessComponent
      */
-    public void setPxTradeServiceIntg(PxTradeServiceIntg pxTradeServiceIntg) {
-        this.pxTradeServiceIntg = pxTradeServiceIntg;
+    public void setPxProcessComponent(PxProcessComponent pxProcessComponent) {
+        this.pxProcessComponent = pxProcessComponent;
     }
 
 }

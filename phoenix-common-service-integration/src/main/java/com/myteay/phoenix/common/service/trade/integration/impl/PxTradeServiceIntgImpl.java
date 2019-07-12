@@ -12,7 +12,6 @@ import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
-import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 
 /**
@@ -36,13 +35,18 @@ public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
      * @see com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg#createGoodsOrderOut(com.myteay.phoenix.core.model.PxGoodsOrderModel)
      */
     @Override
-    public MtOperateResult<CampCashierModel> createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) {
+    public PxGoodsOrderModel createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) {
         String url = "http://192.168.0.103:40031/myteay/api/phoenix/cashier/manage/base/order/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
-        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result,
-            new TypeReference<MtOperateResult<CampCashierModel>>() {
+        MtOperateResult<PxGoodsOrderModel> obj = (MtOperateResult<PxGoodsOrderModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<PxGoodsOrderModel>>() {
             });
-        return obj;
+
+        if (obj == null) {
+            return null;
+        }
+
+        return obj.getResult();
     }
 
 }

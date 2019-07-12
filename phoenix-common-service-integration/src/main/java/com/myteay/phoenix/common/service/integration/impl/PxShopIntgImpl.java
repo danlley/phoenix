@@ -25,7 +25,7 @@ public class PxShopIntgImpl implements PxShopIntg {
      */
     @Override
     public MtOperateResult<List<PxShopModel>> queryShopAll() {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/shop/all";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/shop/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxShopModel>> obj = (MtOperateResult<List<PxShopModel>>) JSON.parseObject(result,
@@ -39,7 +39,7 @@ public class PxShopIntgImpl implements PxShopIntg {
      */
     @Override
     public MtOperateResult<PxShopModel> manageShop(PxShopModel pxShopModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/shop/manage";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/shop/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxShopModel));
         MtOperateResult<PxShopModel> obj = (MtOperateResult<PxShopModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxShopModel>>() {
         });

@@ -26,7 +26,7 @@ public class PxGoodsPackagesDetailIntgImpl implements PxGoodsPackagesDetailIntg 
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListAll() {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/all";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesDetailModel>> obj = (MtOperateResult<List<PxGoodsPackagesDetailModel>>) JSON.parseObject(result,
@@ -40,7 +40,7 @@ public class PxGoodsPackagesDetailIntgImpl implements PxGoodsPackagesDetailIntg 
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesDetailModel>> queryPackagesDetailListByGoodsId(String goodsId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/list/goods/" + goodsId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/list/goods/" + goodsId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesDetailModel>> obj = (MtOperateResult<List<PxGoodsPackagesDetailModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsPackagesDetailModel>>>() {
@@ -53,7 +53,7 @@ public class PxGoodsPackagesDetailIntgImpl implements PxGoodsPackagesDetailIntg 
      */
     @Override
     public MtOperateResult<PxGoodsPackagesDetailModel> manageGoodsPackagesDetail(PxGoodsPackagesDetailModel pxGoodsPackagesDetailModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/manage";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsPackagesDetailModel));
         MtOperateResult<PxGoodsPackagesDetailModel> obj = (MtOperateResult<PxGoodsPackagesDetailModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsPackagesDetailModel>>() {

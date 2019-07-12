@@ -25,7 +25,7 @@ public class PxSubPackagesIntgImpl implements PxSubPackagesIntg {
      */
     @Override
     public MtOperateResult<List<PxSubPackagesModel>> querySubPackagesByPackagesId(String packagesDetailId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/sub/pkgs/list/sub/packages/" + packagesDetailId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/sub/pkgs/list/sub/packages/" + packagesDetailId;
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxSubPackagesModel>> obj = (MtOperateResult<List<PxSubPackagesModel>>) JSON.parseObject(result,
@@ -39,7 +39,7 @@ public class PxSubPackagesIntgImpl implements PxSubPackagesIntg {
      */
     @Override
     public MtOperateResult<PxSubPackagesModel> manageSubPackages(PxSubPackagesModel pxSubPackagesModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/sub/pkgs/manage";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/sub/pkgs/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxSubPackagesModel));
         MtOperateResult<PxSubPackagesModel> obj = (MtOperateResult<PxSubPackagesModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxSubPackagesModel>>() {

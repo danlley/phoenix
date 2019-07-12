@@ -31,7 +31,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<List<PxGoodsModel>> queryGoodsAll() {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/all";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
@@ -45,7 +45,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<List<PxGoodsModel>> queryGoodsListByShopId(String shopId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/list/shop/" + shopId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/list/shop/" + shopId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsModel>>>() {
@@ -58,7 +58,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsAdvModel> queryGoodsAdvAll(String goodsId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/query/goods/adv/" + goodsId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/query/goods/adv/" + goodsId;
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<PxGoodsAdvModel> obj = (MtOperateResult<PxGoodsAdvModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsAdvModel>>() {
@@ -88,7 +88,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
         }
 
         String url = null;
-        url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/query/goods/condition/?" + subUrl.toString();
+        url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/query/goods/condition/?" + subUrl.toString();
 
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
@@ -102,7 +102,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsModel> manageGoodsStatus(PxGoodsModel pxGoodsModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/status/";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/status/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsModel));
         MtOperateResult<PxGoodsModel> obj = (MtOperateResult<PxGoodsModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsModel>>() {
         });
@@ -114,7 +114,7 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsModel> manageGoods(PxGoodsModel pxGoodsModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/goods/manage";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsModel));
         MtOperateResult<PxGoodsModel> obj = (MtOperateResult<PxGoodsModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsModel>>() {
         });

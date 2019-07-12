@@ -25,7 +25,7 @@ public class PxMobileGoodsIntgImpl implements PxMobileGoodsIntg {
      */
     @Override
     public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) {
-        String url = "http://localhost:40051/myteay/api/phoenix/mobile/goods/list/";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/mobile/goods/list/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(excludeGoodsIds));
         MtOperateResult<List<PxMobileGoodsModel>> obj = (MtOperateResult<List<PxMobileGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxMobileGoodsModel>>>() {
@@ -38,7 +38,7 @@ public class PxMobileGoodsIntgImpl implements PxMobileGoodsIntg {
      */
     @Override
     public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/mobile/goods/single/" + goodsId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/mobile/goods/single/" + goodsId;
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<PxMobileGoodsModel> obj = (MtOperateResult<PxMobileGoodsModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxMobileGoodsModel>>() {

@@ -1,0 +1,31 @@
+/**
+ * GanguTianCan.com Inc.
+ * Copyright (c) 2005-2019 All Rights Reserved.
+ */
+package com.myteay.phoenix.common.service.camp.integration;
+
+import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.camp.CampCashierModel;
+
+/**
+ * 
+ * @author min.weixm
+ * @version $Id: PxCampPrizeServiceIntg.java, v 0.1 2019年7月6日 下午5:08:29 min.weixm Exp $
+ */
+public interface PxCampPrizeServiceIntg {
+
+    /**
+     * 
+     * @param orderNo
+     * @return
+     */
+    public MtOperateResult<String> consumePrize(String orderNo);
+
+    /**
+     * 
+     * @param pxGoodsOrderModel
+     * @return
+     */
+    public CampCashierModel doCamp(PxGoodsOrderModel pxGoodsOrderModel);
+}

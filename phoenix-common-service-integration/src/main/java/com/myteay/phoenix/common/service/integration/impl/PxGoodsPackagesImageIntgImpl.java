@@ -25,7 +25,7 @@ public class PxGoodsPackagesImageIntgImpl implements PxGoodsPackagesImageIntg {
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesImageModel>> queryPackagesImageListByGoodsId(String goodsId) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/image/list/goods/" + goodsId;
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/image/list/goods/" + goodsId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesImageModel>> obj = (MtOperateResult<List<PxGoodsPackagesImageModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsPackagesImageModel>>>() {
@@ -38,7 +38,7 @@ public class PxGoodsPackagesImageIntgImpl implements PxGoodsPackagesImageIntg {
      */
     @Override
     public MtOperateResult<PxGoodsPackagesImageModel> manageGoodsPackagesImage(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
-        String url = "http://localhost:40051/myteay/api/phoenix/admin/manage/pkgs/image/manage/goods/";
+        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/image/manage/goods/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsPackagesImageModel));
         MtOperateResult<PxGoodsPackagesImageModel> obj = (MtOperateResult<PxGoodsPackagesImageModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsPackagesImageModel>>() {
