@@ -196,7 +196,7 @@ public class CashierController {
                     + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
         }
 
-        //        result.setResult(innerResult.getResult());
+        result.setResult(innerResult.getResult());
         return result;
     }
 
