@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import com.myteay.common.async.event.EventPublishService;
 import com.myteay.common.async.event.MtEvent;
 import com.myteay.common.async.event.MtEventException;
-import com.myteay.phoenix.common.util.enums.PxEventTopicEnum;
+import com.myteay.phoenix.common.util.process.enums.PxEventTopicEnum;
 
 /**
  * 异步事件处理工具类

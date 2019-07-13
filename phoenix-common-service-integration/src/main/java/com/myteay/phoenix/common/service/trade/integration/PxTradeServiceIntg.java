@@ -20,5 +20,5 @@ public interface PxTradeServiceIntg {
     public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
                                                        CampShopPrizeOutModel campShopPrizeOutModel);
 
-    public PxGoodsOrderModel createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel);
+    public MtOperateResult<PxGoodsOrderModel> createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel);
 }

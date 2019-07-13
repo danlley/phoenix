@@ -10,10 +10,12 @@ import com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg
 import com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.process.enums.PxEventTopicEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.myteay.phoenix.core.service.component.PxProcessComponent;
+import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
 
 /**
  * 
@@ -31,6 +33,9 @@ public class PxProcessComponentImpl implements PxProcessComponent {
     /**  */
     private PxCampPrizeServiceIntg pxCampPrizeServiceIntg;
 
+    /**  */
+    private PxEventPublishTool     pxEventPublishTool;
+
     /** 
      * @see com.myteay.phoenix.core.service.component.PxProcessComponent#doProcess(com.myteay.phoenix.core.model.PxGoodsOrderModel)
      */
@@ -42,24 +47,32 @@ public class PxProcessComponentImpl implements PxProcessComponent {
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
         }
 
-        PxGoodsOrderModel pxOrderModel = null;
+        // step 1: 创建收银台订单
+        MtOperateResult<PxGoodsOrderModel> orderResult = null;
         try {
-            pxOrderModel = pxTradeServiceIntg.createGoodsOrderOut(pxGoodsOrderModel);
+            orderResult = pxTradeServiceIntg.createGoodsOrderOut(pxGoodsOrderModel);
         } catch (Throwable e) {
             logger.warn("创建订单过程发生异常 pxGoodsOrderModel=" + pxGoodsOrderModel, e);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
 
-        if (pxOrderModel == null) {
+        if (orderResult == null) {
             logger.warn("创建订单过程发生未知异常 pxGoodsOrderModel=" + pxGoodsOrderModel);
             return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
 
-        CampCashierModel campCashierModel = pxCampPrizeServiceIntg.doCamp(pxOrderModel);
+        // step 2: 同步进行收银台抽奖出券动作
+        CampCashierModel campCashierModel = pxCampPrizeServiceIntg.doCamp(orderResult.getResult());
 
         if (logger.isInfoEnabled()) {
-            logger.info("针对指定订单抽奖 pxOrderModel=" + pxOrderModel + " campCashierModel=" + campCashierModel);
+            logger.info("针对指定订单抽奖 orderResult=" + orderResult + " campCashierModel=" + campCashierModel);
         }
+
+        // step 3: 记录成本信息
+        pxEventPublishTool.publishEventWithObject(PxEventTopicEnum.PX_GOODS_COST_MARAK, orderResult.getResult());
+
+        // step 4: 对需要进行抵扣的优惠券进行打标
+        pxEventPublishTool.publishEventWithObject(PxEventTopicEnum.PX_CAMP_PRIZE_MARK, orderResult.getResult());
 
         return new MtOperateResult<>(campCashierModel);
     }
@@ -80,6 +93,15 @@ public class PxProcessComponentImpl implements PxProcessComponent {
      */
     public void setPxCampPrizeServiceIntg(PxCampPrizeServiceIntg pxCampPrizeServiceIntg) {
         this.pxCampPrizeServiceIntg = pxCampPrizeServiceIntg;
+    }
+
+    /**
+     * Setter method for property <tt>pxEventPublishTool</tt>.
+     * 
+     * @param pxEventPublishTool value to be assigned to property pxEventPublishTool
+     */
+    public void setPxEventPublishTool(PxEventPublishTool pxEventPublishTool) {
+        this.pxEventPublishTool = pxEventPublishTool;
     }
 
 }

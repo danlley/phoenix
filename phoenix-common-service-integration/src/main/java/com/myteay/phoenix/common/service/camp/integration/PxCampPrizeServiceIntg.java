@@ -9,6 +9,7 @@ import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
 
 /**
+ * 优惠券服务客户端
  * 
  * @author min.weixm
  * @version $Id: PxCampPrizeServiceIntg.java, v 0.1 2019年7月6日 下午5:08:29 min.weixm Exp $
@@ -21,6 +22,13 @@ public interface PxCampPrizeServiceIntg {
      * @return
      */
     public MtOperateResult<String> consumePrize(String orderNo);
+
+    /**
+     * 
+     * @param pxGoodsOrderModel
+     * @return
+     */
+    public MtOperateResult<String> markPrize(PxGoodsOrderModel pxGoodsOrderModel);
 
     /**
      * 

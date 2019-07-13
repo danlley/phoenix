@@ -21,4 +21,5 @@ public interface CampShopPrizeOutIntg {
      * @return
      */
     public MtOperateResult<CampShopPrizeOutModel> queryShopPrizeOutById(String prizeOutId);
+
 }
