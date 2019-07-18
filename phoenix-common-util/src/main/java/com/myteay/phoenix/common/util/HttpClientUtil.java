@@ -12,6 +12,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * http请求处理工具类
  * 
@@ -49,12 +51,14 @@ public class HttpClientUtil {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setUseCaches(false);
-            // 获取URLConnection对象对应的输出流
-            out = new PrintWriter(conn.getOutputStream());
             // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
+            if (StringUtils.isNotBlank(param)) {
+                // 获取URLConnection对象对应的输出流
+                out = new PrintWriter(conn.getOutputStream());
+                out.print(param);
+                // flush输出流的缓冲
+                out.flush();
+            }
             is = conn.getInputStream();
             br = new BufferedReader(new InputStreamReader(is));
             String line = null;

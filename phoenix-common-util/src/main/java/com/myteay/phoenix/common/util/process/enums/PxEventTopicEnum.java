@@ -16,7 +16,11 @@ public enum PxEventTopicEnum {
 
     PX_CAMP_PRIZE_MARK("PX_CAMP_PRIZE_MARK", "营销活动奖品打标事件"),
 
+    PX_CAMP_PRIZE_CONSUME("PX_CAMP_PRIZE_CONSUME", "营销活动奖品抵扣事件"),
+
     PX_GOODS_COST_MARAK("PX_GOODS_COST_MARAK", "成本打标事件"),
+
+    PX_GOODS_COST_COVERED("PX_GOODS_COST_COVERED", "成本覆盖事件"),
 
     ;
     /** value */

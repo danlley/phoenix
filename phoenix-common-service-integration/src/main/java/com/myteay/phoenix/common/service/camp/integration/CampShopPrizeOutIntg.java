@@ -8,6 +8,7 @@ import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 
 /**
+ * 营销管理优惠券
  * 
  * @author min.weixm
  * @version $Id: CampShopPrizeOutIntg.java, v 0.1 Jun 19, 2019 3:56:16 PM min.weixm Exp $

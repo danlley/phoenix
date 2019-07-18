@@ -28,6 +28,8 @@ import com.myteay.phoenix.common.util.PxOrderNoUtil;
 import com.myteay.phoenix.common.util.QRCodeUtil;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
+import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
@@ -58,97 +60,35 @@ public class CashierController {
     /**  */
     @Autowired
     private PxProcessComponent  pxProcessComponent;
-    //
-    //    /**
-    //     * 修改订单状态
-    //     * 
-    //     * @param orderNo
-    //     * @param pxPayTypeEnum
-    //     * @param pxOrderStatusEnum
-    //     * @param request
-    //     * @param response
-    //     * @return
-    //     */
-    //    @RequestMapping(value = "/order/change", method = { RequestMethod.POST })
-    //    public MtServiceResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
-    //                                                       @RequestBody(required = false) CampShopPrizeOutModel campShopPrizeOutModel, HttpServletRequest request,
-    //                                                       HttpServletResponse response) {
-    //
-    //        if (logger_cashier.isInfoEnabled() && campShopPrizeOutModel == null) {
-    //            logger_cashier.info("[REQCONSUME," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + ",null]");
-    //        }
-    //
-    //        if (logger_cashier.isInfoEnabled() && campShopPrizeOutModel != null) {
-    //            logger_cashier
-    //                .info("[REQCONSUME," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + campShopPrizeOutModel.getCampPrizeOutId() + "]");
-    //        }
-    //
-    //        MtOperateResult<String> innerResult = pxGoodsOrderOutCompoonent.modifyGoodsOrderOut(orderNo, pxPayTypeEnum, pxOrderStatusEnum, campShopPrizeOutModel);
-    //        MtServiceResult<String> result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
-    //        result.setResult(innerResult.getResult());
-    //
-    //        if (logger_cashier.isInfoEnabled() && campShopPrizeOutModel == null) {
-    //            logger_cashier.info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + ",null," + result.getOperateResult() + ","
-    //                                + result.getOperateExResult() + "]");
-    //        }
-    //
-    //        if (logger_cashier.isInfoEnabled() && campShopPrizeOutModel != null) {
-    //            logger_cashier.info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + campShopPrizeOutModel.getCampPrizeOutId()
-    //                                + "," + result.getOperateResult() + "," + result.getOperateExResult() + "]");
-    //        }
-    //
-    //        return result;
-    //    }
-    //
-    //    /**
-    //     * 创建订单流水
-    //     * 
-    //     * @param pxGoodsOrderModel
-    //     * @param request
-    //     * @param response
-    //     * @return
-    //     */
-    //    @RequestMapping(value = "/order/", method = { RequestMethod.POST })
-    //    public MtServiceResult<CampCashierModel> createGoodsOrderOut(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
-    //                                                                 HttpServletResponse response) {
-    //
-    //        if (logger.isInfoEnabled()) {
-    //            logger.info("收到订单请求 pxGoodsOrderModel=" + pxGoodsOrderModel);
-    //        }
-    //
-    //        //step 1: 生成订单号
-    //        pxGoodsOrderModel.setOrderNo(PxOrderNoUtil.getUUID());
-    //        MtServiceResult<CampCashierModel> result = new MtServiceResult<>();
-    //
-    //        //step 2: 填充上下文
-    //        PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
-    //
-    //        // step 3: 异常参数校验
-    //        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
-    //            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
-    //            logger_cashier
-    //                .warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
-    //            return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
-    //        }
-    //
-    //        // step 4: 记录订单请求的摘要日志
-    //        if (logger_cashier.isInfoEnabled()) {
-    //            logger_cashier.info("[REQGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + ","
-    //                                + pxGoodsOrderModel.getPxGoodsModelList().size() + "]");
-    //        }
-    //
-    //        // step 5: 执行订单流水落地业务
-    //        MtOperateResult<CampCashierModel> innerResult = pxGoodsOrderOutCompoonent.execute(pxGoodsOrderModel);
-    //
-    //        // step 6: 记录订单流水落地结果
-    //        if (logger_cashier.isInfoEnabled()) {
-    //            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo()
-    //                                + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
-    //        }
-    //
-    //        result.setResult(innerResult.getResult());
-    //        return result;
-    //    }
+
+    /**
+     * 修改订单状态
+     * 
+     * @param orderNo
+     * @param pxPayTypeEnum
+     * @param pxOrderStatusEnum
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/order/change", method = { RequestMethod.POST })
+    public MtServiceResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
+
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[REQCONSUME," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "]");
+        }
+
+        MtOperateResult<String> innerResult = pxProcessComponent.doPay(orderNo, pxPayTypeEnum, pxOrderStatusEnum);
+        MtServiceResult<String> result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+        result.setResult(innerResult.getResult());
+
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + result.getOperateResult() + ","
+                    + result.getOperateExResult() + "]");
+        }
+
+        return result;
+    }
 
     /**
      * 创建订单流水v2.0

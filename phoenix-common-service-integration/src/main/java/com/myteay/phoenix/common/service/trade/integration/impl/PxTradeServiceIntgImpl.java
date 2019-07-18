@@ -12,24 +12,14 @@ import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
-import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
 
 /**
+ * 交易订单管理客户端
  * 
  * @author min.weixm
  * @version $Id: PxTradeServiceIntgImpl.java, v 0.1 Jul 6, 2019 9:29:16 PM min.weixm Exp $
  */
 public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
-
-    /** 
-     * @see com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum, com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel)
-     */
-    @Override
-    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum,
-                                                       CampShopPrizeOutModel campShopPrizeOutModel) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /** 
      * @see com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg#createGoodsOrderOut(com.myteay.phoenix.core.model.PxGoodsOrderModel)
@@ -41,6 +31,18 @@ public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
         return (MtOperateResult<PxGoodsOrderModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsOrderModel>>() {
         });
 
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg#modifyGoodsOrderOut(java.lang.String, com.myteay.phoenix.common.util.enums.PxPayTypeEnum, com.myteay.phoenix.common.util.enums.PxOrderStatusEnum)
+     */
+    @Override
+    public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
+        String url = "http://192.168.0.103:40031/myteay/api/phoenix/cashier/manage/base/order/change" + "?orderNo=" + orderNo + "&pxOrderStatusEnum="
+                + pxOrderStatusEnum + "&pxPayTypeEnum=" + pxPayTypeEnum;
+        String result = HttpClientUtil.insureResponsePost(url, null);
+        return (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
+        });
     }
 
 }
