@@ -6,6 +6,9 @@ package com.myteay.phoenix.common.service.integration.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxSubPackagesIntg;
@@ -20,12 +23,17 @@ import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
  */
 public class PxSubPackagesIntgImpl implements PxSubPackagesIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.integration.PxSubPackagesIntg#querySubPackagesByPackagesId(java.lang.String)
      */
     @Override
     public MtOperateResult<List<PxSubPackagesModel>> querySubPackagesByPackagesId(String packagesDetailId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/sub/pkgs/list/sub/packages/" + packagesDetailId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/sub/pkgs/list/sub/packages/" + packagesDetailId;
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxSubPackagesModel>> obj = (MtOperateResult<List<PxSubPackagesModel>>) JSON.parseObject(result,
@@ -39,7 +47,8 @@ public class PxSubPackagesIntgImpl implements PxSubPackagesIntg {
      */
     @Override
     public MtOperateResult<PxSubPackagesModel> manageSubPackages(PxSubPackagesModel pxSubPackagesModel) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/sub/pkgs/manage";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/sub/pkgs/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxSubPackagesModel));
         MtOperateResult<PxSubPackagesModel> obj = (MtOperateResult<PxSubPackagesModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxSubPackagesModel>>() {

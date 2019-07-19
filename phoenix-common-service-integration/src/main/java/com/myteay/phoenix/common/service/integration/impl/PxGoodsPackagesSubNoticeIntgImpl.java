@@ -6,6 +6,9 @@ package com.myteay.phoenix.common.service.integration.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesSubNoticeIntg;
@@ -20,12 +23,17 @@ import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
  */
 public class PxGoodsPackagesSubNoticeIntgImpl implements PxGoodsPackagesSubNoticeIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.integration.PxGoodsPackagesSubNoticeIntg#queryPackagesNoticeListByNoticeId(java.lang.String)
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryPackagesNoticeListByNoticeId(String packagesNoticeId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/list/notice/" + packagesNoticeId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/pkgs/sub/notice/list/notice/" + packagesNoticeId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> obj = (MtOperateResult<List<PxGoodsPackagesSubNoticeModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsPackagesSubNoticeModel>>>() {
@@ -38,7 +46,8 @@ public class PxGoodsPackagesSubNoticeIntgImpl implements PxGoodsPackagesSubNotic
      */
     @Override
     public MtOperateResult<PxGoodsPackagesSubNoticeModel> manageSubPackages(PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/sub/notice/manage";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/pkgs/sub/notice/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsPackagesSubNoticeModel));
         MtOperateResult<PxGoodsPackagesSubNoticeModel> obj = (MtOperateResult<PxGoodsPackagesSubNoticeModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsPackagesSubNoticeModel>>() {

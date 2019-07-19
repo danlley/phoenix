@@ -9,6 +9,8 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -26,12 +28,17 @@ import com.myteay.phoenix.core.model.manage.PxGoodsModel;
  */
 public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.integration.PxGoodsControllerIntg#queryGoodsAll()
      */
     @Override
     public MtOperateResult<List<PxGoodsModel>> queryGoodsAll() {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/all";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
@@ -45,7 +52,8 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<List<PxGoodsModel>> queryGoodsListByShopId(String shopId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/list/shop/" + shopId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/list/shop/" + shopId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsModel>>>() {
@@ -58,7 +66,8 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsAdvModel> queryGoodsAdvAll(String goodsId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/query/goods/adv/" + goodsId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/query/goods/adv/" + goodsId;
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<PxGoodsAdvModel> obj = (MtOperateResult<PxGoodsAdvModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsAdvModel>>() {
@@ -87,8 +96,8 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
             }
         }
 
-        String url = null;
-        url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/query/goods/condition/?" + subUrl.toString();
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/query/goods/condition/?" + subUrl.toString();
 
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<List<PxGoodsModel>> obj = (MtOperateResult<List<PxGoodsModel>>) JSON.parseObject(result,
@@ -102,7 +111,8 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsModel> manageGoodsStatus(PxGoodsModel pxGoodsModel) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/status/";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/status/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsModel));
         MtOperateResult<PxGoodsModel> obj = (MtOperateResult<PxGoodsModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsModel>>() {
         });
@@ -114,7 +124,8 @@ public class PxGoodsControllerIntgImpl implements PxGoodsControllerIntg {
      */
     @Override
     public MtOperateResult<PxGoodsModel> manageGoods(PxGoodsModel pxGoodsModel) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/goods/manage";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/goods/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsModel));
         MtOperateResult<PxGoodsModel> obj = (MtOperateResult<PxGoodsModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsModel>>() {
         });

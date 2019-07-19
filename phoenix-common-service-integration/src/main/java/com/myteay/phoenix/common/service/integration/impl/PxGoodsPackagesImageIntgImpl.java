@@ -6,6 +6,9 @@ package com.myteay.phoenix.common.service.integration.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesImageIntg;
@@ -20,12 +23,17 @@ import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
  */
 public class PxGoodsPackagesImageIntgImpl implements PxGoodsPackagesImageIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.integration.PxGoodsPackagesImageIntg#queryPackagesImageListByGoodsId(java.lang.String)
      */
     @Override
     public MtOperateResult<List<PxGoodsPackagesImageModel>> queryPackagesImageListByGoodsId(String goodsId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/image/list/goods/" + goodsId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/pkgs/image/list/goods/" + goodsId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<PxGoodsPackagesImageModel>> obj = (MtOperateResult<List<PxGoodsPackagesImageModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxGoodsPackagesImageModel>>>() {
@@ -38,7 +46,8 @@ public class PxGoodsPackagesImageIntgImpl implements PxGoodsPackagesImageIntg {
      */
     @Override
     public MtOperateResult<PxGoodsPackagesImageModel> manageGoodsPackagesImage(PxGoodsPackagesImageModel pxGoodsPackagesImageModel) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/admin/manage/pkgs/image/manage/goods/";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/pkgs/image/manage/goods/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsPackagesImageModel));
         MtOperateResult<PxGoodsPackagesImageModel> obj = (MtOperateResult<PxGoodsPackagesImageModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxGoodsPackagesImageModel>>() {

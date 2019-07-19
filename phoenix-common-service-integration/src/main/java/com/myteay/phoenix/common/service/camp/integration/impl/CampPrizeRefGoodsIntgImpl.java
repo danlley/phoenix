@@ -6,6 +6,9 @@ package com.myteay.phoenix.common.service.camp.integration.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeRefGoodsIntg;
@@ -20,12 +23,17 @@ import com.myteay.phoenix.core.model.camp.CampPrizeRefGoodsModel;
  */
 public class CampPrizeRefGoodsIntgImpl implements CampPrizeRefGoodsIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.camp.integration.CampPrizeRefGoodsIntg#queryPrizeRefGoodsByPrizeId(java.lang.String)
      */
     @Override
     public MtOperateResult<List<CampPrizeRefGoodsModel>> queryPrizeRefGoodsByPrizeId(String prizeId) {
-        String url = "http://localhost:40041/myteay/api/phoenix/camp/manage/prize/ref/list/" + prizeId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/camp/manage/prize/ref/list/" + prizeId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<List<CampPrizeRefGoodsModel>> obj = (MtOperateResult<List<CampPrizeRefGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<CampPrizeRefGoodsModel>>>() {
@@ -38,7 +46,8 @@ public class CampPrizeRefGoodsIntgImpl implements CampPrizeRefGoodsIntg {
      */
     @Override
     public MtOperateResult<List<CampPrizeRefGoodsModel>> managePrizeGoodsRefList(String prizeId, List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) {
-        String url = "http://localhost:40041/myteay/api/phoenix/camp/manage/prize/ref/manage/" + prizeId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/camp/manage/prize/ref/manage/" + prizeId;
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(campPrizeRefGoodsModelList));
         MtOperateResult<List<CampPrizeRefGoodsModel>> obj = (MtOperateResult<List<CampPrizeRefGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<CampPrizeRefGoodsModel>>>() {

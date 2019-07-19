@@ -134,12 +134,12 @@ public class PxProcessComponentImpl implements PxProcessComponent {
         // step 1: 检查优惠券有效性
         List<CampShopPrizeOutModel> prizeList = constructPrizeList(pxGoodsOrderModel);
         if (!CollectionUtils.isEmpty(prizeList) && isPrizeListInvalid(prizeList)) {
-            return false;
+            return true;
         }
 
         // step 2: 检查订单金额有效性
 
-        return true;
+        return false;
     }
 
     /**

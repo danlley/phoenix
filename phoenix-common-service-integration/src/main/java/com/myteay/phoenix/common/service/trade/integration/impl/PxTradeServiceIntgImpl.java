@@ -4,6 +4,9 @@
  */
 package com.myteay.phoenix.common.service.trade.integration.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg;
@@ -21,12 +24,17 @@ import com.myteay.phoenix.core.model.PxGoodsOrderModel;
  */
 public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.trade.integration.PxTradeServiceIntg#createGoodsOrderOut(com.myteay.phoenix.core.model.PxGoodsOrderModel)
      */
     @Override
     public MtOperateResult<PxGoodsOrderModel> createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) {
-        String url = "http://192.168.0.103:40031/myteay/api/phoenix/cashier/manage/base/order/";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/cashier/manage/base/order/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
         return (MtOperateResult<PxGoodsOrderModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsOrderModel>>() {
         });
@@ -38,8 +46,9 @@ public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
      */
     @Override
     public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
-        String url = "http://192.168.0.103:40031/myteay/api/phoenix/cashier/manage/base/order/change" + "?orderNo=" + orderNo + "&pxOrderStatusEnum="
-                + pxOrderStatusEnum + "&pxPayTypeEnum=" + pxPayTypeEnum;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/cashier/manage/base/order/change" + "?orderNo=" + orderNo + "&pxOrderStatusEnum=" + pxOrderStatusEnum
+                + "&pxPayTypeEnum=" + pxPayTypeEnum;
         String result = HttpClientUtil.insureResponsePost(url, null);
         return (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
         });

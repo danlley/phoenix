@@ -6,6 +6,9 @@ package com.myteay.phoenix.common.service.integration.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxMobileGoodsIntg;
@@ -20,12 +23,17 @@ import com.myteay.phoenix.core.model.mobile.PxMobileGoodsModel;
  */
 public class PxMobileGoodsIntgImpl implements PxMobileGoodsIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.integration.PxMobileGoodsIntg#queryNextGoodsList(java.util.List)
      */
     @Override
     public MtOperateResult<List<PxMobileGoodsModel>> queryNextGoodsList(List<String> excludeGoodsIds) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/mobile/goods/list/";
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/mobile/goods/list/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(excludeGoodsIds));
         MtOperateResult<List<PxMobileGoodsModel>> obj = (MtOperateResult<List<PxMobileGoodsModel>>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<List<PxMobileGoodsModel>>>() {
@@ -38,7 +46,8 @@ public class PxMobileGoodsIntgImpl implements PxMobileGoodsIntg {
      */
     @Override
     public MtOperateResult<PxMobileGoodsModel> queryGoodsDetail(String goodsId) {
-        String url = "http://192.168.0.101:40051/myteay/api/phoenix/mobile/goods/single/" + goodsId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/mobile/goods/single/" + goodsId;
         String result = HttpClientUtil.insureResponsePost(url, null);
         MtOperateResult<PxMobileGoodsModel> obj = (MtOperateResult<PxMobileGoodsModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<PxMobileGoodsModel>>() {

@@ -4,6 +4,9 @@
  */
 package com.myteay.phoenix.common.service.camp.integration.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg;
@@ -19,12 +22,17 @@ import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
  */
 public class CampShopPrizeOutIntgImpl implements CampShopPrizeOutIntg {
 
+    /** 环境变量 */
+    @Autowired
+    private Environment env;
+
     /** 
      * @see com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg#queryShopPrizeOutById(java.lang.String)
      */
     @Override
     public MtOperateResult<CampShopPrizeOutModel> queryShopPrizeOutById(String prizeOutId) {
-        String url = "http://localhost:40041/myteay/api/phoenix/camp/prize/out/list/" + prizeOutId;
+        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
+        String url = pathPrefix + "/myteay/api/phoenix/camp/prize/out/list/" + prizeOutId;
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<CampShopPrizeOutModel> obj = (MtOperateResult<CampShopPrizeOutModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<CampShopPrizeOutModel>>() {
