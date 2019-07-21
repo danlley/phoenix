@@ -57,7 +57,7 @@ public class CashierController {
     /** 当前日期 */
     private static String       currentDate;
 
-    /**  */
+    /** 收银台主流程处理组件 */
     @Autowired
     private PxProcessComponent  pxProcessComponent;
 

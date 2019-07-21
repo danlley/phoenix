@@ -33,7 +33,7 @@ public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
      */
     @Override
     public MtOperateResult<PxGoodsOrderModel> createGoodsOrderOut(PxGoodsOrderModel pxGoodsOrderModel) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String pathPrefix = env.getProperty("tiancan.phoenix.trade.path.prefix");
         String url = pathPrefix + "/myteay/api/phoenix/cashier/manage/base/order/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
         return (MtOperateResult<PxGoodsOrderModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxGoodsOrderModel>>() {
@@ -46,7 +46,7 @@ public class PxTradeServiceIntgImpl implements PxTradeServiceIntg {
      */
     @Override
     public MtOperateResult<String> modifyGoodsOrderOut(String orderNo, PxPayTypeEnum pxPayTypeEnum, PxOrderStatusEnum pxOrderStatusEnum) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
+        String pathPrefix = env.getProperty("tiancan.phoenix.trade.path.prefix");
         String url = pathPrefix + "/myteay/api/phoenix/cashier/manage/base/order/change" + "?orderNo=" + orderNo + "&pxOrderStatusEnum=" + pxOrderStatusEnum
                 + "&pxPayTypeEnum=" + pxPayTypeEnum;
         String result = HttpClientUtil.insureResponsePost(url, null);
