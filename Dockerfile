@@ -3,6 +3,7 @@ FROM daocloud.io/ld00000/jdk-8:latest
 # ------------------------------------------------------------------------------------------
 #
 #                                     安装微服务应用phoenix
+# docker run -p 40009:40009 -v /home/danlley/docker/share/phoenix/logs:/etc/myteay/plateform/logs/phoenix/ -v /home/danlley/docker/share/phoenix/file:/etc/myteay/plateform/phoenix/images -v /etc/localtime:/etc/localtime:ro phoenix_201905102157
 #
 # ------------------------------------------------------------------------------------------
 #安装应用
