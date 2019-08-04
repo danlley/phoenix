@@ -58,8 +58,8 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String path = env.getProperty("myteay.phoenix.images.path");
-        //        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations(path);
-        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations("file:/D:/git_repository/dev/packages/images/");
+        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations(path);
+        //        registry.addResourceHandler("/myteay/api/phoenix/web/images/**").addResourceLocations("file:/D:/git_repository/dev/packages/images/");
     }
 
     /** 

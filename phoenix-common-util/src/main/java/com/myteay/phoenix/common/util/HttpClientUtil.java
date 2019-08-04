@@ -60,7 +60,7 @@ public class HttpClientUtil {
                 out.flush();
             }
             is = conn.getInputStream();
-            br = new BufferedReader(new InputStreamReader(is));
+            br = new BufferedReader(new InputStreamReader(is, "utf-8"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 strBuffer.append(line);
@@ -114,7 +114,7 @@ public class HttpClientUtil {
             // 传输数据为json，如果为其他格式可以进行修改
             conn.setRequestProperty("Content-Type", "application/json");
             is = conn.getInputStream();
-            br = new BufferedReader(new InputStreamReader(is));
+            br = new BufferedReader(new InputStreamReader(is, "utf-8"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 strBuffer.append(line);

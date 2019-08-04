@@ -15,7 +15,13 @@
 	
 	
 	<!--- StringHttpMessageConverter bean -->
-	<bean id = "stringHttpMessageConverter" class = "org.springframework.http.converter.StringHttpMessageConverter"/>
+	<bean id = "stringHttpMessageConverter" class = "org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+	</bean>
 	
 	<!--- formHttpMessageConverter bean -->
 	<bean id = "formHttpMessageConverter" class = "org.springframework.http.converter.FormHttpMessageConverter"/>
