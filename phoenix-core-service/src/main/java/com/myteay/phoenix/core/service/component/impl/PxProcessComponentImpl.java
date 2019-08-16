@@ -108,7 +108,18 @@ public class PxProcessComponentImpl implements PxProcessComponent {
         }
 
         // step 2: 同步进行收银台抽奖出券动作
-        CampCashierModel campCashierModel = pxCampPrizeServiceIntg.doCamp(orderResult.getResult());
+        CampCashierModel campCashierModel = null;
+        try {
+            campCashierModel = pxCampPrizeServiceIntg.doCamp(orderResult.getResult());
+        } catch (Throwable e) {
+            logger.warn("当前订单抽奖失败 orderResult=" + orderResult, e);
+        }
+
+        if (campCashierModel == null) {
+            campCashierModel = new CampCashierModel();
+            campCashierModel.setOrderNo(orderResult.getResult().getOrderNo());
+            campCashierModel.setUserId(orderResult.getResult().getUserId());
+        }
 
         if (logger.isInfoEnabled()) {
             logger.info("针对指定订单抽奖 orderResult=" + orderResult + " campCashierModel=" + campCashierModel);
