@@ -9,7 +9,7 @@ select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm from
  */
 select * from (
 select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm, date_format(gmt_created,'%Y-%c-%d') sum_date  from px_goods_order_out group by sum_date
-) as a where sum_date = '2019-3-15'
+) as a where sum_date = '2019-8-28'
 
 -- 查询用户是否下单成功
 select * from (
