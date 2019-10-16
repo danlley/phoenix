@@ -9,7 +9,13 @@ select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm from
  */
 select * from (
 select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm, date_format(gmt_created,'%Y-%c-%d') sum_date  from px_goods_order_out group by sum_date
-) as a where sum_date = '2019-8-28'
+) as a where sum_date = '2019-9-15'
+
+select total-price as ccc from{
+	select sum((goods_price*seller_amount-price) ) as '实际销量', sum((goods_price*seller_amount) ) as '总销量', sum(price) as '兑券额' from (
+		select (case when prize_price is null then '0' else prize_price end) price, goods_price, seller_amount from px_goods_order_out
+	)as a
+) as b
 
 -- 查询用户是否下单成功
 select * from (
