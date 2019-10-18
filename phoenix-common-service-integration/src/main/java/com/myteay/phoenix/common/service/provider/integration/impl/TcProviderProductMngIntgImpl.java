@@ -65,7 +65,7 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
     @Override
     public MtServiceResult<TcProviderProductImagesModel> manageProductImagesInfo(TcProviderProductImagesModel tcProviderProductImagesModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
-        String url = pathPrefix + "/tiancan/api/provider/manage/do/images/mng" + tcProviderProductImagesModel;
+        String url = pathPrefix + "/tiancan/api/provider/manage/do/images/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductImagesModel));
         MtServiceResult<TcProviderProductImagesModel> obj = (MtServiceResult<TcProviderProductImagesModel>) JSON.parseObject(result,
@@ -80,7 +80,7 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
     @Override
     public MtServiceResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(TcProviderProductPriceModel tcProviderProductPriceModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
-        String url = pathPrefix + "/tiancan/api/provider/manage/do/price/mng" + tcProviderProductPriceModel;
+        String url = pathPrefix + "/tiancan/api/provider/manage/do/price/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductPriceModel));
         MtServiceResult<TcProviderProductPriceModel> obj = (MtServiceResult<TcProviderProductPriceModel>) JSON.parseObject(result,
@@ -95,7 +95,7 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
     @Override
     public MtServiceResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(TcProviderProductNutritionalModel tcProviderProductNutritionalModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
-        String url = pathPrefix + "/tiancan/api/provider/manage/do/nutritional/mng" + tcProviderProductNutritionalModel;
+        String url = pathPrefix + "/tiancan/api/provider/manage/do/nutritional/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductNutritionalModel));
         MtServiceResult<TcProviderProductNutritionalModel> obj = (MtServiceResult<TcProviderProductNutritionalModel>) JSON.parseObject(result,
