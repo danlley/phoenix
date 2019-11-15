@@ -1,8 +1,10 @@
 /**
  * 查询当前店铺总销量
  */
-select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm from px_goods_order_out where shop_id=24
+select cast(sum(goods_price * seller_amount) as decimal (19, 2)) as sumComm from px_goods_order_outpx_goods_packages_noticepx_goods_packages_notice where shop_id=24
 
+
+-- flush privileges;
 
 /**
  * 查询当前店铺单日销量
