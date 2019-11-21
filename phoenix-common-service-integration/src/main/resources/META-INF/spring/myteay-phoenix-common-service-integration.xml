@@ -13,6 +13,8 @@
 	
 	<bean id="tcProviderProductMngIntg" class="com.myteay.phoenix.common.service.provider.integration.impl.TcProviderProductMngIntgImpl"></bean>
 	
+	<bean id="tcProviderProductOrderOutIntg" class="com.myteay.phoenix.common.service.provider.integration.impl.TcProviderProductOrderOutIntgImpl"></bean>
+	
 	<bean id="pxGoodsControllerIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsControllerIntgImpl"></bean>
 	
 	<bean id="pxGoodsPackagesDetailIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesDetailIntgImpl"></bean>

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg;
+import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.tc.provider.orm.model.TcProviderProductImagesModel;
 import com.tc.provider.orm.model.TcProviderProductModel;
 import com.tc.provider.orm.model.TcProviderProductNutritionalModel;
@@ -147,5 +149,25 @@ public class TcProviderProductMngController {
     @RequestMapping(value = "/list/images/{productId}", method = { RequestMethod.GET })
     public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(@PathVariable String productId) {
         return tcProviderProductMngIntg.queryProductAllImagesByProductId(productId);
+    }
+
+    /**
+     * 多条件查询原材料配置信息
+     * 
+     * @param shopId
+     * @param productName
+     * @return
+     */
+    @RequestMapping(value = "/list/condition/shop/", method = { RequestMethod.POST })
+    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
+        MtServiceResult<List<TcProviderProductModel>> result = null;
+        try {
+            result = tcProviderProductMngIntg.findTcProviderProductByCondition(shopId, productName);
+        } catch (Throwable e) {
+            logger.warn("查询产品询价配置发生异常 error: " + e.getMessage(), e);
+            return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+        }
+
+        return new MtServiceResult<List<TcProviderProductModel>>(result.getResult());
     }
 }

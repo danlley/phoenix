@@ -6,7 +6,6 @@ package com.myteay.phoenix.common.service.provider.integration;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
@@ -38,7 +37,7 @@ public interface TcProviderProductMngIntg {
      * @param shopId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductModel>> queryProviderProductByShopId(@PathVariable String shopId);
+    public MtServiceResult<List<TcProviderProductModel>> queryProviderProductByShopId(String shopId);
 
     /**
      * 原材料图片管理
@@ -78,7 +77,7 @@ public interface TcProviderProductMngIntg {
      * @param shopId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(@PathVariable String productId);
+    public MtServiceResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(String productId);
 
     /**
      * 查询原材料对应的所有营养配比
@@ -86,7 +85,7 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(@PathVariable String productId);
+    public MtServiceResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(String productId);
 
     /**
      * 查询原材料对应的所有帮助手册
@@ -94,7 +93,7 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(@PathVariable String productId);
+    public MtServiceResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(String productId);
 
     /**
      * 查询原材料图片
@@ -102,5 +101,13 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(@PathVariable String productId);
+    public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(String productId);
+
+    /**
+     * 
+     * @param shopId
+     * @param productName
+     * @return
+     */
+    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName);
 }

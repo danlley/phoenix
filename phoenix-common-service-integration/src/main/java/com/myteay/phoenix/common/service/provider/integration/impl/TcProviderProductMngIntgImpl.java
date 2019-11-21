@@ -4,8 +4,11 @@
  */
 package com.myteay.phoenix.common.service.provider.integration.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -175,6 +178,32 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
         String result = HttpClientUtil.insureResponseGet(url);
         MtServiceResult<List<TcProviderProductImagesModel>> obj = (MtServiceResult<List<TcProviderProductImagesModel>>) JSON.parseObject(result,
             new TypeReference<MtServiceResult<List<TcProviderProductImagesModel>>>() {
+            });
+        return obj;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#findTcProviderProductByCondition(java.lang.String, java.lang.String)
+     */
+    @Override
+    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
+        String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
+
+        StringBuffer subUrl = new StringBuffer();
+        if (StringUtils.isNotBlank(shopId)) {
+            subUrl.append("shopId=" + shopId);
+        }
+        if (StringUtils.isNotBlank(productName)) {
+            try {
+                subUrl.append("&productName=" + URLEncoder.encode(productName, "utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        String url = pathPrefix + "/tiancan/api/provider/manage/list/condition/shop/?" + subUrl.toString();
+        String result = HttpClientUtil.insureResponsePost(url, null);
+        MtServiceResult<List<TcProviderProductModel>> obj = (MtServiceResult<List<TcProviderProductModel>>) JSON.parseObject(result,
+            new TypeReference<MtServiceResult<List<TcProviderProductModel>>>() {
             });
         return obj;
     }
