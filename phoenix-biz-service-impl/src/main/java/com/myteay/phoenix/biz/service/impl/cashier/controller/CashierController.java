@@ -4,7 +4,11 @@
  */
 package com.myteay.phoenix.biz.service.impl.cashier.controller;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +36,8 @@ import com.myteay.phoenix.common.util.enums.PxOrderStatusEnum;
 import com.myteay.phoenix.common.util.enums.PxPayTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
+import com.myteay.phoenix.core.model.PxOrderPayedResultModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.myteay.phoenix.core.service.component.PxProcessComponent;
 
@@ -46,20 +52,22 @@ import com.myteay.phoenix.core.service.component.PxProcessComponent;
 public class CashierController {
 
     /** 日志 */
-    private static final Logger logger         = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
+    private static final Logger               logger         = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
 
     /** 摘要日志 */
-    private static final Logger logger_cashier = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DIGEST);
+    private static final Logger               logger_cashier = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DIGEST);
+
+    private static final Map<String, Integer> SHOP_TRADE_NO  = Collections.synchronizedMap(new HashMap<String, Integer>());
 
     /** 当前订单编号 */
-    private static int          currentNo      = 1;
+    private static int                        currentNo      = 1;
 
     /** 当前日期 */
-    private static String       currentDate;
+    private static String                     currentDate;
 
     /** 收银台主流程处理组件 */
     @Autowired
-    private PxProcessComponent  pxProcessComponent;
+    private PxProcessComponent                pxProcessComponent;
 
     /**
      * 修改订单状态
@@ -84,10 +92,113 @@ public class CashierController {
 
         if (logger_cashier.isInfoEnabled()) {
             logger_cashier.info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + result.getOperateResult() + ","
-                    + result.getOperateExResult() + "]");
+                                + result.getOperateExResult() + "]");
         }
 
         return result;
+    }
+
+    /**
+     * 创建订单并完成付款
+     * 
+     * @param pxGoodsOrderModel
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/order/create/payed/", method = { RequestMethod.POST })
+    public MtServiceResult<PxOrderPayedResultModel> createGoodsOrderOutPayed(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
+                                                                             HttpServletResponse response) {
+
+        if (logger.isInfoEnabled()) {
+            logger.info("收到订单请求 pxGoodsOrderModel=" + pxGoodsOrderModel);
+        }
+
+        //step 1: 生成订单号
+        pxGoodsOrderModel.setOrderNo(PxOrderNoUtil.getUUID());
+        MtServiceResult<CampCashierModel> result = new MtServiceResult<>();
+
+        //step 2: 填充上下文
+        PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
+
+        // step 3: 异常参数校验
+        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
+            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsOrderOutModelList())) {
+            logger_cashier
+                .warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
+            return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+        }
+
+        // step 4: 记录订单请求的摘要日志
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[REQGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + ","
+                                + pxGoodsOrderModel.getPxGoodsOrderOutModelList().size() + "]");
+        }
+
+        // step 5: 执行订单流水落地业务
+        MtOperateResult<CampCashierModel> innerResult = pxProcessComponent.doProcess(pxGoodsOrderModel);
+
+        // step 6: 记录订单流水落地结果
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo()
+                                + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
+        }
+
+        String tradeNo = pxGoodsOrderModel.getOrderNo();
+
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[REQCONSUME," + tradeNo + "," + pxGoodsOrderModel.getPayType() + "," + PxOrderStatusEnum.PX_ORDER_PAYED + "]");
+        }
+
+        MtOperateResult<String> innerPayedResult = pxProcessComponent.doPay(tradeNo, pxGoodsOrderModel.getPayType(), PxOrderStatusEnum.PX_ORDER_PAYED);
+        result.setResult(innerResult.getResult());
+
+        if (logger_cashier.isInfoEnabled()) {
+            logger_cashier.info("[REQCONSUMERES," + tradeNo + "," + pxGoodsOrderModel.getPayType() + "," + PxOrderStatusEnum.PX_ORDER_PAYED + ","
+                                + result.getOperateResult() + "," + result.getOperateExResult() + "]");
+        }
+
+        List<PxGoodsOrderOutModel> pxGoodsOrderOutModelList = pxGoodsOrderModel.getPxGoodsOrderOutModelList();
+        String shopId = pxGoodsOrderModel.getShopId();
+        String shopName = pxGoodsOrderModel.getShopName();
+        String orderNo = getOrderNoByShop(shopId);
+
+        CampCashierModel campCashierModel = innerResult.getResult();
+        PxOrderPayedResultModel pxOrderPayedResultModel = new PxOrderPayedResultModel();
+        pxOrderPayedResultModel.setCampCashierModel(campCashierModel);
+        pxOrderPayedResultModel.setOrderNo(orderNo);
+        pxOrderPayedResultModel.setOrderTime(new Date());
+        pxOrderPayedResultModel.setPxGoodsOrderOutModelList(pxGoodsOrderOutModelList);
+        pxOrderPayedResultModel.setShopId(shopId);
+        pxOrderPayedResultModel.setShopLogo("logo.jpg");
+        pxOrderPayedResultModel.setShopName(shopName);
+        pxOrderPayedResultModel.setTradeNo(tradeNo);
+        pxOrderPayedResultModel.setShopTel("15294395456");
+
+        MtServiceResult<PxOrderPayedResultModel> operateResult = new MtServiceResult<>(innerPayedResult.getOperateResult(),
+            innerPayedResult.getOperateExResult());
+        operateResult.setResult(pxOrderPayedResultModel);
+
+        return operateResult;
+    }
+
+    /**
+     * 获取店铺当前序号
+     * 
+     * @param shopId
+     * @return
+     */
+    private String getOrderNoByShop(String shopId) {
+        Integer number = SHOP_TRADE_NO.get(shopId);
+        if (number == null || number.intValue() <= 0) {
+            SHOP_TRADE_NO.put(shopId, 1);
+            number = SHOP_TRADE_NO.get(shopId);
+        }
+
+        String currOrderNo = number.toString();
+        SHOP_TRADE_NO.put(shopId, (number.intValue()) + 1);
+
+        return currOrderNo;
     }
 
     /**
@@ -115,7 +226,7 @@ public class CashierController {
 
         // step 3: 异常参数校验
         if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
-                || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
+            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
             logger_cashier
                 .warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
             return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
@@ -124,7 +235,7 @@ public class CashierController {
         // step 4: 记录订单请求的摘要日志
         if (logger_cashier.isInfoEnabled()) {
             logger_cashier.info("[REQGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + ","
-                    + pxGoodsOrderModel.getPxGoodsModelList().size() + "]");
+                                + pxGoodsOrderModel.getPxGoodsModelList().size() + "]");
         }
 
         // step 5: 执行订单流水落地业务
@@ -133,7 +244,7 @@ public class CashierController {
         // step 6: 记录订单流水落地结果
         if (logger_cashier.isInfoEnabled()) {
             logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo()
-                    + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
+                                + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
         }
 
         result.setResult(innerResult.getResult());

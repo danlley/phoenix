@@ -19,6 +19,11 @@ select total-price as ccc from{
 	)as a
 ) as b
 
+
+select goods_title,(case when prize_price is null then '0' else prize_price end) price, goods_price, seller_amount from px_goods_order_out where gmt_created > '2019-11-29 10:19:11' and goods_id<>'43'
+
+select * from px_goods where goods_title like '%蟹爪%'
+select * from px_goods_order_out_history where order_no = '6ACD3C4D423D4824B7005FFF87565A41'
 -- 查询用户是否下单成功
 select * from (
 select *,date_format(gmt_created,'%Y-%c-%d') sum_date from px_goods_order_out) as a where sum_date = '2019-3-15' order by gmt_created desc
@@ -47,5 +52,11 @@ update px_goods_order_out set seller_amount = '1'
 update px_goods_order_out set pay_type = 'PX_CASH_PAY'
 
 
-
-
+product_order_out
+insert into products (
+			order_name, shop_id, product_name, atomic, weight, order_status, product_amount, product_price,
+			product_total_price, gmt_created, gmt_modified
+		)values(
+		    'daf','adfa','adsf','dsfa','dfad','adfa','sadfa','adsfad',
+		    'adsfadsf',now(),now()
+		)
