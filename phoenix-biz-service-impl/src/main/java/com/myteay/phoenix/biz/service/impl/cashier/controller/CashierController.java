@@ -202,6 +202,18 @@ public class CashierController {
     }
 
     /**
+     * 获取订单编号
+     * 
+     * @param shopId
+     * @return
+     */
+    @RequestMapping(value = "/list/shop/order/number/ii/{shopId}", method = { RequestMethod.GET })
+    public MtServiceResult<String> getOrderNoByShopId(@PathVariable String shopId) {
+        String orderNum = getOrderNoByShop(shopId);
+        return new MtServiceResult<>(orderNum);
+    }
+
+    /**
      * 创建订单流水v2.0
      * 
      * @param pxGoodsOrderModel
