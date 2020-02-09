@@ -12,10 +12,12 @@
     <version>1.0.1.20172054</version>
 
     <name>phoenix-common-util</name>
-    <url>http://maven.apache.org</url>
+    <url>http://www.gangutiancan.com</url>
     
     <properties>
-    	<spring.version>4.2.6.RELEASE</spring.version>
+    	<spring.version>5.0.8.RELEASE</spring.version>
+    	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	<jmock.version>1.2.0</jmock.version>
     </properties>
 
@@ -143,8 +145,63 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- spring dependency end -->
+		<!-- nacos集成开始 -->
+<!-- 	    <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+	        <exclusions>
+		        <exclusion>
+		            <groupId>ch.qos.logback</groupId>
+		            <artifactId>logback-core</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>ch.qos.logback</groupId>
+		            <artifactId>logback-classic</artifactId>
+		        </exclusion>
+		    </exclusions>
+	    </dependency> -->
+	    <!-- nacos集成结束 -->
     </dependencies>
-
+    <!-- 开始集成nacos -->
+<!--       <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+			        <exclusion>
+			            <groupId>ch.qos.logback</groupId>
+			            <artifactId>logback-core</artifactId>
+			        </exclusion>
+			        <exclusion>
+			            <groupId>ch.qos.logback</groupId>
+			            <artifactId>logback-classic</artifactId>
+			        </exclusion>
+		    </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>0.2.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+			        <exclusion>
+			            <groupId>ch.qos.logback</groupId>
+			            <artifactId>logback-core</artifactId>
+			        </exclusion>
+			        <exclusion>
+			            <groupId>ch.qos.logback</groupId>
+			            <artifactId>logback-classic</artifactId>
+			        </exclusion>
+			    </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement> -->
+    <!-- nacos集成结束 -->
     <build>
         <plugins>
             <plugin>

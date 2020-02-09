@@ -16,7 +16,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     	<jmock.version>1.2.0</jmock.version>
+        <java.version>1.8</java.version>
     </properties>
 
   <dependencies>
@@ -117,7 +119,36 @@
 		<artifactId>phoenix-biz-service-quartz</artifactId>
 		<version>1.0.1.20172054</version>
     </dependency>
+
+    <!-- nacos集成开始 -->
+<!--     <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency> -->
+    <!-- nacos集成结束 -->
+
   </dependencies>
+
+    <!-- 开始集成nacos -->
+<!--       <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>0.2.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement> -->
+    <!-- nacos集成结束 -->
 
   <build>
     <plugins>

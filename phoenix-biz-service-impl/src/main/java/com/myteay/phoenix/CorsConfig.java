@@ -1,13 +1,12 @@
 /**
- * Myteay.com Inc.
- * Copyright (c) 2015-2018 All Rights Reserved.
+ * GanguTianCan.com Inc.
+ * Copyright (c) 2005-2017 All Rights Reserved.
  */
 package com.myteay.phoenix;
 
 import java.text.DateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -27,9 +26,6 @@ import com.myteay.phoenix.common.util.PxDateFormat;
  */
 @Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
-
-    @Value("${myteay.phoenix.images.path}")
-    private String                      mImagesPath;
 
     @Autowired
     private Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder;

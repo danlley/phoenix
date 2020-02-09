@@ -1,6 +1,6 @@
 /**
- * Danlley Wei (mailto://danlley@126.com)
- * Copyright (c) 2005-2017 All Rights Reserved.
+ * GanguTianCan.com Inc.
+ * Copyright (c) 2005-2019 All Rights Reserved.
  */
 package com.myteay.phoenix;
 
