@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 到店消费营销活动奖品维护
@@ -41,7 +41,7 @@ public class CampPrizeController {
     private CampPrizeIntg       campPrizeIntg;
 
     /**
-     * 通过店铺ID查询店铺下的所有店内营销活动
+     * 通过店铺ID查询店铺下的所有店内营销活动 
      * 
      * @param shopId
      * @return

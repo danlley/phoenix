@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeRefGoodsIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampPrizeRefGoodsModel;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 店内营销活动奖品关联商品对外服务

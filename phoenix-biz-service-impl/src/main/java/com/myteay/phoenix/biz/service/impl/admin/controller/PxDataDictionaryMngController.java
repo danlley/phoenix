@@ -16,11 +16,11 @@ import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.model.DataDictionaryModel;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 数据字典查询

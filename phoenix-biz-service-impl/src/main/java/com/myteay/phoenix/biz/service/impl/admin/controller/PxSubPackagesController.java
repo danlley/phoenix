@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.service.integration.PxSubPackagesIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 子套餐管理
@@ -43,7 +43,7 @@ public class PxSubPackagesController {
     /**
      * 通过套餐包ID查询店铺下的所有子套餐列表
      * 
-     * @param shopId
+     * @param shopId    
      * @return
      */
     @RequestMapping(value = "/list/sub/packages/{packagesDetailId}", method = { RequestMethod.GET })

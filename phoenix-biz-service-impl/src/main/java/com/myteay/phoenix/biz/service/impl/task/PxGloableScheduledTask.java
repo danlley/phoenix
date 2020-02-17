@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 商品缓存定时加载

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesDetailIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesDetailModel;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 套餐包管理

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myteay.common.util.log.Logger;
 import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
-import com.myteay.phoenix.common.logs.LoggerNames;
 import com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
+import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
  * 
@@ -38,7 +38,7 @@ public class CampShopPrizeOutController {
 
     /**
      * 查询已发放奖品信息
-     * 
+     *  
      * @param prizeId
      * @return
      */
