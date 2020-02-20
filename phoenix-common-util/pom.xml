@@ -44,6 +44,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+			<groupId>com.tc</groupId>
+			<artifactId>discount-common-orm</artifactId>
+			<version>1.0.1.201908261144</version>
+        </dependency>
+        <dependency>
 			<groupId>jmock</groupId>
 			<artifactId>jmock</artifactId>
 			<version>${jmock.version}</version>
