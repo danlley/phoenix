@@ -7,6 +7,7 @@ package com.myteay.phoenix.common.service.discount.integration;
 import java.util.List;
 
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 
 /**
@@ -16,6 +17,14 @@ import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
  * @version $Id: TcDiscountGoodsConfMngIntg.java, v 0.1 Feb 20, 2020 2:20:50 PM min.weixm Exp $
  */
 public interface TcDiscountGoodsConfMngIntg {
+
+    /**
+     * 从缓存中查询当前店铺下的所有商品折扣配置信息，并对配置信息以会员为维度进行归类
+     * 
+     * @param shopId
+     * @return
+     */
+    public MtOperateResult<TcAvaliableDiscountGoodsConfigModel> queryDiscountGoodsConfAllFromCache(String shopId);
 
     /**
      * 查询店铺下所的折扣商品配置信息

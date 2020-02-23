@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 
 /**
@@ -44,6 +45,17 @@ public class TcDiscountGoodsConfController {
     @RequestMapping(value = "/query/shop/{shopId}", method = { RequestMethod.GET })
     public MtOperateResult<List<TcDiscountGoodsConfigModel>> queryDiscountGoodsConfAll(@PathVariable String shopId) {
         return tcDiscountGoodsConfMngIntg.queryDiscountGoodsConfAll(shopId);
+    }
+
+    /**
+     * 从缓存中查询当前店铺下的所有商品折扣配置信息，并对配置信息以会员为维度进行归类
+     * 
+     * @param shopId
+     * @return
+     */
+    @RequestMapping(value = "/query/cache/shop/{shopId}", method = { RequestMethod.GET })
+    public MtOperateResult<TcAvaliableDiscountGoodsConfigModel> queryDiscountGoodsConfAllFromCache(@PathVariable String shopId) {
+        return tcDiscountGoodsConfMngIntg.queryDiscountGoodsConfAllFromCache(shopId);
     }
 
     /**

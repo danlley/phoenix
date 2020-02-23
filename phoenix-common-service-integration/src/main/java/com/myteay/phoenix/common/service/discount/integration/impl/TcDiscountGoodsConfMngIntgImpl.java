@@ -14,6 +14,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 
 /**
@@ -80,6 +81,21 @@ public class TcDiscountGoodsConfMngIntgImpl implements TcDiscountGoodsConfMngInt
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcDiscountGoodsConfigModel));
         MtOperateResult<String> obj = (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
         });
+        return obj;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg#queryDiscountGoodsConfAllFromCache(java.lang.String)
+     */
+    @Override
+    public MtOperateResult<TcAvaliableDiscountGoodsConfigModel> queryDiscountGoodsConfAllFromCache(String shopId) {
+        String pathPrefix = env.getProperty("tiancan.phoenix.discount.path.prefix");
+        String url = pathPrefix + "/tiancan/api/discount/manage/query/cache/shop/" + shopId;
+
+        String result = HttpClientUtil.insureResponseGet(url);
+        MtOperateResult<TcAvaliableDiscountGoodsConfigModel> obj = (MtOperateResult<TcAvaliableDiscountGoodsConfigModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<TcAvaliableDiscountGoodsConfigModel>>() {
+            });
         return obj;
     }
 
