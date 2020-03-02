@@ -6,9 +6,14 @@ package com.myteay.phoenix.common.service.discount.integration;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.myteay.common.util.lang.Money;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
+import com.tc.discount.core.model.TcDiscountGoodsOrderModel;
 
 /**
  * 商品折扣管理客户端集成
@@ -17,6 +22,14 @@ import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
  * @version $Id: TcDiscountGoodsConfMngIntg.java, v 0.1 Feb 20, 2020 2:20:50 PM min.weixm Exp $
  */
 public interface TcDiscountGoodsConfMngIntg {
+
+    /**
+     * 应用折扣价格
+     * 
+     * @param goodsList
+     * @return
+     */
+    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money> orderModel);
 
     /**
      * 从缓存中查询当前店铺下的所有商品折扣配置信息，并对配置信息以会员为维度进行归类

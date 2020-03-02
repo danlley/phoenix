@@ -11,11 +11,14 @@ import org.springframework.core.env.Environment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.myteay.common.util.lang.Money;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
+import com.tc.discount.core.model.TcDiscountGoodsOrderModel;
 
 /**
  * 商品折扣管理客户端集成
@@ -95,6 +98,20 @@ public class TcDiscountGoodsConfMngIntgImpl implements TcDiscountGoodsConfMngInt
         String result = HttpClientUtil.insureResponseGet(url);
         MtOperateResult<TcAvaliableDiscountGoodsConfigModel> obj = (MtOperateResult<TcAvaliableDiscountGoodsConfigModel>) JSON.parseObject(result,
             new TypeReference<MtOperateResult<TcAvaliableDiscountGoodsConfigModel>>() {
+            });
+        return obj;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg#aplayDiscount(com.tc.discount.core.model.TcDiscountGoodsOrderModel)
+     */
+    @Override
+    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>> aplayDiscount(TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money> orderModel) {
+        String pathPrefix = env.getProperty("tiancan.phoenix.discount.path.prefix");
+        String url = pathPrefix + "/tiancan/api/discount/cashier/query/price/";
+        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(orderModel));
+        MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>> obj = (MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>>) JSON
+            .parseObject(result, new TypeReference<MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>>>() {
             });
         return obj;
     }
