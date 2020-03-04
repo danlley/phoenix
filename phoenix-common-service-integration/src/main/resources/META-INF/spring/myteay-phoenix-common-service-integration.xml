@@ -44,4 +44,6 @@
 	<bean id="pxTradeServiceIntg" class="com.myteay.phoenix.common.service.trade.integration.impl.PxTradeServiceIntgImpl"></bean>
 	
 	<bean id="pxCampPrizeServiceIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.PxCampPrizeServiceIntgImpl"></bean>
+	
+	<bean id="tcProdtransConfigMngIntg" class="com.myteay.phoenix.common.service.prodtrans.integration.impl.TcProdtransConfigMngIntgImpl"></bean>
 </beans>
