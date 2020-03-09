@@ -37,6 +37,8 @@ import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
 import com.tc.discount.core.model.enums.TcDiscountCrowdTypeEnum;
 import com.tc.discount.core.model.enums.TcDiscountGoodsTypeEnum;
 import com.tc.discount.core.model.enums.TcDiscountStatusEnum;
+import com.tc.discount.core.model.enums.TcProdtransTypeEnums;
+import com.tc.discount.core.model.enums.TcPtsStatusEnum;
 
 /**
  * 数据字典查询组件
@@ -135,6 +137,14 @@ public class PxDataDictionaryComponentImpl implements PxDataDictionaryComponent,
         //支持会员范围
         list = EnumUtil.getDataDictionaryModelFromEnum(TcDiscountCrowdTypeEnum.class);
         DATA_DIC_CACHE.put("TcDiscountCrowdTypeEnum", list);
+
+        //产品账记账类型
+        list = EnumUtil.getDataDictionaryModelFromEnum(TcProdtransTypeEnums.class);
+        DATA_DIC_CACHE.put("TcProdtransTypeEnums", list);
+
+        //产品账记账配置状态
+        list = EnumUtil.getDataDictionaryModelFromEnum(TcPtsStatusEnum.class);
+        DATA_DIC_CACHE.put("TcPtsStatusEnum", list);
 
         logger.warn("缓存初始化结果： " + DATA_DIC_CACHE);
     }
