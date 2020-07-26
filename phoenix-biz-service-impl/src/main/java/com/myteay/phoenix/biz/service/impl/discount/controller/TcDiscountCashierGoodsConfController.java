@@ -15,6 +15,7 @@ import com.myteay.common.util.lang.Money;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
+import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.tc.discount.core.model.TcDiscountGoodsOrderModel;
 
 /**
@@ -41,7 +42,7 @@ public class TcDiscountCashierGoodsConfController {
      * @return
      */
     @RequestMapping(value = "/query/price/", method = { RequestMethod.POST })
-    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money> orderModel) {
+    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
 
         if (logger.isInfoEnabled()) {
             logger.warn("收到订单折扣请求 orderModel=" + orderModel);
