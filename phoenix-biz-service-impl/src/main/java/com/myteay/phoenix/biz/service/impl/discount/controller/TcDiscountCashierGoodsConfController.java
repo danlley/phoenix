@@ -45,7 +45,7 @@ public class TcDiscountCashierGoodsConfController {
     public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
 
         if (logger.isInfoEnabled()) {
-            logger.warn("收到订单折扣请求 orderModel=" + orderModel);
+            logger.info("收到订单折扣请求 orderModel=" + orderModel);
         }
 
         return tcDiscountGoodsConfMngIntg.aplayDiscount(orderModel);
