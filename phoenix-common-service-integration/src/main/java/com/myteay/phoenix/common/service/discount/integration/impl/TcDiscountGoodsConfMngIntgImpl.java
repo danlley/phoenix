@@ -8,19 +8,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.myteay.common.util.lang.Money;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.PxGoodsOrderModel;
-import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
-import com.tc.discount.core.model.TcDiscountGoodsOrderModel;
 
 /**
  * 商品折扣管理客户端集成
@@ -104,18 +99,18 @@ public class TcDiscountGoodsConfMngIntgImpl implements TcDiscountGoodsConfMngInt
         return obj;
     }
 
-    /** 
-     * @see com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg#aplayDiscount(com.tc.discount.core.model.TcDiscountGoodsOrderModel)
-     */
-    @Override
-    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.discount.path.prefix");
-        String url = pathPrefix + "/tiancan/api/discount/cashier/query/price/";
-        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(orderModel));
-        MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> obj = (MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>>) JSON
-            .parseObject(result, new TypeReference<MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>>>() {
-            });
-        return obj;
-    }
+    //    /** 
+    //     * @see com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg#aplayDiscount(com.tc.discount.core.model.TcDiscountGoodsOrderModel)
+    //     */
+    //    @Override
+    //    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
+    //        String pathPrefix = env.getProperty("tiancan.phoenix.discount.path.prefix");
+    //        String url = pathPrefix + "/tiancan/api/discount/cashier/query/price/";
+    //        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(orderModel));
+    //        MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> obj = (MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>>) JSON
+    //            .parseObject(result, new TypeReference<MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>>>() {
+    //            });
+    //        return obj;
+    //    }
 
 }

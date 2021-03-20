@@ -6,17 +6,10 @@ package com.myteay.phoenix.biz.service.impl.discount.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.common.util.lang.Money;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.PxGoodsOrderModel;
-import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
-import com.tc.discount.core.model.TcDiscountGoodsOrderModel;
 
 /**
  * 
@@ -35,19 +28,19 @@ public class TcDiscountCashierGoodsConfController {
     @Autowired
     private TcDiscountGoodsConfMngIntg tcDiscountGoodsConfMngIntg;
 
-    /**
-     * 应用折扣价格
-     * 
-     * @param goodsList
-     * @return
-     */
-    @RequestMapping(value = "/query/price/", method = { RequestMethod.POST })
-    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
-
-        if (logger.isInfoEnabled()) {
-            logger.info("收到订单折扣请求 orderModel=" + orderModel);
-        }
-
-        return tcDiscountGoodsConfMngIntg.aplayDiscount(orderModel);
-    }
+    //    /**
+    //     * 应用折扣价格
+    //     * 
+    //     * @param goodsList
+    //     * @return
+    //     */
+    //    @RequestMapping(value = "/query/price/", method = { RequestMethod.POST })
+    //    public MtOperateResult<TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel>> aplayDiscount(@RequestBody TcDiscountGoodsOrderModel<PxGoodsOrderModel, Money, PxGoodsOrderOutModel> orderModel) {
+    //
+    //        if (logger.isInfoEnabled()) {
+    //            logger.info("收到订单折扣请求 orderModel=" + orderModel);
+    //        }
+    //
+    //        return tcDiscountGoodsConfMngIntg.aplayDiscount(orderModel);
+    //    }
 }
