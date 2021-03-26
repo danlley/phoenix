@@ -30,7 +30,6 @@ import com.myteay.phoenix.common.util.manage.enums.PxGoodsQuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTuanEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxGoodsTypeEnum;
-import com.myteay.phoenix.common.util.manage.enums.PxShopStatusEnum;
 import com.myteay.phoenix.common.util.manage.enums.PxSubPackagesTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
@@ -39,6 +38,7 @@ import com.tc.discount.core.model.enums.TcDiscountGoodsTypeEnum;
 import com.tc.discount.core.model.enums.TcDiscountStatusEnum;
 import com.tc.discount.core.model.enums.TcProdtransTypeEnums;
 import com.tc.discount.core.model.enums.TcPtsStatusEnum;
+import com.tc.shop.orm.model.enums.PxShopStatusEnum;
 
 /**
  * 数据字典查询组件

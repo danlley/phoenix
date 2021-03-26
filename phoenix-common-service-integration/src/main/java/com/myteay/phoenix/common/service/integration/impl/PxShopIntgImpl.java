@@ -14,7 +14,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxShopIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.tc.shop.orm.model.PxShopModel;
 
 /**
  * 
@@ -33,12 +33,11 @@ public class PxShopIntgImpl implements PxShopIntg {
     @Override
     public MtOperateResult<List<PxShopModel>> queryShopAll() {
         String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
-        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/shop/all";
+        String url = pathPrefix + "/tiancan/api/shop/services/op/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtOperateResult<List<PxShopModel>> obj = (MtOperateResult<List<PxShopModel>>) JSON.parseObject(result,
-            new TypeReference<MtOperateResult<List<PxShopModel>>>() {
-            });
+        MtOperateResult<List<PxShopModel>> obj = (MtOperateResult<List<PxShopModel>>) JSON.parseObject(result, new TypeReference<MtOperateResult<List<PxShopModel>>>() {
+        });
         return obj;
     }
 
@@ -47,8 +46,8 @@ public class PxShopIntgImpl implements PxShopIntg {
      */
     @Override
     public MtOperateResult<PxShopModel> manageShop(PxShopModel pxShopModel) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.dbcenter.path.prefix");
-        String url = pathPrefix + "/myteay/api/phoenix/admin/manage/shop/manage";
+        String pathPrefix = env.getProperty("tiancan.phoenix.shop.path.prefix");
+        String url = pathPrefix + "/tiancan/api/shop/services/op/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxShopModel));
         MtOperateResult<PxShopModel> obj = (MtOperateResult<PxShopModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<PxShopModel>>() {
         });

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
-import com.myteay.common.util.log.Logger;
-import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.core.service.tools.PxEventPublishTool;
+import com.tc.common.lang.logger.Logger;
+import com.tc.common.lang.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**

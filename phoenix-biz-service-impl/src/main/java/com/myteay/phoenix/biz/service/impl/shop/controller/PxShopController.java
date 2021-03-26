@@ -2,7 +2,7 @@
  * Myteay.com Inc.
  * Copyright (c) 2015-2018 All Rights Reserved.
  */
-package com.myteay.phoenix.biz.service.impl.admin.controller;
+package com.myteay.phoenix.biz.service.impl.shop.controller;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.common.util.log.Logger;
-import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxShopIntg;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxShopModel;
+import com.tc.common.lang.logger.Logger;
+import com.tc.common.lang.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
+import com.tc.shop.orm.model.PxShopModel;
 
 /**
  * 店铺管理
@@ -29,7 +29,7 @@ import com.tc.phoenix.common.util.log.LoggerNames;
  * @version $Id: PxShopController.java, v 0.1 Jul 24, 2018 12:35:57 PM min.weixm Exp $
  */
 @RestController
-@RequestMapping(value = "myteay/api/phoenix/admin/manage/shop")
+@RequestMapping(value = "tiancan/api/shop/services/op")
 public class PxShopController {
 
     /** 日志 */

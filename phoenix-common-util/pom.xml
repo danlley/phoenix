@@ -79,6 +79,16 @@
             <version>1.0.1.20171028</version>
         </dependency>
         <dependency>
+			<groupId>com.tc</groupId>
+			<artifactId>tc-common-lang</artifactId>
+			<version>1.0.1.202103102034</version>
+        </dependency>
+        <dependency>
+			<groupId>com.tc</groupId>
+			<artifactId>shop-common-orm</artifactId>
+			<version>1.0.1.201908261144</version>
+        </dependency>
+        <dependency>
             <groupId>com.tc</groupId>
             <artifactId>provider-common-orm</artifactId>
             <version>1.0.1.201908261144</version>

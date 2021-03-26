@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.common.util.log.Logger;
-import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.common.util.tools.DateUtil;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.biz.service.impl.PxGoodsOrderContextUtil;
@@ -39,6 +37,8 @@ import com.myteay.phoenix.core.model.PxGoodsOrderOutModel;
 import com.myteay.phoenix.core.model.PxOrderPayedResultModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.myteay.phoenix.core.service.component.PxProcessComponent;
+import com.tc.common.lang.logger.Logger;
+import com.tc.common.lang.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -91,8 +91,8 @@ public class CashierController {
         result.setResult(innerResult.getResult());
 
         if (logger_cashier.isInfoEnabled()) {
-            logger_cashier.info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + result.getOperateResult() + ","
-                                + result.getOperateExResult() + "]");
+            logger_cashier
+                .info("[REQCONSUMERES," + orderNo + "," + pxPayTypeEnum + "," + pxOrderStatusEnum + "," + result.getOperateResult() + "," + result.getOperateExResult() + "]");
         }
 
         return result;
@@ -122,10 +122,9 @@ public class CashierController {
         PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
 
         // step 3: 异常参数校验
-        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
-            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsOrderOutModelList())) {
-            logger_cashier
-                .warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
+        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName()) || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo())
+            || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsOrderOutModelList())) {
+            logger_cashier.warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
             return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
         }
 
@@ -140,8 +139,8 @@ public class CashierController {
 
         // step 6: 记录订单流水落地结果
         if (logger_cashier.isInfoEnabled()) {
-            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo()
-                                + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
+            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + ","
+                                + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
         }
 
         String tradeNo = pxGoodsOrderModel.getOrderNo();
@@ -154,8 +153,8 @@ public class CashierController {
         result.setResult(innerResult.getResult());
 
         if (logger_cashier.isInfoEnabled()) {
-            logger_cashier.info("[REQCONSUMERES," + tradeNo + "," + pxGoodsOrderModel.getPayType() + "," + PxOrderStatusEnum.PX_ORDER_PAYED + ","
-                                + result.getOperateResult() + "," + result.getOperateExResult() + "]");
+            logger_cashier.info("[REQCONSUMERES," + tradeNo + "," + pxGoodsOrderModel.getPayType() + "," + PxOrderStatusEnum.PX_ORDER_PAYED + "," + result.getOperateResult() + ","
+                                + result.getOperateExResult() + "]");
         }
 
         List<PxGoodsOrderOutModel> pxGoodsOrderOutModelList = pxGoodsOrderModel.getPxGoodsOrderOutModelList();
@@ -175,8 +174,7 @@ public class CashierController {
         pxOrderPayedResultModel.setTradeNo(tradeNo);
         pxOrderPayedResultModel.setShopTel("15294395456");
 
-        MtServiceResult<PxOrderPayedResultModel> operateResult = new MtServiceResult<>(innerPayedResult.getOperateResult(),
-            innerPayedResult.getOperateExResult());
+        MtServiceResult<PxOrderPayedResultModel> operateResult = new MtServiceResult<>(innerPayedResult.getOperateResult(), innerPayedResult.getOperateExResult());
         operateResult.setResult(pxOrderPayedResultModel);
 
         return operateResult;
@@ -222,8 +220,7 @@ public class CashierController {
      * @return
      */
     @RequestMapping(value = "/order/ii/", method = { RequestMethod.POST })
-    public MtServiceResult<CampCashierModel> createGoodsOrderOutII(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request,
-                                                                   HttpServletResponse response) {
+    public MtServiceResult<CampCashierModel> createGoodsOrderOutII(@RequestBody PxGoodsOrderModel pxGoodsOrderModel, HttpServletRequest request, HttpServletResponse response) {
 
         if (logger.isInfoEnabled()) {
             logger.info("收到订单请求 pxGoodsOrderModel=" + pxGoodsOrderModel);
@@ -237,10 +234,9 @@ public class CashierController {
         PxGoodsOrderContextUtil.fillOrderContext(pxGoodsOrderModel, request);
 
         // step 3: 异常参数校验
-        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName())
-            || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo()) || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
-            logger_cashier
-                .warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
+        if (StringUtils.isBlank(pxGoodsOrderModel.getUserId()) || StringUtils.isBlank(pxGoodsOrderModel.getShopName()) || StringUtils.isBlank(pxGoodsOrderModel.getOrderNo())
+            || CollectionUtils.isEmpty(pxGoodsOrderModel.getPxGoodsModelList())) {
+            logger_cashier.warn("[REQGENERR," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + "]");
             return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
         }
 
@@ -255,8 +251,8 @@ public class CashierController {
 
         // step 6: 记录订单流水落地结果
         if (logger_cashier.isInfoEnabled()) {
-            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo()
-                                + "," + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
+            logger_cashier.info("[RESULTGEN," + pxGoodsOrderModel.getUserId() + "," + pxGoodsOrderModel.getShopName() + "," + pxGoodsOrderModel.getOrderNo() + ","
+                                + innerResult.getOperateResult() + "," + innerResult.getOperateExResult() + "]");
         }
 
         result.setResult(innerResult.getResult());

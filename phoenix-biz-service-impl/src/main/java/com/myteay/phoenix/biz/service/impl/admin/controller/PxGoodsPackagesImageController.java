@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.myteay.common.util.log.Logger;
-import com.myteay.common.util.log.LoggerFactory;
 import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesImageIntg;
 import com.myteay.phoenix.common.util.MtFileUtils;
@@ -29,6 +27,8 @@ import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
+import com.tc.common.lang.logger.Logger;
+import com.tc.common.lang.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -82,8 +82,8 @@ public class PxGoodsPackagesImageController {
      * @return
      */
     @RequestMapping(value = "/manage/goods/{goodsId}", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsPackagesImageModel> manageGoodsImage(@PathVariable String goodsId, @RequestParam(value = "file") MultipartFile file,
-                                                                       HttpServletRequest request, HttpServletResponse response) {
+    public MtServiceResult<PxGoodsPackagesImageModel> manageGoodsImage(@PathVariable String goodsId, @RequestParam(value = "file") MultipartFile file, HttpServletRequest request,
+                                                                       HttpServletResponse response) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存套餐详情图片信息 goodsId=" + goodsId);
