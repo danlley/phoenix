@@ -15,6 +15,7 @@ import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.tc.trade.orm.model.TcTradeModel;
 
 /**
  * 优惠券服务客户端
@@ -56,9 +57,8 @@ public class PxCampPrizeServiceIntgImpl implements PxCampPrizeServiceIntg {
         String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
         String url = pathPrefix + "/tiancan/api/promocore/prize/service/camp/prize/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
-        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result,
-            new TypeReference<MtOperateResult<CampCashierModel>>() {
-            });
+        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<CampCashierModel>>() {
+        });
 
         if (obj == null) {
             return null;
@@ -76,6 +76,20 @@ public class PxCampPrizeServiceIntgImpl implements PxCampPrizeServiceIntg {
         String url = pathPrefix + "/tiancan/api/promocore/prize/service/camp/mark/";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
         MtOperateResult<String> obj = (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
+        });
+
+        return obj;
+    }
+
+    /** 
+     * @see com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg#doCamp(com.tc.trade.orm.model.TcTradeModel)
+     */
+    @Override
+    public MtOperateResult<CampCashierModel> doCamp(TcTradeModel tcTradeModel) {
+        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
+        String url = pathPrefix + "/tiancan/api/promocore/prize/ref/camp/trade/ii/do";
+        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcTradeModel));
+        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<CampCashierModel>>() {
         });
 
         return obj;

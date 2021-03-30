@@ -7,6 +7,7 @@ package com.myteay.phoenix.common.service.camp.integration;
 import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.tc.trade.orm.model.TcTradeModel;
 
 /**
  * 优惠券服务客户端
@@ -36,4 +37,11 @@ public interface PxCampPrizeServiceIntg {
      * @return
      */
     public CampCashierModel doCamp(PxGoodsOrderModel pxGoodsOrderModel);
+
+    /**
+     * 
+     * @param tcTradeModel
+     * @return
+     */
+    public MtOperateResult<CampCashierModel> doCamp(TcTradeModel tcTradeModel);
 }

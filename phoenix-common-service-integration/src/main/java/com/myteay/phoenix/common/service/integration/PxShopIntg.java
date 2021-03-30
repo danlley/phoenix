@@ -30,4 +30,12 @@ public interface PxShopIntg {
      * @return
      */
     MtOperateResult<PxShopModel> manageShop(PxShopModel pxShopModel);
+
+    /**
+     * 查询店铺营销活动配置
+     * 
+     * @param shopId
+     * @return
+     */
+    public String queryCampConfig(String shopId);
 }

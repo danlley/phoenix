@@ -54,4 +54,17 @@ public class PxShopIntgImpl implements PxShopIntg {
         return obj;
     }
 
+    /** 
+     * @see com.myteay.phoenix.common.service.integration.PxShopIntg#queryCampConfig(java.lang.String)
+     */
+    @Override
+    public String queryCampConfig(String shopId) {
+        String pathPrefix = env.getProperty("tiancan.phoenix.shop.path.prefix");
+        String url = pathPrefix + "/tiancan/api/shop/conf/services/op/query/camp/" + shopId;
+        String result = HttpClientUtil.insureResponseGet(url);
+        MtOperateResult<String> obj = (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
+        });
+        return obj.getResult();
+    }
+
 }
