@@ -13,10 +13,4 @@
 	
 	<bean id="pxDataDictionaryComponent" class="com.myteay.phoenix.core.service.component.impl.PxDataDictionaryComponentImpl"></bean>
 	
-	<bean id="pxEventPublishTool" class="com.myteay.phoenix.core.service.tools.PxEventPublishTool"></bean>
-	
-	<bean id="campServiceComponent" class="com.myteay.phoenix.core.service.component.impl.CampServiceComponentImpl"></bean>
-	
-	<bean id="pxProcessComponent" class="com.myteay.phoenix.core.service.component.impl.PxProcessComponentImpl"></bean>
-
 </beans>

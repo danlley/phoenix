@@ -11,33 +11,4 @@
                 http://www.springframework.org/schema/context/spring-context-4.1.xsd"
 	default-autowire="byName">
 	
-	<!-- 事件描述文件缓存 -->
-	<bean id="listenerDescriptorCache" class="com.myteay.common.async.event.ListenerDescriptorCache"></bean>
-	
-	<!-- 事件执行引擎 -->
-	<bean id="eventPublishService" class="com.myteay.common.async.event.EventPublishServiceImpl"></bean>
-	
-	<!-- 异步执行线程池(普通线程池——最低级线程池) -->
-	<bean id="myteayCommonTaskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="5" />
-		<property name="maxPoolSize" value="10" />
-		<property name="queueCapacity" value="2000" />
-	</bean>
-	
-	<!-- 异步执行线程池(中级线程池——适合处理中等优先级业务) -->
-	<bean id="myteayMidTaskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="10" />
-		<property name="maxPoolSize" value="20" />
-		<property name="queueCapacity" value="5000" />
-	</bean>
-	
-	<!-- 异步执行线程池（适合处理高优先级、高响应速度的业务） -->
-	<bean id="myteayHigherTaskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="15" />
-		<property name="maxPoolSize" value="40" />
-		<property name="queueCapacity" value="10000" />
-	</bean>	
 </beans>
