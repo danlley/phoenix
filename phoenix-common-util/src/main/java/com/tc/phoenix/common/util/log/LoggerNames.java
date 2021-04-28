@@ -13,18 +13,6 @@ package com.tc.phoenix.common.util.log;
 public interface LoggerNames {
 
     /** 基础数据管理日志 */
-    public static final String PX_MNG             = "PX-MNG";
-
-    /** 定时任务日志 */
-    public static final String PX_TASK            = "PX-TASK";
-
-    /** 缓存管理日志 */
-    public static final String PX_CACHE_DEFAULT   = "PX-CACHE-DEFAULT";
-
-    /** 收银台默认日志 */
-    public static final String PX_CASHIER_DEFAULT = "PX-CASHIER-DEFAULT";
-
-    /** 收银台摘要日志 */
-    public static final String PX_CASHIER_DIGEST  = "PX-CASHIER-DIGEST";
+    public static final String PX_MNG = "PX-MNG";
 
 }

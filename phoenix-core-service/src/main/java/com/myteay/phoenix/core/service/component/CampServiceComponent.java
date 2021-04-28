@@ -4,9 +4,6 @@
  */
 package com.myteay.phoenix.core.service.component;
 
-import com.myteay.phoenix.core.model.PxGoodsOrderModel;
-import com.myteay.phoenix.core.model.camp.CampCashierModel;
-
 /**
  * 
  * @author min.weixm
@@ -14,10 +11,4 @@ import com.myteay.phoenix.core.model.camp.CampCashierModel;
  */
 public interface CampServiceComponent {
 
-    /**
-     * 
-     * @param pxGoodsOrderModel
-     * @return
-     */
-    public CampCashierModel doCamp(PxGoodsOrderModel pxGoodsOrderModel);
 }

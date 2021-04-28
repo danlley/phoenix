@@ -28,7 +28,7 @@ import com.tc.provider.orm.model.TcProviderProductOutModel;
 public class TcProviderProductOrderOutController {
 
     /** 日志 */
-    private static final Logger           logger = LoggerFactory.getLogger(LoggerNames.PX_CASHIER_DEFAULT);
+    private static final Logger           logger = LoggerFactory.getLogger(LoggerNames.PX_MNG);
 
     /** 原材料管理组件 */
     @Autowired

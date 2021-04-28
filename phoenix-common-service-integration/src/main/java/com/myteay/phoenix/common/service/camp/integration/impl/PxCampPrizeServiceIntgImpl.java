@@ -13,7 +13,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
 import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.PxGoodsOrderModel;
 import com.myteay.phoenix.core.model.camp.CampCashierModel;
 import com.tc.trade.orm.model.TcTradeModel;
 
@@ -31,55 +30,6 @@ public class PxCampPrizeServiceIntgImpl implements PxCampPrizeServiceIntg {
     /** 环境变量 */
     @Autowired
     private Environment        env;
-
-    /** 
-     * @see com.tc.trade.common.service.integration.client.PxCampPrizeServiceIntg#consumePrize(java.lang.String)
-     */
-    @Override
-    public MtOperateResult<String> consumePrize(String orderNo) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
-        String url = pathPrefix + "/tiancan/api/promocore/prize/service/consume/prize/" + orderNo;
-        String result = HttpClientUtil.insureResponseGet(url);
-        return (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
-        });
-    }
-
-    /** 
-     * @see com.tc.trade.common.service.integration.client.PxCampPrizeServiceIntg#doCamp(com.myteay.phoenix.core.model.PxGoodsOrderModel)
-     */
-    @Override
-    public CampCashierModel doCamp(PxGoodsOrderModel pxGoodsOrderModel) {
-
-        if (logger.isInfoEnabled()) {
-            logger.info("开始执行订单创建后的抽奖 pxGoodsOrderModel=" + pxGoodsOrderModel);
-        }
-
-        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
-        String url = pathPrefix + "/tiancan/api/promocore/prize/service/camp/prize/";
-        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
-        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<CampCashierModel>>() {
-        });
-
-        if (obj == null) {
-            return null;
-        }
-
-        return obj.getResult();
-    }
-
-    /** 
-     * @see com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg#markPrize(com.myteay.phoenix.core.model.PxGoodsOrderModel)
-     */
-    @Override
-    public MtOperateResult<String> markPrize(PxGoodsOrderModel pxGoodsOrderModel) {
-        String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
-        String url = pathPrefix + "/tiancan/api/promocore/prize/service/camp/mark/";
-        String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(pxGoodsOrderModel));
-        MtOperateResult<String> obj = (MtOperateResult<String>) JSON.parseObject(result, new TypeReference<MtOperateResult<String>>() {
-        });
-
-        return obj;
-    }
 
     /** 
      * @see com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg#doCamp(com.tc.trade.orm.model.TcTradeModel)

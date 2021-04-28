@@ -19,47 +19,4 @@
 	
 	<bean id="pxProcessComponent" class="com.myteay.phoenix.core.service.component.impl.PxProcessComponentImpl"></bean>
 
-	<!-- 订单优惠券监听 -->
-	<bean id="pxCampPrizeMarkListener" class="com.myteay.phoenix.core.service.listeners.PxCampPrizeMarkListener">
-		<property name="descriptor">
-			<bean class="com.myteay.common.async.event.ListenerDescriptor">
-				<property name="topic" value="PX_CAMP_PRIZE_MARK"></property>
-				<property name="async" value="true"></property>
-				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
-			</bean>
-		</property>
-	</bean>	
-
-	<!-- 订单成本 -->
-	<bean id="pxGoodsCostMarkListener" class="com.myteay.phoenix.core.service.listeners.PxGoodsCostMarkListener">
-		<property name="descriptor">
-			<bean class="com.myteay.common.async.event.ListenerDescriptor">
-				<property name="topic" value="PX_GOODS_COST_MARAK"></property>
-				<property name="async" value="true"></property>
-				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
-			</bean>
-		</property>
-	</bean>	
-
-	<!-- 优惠券抵扣监听器 -->
-	<bean id="pxCampPrizeConsumeListener" class="com.myteay.phoenix.core.service.listeners.PxCampPrizeConsumeListener">
-		<property name="descriptor">
-			<bean class="com.myteay.common.async.event.ListenerDescriptor">
-				<property name="topic" value="PX_CAMP_PRIZE_CONSUME"></property>
-				<property name="async" value="true"></property>
-				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
-			</bean>
-		</property>
-	</bean>	
-
-	<!-- 成本计算监听器 -->
-	<bean id="pxGoodsCostCoveredListener" class="com.myteay.phoenix.core.service.listeners.PxGoodsCostCoveredListener">
-		<property name="descriptor">
-			<bean class="com.myteay.common.async.event.ListenerDescriptor">
-				<property name="topic" value="PX_GOODS_COST_COVERED"></property>
-				<property name="async" value="true"></property>
-				<property name="taskExecutor" ref="myteayHigherTaskExecutor"></property>
-			</bean>
-		</property>
-	</bean>	
 </beans>
