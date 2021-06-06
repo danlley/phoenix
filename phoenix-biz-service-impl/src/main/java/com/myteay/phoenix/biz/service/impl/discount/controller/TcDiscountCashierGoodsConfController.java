@@ -4,12 +4,8 @@
  */
 package com.myteay.phoenix.biz.service.impl.discount.controller;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 
 /**
  * 
@@ -20,13 +16,13 @@ import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsCon
 @RestController
 @RequestMapping(value = "tiancan/api/discount/cashier")
 public class TcDiscountCashierGoodsConfController {
-
-    /** 日志 */
-    public static final Logger         logger = Logger.getLogger(TcDiscountGoodsConfController.class);
-
-    /** 店铺商品折扣管理组件 */
-    @Autowired
-    private TcDiscountGoodsConfMngIntg tcDiscountGoodsConfMngIntg;
+    //
+    //    /** 日志 */
+    //    public static final Logger         logger = Logger.getLogger(TcDiscountGoodsConfController.class);
+    //
+    //    /** 店铺商品折扣管理组件 */
+    //    @Autowired
+    //    private TcDiscountGoodsConfMngIntg tcDiscountGoodsConfMngIntg;
 
     //    /**
     //     * 应用折扣价格
