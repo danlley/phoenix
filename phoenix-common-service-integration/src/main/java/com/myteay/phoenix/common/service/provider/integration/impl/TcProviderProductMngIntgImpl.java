@@ -14,9 +14,9 @@ import org.springframework.core.env.Environment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductImagesModel;
 import com.tc.provider.orm.model.TcProviderProductModel;
 import com.tc.provider.orm.model.TcProviderProductNutritionalModel;
@@ -39,11 +39,11 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#manageProviderProductInfo(com.tc.provider.orm.model.TcProviderProductModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductModel> manageProviderProductInfo(TcProviderProductModel tcProviderProductModel) {
+    public MtOperateResult<TcProviderProductModel> manageProviderProductInfo(TcProviderProductModel tcProviderProductModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/do/mng";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductModel));
-        return (MtServiceResult<TcProviderProductModel>) JSON.parseObject(result, new TypeReference<MtServiceResult<TcProviderProductModel>>() {
+        return (MtOperateResult<TcProviderProductModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<TcProviderProductModel>>() {
         });
     }
 
@@ -51,13 +51,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#queryProviderProductByShopId(java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductModel>> queryProviderProductByShopId(String shopId) {
+    public MtOperateResult<List<TcProviderProductModel>> queryProviderProductByShopId(String shopId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/list/shop/" + shopId;
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtServiceResult<List<TcProviderProductModel>> obj = (MtServiceResult<List<TcProviderProductModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductModel>>>() {
+        MtOperateResult<List<TcProviderProductModel>> obj = (MtOperateResult<List<TcProviderProductModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductModel>>>() {
             });
         return obj;
     }
@@ -66,13 +66,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#manageProductImagesInfo(com.tc.provider.orm.model.TcProviderProductImagesModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductImagesModel> manageProductImagesInfo(TcProviderProductImagesModel tcProviderProductImagesModel) {
+    public MtOperateResult<TcProviderProductImagesModel> manageProductImagesInfo(TcProviderProductImagesModel tcProviderProductImagesModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/do/images/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductImagesModel));
-        MtServiceResult<TcProviderProductImagesModel> obj = (MtServiceResult<TcProviderProductImagesModel>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<TcProviderProductImagesModel>>() {
+        MtOperateResult<TcProviderProductImagesModel> obj = (MtOperateResult<TcProviderProductImagesModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<TcProviderProductImagesModel>>() {
             });
         return obj;
     }
@@ -81,13 +81,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#manageProviderProductPriceInfo(com.tc.provider.orm.model.TcProviderProductPriceModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(TcProviderProductPriceModel tcProviderProductPriceModel) {
+    public MtOperateResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(TcProviderProductPriceModel tcProviderProductPriceModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/do/price/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductPriceModel));
-        MtServiceResult<TcProviderProductPriceModel> obj = (MtServiceResult<TcProviderProductPriceModel>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<TcProviderProductPriceModel>>() {
+        MtOperateResult<TcProviderProductPriceModel> obj = (MtOperateResult<TcProviderProductPriceModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<TcProviderProductPriceModel>>() {
             });
         return obj;
     }
@@ -96,13 +96,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#manageProviderProductNutritionalInfo(com.tc.provider.orm.model.TcProviderProductNutritionalModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(TcProviderProductNutritionalModel tcProviderProductNutritionalModel) {
+    public MtOperateResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(TcProviderProductNutritionalModel tcProviderProductNutritionalModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/do/nutritional/mng";
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductNutritionalModel));
-        MtServiceResult<TcProviderProductNutritionalModel> obj = (MtServiceResult<TcProviderProductNutritionalModel>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<TcProviderProductNutritionalModel>>() {
+        MtOperateResult<TcProviderProductNutritionalModel> obj = (MtOperateResult<TcProviderProductNutritionalModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<TcProviderProductNutritionalModel>>() {
             });
         return obj;
     }
@@ -111,13 +111,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#manageProviderProductOpManualInfo(com.tc.provider.orm.model.TcProviderProductOpManualModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(TcProviderProductOpManualModel tcProviderProductOpManualModel) {
+    public MtOperateResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(TcProviderProductOpManualModel tcProviderProductOpManualModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/do/op/manual/mng" + tcProviderProductOpManualModel;
 
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductOpManualModel));
-        MtServiceResult<TcProviderProductOpManualModel> obj = (MtServiceResult<TcProviderProductOpManualModel>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<TcProviderProductOpManualModel>>() {
+        MtOperateResult<TcProviderProductOpManualModel> obj = (MtOperateResult<TcProviderProductOpManualModel>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<TcProviderProductOpManualModel>>() {
             });
         return obj;
     }
@@ -126,13 +126,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#queryProductAllPriceByProductId(java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(String productId) {
+    public MtOperateResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(String productId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/list/price/" + productId;
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtServiceResult<List<TcProviderProductPriceModel>> obj = (MtServiceResult<List<TcProviderProductPriceModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductPriceModel>>>() {
+        MtOperateResult<List<TcProviderProductPriceModel>> obj = (MtOperateResult<List<TcProviderProductPriceModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductPriceModel>>>() {
             });
         return obj;
     }
@@ -141,13 +141,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#queryProductAllNutritionalByProductId(java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(String productId) {
+    public MtOperateResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(String productId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/list/nutritional/" + productId;
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtServiceResult<List<TcProviderProductNutritionalModel>> obj = (MtServiceResult<List<TcProviderProductNutritionalModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductNutritionalModel>>>() {
+        MtOperateResult<List<TcProviderProductNutritionalModel>> obj = (MtOperateResult<List<TcProviderProductNutritionalModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductNutritionalModel>>>() {
             });
         return obj;
     }
@@ -156,13 +156,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#queryProductAllOpManualByProductId(java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(String productId) {
+    public MtOperateResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(String productId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/list/op/manual/" + productId;
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtServiceResult<List<TcProviderProductOpManualModel>> obj = (MtServiceResult<List<TcProviderProductOpManualModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductOpManualModel>>>() {
+        MtOperateResult<List<TcProviderProductOpManualModel>> obj = (MtOperateResult<List<TcProviderProductOpManualModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductOpManualModel>>>() {
             });
         return obj;
     }
@@ -171,13 +171,13 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#queryProductAllImagesByProductId(java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(String productId) {
+    public MtOperateResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(String productId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/manage/list/images/" + productId;
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtServiceResult<List<TcProviderProductImagesModel>> obj = (MtServiceResult<List<TcProviderProductImagesModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductImagesModel>>>() {
+        MtOperateResult<List<TcProviderProductImagesModel>> obj = (MtOperateResult<List<TcProviderProductImagesModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductImagesModel>>>() {
             });
         return obj;
     }
@@ -186,7 +186,7 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg#findTcProviderProductByCondition(java.lang.String, java.lang.String)
      */
     @Override
-    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
+    public MtOperateResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
 
         StringBuffer subUrl = new StringBuffer();
@@ -202,8 +202,8 @@ public class TcProviderProductMngIntgImpl implements TcProviderProductMngIntg {
         }
         String url = pathPrefix + "/tiancan/api/provider/manage/list/condition/shop/?" + subUrl.toString();
         String result = HttpClientUtil.insureResponsePost(url, null);
-        MtServiceResult<List<TcProviderProductModel>> obj = (MtServiceResult<List<TcProviderProductModel>>) JSON.parseObject(result,
-            new TypeReference<MtServiceResult<List<TcProviderProductModel>>>() {
+        MtOperateResult<List<TcProviderProductModel>> obj = (MtOperateResult<List<TcProviderProductModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcProviderProductModel>>>() {
             });
         return obj;
     }

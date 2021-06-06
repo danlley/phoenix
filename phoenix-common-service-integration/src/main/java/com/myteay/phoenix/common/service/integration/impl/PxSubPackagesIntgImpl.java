@@ -13,8 +13,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxSubPackagesIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxSubPackagesModel;
 
 /**
  * 

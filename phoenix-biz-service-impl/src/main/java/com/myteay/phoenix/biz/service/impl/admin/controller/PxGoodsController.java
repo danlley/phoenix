@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxGoodsControllerIntg;
 import com.myteay.phoenix.common.util.MtFileUtils;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
-import com.myteay.phoenix.core.model.manage.PxGoodsModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.enums.PxOperationTypeEnum;
+import com.tc.dbcenter.common.orm.model.PxGoodsAdvModel;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -57,17 +56,17 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/all", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxGoodsModel>> queryShopAll() {
-        MtServiceResult<List<PxGoodsModel>> result = null;
+    public MtOperateResult<List<PxGoodsModel>> queryShopAll() {
+        MtOperateResult<List<PxGoodsModel>> result = null;
 
         MtOperateResult<List<PxGoodsModel>> componentResult = null;
         try {
             componentResult = pxGoodsControllerIntg.queryGoodsAll();
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询商品摘要信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -80,17 +79,17 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/list/shop/{shopId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxGoodsModel>> queryGoodsByShopId(@PathVariable String shopId) {
-        MtServiceResult<List<PxGoodsModel>> result = null;
+    public MtOperateResult<List<PxGoodsModel>> queryGoodsByShopId(@PathVariable String shopId) {
+        MtOperateResult<List<PxGoodsModel>> result = null;
 
         MtOperateResult<List<PxGoodsModel>> componentResult = null;
         try {
             componentResult = pxGoodsControllerIntg.queryGoodsListByShopId(shopId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询商品摘要信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -103,19 +102,19 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/query/goods/adv/{goodsId}", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsAdvModel> querySingleAdv(@PathVariable String goodsId) {
+    public MtOperateResult<PxGoodsAdvModel> querySingleAdv(@PathVariable String goodsId) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始执行商品高阶版查询 goodsId=" + goodsId);
         }
-        MtServiceResult<PxGoodsAdvModel> result = null;
+        MtOperateResult<PxGoodsAdvModel> result = null;
         try {
             MtOperateResult<PxGoodsAdvModel> innerResult = pxGoodsControllerIntg.queryGoodsAdvAll(goodsId);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存商品概要信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -128,19 +127,19 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/query/goods/condition/", method = { RequestMethod.POST })
-    public MtServiceResult<List<PxGoodsModel>> querySingleAdv(String shopId, String goodsType, String goodsTitle) {
+    public MtOperateResult<List<PxGoodsModel>> querySingleAdv(String shopId, String goodsType, String goodsTitle) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始执行商品多条件查询 shopId=" + shopId + " goodsType=" + goodsType + " goodsTitle=" + goodsTitle);
         }
-        MtServiceResult<List<PxGoodsModel>> result = null;
+        MtOperateResult<List<PxGoodsModel>> result = null;
         try {
             MtOperateResult<List<PxGoodsModel>> innerResult = pxGoodsControllerIntg.findPxShopOnlineGoodsByCondition(shopId, goodsType, goodsTitle);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("执行商品多条件查询发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -153,20 +152,20 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsModel> manageGoods(@RequestParam(value = "file", required = false) MultipartFile file, PxGoodsModel pxGoodsModel) {
+    public MtOperateResult<PxGoodsModel> manageGoods(@RequestParam(value = "file", required = false) MultipartFile file, PxGoodsModel pxGoodsModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存商品概要信息 pxGoodsModel=" + pxGoodsModel);
         }
-        MtServiceResult<PxGoodsModel> result = null;
+        MtOperateResult<PxGoodsModel> result = null;
         try {
             uploadFile(file, pxGoodsModel);
             MtOperateResult<PxGoodsModel> innerResult = pxGoodsControllerIntg.manageGoods(pxGoodsModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存商品概要信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -179,19 +178,19 @@ public class PxGoodsController {
      * @return
      */
     @RequestMapping(value = "/status/", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsModel> onlineGoods(@RequestBody PxGoodsModel pxGoodsModel) {
+    public MtOperateResult<PxGoodsModel> onlineGoods(@RequestBody PxGoodsModel pxGoodsModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始执行商品下架及商品发布 pxGoodsModel=" + pxGoodsModel);
         }
-        MtServiceResult<PxGoodsModel> result = null;
+        MtOperateResult<PxGoodsModel> result = null;
         try {
             MtOperateResult<PxGoodsModel> innerResult = pxGoodsControllerIntg.manageGoodsStatus(pxGoodsModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("商品下架及商品发布过程发生未知异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg;
 import com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg;
 import com.myteay.phoenix.common.service.integration.PxShopIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampCashierModel;
-import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
+import com.tc.promocore.common.orm.model.CampCashierModel;
+import com.tc.promocore.common.orm.model.CampShopPrizeOutModel;
 import com.tc.trade.orm.model.TcTradeModel;
 
 /**
@@ -57,17 +57,17 @@ public class CampShopPrizeOutController {
      * @return
      */
     @RequestMapping(value = "/list/{prizeOutId}", method = { RequestMethod.GET })
-    public MtServiceResult<CampShopPrizeOutModel> queryShopPrizeOutById(@PathVariable String prizeOutId) {
-        MtServiceResult<CampShopPrizeOutModel> result = null;
+    public MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> queryShopPrizeOutById(@PathVariable String prizeOutId) {
+        MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> result = null;
 
-        MtOperateResult<CampShopPrizeOutModel> componentResult = null;
+        MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> componentResult = null;
         try {
             componentResult = campShopPrizeOutIntg.queryShopPrizeOutById(prizeOutId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询已发放奖品信息发生未知异常  prizeOutId=" + prizeOutId + " " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_PRIZE_REF_GOODS_QRY_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
 
         return result;
@@ -80,7 +80,7 @@ public class CampShopPrizeOutController {
      * @return
      */
     @RequestMapping(value = "/camp/trade/ii/do", method = { RequestMethod.POST })
-    public MtOperateResult<CampCashierModel> doCamp(@RequestBody TcTradeModel tcTradeModel) {
+    public MtOperateResult<CampCashierModel<PxGoodsModel>> doCamp(@RequestBody TcTradeModel tcTradeModel) {
 
         if (tcTradeModel == null || StringUtils.isBlank(tcTradeModel.getShopId())) {
             logger.warn("交易模型关键参数不可用，无法完成抽奖。 tcTradeModel=" + tcTradeModel);

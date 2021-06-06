@@ -6,7 +6,6 @@ package com.myteay.phoenix.biz.service.impl.provider.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.provider.orm.model.TcProviderProductImagesModel;
 import com.tc.provider.orm.model.TcProviderProductModel;
 import com.tc.provider.orm.model.TcProviderProductNutritionalModel;
@@ -35,7 +36,7 @@ import com.tc.provider.orm.model.TcProviderProductPriceModel;
 public class TcProviderProductMngController {
 
     /** 日志 */
-    public static final Logger       logger = Logger.getLogger(TcProviderProductMngController.class);
+    public static final Logger       logger = LoggerFactory.getLogger(TcProviderProductMngController.class);
 
     /** 原材料管理 */
     @Autowired
@@ -48,7 +49,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/do/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductModel> manageProviderProductInfo(@RequestBody TcProviderProductModel tcProviderProductModel) {
+    public MtOperateResult<TcProviderProductModel> manageProviderProductInfo(@RequestBody TcProviderProductModel tcProviderProductModel) {
         return tcProviderProductMngIntg.manageProviderProductInfo(tcProviderProductModel);
     }
 
@@ -59,7 +60,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/shop/{shopId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<TcProviderProductModel>> queryGoodsByShopId(@PathVariable String shopId) {
+    public MtOperateResult<List<TcProviderProductModel>> queryGoodsByShopId(@PathVariable String shopId) {
         return tcProviderProductMngIntg.queryProviderProductByShopId(shopId);
     }
 
@@ -70,7 +71,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/do/images/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductImagesModel> manageProviderProductImagesInfo(@RequestBody TcProviderProductImagesModel tcProviderProductImagesModel) {
+    public MtOperateResult<TcProviderProductImagesModel> manageProviderProductImagesInfo(@RequestBody TcProviderProductImagesModel tcProviderProductImagesModel) {
         return tcProviderProductMngIntg.manageProductImagesInfo(tcProviderProductImagesModel);
     }
 
@@ -81,7 +82,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/do/price/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(@RequestBody TcProviderProductPriceModel tcProviderProductPriceModel) {
+    public MtOperateResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(@RequestBody TcProviderProductPriceModel tcProviderProductPriceModel) {
         return tcProviderProductMngIntg.manageProviderProductPriceInfo(tcProviderProductPriceModel);
     }
 
@@ -92,7 +93,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/do/nutritional/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(@RequestBody TcProviderProductNutritionalModel tcProviderProductNutritionalModel) {
+    public MtOperateResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(@RequestBody TcProviderProductNutritionalModel tcProviderProductNutritionalModel) {
         return tcProviderProductMngIntg.manageProviderProductNutritionalInfo(tcProviderProductNutritionalModel);
     }
 
@@ -103,7 +104,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/do/op/manual/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(@RequestBody TcProviderProductOpManualModel tcProviderProductOpManualModel) {
+    public MtOperateResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(@RequestBody TcProviderProductOpManualModel tcProviderProductOpManualModel) {
         return tcProviderProductMngIntg.manageProviderProductOpManualInfo(tcProviderProductOpManualModel);
     }
 
@@ -114,7 +115,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/price/{productId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(@PathVariable String productId) {
+    public MtOperateResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(@PathVariable String productId) {
         return tcProviderProductMngIntg.queryProductAllPriceByProductId(productId);
     }
 
@@ -125,7 +126,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/nutritional/{productId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(@PathVariable String productId) {
+    public MtOperateResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(@PathVariable String productId) {
         return tcProviderProductMngIntg.queryProductAllNutritionalByProductId(productId);
     }
 
@@ -136,7 +137,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/op/manual/{productId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(@PathVariable String productId) {
+    public MtOperateResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(@PathVariable String productId) {
         return tcProviderProductMngIntg.queryProductAllOpManualByProductId(productId);
     }
 
@@ -147,7 +148,7 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/images/{productId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(@PathVariable String productId) {
+    public MtOperateResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(@PathVariable String productId) {
         return tcProviderProductMngIntg.queryProductAllImagesByProductId(productId);
     }
 
@@ -159,15 +160,15 @@ public class TcProviderProductMngController {
      * @return
      */
     @RequestMapping(value = "/list/condition/shop/", method = { RequestMethod.POST })
-    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
-        MtServiceResult<List<TcProviderProductModel>> result = null;
+    public MtOperateResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName) {
+        MtOperateResult<List<TcProviderProductModel>> result = null;
         try {
             result = tcProviderProductMngIntg.findTcProviderProductByCondition(shopId, productName);
         } catch (Throwable e) {
             logger.warn("查询产品询价配置发生异常 error: " + e.getMessage(), e);
-            return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_FAILED, MtOperateExResultEnum.CAMP_ILLEGAL_ARGUMENTS);
         }
 
-        return new MtServiceResult<List<TcProviderProductModel>>(result.getResult());
+        return new MtOperateResult<List<TcProviderProductModel>>(result.getResult());
     }
 }

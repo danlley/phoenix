@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.common.util.model.DataDictionaryModel;
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
 import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -40,23 +39,23 @@ public class PxDataDictionaryMngController {
     private PxDataDictionaryComponent pxDataDictionaryComponent;
 
     @RequestMapping(value = "/{key}", method = { RequestMethod.GET })
-    public MtServiceResult<List<DataDictionaryModel>> queryDataDictionaryByKey(@PathVariable("key") String key) {
+    public MtOperateResult<List<DataDictionaryModel>> queryDataDictionaryByKey(@PathVariable("key") String key) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始查询数据字典配置信息  key=" + key);
         }
 
-        MtServiceResult<List<DataDictionaryModel>> result = null;
+        MtOperateResult<List<DataDictionaryModel>> result = null;
         try {
             MtOperateResult<List<DataDictionaryModel>> innerResult = pxDataDictionaryComponent.queryDataDictionaryByKey(key);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
             if (logger.isInfoEnabled()) {
                 logger.info("查询数据字典结果： key=" + key + " innerResult=" + innerResult);
             }
         } catch (Throwable e) {
             logger.warn("查询数据字典发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

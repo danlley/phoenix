@@ -6,8 +6,8 @@ package com.myteay.phoenix.common.service.camp.integration;
 
 import java.util.List;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampBaseModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.promocore.common.orm.model.CampBaseModel;
 
 /**
  * 

@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.prodtrans.integration.TcProdtransConfigMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.prodtrans.core.model.TcPtsUserShopProdConfigModel;
 
 /**
@@ -48,8 +48,9 @@ public class TcProdtransConfigMngIntgImpl implements TcProdtransConfigMngIntg {
         String pathPrefix = env.getProperty("tiancan.phoenix.prodtrans.path.prefix");
         String url = pathPrefix + "/tiancan/api/prodtrans/manage/query/shop/" + shopId;
         String result = HttpClientUtil.insureResponsePost(url, null);
-        return (MtOperateResult<List<TcPtsUserShopProdConfigModel>>) JSON.parseObject(result, new TypeReference<MtOperateResult<List<TcPtsUserShopProdConfigModel>>>() {
-        });
+        return (MtOperateResult<List<TcPtsUserShopProdConfigModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<TcPtsUserShopProdConfigModel>>>() {
+            });
     }
 
     /** 

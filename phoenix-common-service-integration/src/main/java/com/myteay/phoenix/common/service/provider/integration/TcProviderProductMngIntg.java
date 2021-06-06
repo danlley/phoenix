@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductImagesModel;
 import com.tc.provider.orm.model.TcProviderProductModel;
 import com.tc.provider.orm.model.TcProviderProductNutritionalModel;
@@ -29,7 +29,7 @@ public interface TcProviderProductMngIntg {
      * @param tcProviderProductModel
      * @return
      */
-    public MtServiceResult<TcProviderProductModel> manageProviderProductInfo(@RequestBody TcProviderProductModel tcProviderProductModel);
+    public MtOperateResult<TcProviderProductModel> manageProviderProductInfo(@RequestBody TcProviderProductModel tcProviderProductModel);
 
     /**
      * 查询店铺下所有的原材料信息
@@ -37,7 +37,7 @@ public interface TcProviderProductMngIntg {
      * @param shopId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductModel>> queryProviderProductByShopId(String shopId);
+    public MtOperateResult<List<TcProviderProductModel>> queryProviderProductByShopId(String shopId);
 
     /**
      * 原材料图片管理
@@ -45,7 +45,7 @@ public interface TcProviderProductMngIntg {
      * @param tcProviderProductImagesModel
      * @return
      */
-    public MtServiceResult<TcProviderProductImagesModel> manageProductImagesInfo(TcProviderProductImagesModel tcProviderProductImagesModel);
+    public MtOperateResult<TcProviderProductImagesModel> manageProductImagesInfo(TcProviderProductImagesModel tcProviderProductImagesModel);
 
     /**
      * 原材料询价管理
@@ -53,7 +53,7 @@ public interface TcProviderProductMngIntg {
      * @param tcProviderProductPriceModel
      * @return
      */
-    public MtServiceResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(TcProviderProductPriceModel tcProviderProductPriceModel);
+    public MtOperateResult<TcProviderProductPriceModel> manageProviderProductPriceInfo(TcProviderProductPriceModel tcProviderProductPriceModel);
 
     /**
      * 原材料操作手册管理
@@ -61,7 +61,7 @@ public interface TcProviderProductMngIntg {
      * @param tcProviderProductOpManualModel
      * @return
      */
-    public MtServiceResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(TcProviderProductOpManualModel tcProviderProductOpManualModel);
+    public MtOperateResult<TcProviderProductOpManualModel> manageProviderProductOpManualInfo(TcProviderProductOpManualModel tcProviderProductOpManualModel);
 
     /**
      * 原材料营养配比管理
@@ -69,7 +69,7 @@ public interface TcProviderProductMngIntg {
      * @param tcProviderProductNutritionalModel
      * @return
      */
-    public MtServiceResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(TcProviderProductNutritionalModel tcProviderProductNutritionalModel);
+    public MtOperateResult<TcProviderProductNutritionalModel> manageProviderProductNutritionalInfo(TcProviderProductNutritionalModel tcProviderProductNutritionalModel);
 
     /**
      * 查询店铺下所有的原材料信息
@@ -77,7 +77,7 @@ public interface TcProviderProductMngIntg {
      * @param shopId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(String productId);
+    public MtOperateResult<List<TcProviderProductPriceModel>> queryProductAllPriceByProductId(String productId);
 
     /**
      * 查询原材料对应的所有营养配比
@@ -85,7 +85,7 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(String productId);
+    public MtOperateResult<List<TcProviderProductNutritionalModel>> queryProductAllNutritionalByProductId(String productId);
 
     /**
      * 查询原材料对应的所有帮助手册
@@ -93,7 +93,7 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(String productId);
+    public MtOperateResult<List<TcProviderProductOpManualModel>> queryProductAllOpManualByProductId(String productId);
 
     /**
      * 查询原材料图片
@@ -101,7 +101,7 @@ public interface TcProviderProductMngIntg {
      * @param productId
      * @return
      */
-    public MtServiceResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(String productId);
+    public MtOperateResult<List<TcProviderProductImagesModel>> queryProductAllImagesByProductId(String productId);
 
     /**
      * 
@@ -109,5 +109,5 @@ public interface TcProviderProductMngIntg {
      * @param productName
      * @return
      */
-    public MtServiceResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName);
+    public MtOperateResult<List<TcProviderProductModel>> findTcProviderProductByCondition(String shopId, String productName);
 }

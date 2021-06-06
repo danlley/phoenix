@@ -4,7 +4,7 @@
  */
 package com.myteay.phoenix.core.service.utils;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 
 /**
  * 过滤处理结果

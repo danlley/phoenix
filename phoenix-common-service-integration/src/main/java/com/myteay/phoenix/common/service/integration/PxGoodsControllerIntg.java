@@ -6,9 +6,9 @@ package com.myteay.phoenix.common.service.integration;
 
 import java.util.List;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxGoodsAdvModel;
-import com.myteay.phoenix.core.model.manage.PxGoodsModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsAdvModel;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
 
 /**
  * 集成数据中心服务

@@ -4,8 +4,9 @@
  */
 package com.myteay.phoenix.common.service.camp.integration;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.promocore.common.orm.model.CampShopPrizeOutModel;
 
 /**
  * 营销管理优惠券
@@ -21,6 +22,6 @@ public interface CampShopPrizeOutIntg {
      * @param prizeOutId
      * @return
      */
-    public MtOperateResult<CampShopPrizeOutModel> queryShopPrizeOutById(String prizeOutId);
+    public MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> queryShopPrizeOutById(String prizeOutId);
 
 }

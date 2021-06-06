@@ -9,9 +9,9 @@ import org.springframework.core.env.Environment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.provider.integration.TcProviderProductOrderOutIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductOutModel;
 
 /**
@@ -30,11 +30,11 @@ public class TcProviderProductOrderOutIntgImpl implements TcProviderProductOrder
      * @see com.myteay.phoenix.common.service.provider.integration.TcProviderProductOrderOutIntg#manageProviderProductOrderOutInfo(com.tc.provider.orm.model.TcProviderProductOutModel)
      */
     @Override
-    public MtServiceResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(TcProviderProductOutModel tcProviderProductOutModel) {
+    public MtOperateResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(TcProviderProductOutModel tcProviderProductOutModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.provider.path.prefix");
         String url = pathPrefix + "/tiancan/api/provider/order/out/mng";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcProviderProductOutModel));
-        return (MtServiceResult<TcProviderProductOutModel>) JSON.parseObject(result, new TypeReference<MtServiceResult<TcProviderProductOutModel>>() {
+        return (MtOperateResult<TcProviderProductOutModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<TcProviderProductOutModel>>() {
         });
     }
 

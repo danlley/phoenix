@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesSubNoticeIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxGoodsPackagesSubNoticeModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.model.PxGoodsPackagesSubNoticeModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -47,17 +46,17 @@ public class PxGoodsPackagesSubNoticeController {
      * @return
      */
     @RequestMapping(value = "/list/notice/{packagesNoticeId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxGoodsPackagesSubNoticeModel>> queryGoodsByShopId(@PathVariable String packagesNoticeId) {
-        MtServiceResult<List<PxGoodsPackagesSubNoticeModel>> result = null;
+    public MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> queryGoodsByShopId(@PathVariable String packagesNoticeId) {
+        MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> result = null;
 
         MtOperateResult<List<PxGoodsPackagesSubNoticeModel>> componentResult = null;
         try {
             componentResult = pxGoodsPackagesSubNoticeIntg.queryPackagesNoticeListByNoticeId(packagesNoticeId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询温馨提醒子项信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -70,19 +69,19 @@ public class PxGoodsPackagesSubNoticeController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsPackagesSubNoticeModel> manageGoods(@RequestBody PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
+    public MtOperateResult<PxGoodsPackagesSubNoticeModel> manageGoods(@RequestBody PxGoodsPackagesSubNoticeModel pxGoodsPackagesSubNoticeModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存温馨提醒子项信息 pxGoodsPackagesSubNoticeModel=" + pxGoodsPackagesSubNoticeModel);
         }
-        MtServiceResult<PxGoodsPackagesSubNoticeModel> result = null;
+        MtOperateResult<PxGoodsPackagesSubNoticeModel> result = null;
         try {
             MtOperateResult<PxGoodsPackagesSubNoticeModel> innerResult = pxGoodsPackagesSubNoticeIntg.manageSubPackages(pxGoodsPackagesSubNoticeModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存温馨提醒子项信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

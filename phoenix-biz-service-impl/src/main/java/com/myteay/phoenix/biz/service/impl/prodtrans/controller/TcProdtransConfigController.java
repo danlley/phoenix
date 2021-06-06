@@ -6,7 +6,6 @@ package com.myteay.phoenix.biz.service.impl.prodtrans.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.common.service.prodtrans.integration.TcProdtransConfigMngIntg;
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.prodtrans.core.model.TcPtsUserShopProdConfigModel;
 
 /**
@@ -29,7 +30,7 @@ import com.tc.prodtrans.core.model.TcPtsUserShopProdConfigModel;
 public class TcProdtransConfigController {
 
     /** 日志 */
-    public static final Logger       logger = Logger.getLogger(TcProdtransConfigController.class);
+    public static final Logger       logger = LoggerFactory.getLogger(TcProdtransConfigController.class);
 
     /** 会员店铺产品账配置信息操作组件 */
     @Autowired

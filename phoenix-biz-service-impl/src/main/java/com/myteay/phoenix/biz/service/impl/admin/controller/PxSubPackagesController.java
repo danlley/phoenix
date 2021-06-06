@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxSubPackagesIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxSubPackagesModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.model.PxSubPackagesModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -47,17 +46,17 @@ public class PxSubPackagesController {
      * @return
      */
     @RequestMapping(value = "/list/sub/packages/{packagesDetailId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxSubPackagesModel>> queryGoodsByShopId(@PathVariable String packagesDetailId) {
-        MtServiceResult<List<PxSubPackagesModel>> result = null;
+    public MtOperateResult<List<PxSubPackagesModel>> queryGoodsByShopId(@PathVariable String packagesDetailId) {
+        MtOperateResult<List<PxSubPackagesModel>> result = null;
 
         MtOperateResult<List<PxSubPackagesModel>> componentResult = null;
         try {
             componentResult = pxSubPackagesIntg.querySubPackagesByPackagesId(packagesDetailId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询子套餐信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -70,19 +69,19 @@ public class PxSubPackagesController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxSubPackagesModel> manageGoods(@RequestBody PxSubPackagesModel pxSubPackagesModel) {
+    public MtOperateResult<PxSubPackagesModel> manageGoods(@RequestBody PxSubPackagesModel pxSubPackagesModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存子套餐信息 pxSubPackagesModel=" + pxSubPackagesModel);
         }
-        MtServiceResult<PxSubPackagesModel> result = null;
+        MtOperateResult<PxSubPackagesModel> result = null;
         try {
             MtOperateResult<PxSubPackagesModel> innerResult = pxSubPackagesIntg.manageSubPackages(pxSubPackagesModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存子套餐信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

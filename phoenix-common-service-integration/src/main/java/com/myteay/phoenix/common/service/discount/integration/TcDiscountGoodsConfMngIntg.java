@@ -6,7 +6,7 @@ package com.myteay.phoenix.common.service.discount.integration;
 
 import java.util.List;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 

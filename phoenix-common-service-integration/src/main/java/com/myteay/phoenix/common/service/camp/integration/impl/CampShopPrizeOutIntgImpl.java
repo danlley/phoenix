@@ -11,8 +11,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampShopPrizeOutModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.promocore.common.orm.model.CampShopPrizeOutModel;
 
 /**
  * 营销管理优惠券
@@ -30,12 +31,12 @@ public class CampShopPrizeOutIntgImpl implements CampShopPrizeOutIntg {
      * @see com.myteay.phoenix.common.service.camp.integration.CampShopPrizeOutIntg#queryShopPrizeOutById(java.lang.String)
      */
     @Override
-    public MtOperateResult<CampShopPrizeOutModel> queryShopPrizeOutById(String prizeOutId) {
+    public MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> queryShopPrizeOutById(String prizeOutId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
         String url = pathPrefix + "/myteay/api/phoenix/camp/prize/out/list/" + prizeOutId;
         String result = HttpClientUtil.insureResponseGet(url);
-        MtOperateResult<CampShopPrizeOutModel> obj = (MtOperateResult<CampShopPrizeOutModel>) JSON.parseObject(result,
-            new TypeReference<MtOperateResult<CampShopPrizeOutModel>>() {
+        MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>> obj = (MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<CampShopPrizeOutModel<PxGoodsModel>>>() {
             });
         return obj;
     }

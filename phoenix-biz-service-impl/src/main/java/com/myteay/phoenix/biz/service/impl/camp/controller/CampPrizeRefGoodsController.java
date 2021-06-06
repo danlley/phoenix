@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeRefGoodsIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampPrizeRefGoodsModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
+import com.tc.promocore.common.orm.model.CampPrizeRefGoodsModel;
 
 /**
  * 店内营销活动奖品关联商品对外服务
@@ -47,17 +47,17 @@ public class CampPrizeRefGoodsController {
      * @return
      */
     @RequestMapping(value = "/list/{prizeId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<CampPrizeRefGoodsModel>> queryGoodsByShopId(@PathVariable String prizeId) {
-        MtServiceResult<List<CampPrizeRefGoodsModel>> result = null;
+    public MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> queryGoodsByShopId(@PathVariable String prizeId) {
+        MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> result = null;
 
-        MtOperateResult<List<CampPrizeRefGoodsModel>> componentResult = null;
+        MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> componentResult = null;
         try {
             componentResult = campPrizeRefGoodsIntg.queryPrizeRefGoodsByPrizeId(prizeId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Throwable e) {
             logger.warn("查询所有店内营销活动关联奖品信息发生未知异常  prizeId=" + prizeId + " " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_PRIZE_REF_GOODS_QRY_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_OPERATE_FAILED);
         }
 
         return result;
@@ -72,20 +72,21 @@ public class CampPrizeRefGoodsController {
      * @return
      */
     @RequestMapping(value = "/manage/{prizeId}", method = { RequestMethod.POST })
-    public MtServiceResult<List<CampPrizeRefGoodsModel>> managePrizeGoodsRefList(@PathVariable String prizeId,
-                                                                                 @RequestBody List<CampPrizeRefGoodsModel> campPrizeRefGoodsModelList) {
+    public MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> managePrizeGoodsRefList(@PathVariable String prizeId,
+                                                                                               @RequestBody List<CampPrizeRefGoodsModel<PxGoodsModel>> campPrizeRefGoodsModelList) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动关联奖品信息 campPrizeRefGoodsModelList=" + campPrizeRefGoodsModelList);
         }
-        MtServiceResult<List<CampPrizeRefGoodsModel>> result = null;
+        MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> result = null;
         try {
-            MtOperateResult<List<CampPrizeRefGoodsModel>> innerResult = campPrizeRefGoodsIntg.managePrizeGoodsRefList(prizeId, campPrizeRefGoodsModelList);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            MtOperateResult<List<CampPrizeRefGoodsModel<PxGoodsModel>>> innerResult = campPrizeRefGoodsIntg.managePrizeGoodsRefList(prizeId,
+                campPrizeRefGoodsModelList);
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Throwable e) {
             logger.warn("管理店内营销活动关联奖品信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

@@ -12,8 +12,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampCashierModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.promocore.common.orm.model.CampCashierModel;
 import com.tc.trade.orm.model.TcTradeModel;
 
 /**
@@ -35,12 +36,13 @@ public class PxCampPrizeServiceIntgImpl implements PxCampPrizeServiceIntg {
      * @see com.myteay.phoenix.common.service.camp.integration.PxCampPrizeServiceIntg#doCamp(com.tc.trade.orm.model.TcTradeModel)
      */
     @Override
-    public MtOperateResult<CampCashierModel> doCamp(TcTradeModel tcTradeModel) {
+    public MtOperateResult<CampCashierModel<PxGoodsModel>> doCamp(TcTradeModel tcTradeModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
         String url = pathPrefix + "/tiancan/api/promocore/prize/ref/camp/trade/ii/do";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(tcTradeModel));
-        MtOperateResult<CampCashierModel> obj = (MtOperateResult<CampCashierModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<CampCashierModel>>() {
-        });
+        MtOperateResult<CampCashierModel<PxGoodsModel>> obj = (MtOperateResult<CampCashierModel<PxGoodsModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<CampCashierModel<PxGoodsModel>>>() {
+            });
 
         return obj;
     }

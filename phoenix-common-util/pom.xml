@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.myteay</groupId>
+        <groupId>com.tc</groupId>
         <artifactId>phoenix</artifactId>
         <version>1.0.1.20172054</version>
     </parent>
-    <groupId>com.myteay</groupId>
+    <groupId>com.tc</groupId>
     <artifactId>phoenix-common-util</artifactId>
     <packaging>jar</packaging>
     <version>1.0.1.20172054</version>
@@ -15,21 +15,17 @@
     <url>http://www.gangutiancan.com</url>
     
     <properties>
-    	<spring.version>5.0.8.RELEASE</spring.version>
-    	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<spring.version>4.2.6.RELEASE</spring.version>
     	<jmock.version>1.2.0</jmock.version>
     </properties>
 
     <dependencies>
-    	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>javax.servlet-api</artifactId>
 		    <version>4.0.1</version>
 		    <scope>provided</scope>
 		</dependency>
-
     	<!-- fastjson -->  
         <dependency>  
             <groupId>com.alibaba</groupId>  
@@ -42,16 +38,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-			<groupId>com.tc</groupId>
-			<artifactId>discount-common-orm</artifactId>
-			<version>1.0.1.201908261144</version>
-        </dependency>
-        <dependency>
-			<groupId>com.tc</groupId>
-		    <artifactId>prodtrans-common-orm</artifactId>
-		    <version>1.0.1.201908261144</version>
         </dependency>
         <dependency>
 			<groupId>jmock</groupId>
@@ -69,24 +55,29 @@
 		    <version>1.0.1.20171028</version>
         </dependency>
         <dependency>
-            <groupId>com.myteay</groupId>
-            <artifactId>myteay-common-event</artifactId>
-            <version>1.0.1.20171028</version>
+			<groupId>com.tc</groupId>
+			<artifactId>discount-common-orm</artifactId>
+			<version>1.0.1.201908261144</version>
         </dependency>
         <dependency>
-            <groupId>com.myteay</groupId>
-            <artifactId>myteay-common-orm</artifactId>
-            <version>1.0.1.20171028</version>
+		    <groupId>com.tc</groupId>
+		    <artifactId>promocore-common-orm</artifactId>
+		    <version>1.0.1.202104282114</version>
         </dependency>
         <dependency>
 			<groupId>com.tc</groupId>
-			<artifactId>tc-common-lang</artifactId>
-			<version>1.0.1.202103102034</version>
+		    <artifactId>prodtrans-common-orm</artifactId>
+		    <version>1.0.1.201908261144</version>
         </dependency>
         <dependency>
 			<groupId>com.tc</groupId>
 			<artifactId>shop-common-orm</artifactId>
 			<version>1.0.1.201908261144</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.tc</groupId>
+		    <artifactId>dbcenter-common-orm</artifactId>
+		    <version>1.0.1.202104281721</version>
         </dependency>
         <dependency>
             <groupId>com.tc</groupId>
@@ -99,10 +90,47 @@
             <version>1.0.1.201908261144</version>
         </dependency>
         <dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.5.4</version>
+		    <groupId>com.tc</groupId>
+		    <artifactId>tc-ccopass-event</artifactId>
+		    <version>1.0.1.202105032036</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.tc</groupId>
+		    <artifactId>tc-ccopass-config-client</artifactId>
+		    <version>1.0.1.202105092133</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.tc</groupId>
+		    <artifactId>tc-ccopass-rpc</artifactId>
+		    <version>1.0.1.202105081042</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.tc</groupId>
+		    <artifactId>tc-ccopass-aop</artifactId>
+		    <version>1.0.1.202105151741</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.tc</groupId>
+		    <artifactId>tc-ccopass-logger</artifactId>
+		    <version>1.0.1.202105032036</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+			<version>2.3.4.726</version>
 		</dependency>
+		<dependency>  
+            <groupId>org.mybatis</groupId>  
+            <artifactId>mybatis</artifactId>  
+            <version>3.4.2</version>  
+        </dependency> 
+        <!-- mysql dependency end -->  
+        <dependency>  
+            <groupId>org.mybatis</groupId>  
+            <artifactId>mybatis-spring</artifactId>  
+            <version>1.3.1</version>  
+        </dependency> 
 		<!-- spring dependency start -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -151,6 +179,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.3.12.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<version>1.5.8.RELEASE</version>
+			<artifactId>spring-boot-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
@@ -167,66 +205,20 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
+			<version>4.3.12.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+            <version>1.8.8.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+            <version>2.9.0</version>
 		</dependency>
 		<!-- spring dependency end -->
-		<!-- nacos集成开始 -->
-<!-- 	    <dependency>
-	        <groupId>org.springframework.cloud</groupId>
-	        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-	        <exclusions>
-		        <exclusion>
-		            <groupId>ch.qos.logback</groupId>
-		            <artifactId>logback-core</artifactId>
-		        </exclusion>
-		        <exclusion>
-		            <groupId>ch.qos.logback</groupId>
-		            <artifactId>logback-classic</artifactId>
-		        </exclusion>
-		    </exclusions>
-	    </dependency> -->
-	    <!-- nacos集成结束 -->
     </dependencies>
-    <!-- 开始集成nacos -->
-<!--       <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.SR1</version>
-                <type>pom</type>
-                <scope>import</scope>
-                <exclusions>
-			        <exclusion>
-			            <groupId>ch.qos.logback</groupId>
-			            <artifactId>logback-core</artifactId>
-			        </exclusion>
-			        <exclusion>
-			            <groupId>ch.qos.logback</groupId>
-			            <artifactId>logback-classic</artifactId>
-			        </exclusion>
-		    </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>0.2.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-                <exclusions>
-			        <exclusion>
-			            <groupId>ch.qos.logback</groupId>
-			            <artifactId>logback-core</artifactId>
-			        </exclusion>
-			        <exclusion>
-			            <groupId>ch.qos.logback</groupId>
-			            <artifactId>logback-classic</artifactId>
-			        </exclusion>
-			    </exclusions>
-            </dependency>
-        </dependencies>
-    </dependencyManagement> -->
-    <!-- nacos集成结束 -->
     <build>
         <plugins>
             <plugin>

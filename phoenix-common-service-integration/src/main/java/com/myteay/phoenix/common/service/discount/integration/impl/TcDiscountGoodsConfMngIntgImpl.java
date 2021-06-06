@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 

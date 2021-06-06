@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.provider.integration.TcProviderProductOrderOutIntg;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 import com.tc.provider.orm.model.TcProviderProductOutModel;
 
@@ -41,7 +41,7 @@ public class TcProviderProductOrderOutController {
      * @return
      */
     @RequestMapping(value = "/out/mng", method = { RequestMethod.POST })
-    public MtServiceResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(@RequestBody TcProviderProductOutModel tcProviderProductOutModel) {
+    public MtOperateResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(@RequestBody TcProviderProductOutModel tcProviderProductOutModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理进货清单 tcProviderProductOutModel=" + tcProviderProductOutModel);

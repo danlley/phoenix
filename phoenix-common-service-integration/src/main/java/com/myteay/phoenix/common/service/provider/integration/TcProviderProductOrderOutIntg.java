@@ -4,7 +4,7 @@
  */
 package com.myteay.phoenix.common.service.provider.integration;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductOutModel;
 
 /**
@@ -20,5 +20,5 @@ public interface TcProviderProductOrderOutIntg {
      * @param tcProviderProductModel
      * @return
      */
-    public MtServiceResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(TcProviderProductOutModel tcProviderProductOutModel);
+    public MtOperateResult<TcProviderProductOutModel> manageProviderProductOrderOutInfo(TcProviderProductOutModel tcProviderProductOutModel);
 }

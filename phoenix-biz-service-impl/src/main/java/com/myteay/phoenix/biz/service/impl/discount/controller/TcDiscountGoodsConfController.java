@@ -6,7 +6,6 @@ package com.myteay.phoenix.biz.service.impl.discount.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 
@@ -30,7 +31,7 @@ import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
 public class TcDiscountGoodsConfController {
 
     /** 日志 */
-    public static final Logger         logger = Logger.getLogger(TcDiscountGoodsConfController.class);
+    public static final Logger         logger = LoggerFactory.getLogger(TcDiscountGoodsConfController.class);
 
     /** 店铺商品折扣管理组件 */
     @Autowired

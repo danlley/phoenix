@@ -6,8 +6,9 @@ package com.myteay.phoenix.common.service.camp.integration;
 
 import java.util.List;
 
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.promocore.common.orm.model.CampPrizeModel;
 
 /**
  * 
@@ -22,7 +23,7 @@ public interface CampPrizeIntg {
      * @param campId
      * @return
      */
-    public MtOperateResult<List<CampPrizeModel>> queryPrizeListByCampId(String campId);
+    public MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> queryPrizeListByCampId(String campId);
 
     /**
      * 店内营销活动奖品管理服务（增、删、改、单条查询）
@@ -30,5 +31,5 @@ public interface CampPrizeIntg {
      * @param campPrizeModel
      * @return
      */
-    public MtOperateResult<CampPrizeModel> manageCampPrize(CampPrizeModel campPrizeModel);
+    public MtOperateResult<CampPrizeModel<PxGoodsModel>> manageCampPrize(CampPrizeModel<PxGoodsModel> campPrizeModel);
 }

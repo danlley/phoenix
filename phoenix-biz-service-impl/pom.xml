@@ -2,11 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.myteay</groupId>
+        <groupId>com.tc</groupId>
         <artifactId>phoenix</artifactId>
         <version>1.0.1.20172054</version>
     </parent>
-  <groupId>com.myteay</groupId>
+  <groupId>com.tc</groupId>
   <artifactId>phoenix-biz-service-impl</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
@@ -110,45 +110,16 @@
         <scope>test</scope>
     </dependency>
     <dependency>
-		<groupId>com.myteay</groupId>
+		<groupId>com.tc</groupId>
 		<artifactId>phoenix-core-service</artifactId>
 		<version>1.0.1.20172054</version>
     </dependency>
     <dependency>
-		<groupId>com.myteay</groupId>
+		<groupId>com.tc</groupId>
 		<artifactId>phoenix-biz-service-quartz</artifactId>
 		<version>1.0.1.20172054</version>
     </dependency>
-
-    <!-- nacos集成开始 -->
-<!--     <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-    </dependency> -->
-    <!-- nacos集成结束 -->
-
   </dependencies>
-
-    <!-- 开始集成nacos -->
-<!--       <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.SR1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>0.2.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement> -->
-    <!-- nacos集成结束 -->
 
   <build>
     <plugins>

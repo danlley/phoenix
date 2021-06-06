@@ -19,16 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesImageIntg;
 import com.myteay.phoenix.common.util.MtFileUtils;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.common.util.enums.PxOperationTypeEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.manage.PxGoodsPackagesImageModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.enums.PxOperationTypeEnum;
+import com.tc.dbcenter.common.orm.model.PxGoodsPackagesImageModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
@@ -59,17 +58,17 @@ public class PxGoodsPackagesImageController {
      * @return
      */
     @RequestMapping(value = "/list/goods/{goodsId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxGoodsPackagesImageModel>> queryGoodsImageByGoodsId(@PathVariable String goodsId) {
-        MtServiceResult<List<PxGoodsPackagesImageModel>> result = null;
+    public MtOperateResult<List<PxGoodsPackagesImageModel>> queryGoodsImageByGoodsId(@PathVariable String goodsId) {
+        MtOperateResult<List<PxGoodsPackagesImageModel>> result = null;
 
         MtOperateResult<List<PxGoodsPackagesImageModel>> componentResult = null;
         try {
             componentResult = pxGoodsPackagesImageIntg.queryPackagesImageListByGoodsId(goodsId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询套餐详情图片信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -82,28 +81,28 @@ public class PxGoodsPackagesImageController {
      * @return
      */
     @RequestMapping(value = "/manage/goods/{goodsId}", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsPackagesImageModel> manageGoodsImage(@PathVariable String goodsId, @RequestParam(value = "file") MultipartFile file, HttpServletRequest request,
-                                                                       HttpServletResponse response) {
+    public MtOperateResult<PxGoodsPackagesImageModel> manageGoodsImage(@PathVariable String goodsId, @RequestParam(value = "file") MultipartFile file,
+                                                                       HttpServletRequest request, HttpServletResponse response) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存套餐详情图片信息 goodsId=" + goodsId);
         }
 
-        MtServiceResult<PxGoodsPackagesImageModel> result = null;
+        MtOperateResult<PxGoodsPackagesImageModel> result = null;
         PxGoodsPackagesImageModel pxGoodsPackagesImageModel = upload(goodsId, file);
 
         if (pxGoodsPackagesImageModel == null) {
             logger.warn("图片上传失败，关键信息不可用  pxGoodsPackagesImageModel is null");
-            return new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            return new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         try {
             MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageIntg.manageGoodsPackagesImage(pxGoodsPackagesImageModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存套餐详情图片信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -116,13 +115,13 @@ public class PxGoodsPackagesImageController {
      * @return
      */
     @RequestMapping(value = "/manage/goods/remove/{imageId}", method = { RequestMethod.POST })
-    public MtServiceResult<PxGoodsPackagesImageModel> delGoodsImage(@PathVariable String imageId) {
+    public MtOperateResult<PxGoodsPackagesImageModel> delGoodsImage(@PathVariable String imageId) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始删除套餐详情图片信息 imageId=" + imageId);
         }
 
-        MtServiceResult<PxGoodsPackagesImageModel> result = null;
+        MtOperateResult<PxGoodsPackagesImageModel> result = null;
         PxGoodsPackagesImageModel pxGoodsPackagesImageModel = new PxGoodsPackagesImageModel();
 
         pxGoodsPackagesImageModel.setImageId(imageId);
@@ -130,11 +129,11 @@ public class PxGoodsPackagesImageController {
 
         try {
             MtOperateResult<PxGoodsPackagesImageModel> innerResult = pxGoodsPackagesImageIntg.manageGoodsPackagesImage(pxGoodsPackagesImageModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存套餐详情图片信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

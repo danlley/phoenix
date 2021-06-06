@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxShopIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.shop.orm.model.PxShopModel;
 
 /**
@@ -36,8 +36,9 @@ public class PxShopIntgImpl implements PxShopIntg {
         String url = pathPrefix + "/tiancan/api/shop/services/op/all";
 
         String result = HttpClientUtil.insureResponseGet(url);
-        MtOperateResult<List<PxShopModel>> obj = (MtOperateResult<List<PxShopModel>>) JSON.parseObject(result, new TypeReference<MtOperateResult<List<PxShopModel>>>() {
-        });
+        MtOperateResult<List<PxShopModel>> obj = (MtOperateResult<List<PxShopModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<PxShopModel>>>() {
+            });
         return obj;
     }
 

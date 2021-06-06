@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.camp.integration.CampBaseIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampBaseModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
+import com.tc.promocore.common.orm.model.CampBaseModel;
 
 /**
  * 店内营销活动
@@ -47,17 +46,17 @@ public class CampBaseController {
      * @return
      */
     @RequestMapping(value = "/list/shop/{shopId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<CampBaseModel>> queryGoodsByShopId(@PathVariable String shopId) {
-        MtServiceResult<List<CampBaseModel>> result = null;
+    public MtOperateResult<List<CampBaseModel>> queryGoodsByShopId(@PathVariable String shopId) {
+        MtOperateResult<List<CampBaseModel>> result = null;
 
         MtOperateResult<List<CampBaseModel>> componentResult = null;
         try {
             componentResult = campBaseIntg.queryAllCampBaseByShopId(shopId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询所有店内营销活动信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -70,19 +69,19 @@ public class CampBaseController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<CampBaseModel> manageGoods(@RequestBody CampBaseModel campBaseModel) {
+    public MtOperateResult<CampBaseModel> manageGoods(@RequestBody CampBaseModel campBaseModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动信息 campBaseModel=" + campBaseModel);
         }
-        MtServiceResult<CampBaseModel> result = null;
+        MtOperateResult<CampBaseModel> result = null;
         try {
             MtOperateResult<CampBaseModel> innerResult = campBaseIntg.manageCampBase(campBaseModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("管理店内营销活动信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -95,19 +94,19 @@ public class CampBaseController {
      * @return
      */
     @RequestMapping(value = "/status/", method = { RequestMethod.POST })
-    public MtServiceResult<CampBaseModel> changeCampBaseStatus(@RequestBody CampBaseModel campBaseModel) {
+    public MtOperateResult<CampBaseModel> changeCampBaseStatus(@RequestBody CampBaseModel campBaseModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始执行店内营销活动下架及店内营销活动发布 campBaseModel=" + campBaseModel);
         }
-        MtServiceResult<CampBaseModel> result = null;
+        MtOperateResult<CampBaseModel> result = null;
         try {
             MtOperateResult<CampBaseModel> innerResult = campBaseIntg.changeCampBaseStatus(campBaseModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("店内营销活动下架及店内营销活动发布过程发生未知异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

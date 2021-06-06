@@ -13,8 +13,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeIntg;
 import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampPrizeModel;
+import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.promocore.common.orm.model.CampPrizeModel;
 
 /**
  * 奖品基本数据维护客户端
@@ -32,12 +33,12 @@ public class CampPrizeIntgImpl implements CampPrizeIntg {
      * @see com.myteay.phoenix.common.service.camp.integration.CampPrizeIntg#queryPrizeListByCampId(java.lang.String)
      */
     @Override
-    public MtOperateResult<List<CampPrizeModel>> queryPrizeListByCampId(String campId) {
+    public MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> queryPrizeListByCampId(String campId) {
         String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
         String url = pathPrefix + "/myteay/api/phoenix/camp/manage/prize/list/prize/" + campId;
         String result = HttpClientUtil.insureResponseGet(url);
-        MtOperateResult<List<CampPrizeModel>> obj = (MtOperateResult<List<CampPrizeModel>>) JSON.parseObject(result,
-            new TypeReference<MtOperateResult<List<CampPrizeModel>>>() {
+        MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> obj = (MtOperateResult<List<CampPrizeModel<PxGoodsModel>>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<List<CampPrizeModel<PxGoodsModel>>>>() {
             });
         return obj;
     }
@@ -46,12 +47,13 @@ public class CampPrizeIntgImpl implements CampPrizeIntg {
      * @see com.myteay.phoenix.common.service.camp.integration.CampPrizeIntg#manageCampPrize(com.myteay.phoenix.core.model.camp.CampPrizeModel)
      */
     @Override
-    public MtOperateResult<CampPrizeModel> manageCampPrize(CampPrizeModel campPrizeModel) {
+    public MtOperateResult<CampPrizeModel<PxGoodsModel>> manageCampPrize(CampPrizeModel<PxGoodsModel> campPrizeModel) {
         String pathPrefix = env.getProperty("tiancan.phoenix.promocore.path.prefix");
         String url = pathPrefix + "/myteay/api/phoenix/camp/manage/prize/manage";
         String result = HttpClientUtil.insureResponsePost(url, JSON.toJSONString(campPrizeModel));
-        MtOperateResult<CampPrizeModel> obj = (MtOperateResult<CampPrizeModel>) JSON.parseObject(result, new TypeReference<MtOperateResult<CampPrizeModel>>() {
-        });
+        MtOperateResult<CampPrizeModel<PxGoodsModel>> obj = (MtOperateResult<CampPrizeModel<PxGoodsModel>>) JSON.parseObject(result,
+            new TypeReference<MtOperateResult<CampPrizeModel<PxGoodsModel>>>() {
+            });
         return obj;
     }
 

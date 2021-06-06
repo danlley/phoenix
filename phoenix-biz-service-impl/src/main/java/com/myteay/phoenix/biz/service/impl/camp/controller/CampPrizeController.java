@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.myteay.phoenix.core.model.camp.CampPrizeModel;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.dbcenter.common.orm.model.PxGoodsModel;
 import com.tc.phoenix.common.util.log.LoggerNames;
+import com.tc.promocore.common.orm.model.CampPrizeModel;;
 
 /**
  * 到店消费营销活动奖品维护
@@ -47,17 +47,17 @@ public class CampPrizeController {
      * @return
      */
     @RequestMapping(value = "/list/prize/{campId}", method = { RequestMethod.GET })
-    public MtServiceResult<List<CampPrizeModel>> queryPrizeListByShopId(@PathVariable String campId) {
-        MtServiceResult<List<CampPrizeModel>> result = null;
+    public MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> queryPrizeListByShopId(@PathVariable String campId) {
+        MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> result = null;
 
-        MtOperateResult<List<CampPrizeModel>> componentResult = null;
+        MtOperateResult<List<CampPrizeModel<PxGoodsModel>>> componentResult = null;
         try {
             componentResult = campPrizeIntg.queryPrizeListByCampId(campId);
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询所有店内营销活动信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -70,19 +70,19 @@ public class CampPrizeController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<CampPrizeModel> manageShopPrize(@RequestBody CampPrizeModel campPrizeModel) {
+    public MtOperateResult<CampPrizeModel<PxGoodsModel>> manageShopPrize(@RequestBody CampPrizeModel<PxGoodsModel> campPrizeModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始管理店内营销活动信息 campPrizeModel=" + campPrizeModel);
         }
-        MtServiceResult<CampPrizeModel> result = null;
+        MtOperateResult<CampPrizeModel<PxGoodsModel>> result = null;
         try {
-            MtOperateResult<CampPrizeModel> innerResult = campPrizeIntg.manageCampPrize(campPrizeModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            MtOperateResult<CampPrizeModel<PxGoodsModel>> innerResult = campPrizeIntg.manageCampPrize(campPrizeModel);
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("管理店内营销活动信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;

@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.biz.service.impl.MtServiceResult;
 import com.myteay.phoenix.common.service.integration.PxShopIntg;
+import com.myteay.phoenix.common.util.MtOperateResult;
 import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
-import com.myteay.phoenix.core.model.MtOperateResult;
-import com.tc.common.lang.logger.Logger;
-import com.tc.common.lang.logger.LoggerFactory;
+import com.tc.ccopass.logger.Logger;
+import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.phoenix.common.util.log.LoggerNames;
 import com.tc.shop.orm.model.PxShopModel;
 
@@ -45,17 +44,17 @@ public class PxShopController {
      * @return
      */
     @RequestMapping(value = "/all", method = { RequestMethod.GET })
-    public MtServiceResult<List<PxShopModel>> queryShopAll() {
-        MtServiceResult<List<PxShopModel>> result = null;
+    public MtOperateResult<List<PxShopModel>> queryShopAll() {
+        MtOperateResult<List<PxShopModel>> result = null;
 
         MtOperateResult<List<PxShopModel>> componentResult = null;
         try {
             componentResult = pxShopIntg.queryShopAll();
-            result = new MtServiceResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
+            result = new MtOperateResult<>(componentResult.getOperateResult(), componentResult.getOperateExResult());
             result.setResult(componentResult.getResult());
         } catch (Exception e) {
             logger.warn("查询店铺信息发生未知异常 " + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
@@ -68,19 +67,19 @@ public class PxShopController {
      * @return
      */
     @RequestMapping(value = "/manage", method = { RequestMethod.POST })
-    public MtServiceResult<PxShopModel> manageShop(@RequestBody PxShopModel pxShopModel) {
+    public MtOperateResult<PxShopModel> manageShop(@RequestBody PxShopModel pxShopModel) {
 
         if (logger.isInfoEnabled()) {
             logger.info("开始保存店铺信息 pxShopModel=" + pxShopModel);
         }
-        MtServiceResult<PxShopModel> result = null;
+        MtOperateResult<PxShopModel> result = null;
         try {
             MtOperateResult<PxShopModel> innerResult = pxShopIntg.manageShop(pxShopModel);
-            result = new MtServiceResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
+            result = new MtOperateResult<>(innerResult.getOperateResult(), innerResult.getOperateExResult());
             result.setResult(innerResult.getResult());
         } catch (Exception e) {
             logger.warn("保存店铺信息发生异常" + e.getMessage(), e);
-            result = new MtServiceResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
+            result = new MtOperateResult<>(MtOperateResultEnum.CAMP_OPERATE_UNKONW, MtOperateExResultEnum.CAMP_UNKNOW_ERR);
         }
 
         return result;
