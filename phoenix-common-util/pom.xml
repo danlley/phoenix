@@ -15,7 +15,7 @@
     <url>http://www.gangutiancan.com</url>
     
     <properties>
-    	<spring.version>4.2.6.RELEASE</spring.version>
+    	<spring.version>5.3.7</spring.version>
     	<jmock.version>1.2.0</jmock.version>
     </properties>
 
@@ -180,7 +180,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.3.12.RELEASE</version>
+			<version>5.3.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
