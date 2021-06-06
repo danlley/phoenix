@@ -1,6 +1,6 @@
 /**
- * Myteay.com Inc.
- * Copyright (c) 2015-2018 All Rights Reserved.
+ * GanguTianCan.com Inc.
+ * Copyright (c) 2005-2021 All Rights Reserved.
  */
 package com.myteay.phoenix.biz.service.impl.admin.controller;
 
