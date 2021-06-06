@@ -24,7 +24,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
 @MapperScan("com.myteay.phoenix.common.persist")
-@ImportResource("classpath*:/META-INF/spring/myteay-*.xml")
+@ImportResource("classpath*:/META-INF/spring/tc-*.xml")
 public class Application {
 
     /**
