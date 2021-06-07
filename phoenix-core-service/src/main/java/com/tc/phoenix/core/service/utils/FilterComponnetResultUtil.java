@@ -2,7 +2,7 @@
  * GanguTianCan.com Inc.
  * Copyright (c) 2005-2021 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.utils;
+package com.tc.phoenix.core.service.utils;
 
 import com.tc.phoenix.common.util.MtOperateResult;
 

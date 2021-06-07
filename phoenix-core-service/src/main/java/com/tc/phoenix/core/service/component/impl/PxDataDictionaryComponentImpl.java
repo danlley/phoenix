@@ -2,7 +2,7 @@
  * GanguTianCan.com Inc.
  * Copyright (c) 2005-2021 All Rights Reserved.
  */
-package com.myteay.phoenix.core.service.component.impl;
+package com.tc.phoenix.core.service.component.impl;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,10 +15,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.model.DataDictionaryModel;
-import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
 import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
+import com.tc.phoenix.core.service.component.PxDataDictionaryComponent;
 
 /**
  * 数据字典查询组件
