@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.common.service.camp.integration.CampPrizeRefGoodsIntg;
-import com.myteay.phoenix.common.util.MtOperateResult;
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.tc.ccopass.logger.Logger;
 import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
 import com.tc.phoenix.common.util.log.LoggerNames;
 import com.tc.promocore.common.orm.model.CampPrizeRefGoodsModel;
 

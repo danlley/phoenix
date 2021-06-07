@@ -6,7 +6,7 @@ package com.myteay.phoenix.common.service.prodtrans.integration;
 
 import java.util.List;
 
-import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.prodtrans.core.model.TcPtsUserShopProdConfigModel;
 
 /**

@@ -2,15 +2,15 @@
  * GanguTianCan.com Inc.
  * Copyright (c) 2015-2020 All Rights Reserved.
  */
-package com.myteay.phoenix.common.util;
+package com.tc.phoenix.common.util;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
 
 /**
  * 返回结果

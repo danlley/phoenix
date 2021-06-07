@@ -12,10 +12,10 @@ import org.springframework.core.env.Environment;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
-import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
+import com.tc.phoenix.common.util.HttpClientUtil;
+import com.tc.phoenix.common.util.MtOperateResult;
 
 /**
  * 商品折扣管理客户端集成

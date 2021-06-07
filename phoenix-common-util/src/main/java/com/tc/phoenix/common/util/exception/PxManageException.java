@@ -2,11 +2,11 @@
  * GanguTianCan.com Inc.
  * Copyright (c) 2005-2021 All Rights Reserved.
  */
-package com.myteay.phoenix.common.util.exception;
+package com.tc.phoenix.common.util.exception;
 
 import com.myteay.common.util.tools.ToStringUtil;
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
 
 /**
  * 业务处理异常

@@ -4,8 +4,8 @@
  */
 package com.myteay.phoenix.common.service.camp.integration;
 
-import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.promocore.common.orm.model.CampShopPrizeOutModel;
 
 /**

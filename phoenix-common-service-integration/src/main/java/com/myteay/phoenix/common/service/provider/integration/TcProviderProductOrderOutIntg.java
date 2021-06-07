@@ -4,7 +4,7 @@
  */
 package com.myteay.phoenix.common.service.provider.integration;
 
-import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductOutModel;
 
 /**

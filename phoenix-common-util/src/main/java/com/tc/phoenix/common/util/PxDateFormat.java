@@ -2,7 +2,7 @@
  * GanguTianCan.com Inc.
  * Copyright (c) 2005-2021 All Rights Reserved.
  */
-package com.myteay.phoenix.common.util;
+package com.tc.phoenix.common.util;
 
 import java.text.DateFormat;
 import java.text.FieldPosition;

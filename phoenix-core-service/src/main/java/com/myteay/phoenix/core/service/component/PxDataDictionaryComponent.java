@@ -7,7 +7,7 @@ package com.myteay.phoenix.core.service.component;
 import java.util.List;
 
 import com.myteay.common.util.model.DataDictionaryModel;
-import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.MtOperateResult;
 
 /**
  * 数据字典查询组件

@@ -15,10 +15,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.CollectionUtils;
 
 import com.myteay.common.util.model.DataDictionaryModel;
-import com.myteay.phoenix.common.util.MtOperateResult;
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.myteay.phoenix.core.service.component.PxDataDictionaryComponent;
+import com.tc.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
 
 /**
  * 数据字典查询组件

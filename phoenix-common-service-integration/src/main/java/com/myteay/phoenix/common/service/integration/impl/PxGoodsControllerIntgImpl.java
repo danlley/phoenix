@@ -15,10 +15,10 @@ import org.springframework.core.env.Environment;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.myteay.phoenix.common.service.integration.PxGoodsControllerIntg;
-import com.myteay.phoenix.common.util.HttpClientUtil;
-import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.dbcenter.common.orm.model.PxGoodsAdvModel;
 import com.tc.dbcenter.common.orm.model.PxGoodsModel;
+import com.tc.phoenix.common.util.HttpClientUtil;
+import com.tc.phoenix.common.util.MtOperateResult;
 
 /**
  * 集成数据中心服务

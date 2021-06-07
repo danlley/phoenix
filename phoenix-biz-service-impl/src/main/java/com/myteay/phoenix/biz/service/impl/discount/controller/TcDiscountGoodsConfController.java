@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myteay.phoenix.common.service.discount.integration.TcDiscountGoodsConfMngIntg;
-import com.myteay.phoenix.common.util.MtOperateResult;
 import com.tc.ccopass.logger.Logger;
 import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.discount.core.model.TcAvaliableDiscountGoodsConfigModel;
 import com.tc.discount.core.model.TcDiscountGoodsConfigModel;
+import com.tc.phoenix.common.util.MtOperateResult;
 
 /**
  * 店铺商品折扣配置管理

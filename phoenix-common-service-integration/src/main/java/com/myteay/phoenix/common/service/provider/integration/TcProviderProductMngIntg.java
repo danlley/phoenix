@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.myteay.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.provider.orm.model.TcProviderProductImagesModel;
 import com.tc.provider.orm.model.TcProviderProductModel;
 import com.tc.provider.orm.model.TcProviderProductNutritionalModel;

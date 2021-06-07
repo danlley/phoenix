@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myteay.phoenix.common.service.integration.PxGoodsPackagesImageIntg;
-import com.myteay.phoenix.common.util.MtFileUtils;
-import com.myteay.phoenix.common.util.MtOperateResult;
-import com.myteay.phoenix.common.util.enums.MtOperateExResultEnum;
-import com.myteay.phoenix.common.util.enums.MtOperateResultEnum;
 import com.tc.ccopass.logger.Logger;
 import com.tc.ccopass.logger.LoggerFactory;
 import com.tc.dbcenter.common.orm.enums.PxOperationTypeEnum;
 import com.tc.dbcenter.common.orm.model.PxGoodsPackagesImageModel;
+import com.tc.phoenix.common.util.MtFileUtils;
+import com.tc.phoenix.common.util.MtOperateResult;
+import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
+import com.tc.phoenix.common.util.enums.MtOperateResultEnum;
 import com.tc.phoenix.common.util.log.LoggerNames;
 
 /**
