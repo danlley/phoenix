@@ -11,35 +11,35 @@
                 http://www.springframework.org/schema/context/spring-context-4.1.xsd"
 	default-autowire="byName">
 	
-	<bean id="tcProviderProductMngIntg" class="com.myteay.phoenix.common.service.provider.integration.impl.TcProviderProductMngIntgImpl"></bean>
+	<bean id="tcProviderProductMngIntg" class="com.tc.phoenix.common.service.provider.integration.impl.TcProviderProductMngIntgImpl"></bean>
 	
-	<bean id="tcDiscountGoodsConfMngIntg" class="com.myteay.phoenix.common.service.discount.integration.impl.TcDiscountGoodsConfMngIntgImpl"></bean>
+	<bean id="tcDiscountGoodsConfMngIntg" class="com.tc.phoenix.common.service.discount.integration.impl.TcDiscountGoodsConfMngIntgImpl"></bean>
 	
-	<bean id="tcProviderProductOrderOutIntg" class="com.myteay.phoenix.common.service.provider.integration.impl.TcProviderProductOrderOutIntgImpl"></bean>
+	<bean id="tcProviderProductOrderOutIntg" class="com.tc.phoenix.common.service.provider.integration.impl.TcProviderProductOrderOutIntgImpl"></bean>
 	
-	<bean id="pxGoodsControllerIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsControllerIntgImpl"></bean>
+	<bean id="pxGoodsControllerIntg" class="com.tc.phoenix.common.service.integration.impl.PxGoodsControllerIntgImpl"></bean>
 	
-	<bean id="pxGoodsPackagesDetailIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesDetailIntgImpl"></bean>
+	<bean id="pxGoodsPackagesDetailIntg" class="com.tc.phoenix.common.service.integration.impl.PxGoodsPackagesDetailIntgImpl"></bean>
 	
-	<bean id="pxGoodsPackagesImageIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesImageIntgImpl"></bean>
+	<bean id="pxGoodsPackagesImageIntg" class="com.tc.phoenix.common.service.integration.impl.PxGoodsPackagesImageIntgImpl"></bean>
 	
-	<bean id="pxGoodsPackagesNoticeIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesNoticeIntgImpl"></bean>
+	<bean id="pxGoodsPackagesNoticeIntg" class="com.tc.phoenix.common.service.integration.impl.PxGoodsPackagesNoticeIntgImpl"></bean>
 	
-	<bean id="pxGoodsPackagesSubNoticeIntg" class="com.myteay.phoenix.common.service.integration.impl.PxGoodsPackagesSubNoticeIntgImpl"></bean>
+	<bean id="pxGoodsPackagesSubNoticeIntg" class="com.tc.phoenix.common.service.integration.impl.PxGoodsPackagesSubNoticeIntgImpl"></bean>
 	
-	<bean id="pxShopIntg" class="com.myteay.phoenix.common.service.integration.impl.PxShopIntgImpl"></bean>
+	<bean id="pxShopIntg" class="com.tc.phoenix.common.service.integration.impl.PxShopIntgImpl"></bean>
 	
-	<bean id="pxSubPackagesIntg" class="com.myteay.phoenix.common.service.integration.impl.PxSubPackagesIntgImpl"></bean>
+	<bean id="pxSubPackagesIntg" class="com.tc.phoenix.common.service.integration.impl.PxSubPackagesIntgImpl"></bean>
 	
-	<bean id="campBaseIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampBaseIntgImpl"></bean>
+	<bean id="campBaseIntg" class="com.tc.phoenix.common.service.camp.integration.impl.CampBaseIntgImpl"></bean>
 	
-	<bean id="campPrizeIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampPrizeIntgImpl"></bean>
+	<bean id="campPrizeIntg" class="com.tc.phoenix.common.service.camp.integration.impl.CampPrizeIntgImpl"></bean>
 	
-	<bean id="campPrizeRefGoodsIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampPrizeRefGoodsIntgImpl"></bean>
+	<bean id="campPrizeRefGoodsIntg" class="com.tc.phoenix.common.service.camp.integration.impl.CampPrizeRefGoodsIntgImpl"></bean>
 	
-	<bean id="campShopPrizeOutIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.CampShopPrizeOutIntgImpl"></bean>
+	<bean id="campShopPrizeOutIntg" class="com.tc.phoenix.common.service.camp.integration.impl.CampShopPrizeOutIntgImpl"></bean>
 	
-	<bean id="pxCampPrizeServiceIntg" class="com.myteay.phoenix.common.service.camp.integration.impl.PxCampPrizeServiceIntgImpl"></bean>
+	<bean id="pxCampPrizeServiceIntg" class="com.tc.phoenix.common.service.camp.integration.impl.PxCampPrizeServiceIntgImpl"></bean>
 	
-	<bean id="tcProdtransConfigMngIntg" class="com.myteay.phoenix.common.service.prodtrans.integration.impl.TcProdtransConfigMngIntgImpl"></bean>
+	<bean id="tcProdtransConfigMngIntg" class="com.tc.phoenix.common.service.prodtrans.integration.impl.TcProdtransConfigMngIntgImpl"></bean>
 </beans>

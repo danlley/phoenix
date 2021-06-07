@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.common.service.provider.integration.TcProviderProductMngIntg;
 import com.tc.ccopass.logger.Logger;
 import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.phoenix.common.service.provider.integration.TcProviderProductMngIntg;
 import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.phoenix.common.util.enums.MtOperateExResultEnum;
 import com.tc.phoenix.common.util.enums.MtOperateResultEnum;

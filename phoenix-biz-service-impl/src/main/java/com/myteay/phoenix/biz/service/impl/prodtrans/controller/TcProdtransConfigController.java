@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myteay.phoenix.common.service.prodtrans.integration.TcProdtransConfigMngIntg;
 import com.tc.ccopass.logger.Logger;
 import com.tc.ccopass.logger.LoggerFactory;
+import com.tc.phoenix.common.service.prodtrans.integration.TcProdtransConfigMngIntg;
 import com.tc.phoenix.common.util.MtOperateResult;
 import com.tc.prodtrans.core.model.TcPtsUserShopProdConfigModel;
 
