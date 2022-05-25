@@ -15,7 +15,7 @@
     <url>http://www.gangutiancan.com</url>
     
     <properties>
-    	<spring.version>4.2.6.RELEASE</spring.version>
+    	<spring.version>5.2.22.RELEASE</spring.version>
     	<jmock.version>1.2.0</jmock.version>
     </properties>
 
